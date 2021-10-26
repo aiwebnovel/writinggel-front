@@ -1,18 +1,28 @@
-import React from 'react'
+import React, {useContext} from 'react'
 import Header from './Header'
 import Footer from './Footer'
+import { ResponsiveContext } from "grommet";
+
+import styled from 'styled-components'
 
 const Home = () => {
 
+    const size = useContext(ResponsiveContext);
+
     return(
         <>
-        <Header/>
-            <div>
+        <Header sizes={size}/>
+            <Main>
                main
-            </div>
-        <Footer/>
+            </Main>
+        <Footer sizes={size}/>
         </>
     )
 }
 
 export default Home;
+
+const Main = styled.div`
+    background-color : #f9f9f9;
+    height: 100vh;
+`

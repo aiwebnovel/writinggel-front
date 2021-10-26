@@ -1,0 +1,61 @@
+.InfoBox {
+    display: flex;
+    flex-direction: column;
+
+    >p,
+    a {
+        font-size: 0.75rem;
+        margin: 0;
+    }
+}
+
+.Icon {
+    >svg {
+        margin-right: 5px;
+    }
+}
+
+a {
+    text-decoration: none;
+    color: #000;
+    cursor: pointer;
+}
+
+
+.footer-logo {
+    width: 100px;
+    height: 100px;
+}
+
+.copyRight {
+    font-size: 0.85rem;
+}
+
+@media screen and (max-width: 680px) {
+
+    .MobileFooterContainer {
+        flex-direction: column !important;
+    }
+
+    .MobileFooter {
+        align-items: baseline;
+        width: 100%;
+    }
+
+    .footer-logo {
+        display: none;
+    }
+
+    .MobileCopyRight {
+        flex-direction: column-reverse !important;
+    }
+
+    .Icon {
+        >svg {
+            width: 20px;
+            height: 20px;
+        }
+    }
+
+
+}
