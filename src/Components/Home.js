@@ -1,10 +1,12 @@
-import React from "react";
+import React, {useContext} from "react";
 import Layout from "./Layout";
-import { Box, Grid, Card, CardBody, CardHeader } from "grommet";
+import { Box, Grid, Card, CardBody, CardHeader, ResponsiveContext } from "grommet";
 import { Magic} from "grommet-icons";
 import "../styles/Main.scss";
 
-const Home = (size) => {
+const Home = () => {
+    
+    const size = useContext(ResponsiveContext)
 
   return (
     <Layout>
@@ -15,8 +17,9 @@ const Home = (size) => {
       align="center"
       >
         <Grid
-          columns={ size !== "small" ? { count: 4, size: "auto" } : "100%"}
+          columns={ size !== "small" ? { count: 4, size: "auto" } : '100%'}
           gap='medium'
+          fill={size !== 'small' ? false : true}
         >
           <Card background='#f9f9f9'>
             <CardHeader className='cardTop'>
