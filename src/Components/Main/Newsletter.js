@@ -1,11 +1,12 @@
 import React from 'react'
+import Layout from '../Layout'
 
 const NewsLetter = () => {
 
     return(
-        <div>
+        <Layout>
            newsletter
-        </div>
+        </Layout>
     )
 }
 

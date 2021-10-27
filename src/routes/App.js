@@ -4,7 +4,7 @@ import '../App.css';
 
 import Home from '../Components/Home';
 import Brand from '../Components/Main/Brand';
-import WebnovelDetail from '../Components/Main/WebnovelDetail';
+import WebnovelDetail from '../Components/Main/Details/WebnovelDetail';
 import NewsLetter from '../Components/Main/Newsletter';
 import FaQ from '../Components/Main/FaQ';
 import Ask from '../Components/Main/Ask';

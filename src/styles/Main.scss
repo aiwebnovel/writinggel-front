@@ -60,7 +60,7 @@
     
 
     @media screen and (max-width: 680px) {
-        width: 100%;
+        width: 90%;
     }
     }
 }
@@ -77,4 +77,27 @@
         justify-content: center;
         align-items: center;
     }
+}
+
+
+//Detail 폴더
+
+.DetailBox {
+    height: 100vh;
+}
+
+.DetailHeader, .DetailBody {
+    text-align: center;
+}
+
+.intoServiceBtn {
+    background-color: #3B2477;
+    color: #fff;
+    border: 0;
+    outline: 0;
+    padding: 0;
+    width: 180px;
+    padding: 8px 0;
+    font-size: 16px;
+    border-radius: 5px;
 }
