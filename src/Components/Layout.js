@@ -1,28 +1,25 @@
-import React, {useContext} from 'react'
-import Header from './Header'
-import Footer from './Footer'
-import { ResponsiveContext } from "grommet";
+import React, { useContext } from "react";
+import Header from "./Header";
+import Footer from "./Footer";
+import { ResponsiveContext, grommet, Grommet } from "grommet";
+import styled from "styled-components";
 
-import styled from 'styled-components'
+const Layout = ({ children }) => {
+    
+    const sizeProps = useContext(ResponsiveContext)
 
-const Layout = ({children}) => {
-
-    const size = useContext(ResponsiveContext);
-
-    return(
-        <>
-        <Header sizes={size}/>
-            <Main sizes={size}>
-              {children}
-            </Main>
-        <Footer sizes={size}/>
-        </>
-    )
-}
+  return (
+    <Grommet theme={grommet}>
+      <Header size={sizeProps} />
+      <Main size={sizeProps}>{children}</Main>
+      <Footer size={sizeProps} />
+    </Grommet>
+  );
+};
 
 export default Layout;
 
 const Main = styled.div`
-    background-color : #f9f9f9;
-    height: 100vh;
-`
+  //background-color : #f9f9f9;
+  //height: 100vh;
+`;
