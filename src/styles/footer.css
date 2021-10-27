@@ -25,6 +25,7 @@ a {
 
 .copyRight {
   font-size: 0.85rem;
+  margin: 0;
 }
 
 @media screen and (max-width: 680px) {

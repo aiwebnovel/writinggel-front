@@ -11,10 +11,9 @@ const Home = () => {
   return (
     <Layout>
       <Box 
-      fill 
-      pad='large'
       justify="center"
       align="center"
+      className="MainHome"
       >
         <Grid
           columns={ size !== "small" ? { count: 4, size: "auto" } : '100%'}
