@@ -101,17 +101,30 @@
   text-align: center;
   padding: 24px 0;
 }
+.LetterHeader > h4 {
+  margin: 0;
+}
 
 .FormInputs {
-  width: 500px;
-  min-width: 200px;
+  width: 400px;
+  text-align: center;
 }
 .FormInputs > input {
   width: 100%;
-  padding: 10px;
+  padding: 10px 5px;
   font-size: 1rem;
   border: 1px solid #051619;
   margin-bottom: 10px;
+}
+@media screen and (max-width: 768px) {
+  .FormInputs > input {
+    width: 200px;
+  }
+}
+@media screen and (max-width: 768px) {
+  .FormInputs {
+    width: 100%;
+  }
 }
 
 .CheckSubs {
@@ -147,6 +160,69 @@
   font-weight: 600;
   padding-top: 15px;
   border-top: 1px solid #000;
+}
+
+.AskHeader {
+  line-height: 45px;
+}
+.AskHeader > h2, .AskHeader h3 {
+  margin: 0;
+}
+
+.goFaq {
+  border: 1px solid #ededed;
+  background-color: #ededed;
+  border-radius: 5px;
+  padding: 10px 30px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 200ms ease-in-out;
+}
+.goFaq:hover {
+  background-color: #fff;
+}
+
+.FieldStyle {
+  border-bottom: 0;
+}
+.FieldStyle > label {
+  margin: 0;
+  margin: 6px 0;
+  font-size: 16px;
+}
+.FieldStyle > div {
+  border: 0;
+}
+.FieldStyle .EmailInput, .FieldStyle .PhoneInput {
+  padding: 10px 8px;
+  border: 1px solid #444;
+}
+.FieldStyle .selectStyle {
+  padding: 10px 5px;
+  border: 1px solid #444;
+}
+.FieldStyle .textareaStyle {
+  padding: 10px;
+  min-height: 200px;
+  resize: none;
+  border: 1px solid #444;
+}
+.FieldStyle .textareaStyle::placeholder {
+  font-size: 14px;
+}
+
+.SubmitBox {
+  text-align: center;
+  padding-top: 10px;
+}
+.SubmitBox > button {
+  font-size: 1rem;
+  background-color: #3b2477;
+  border: 1px solid #3b2477;
+  outline: 0;
+  color: #fff;
+  padding: 15px 50px;
+  border-radius: 10px;
 }
 
 /*# sourceMappingURL=Main.css.map */

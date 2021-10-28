@@ -34,7 +34,7 @@ const NewsLetter = () => {
           </div>
         </Box>
 
-        <Box justify='center' align='center' pad="large" className='PrevLetter'>
+        <Box fill justify='center' align='center' pad="large" className='PrevLetter'>
           <div className="preHeader">지난 레터</div>
           <Grid  columns={ size !== "small" ? { count: 4, size: "auto" } : '100%'}
           gap='medium'

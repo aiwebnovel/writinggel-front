@@ -118,21 +118,34 @@
     color : #fff;
     text-align: center;
     padding : 24px 0;
+
+    > h4 {
+        margin:0;
+    }
 }
 
 
 .FormInputs {
 
-    width: 500px;
-    min-width: 200px;
+    width: 400px;
+    text-align: center;
 
     > input {
+
         width: 100%;
-        // padding: 10px 40px 11px 1.5rem;
-        padding: 10px;
+        padding: 10px 5px;
         font-size: 1rem;
         border: 1px solid #051619;
         margin-bottom: 10px;
+
+
+        @media screen and (max-width:768px){
+            width: 200px;
+        }
+    }
+
+    @media screen and (max-width: 768px) {
+        width: 100%;
     }
 
 }
@@ -155,7 +168,6 @@
 }
 
 .subsBtn {
-    
     background-color: #3B2477;
     color: #fff;
     border: 0;
@@ -176,3 +188,87 @@
     border-top : 1px solid #000;
 }
 
+//Ask
+
+.AskHeader {
+
+    line-height: 45px;
+
+    > h2, h3 {
+        margin:0;  
+    }
+}
+
+.goFaq {
+    border: 1px solid #ededed;
+    background-color: #ededed;
+    border-radius: 5px;
+    padding: 10px 30px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 200ms ease-in-out;
+
+    &:hover {
+        background-color: #fff;
+
+    }
+}
+
+.FieldStyle {
+
+    border-bottom: 0;
+
+    > label {
+        margin:0;
+        margin: 6px 0;
+        font-size: 16px;
+    }
+
+    > div {
+        border: 0;
+    }
+
+    .EmailInput, .PhoneInput {
+        padding: 10px 8px;
+        border: 1px solid #444;
+    }
+
+    .selectStyle {
+        padding: 10px 5px;
+        border: 1px solid #444;
+    }
+
+    .textareaStyle {
+        padding: 10px;
+        min-height: 200px;
+        resize: none;
+        border: 1px solid #444;
+
+        &::placeholder {
+            font-size: 14px;
+        }
+    }
+
+}
+
+.SubmitBox {
+    text-align: center;
+    padding-top: 10px;
+
+    > button {
+        font-size: 1rem;
+        background-color: #3b2477;
+        border: 1px solid #3b2477;
+        outline: 0;
+        color: #fff;
+        padding: 15px 50px;
+        border-radius: 10px;
+    }
+}
+
+
+
+//FAQ
+
+
+//MyPage
