@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap');
 
-// Home , /Main 쪽 파일들
+// Home , /Main 쪽 파일들(Membership 폴더 제외)
 
 
 //Home
@@ -8,8 +8,10 @@
 .MainHome {
     width: 100%;
     padding: 48px;
+    height: 100vh;
 
     @media screen and (max-width: 768px) {
+        height: 100%;
         padding: 30px;
         justify-content: center;
         /* word-break: keep-all; */
@@ -24,6 +26,7 @@
 .cardTitle {
     text-align: center;
     padding: 50px;
+    font-family: 'NeoDunggeunmo'; 
 
     @media screen and (max-width: 768px) {
         padding: 30px;
@@ -101,3 +104,75 @@
     font-size: 16px;
     border-radius: 5px;
 }
+
+
+//newsletter
+
+.LetterContainer {
+    padding: 48px 0;
+}
+
+.LetterHeader {
+    width: 100%;
+    background-color: #3B2477;
+    color : #fff;
+    text-align: center;
+    padding : 24px 0;
+}
+
+
+.FormInputs {
+
+    width: 500px;
+    min-width: 200px;
+
+    > input {
+        width: 100%;
+        // padding: 10px 40px 11px 1.5rem;
+        padding: 10px;
+        font-size: 1rem;
+        border: 1px solid #051619;
+        margin-bottom: 10px;
+    }
+
+}
+
+.CheckSubs {
+    font-size: 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    padding: 20px;
+
+    .checkStyle {
+        cursor: pointer;
+        margin-right : 10px;
+        width: 14px;
+        height: 14px;
+    }
+ 
+}
+
+.subsBtn {
+    
+    background-color: #3B2477;
+    color: #fff;
+    border: 0;
+    outline: 0;
+    padding: 0;
+    padding: 8px 10px;
+    font-size: 16px;
+    border-radius: 5px;
+    margin-top : 12px;
+}
+
+
+.preHeader {
+    width: 50%;
+    text-align: center;
+    font-weight: 600;
+    padding-top : 15px;
+    border-top : 1px solid #000;
+}
+
