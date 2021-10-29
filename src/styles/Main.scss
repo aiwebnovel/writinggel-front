@@ -94,6 +94,11 @@ $boxShadow : rgb(237 237 237) 2px 3px 8px;
 
 .DetailHeader, .DetailBody {
     text-align: center;
+    padding: 20px 0;
+    
+    > p {
+        margin-bottom : 15px;
+    }
 }
 
 .intoServiceBtn {

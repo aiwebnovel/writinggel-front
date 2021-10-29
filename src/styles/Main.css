@@ -76,6 +76,10 @@
 
 .DetailHeader, .DetailBody {
   text-align: center;
+  padding: 20px 0;
+}
+.DetailHeader > p, .DetailBody > p {
+  margin-bottom: 15px;
 }
 
 .intoServiceBtn {

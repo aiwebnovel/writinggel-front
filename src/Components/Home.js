@@ -26,43 +26,43 @@ const Home = () => {
             </CardHeader>
             <CardBody className='cardTitle'>웹소설 창작</CardBody>
           </Card>
-          <Card>
+          <Card background='#f9f9f9'>
             <CardHeader className='cardTop'>
               <Magic color='#fff' />
             </CardHeader>
             <CardBody className='cardTitle'>블로그 쓰기</CardBody>
           </Card>
-          <Card>
+          <Card background='#f9f9f9'>
             <CardHeader className='cardTop'>
               <Magic color='#fff' />
             </CardHeader>
             <CardBody className='cardTitle'>동화창작</CardBody>
           </Card>
-          <Card>
+          <Card background='#f9f9f9'>
             <CardHeader className='cardTop'>
               <Magic color='#fff' />
             </CardHeader>
             <CardBody className='cardTitle'>뉴스레터 콘텐츠 기획</CardBody>
           </Card>
-          <Card>
+          <Card background='#f9f9f9'>
             <CardHeader className='cardTop'>
               <Magic color='#fff' />
             </CardHeader>
             <CardBody className='cardTitle'>영어 시 쓰기</CardBody>
           </Card>
-          <Card>
+          <Card background='#f9f9f9'>
             <CardHeader className='cardTop'>
               <Magic color='#fff' />
             </CardHeader>
             <CardBody className='cardTitle'>비지니스 아이디어</CardBody>
           </Card>
-          <Card>
+          <Card background='#f9f9f9'>
             <CardHeader className='cardTop'>
               <Magic color='#fff' />
             </CardHeader>
             <CardBody className='cardTitle'>연애편지 쓰기</CardBody>
           </Card>
-          <Card>
+          <Card background='#f9f9f9'>
             <CardHeader className='cardTop'>
               <Magic color='#fff' />
             </CardHeader>
