@@ -1,0 +1,180 @@
+@charset "UTF-8";
+.headerStyle {
+  padding: 10px 30px;
+}
+
+.MainLogo {
+  width: 120px;
+}
+@media screen and (max-width: 768px) {
+  .MainLogo {
+    width: 80px;
+  }
+}
+
+.Menus {
+  cursor: pointer;
+}
+
+.MobileMenus {
+  background-color: #fff;
+  text-align: center;
+  position: absolute;
+  width: 100%;
+  z-index: 5;
+}
+.MobileMenus > li {
+  background-color: #3b2477;
+  color: #fff;
+}
+
+.DropMenu:hover .DropDown {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.DropDown {
+  display: none;
+  border: 1px solid #ededed;
+  background-color: #fff;
+  position: absolute;
+  padding: 0 10px;
+  box-sizing: border-box;
+  line-height: 45px;
+}
+@media screen and (max-width: 768px) {
+  .DropDown {
+    width: 100%;
+  }
+}
+
+.AvatarBox {
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.loginAvatar {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+}
+
+.signBox {
+  text-align: center;
+}
+
+.googleButton, .facebookButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 15px 0;
+  margin-bottom: 16px;
+  font-size: 20px;
+  box-shadow: 2px 3px 3px rgba(0, 0, 0, 0.16);
+  border: 0;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.googleButton {
+  background: #fff;
+  transition: all 0.5s ease-in-out;
+}
+
+.googleButton > svg {
+  background-color: #fff;
+  margin-right: 7px;
+  transition: all 0.5s ease-in-out;
+}
+
+.googleButton:hover, .googleButton:hover > svg {
+  background-color: #eee;
+}
+
+.facebookButton {
+  background-color: #3C5997;
+  color: #fff;
+  transition: all 0.5s ease-in-out;
+}
+
+.facebookButton > svg {
+  margin-right: 7px;
+  background-color: #fff;
+  transition: all 0.5s ease-in-out;
+}
+
+.facebookButton:hover, .facebookButton > svg:hover {
+  background-color: #2B3F6B;
+}
+
+.isChecked {
+  font-size: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.isChecked > a {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.afterLogin {
+  position: absolute;
+  width: 300px;
+  background-color: #fff;
+  z-index: 5;
+  right: 10px;
+  padding: 20px;
+  border-radius: 10px;
+  border: 1px solid #ededed;
+}
+
+.Username {
+  font-weight: 600;
+}
+
+.token {
+  text-align: right;
+}
+
+.token > span {
+  font-weight: 600;
+}
+
+.logout {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 99;
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+.openModal {
+  display: flex;
+  align-items: center;
+  /* 팝업이 열릴때 스르륵 열리는 효과 */
+  animation: modal-bg-show 0.3s;
+}
+
+@keyframes modal-bg-show {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/*# sourceMappingURL=header.css.map */

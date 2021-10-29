@@ -1,0 +1,400 @@
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap");
+.MainHome {
+  width: 100%;
+  padding: 48px;
+  height: 100vh;
+}
+@media screen and (max-width: 768px) {
+  .MainHome {
+    height: 100%;
+    padding: 30px;
+    justify-content: center;
+    /* word-break: keep-all; */
+  }
+}
+
+.cardTop {
+  padding: 8px;
+  background-color: #3B2477;
+}
+
+.cardTitle {
+  text-align: center;
+  padding: 70px 50px;
+  font-family: "NeoDunggeunmo";
+}
+@media screen and (max-width: 768px) {
+  .cardTitle {
+    padding: 30px;
+    justify-content: center;
+    /* word-break: keep-all; */
+  }
+}
+
+.brandBox {
+  height: 80vh;
+}
+@media screen and (max-width: 768px) {
+  .brandBox {
+    height: 100%;
+  }
+}
+
+.brand_img {
+  text-align: center;
+  overflow: hidden;
+}
+.brand_img > img {
+  width: 400px;
+}
+@media screen and (max-width: 768px) {
+  .brand_img > img {
+    width: 300px;
+  }
+}
+@media screen and (max-width: 680px) {
+  .brand_img > img {
+    width: 90%;
+  }
+}
+
+.brand_paragraph {
+  font-family: "NeoDunggeunmo";
+}
+@media screen and (max-width: 768px) {
+  .brand_paragraph {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+.DetailBox {
+  height: 100vh;
+}
+
+.DetailHeader, .DetailBody {
+  text-align: center;
+  padding: 20px 0;
+}
+.DetailHeader > p, .DetailBody > p {
+  margin-bottom: 15px;
+}
+
+.intoServiceBtn {
+  background-color: #3B2477;
+  color: #fff;
+  border: 0;
+  outline: 0;
+  padding: 0;
+  width: 180px;
+  padding: 8px 0;
+  font-size: 16px;
+  border-radius: 5px;
+}
+
+.LetterContainer {
+  padding: 48px 0;
+}
+
+.LetterHeader {
+  width: 100%;
+  background-color: #3B2477;
+  color: #fff;
+  text-align: center;
+  padding: 48px 0;
+}
+.LetterHeader > h4 {
+  margin: 0;
+}
+
+.FormInputs {
+  width: 400px;
+  text-align: center;
+}
+.FormInputs > input {
+  width: 100%;
+  padding: 10px 5px;
+  font-size: 1rem;
+  border: 1px solid #051619;
+  margin-bottom: 10px;
+}
+@media screen and (max-width: 768px) {
+  .FormInputs > input {
+    width: 200px;
+  }
+}
+@media screen and (max-width: 768px) {
+  .FormInputs {
+    width: 100%;
+  }
+}
+
+.CheckSubs {
+  font-size: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+  padding: 20px;
+}
+.CheckSubs .checkStyle {
+  cursor: pointer;
+  margin-right: 10px;
+  width: 14px;
+  height: 14px;
+}
+
+.subsBtn {
+  background-color: #3B2477;
+  color: #fff;
+  border: 0;
+  outline: 0;
+  padding: 0;
+  padding: 8px 10px;
+  font-size: 16px;
+  border-radius: 5px;
+  margin-top: 12px;
+}
+
+.preHeader {
+  width: 50%;
+  text-align: center;
+  font-weight: 600;
+  padding-top: 15px;
+  border-top: 1px solid #000;
+}
+
+.AskHeader {
+  line-height: 45px;
+}
+.AskHeader > h2, .AskHeader h3 {
+  margin: 0;
+}
+
+.goFaq {
+  border: 1px solid #ededed;
+  background-color: #ededed;
+  border-radius: 5px;
+  padding: 10px 30px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 200ms ease-in-out;
+}
+.goFaq:hover {
+  background-color: #fff;
+}
+
+.FieldStyle {
+  border-bottom: 0;
+}
+.FieldStyle > label {
+  margin: 0;
+  margin: 6px 0;
+  font-size: 16px;
+}
+.FieldStyle > div {
+  border: 0;
+}
+.FieldStyle .EmailInput, .FieldStyle .PhoneInput {
+  padding: 10px 8px;
+  border: 1px solid #444;
+}
+.FieldStyle .selectStyle {
+  padding: 10px 5px;
+  border: 1px solid #444;
+}
+.FieldStyle .textareaStyle {
+  padding: 10px;
+  min-height: 200px;
+  resize: none;
+  border: 1px solid #444;
+}
+.FieldStyle .textareaStyle::placeholder {
+  font-size: 14px;
+}
+
+.SubmitBox {
+  text-align: center;
+  padding-top: 10px;
+}
+.SubmitBox > button {
+  font-size: 1rem;
+  background-color: #3b2477;
+  border: 1px solid #3b2477;
+  outline: 0;
+  color: #fff;
+  padding: 15px 50px;
+  border-radius: 10px;
+}
+
+.Questions {
+  padding: 48px 0 20px 0;
+  /* font-weight: 900; */
+  font-size: 24px;
+  border-bottom: 1px solid #444;
+  margin-bottom: 40px;
+  font-family: "NeoDunggeunmo";
+}
+
+.FAQContainer {
+  font-family: "NeoDunggeunmo";
+  padding: 0 10px;
+}
+
+.FAQContent {
+  background-color: #fff;
+  box-shadow: #ededed 2px 3px 8px;
+  padding: 15px;
+}
+
+.ExplainHeader {
+  text-align: center;
+  line-height: 35px;
+}
+.ExplainHeader > h2 {
+  margin: 0;
+  font-weight: 600;
+}
+@media screen and (max-width: 768px) {
+  .ExplainHeader > h2 {
+    font-size: 1.4em;
+  }
+}
+
+.ExplainBtn {
+  font-size: 1rem;
+  background-color: #fff;
+  border: 1px solid #3b2477;
+  outline: 0;
+  color: #444;
+  padding: 15px 50px;
+  border-radius: 10px;
+  margin-top: 30px;
+}
+
+.MemCardCon {
+  background-color: #fff;
+  border: 1px solid #3b2477;
+}
+@media screen and (max-width: 768px) {
+  .MemCardCon {
+    width: 100%;
+  }
+}
+.MemCardCon:hover {
+  border: 3px solid #3b2477;
+}
+
+.MemCardHead {
+  background-color: #fff;
+  display: flex;
+  justify-content: flex-end;
+}
+.MemCardHead > svg {
+  width: 35px;
+  height: 35px;
+}
+
+.MemCardBody {
+  line-height: 35px;
+  padding: 10px 20px 10px 15px;
+}
+.MemCardBody > h4, .MemCardBody p {
+  margin: 0;
+}
+
+hr {
+  width: 50%;
+  border-color: #3b2477;
+}
+
+.TextCon {
+  padding: 48px 0;
+}
+
+.ExplainBottom {
+  padding: 48px 0;
+}
+.ExplainBottom > a > button {
+  font-size: 1rem;
+  background-color: #fff;
+  border: 1px solid #3b2477;
+  outline: 0;
+  color: #444;
+  padding: 15px 50px;
+  border-radius: 10px;
+}
+
+.SignInHeader {
+  font-weight: 600;
+}
+
+.CreditBox {
+  border: 1px solid #3b2477;
+  border-radius: 10px;
+  padding: 25px;
+}
+
+.creditCard {
+  width: 100%;
+  /* height: 30%; */
+  padding-bottom: 15px;
+}
+
+.creditCard > h3 {
+  padding-bottom: 20px;
+}
+
+.ElementBox {
+  border-color: #ededed;
+  padding-bottom: 10px;
+}
+
+.ElementBox > p {
+  font-size: 0.9em;
+}
+
+.ElementBox > input {
+  height: 30px;
+  outline: 0;
+  border: 1px solid #ededed;
+  padding: 6px;
+  border-radius: 5px;
+}
+
+.PwElement {
+  width: 60px;
+}
+
+.PriceBox {
+  text-align: right;
+  padding: 0 10px 10px 10px;
+  border-bottom: 1px solid #ededed;
+  font-size: 1.5em;
+}
+
+.creditCardButton {
+  background-color: #30009C;
+  font-size: 1rem;
+  color: #ffffff;
+  border-radius: 8px;
+  padding: 10px 30px;
+  text-align: center;
+  cursor: pointer;
+  border: 0;
+  outline: 0;
+}
+
+.changeButton {
+  background-color: #5600E8;
+  border: 1px solid #5600e8;
+  color: #fff;
+  border-radius: 10px;
+  padding: 5px 8px;
+  text-align: center;
+  cursor: pointer;
+}
+
+/*# sourceMappingURL=Main.css.map */

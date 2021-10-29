@@ -1,0 +1,29 @@
+import React from "react";
+import Layout from "../../Layout";
+import { Box } from "grommet";
+
+const WebnovelDetail = () => {
+  return (
+    <Layout>
+      <Box
+      fill
+      justify='center'
+      align="center"
+      pad="large"
+      className="DetailBox"
+      >
+        <div className="DetailHeader">
+          <p>멤버십에 가입하면 무제한 이용 가능한 서비스 입니다.</p>
+          <button className='intoServiceBtn'>멤버십 가입</button>
+        </div>
+        <div className="DetailBody">
+          <p>개별 서비스에 대한 설명이 들어갈 예정입니다.</p>
+          <p>누가 사용하면 좋을까요? 어떻게 활용할 수 있을까요? 등등</p>
+          <button className='intoServiceBtn'>서비스 이용하기</button>
+        </div>
+      </Box>
+    </Layout>
+  );
+};
+
+export default WebnovelDetail;

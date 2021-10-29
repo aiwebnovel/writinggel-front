@@ -4,7 +4,7 @@ import '../App.css';
 
 import Home from '../Components/Home';
 import Brand from '../Components/Main/Brand';
-import WebnovelDetail from '../Components/Main/WebnovelDetail';
+import WebnovelDetail from '../Components/Main/Details/WebnovelDetail';
 import NewsLetter from '../Components/Main/Newsletter';
 import FaQ from '../Components/Main/FaQ';
 import Ask from '../Components/Main/Ask';
@@ -24,8 +24,8 @@ function App() {
         <Route exact path="/newsletter" component={NewsLetter}></Route>
         <Route exact path="/ask" component={Ask}></Route>
         <Route exact path="/faq" component={FaQ}></Route>
-        <Route exact path="/explainMember" component={ExplainMember}></Route>
-        <Route exact path="/signMember" component={SignMember}></Route>
+        <Route exact path="/explain" component={ExplainMember}></Route>
+        <Route exact path="/signIn" component={SignMember}></Route>
         <Route exact path="/payment" component={PayResult}></Route>
         <Route exact path="/mypage" component={Mypage}></Route>
       </Switch>
