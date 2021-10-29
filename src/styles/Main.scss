@@ -28,7 +28,7 @@ $boxShadow : rgb(237 237 237) 2px 3px 8px;
 
 .cardTitle {
     text-align: center;
-    padding: 50px;
+    padding: 70px 50px;
     font-family: 'NeoDunggeunmo'; 
 
     @media screen and (max-width: 768px) {
@@ -381,10 +381,6 @@ hr {
 
 .SignInHeader {
     font-weight: 600;
-}
-
-.payBox, .choiceBox {
-    padding: 48px 0;
 }
 
 .CreditBox {
