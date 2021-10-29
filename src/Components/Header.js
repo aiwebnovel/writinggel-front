@@ -24,7 +24,7 @@ const Header = () => {
       </Nav>
       {size !== "small" ? (
         <Nav direction='row' className='Menus' gap='large'>
-          <Link to='/explainMember'>
+          <Link to='/explain'>
             <Button>멤버쉽 가입</Button>
           </Link>
           <Link to='/brand'>브랜드소개</Link>

@@ -295,7 +295,7 @@ background-color : #fff;
 
 }
 
-//ExplainMember
+//ExplainMember , /membership/signmMember 
 
 .ExplainHeader {
     text-align: center;
@@ -325,14 +325,26 @@ background-color : #fff;
 .MemCardCon {
     background-color : #fff;
     border : 1px solid $mainColor;
+    // transition: all 200ms ease-in-out;
 
     @media screen and (max-width: 768px) {
         width: 100%;
+    }
+
+    &:hover {
+        border: 3px solid $mainColor
     }
 }
 
 .MemCardHead {
     background-color : #fff;
+    display: flex;
+    justify-content: flex-end;
+
+    > svg {
+        width: 35px;
+        height: 35px;
+    }
 }
 
 .MemCardBody {
@@ -366,6 +378,85 @@ hr {
         border-radius: 10px;
     }
 }
+
+.SignInHeader {
+    font-weight: 600;
+}
+
+.payBox, .choiceBox {
+    padding: 48px 0;
+}
+
+.CreditBox {
+    border: 1px solid $mainColor;
+    border-radius: 10px;
+    padding: 25px;
+}
+
+.creditCard {
+    width: 100%;
+    /* height: 30%; */
+    padding-bottom: 15px;
+  }
+  
+  .creditCard > h3 {
+    padding-bottom : 20px;
+  }
+  
+  .ElementBox {
+    border-color: #ededed;
+    padding-bottom: 10px;
+  }
+  
+  
+  .ElementBox
+  > p{
+    font-size: 0.9em;
+  }
+  
+  .ElementBox > input {
+    height: 30px;
+    outline: 0;
+    border: 1px solid #ededed;
+    padding: 6px;
+    border-radius: 5px;
+  }
+  
+  .PwElement {
+    width: 60px;
+  }
+  
+  .PriceBox {
+    text-align: right;
+    padding: 0 10px 10px 10px;
+    border-bottom : 1px solid #ededed;
+    font-size: 1.5em;
+  }
+  
+  
+  .creditCardButton {
+    background-color: #30009C;
+    font-size : 1rem;
+    color: #ffffff;
+    border-radius: 8px;
+    padding: 10px 30px;
+    text-align: center;
+    cursor: pointer;
+    border: 0;
+    outline : 0;
+  
+  }
+  
+  .changeButton {
+   
+    background-color: #5600E8;
+    border: 1px solid #5600e8;
+    color: #fff;
+    border-radius: 10px;
+    padding: 5px 8px;
+    text-align: center;
+    cursor: pointer;
+  }
 
 
 //MyPage

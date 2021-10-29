@@ -25,11 +25,15 @@ const ExplainMember = () => {
           <h2>
             인공지능 기반 글쓰기 지원 서비스를 무제한 이용하실 수 있습니다.
           </h2>
-          <Link to='/signMember'>
+          <Link to='/signIn'>
             <button className='ExplainBtn'>멤버쉽 가입</button>
           </Link>
         </Box>
+
+       {/* ㅎ헤더 아래 콘텐츠들 */}
         <Box fill justify='center' align='center' pad='large'>
+
+        {/* 멤버쉽 카드들 */}
           <Box fill={size !== "small" ? false : true}>
             <Grid
               columns={size !== "small" ? { count: 3, size: "auto" } : "100%"}
@@ -83,6 +87,8 @@ const ExplainMember = () => {
             </Grid>
           </Box>
           <hr />
+
+        {/* 부가 설명들 */}
           <div className='TextCon'>
             <ExplainTextBox>
               <StatusFilled color='#fff' size='large' />
@@ -131,7 +137,7 @@ const ExplainMember = () => {
           justify='center'
           align='center'
         >
-          <Link to='/signMember'>
+          <Link to='/signIn'>
             <button>멤버쉽 가입</button>
           </Link>
         </Box>

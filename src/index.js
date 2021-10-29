@@ -3,10 +3,12 @@ import ReactDOM from "react-dom";
 import "./root.css";
 import App from "./routes/App";
 import { grommet, Grommet } from "grommet";
+import  GlobalStyles from './cssReset';
 
 ReactDOM.render(
   <React.StrictMode>
     <Grommet theme={grommet}>
+      <GlobalStyles/>
       <App />
     </Grommet>
   </React.StrictMode>,
