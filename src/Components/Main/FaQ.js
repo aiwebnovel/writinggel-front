@@ -19,6 +19,7 @@ const FaQ = () => {
           className='FaQHeader'>
           <h2>FAQ</h2>
         </Box>
+        
         <Box
         fill
         justify='center'

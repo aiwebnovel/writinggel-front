@@ -99,7 +99,7 @@
   background-color: #3B2477;
   color: #fff;
   text-align: center;
-  padding: 24px 0;
+  padding: 48px 0;
 }
 .LetterHeader > h4 {
   margin: 0;
@@ -243,6 +243,75 @@
   background-color: #fff;
   box-shadow: #ededed 2px 3px 8px;
   padding: 15px;
+}
+
+.ExplainHeader {
+  text-align: center;
+  line-height: 35px;
+}
+.ExplainHeader > h2 {
+  margin: 0;
+  font-weight: 600;
+}
+@media screen and (max-width: 768px) {
+  .ExplainHeader > h2 {
+    font-size: 1.4em;
+  }
+}
+
+.ExplainBtn {
+  font-size: 1rem;
+  background-color: #fff;
+  border: 1px solid #3b2477;
+  outline: 0;
+  color: #444;
+  padding: 15px 50px;
+  border-radius: 10px;
+  margin-top: 30px;
+}
+
+.MemCardCon {
+  background-color: #fff;
+  border: 1px solid #3b2477;
+}
+@media screen and (max-width: 768px) {
+  .MemCardCon {
+    width: 100%;
+  }
+}
+
+.MemCardHead {
+  background-color: #fff;
+}
+
+.MemCardBody {
+  line-height: 35px;
+  padding: 10px 20px 10px 15px;
+}
+.MemCardBody > h4, .MemCardBody p {
+  margin: 0;
+}
+
+hr {
+  width: 50%;
+  border-color: #3b2477;
+}
+
+.TextCon {
+  padding: 48px 0;
+}
+
+.ExplainBottom {
+  padding: 48px 0;
+}
+.ExplainBottom > a > button {
+  font-size: 1rem;
+  background-color: #fff;
+  border: 1px solid #3b2477;
+  outline: 0;
+  color: #444;
+  padding: 15px 50px;
+  border-radius: 10px;
 }
 
 /*# sourceMappingURL=Main.css.map */

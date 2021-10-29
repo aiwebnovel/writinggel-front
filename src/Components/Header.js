@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import { Header as HeaderLayout, Nav } from "grommet";
-import { Login, Menu } from "grommet-icons";
+import { User, Menu } from "grommet-icons";
 import { ResponsiveContext } from "grommet";
 
 import "../styles/header.scss";
@@ -32,7 +32,7 @@ const Header = () => {
           <Link to='/newsletter'>뉴스레터</Link>
           <Link to='/ask'>문의</Link>
 
-          <Login color='brand' onClick={SignIn} />
+          <User color='brand' onClick={SignIn} />
         </Nav>
       ) : (
         <Nav>
@@ -49,4 +49,5 @@ const Button = styled.button`
   border: 1px solid #dedede;
   background-color: #fff;
   padding: 5px 20px;
+  cursor: pointer;
 `;
