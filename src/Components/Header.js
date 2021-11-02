@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect, useCallback } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link} from "react-router-dom";
 import axios from "axios";
-import { Header as HeaderLayout, Nav, Avatar, Anchor, Button } from "grommet";
+import { Header as HeaderLayout, Nav, Avatar, Anchor } from "grommet";
 import { User, Menu, Google, FacebookOption, Down } from "grommet-icons";
 import { ResponsiveContext } from "grommet";
 
@@ -20,20 +20,15 @@ const Header = () => {
   const [isOpen, SetOpen] = useState(false);
   const [isShow, SetShow] = useState(false);
   const [isChecked, SetChecked] = useState(false);
-  const [user, SetUser] = useState(false);
+  const [isuser, SetUser] = useState(false);
   const [isShowMenu, SetShowMenu] = useState(false);
   const [profile, SetProfile] = useState({
     userName: "Guest",
     userImage: `유저`,
   });
-  const [isSubMenu, SetSubMenu] = useState(false)
   const [MobileSubMenu, SetMobileSubMenu] = useState(false)
 
   const { userName, userImage } = profile;
-
-  const HandleSubMenu = () => {
-    SetSubMenu(!isSubMenu);
-  }
 
   const HandleMobile = () => {
     SetMobileSubMenu(!MobileSubMenu);
@@ -49,12 +44,9 @@ const Header = () => {
   };
 
   const HandleShow = () => {
-    SetShow(!isShow);
+    SetShow(!isShow)
   };
 
-  const closeModal = () => {
-
-  }
 
   const signIn = async (event) => {
     if (isChecked === true) {
@@ -77,14 +69,16 @@ const Header = () => {
 
           await localStorage.setItem("token", token);
           SetUser(true);
+          SetOpen(false);
           toast.success(`로그인 되었습니다!`);
-          this.requestProfile();
+          requestProfile();
         })
         .catch((error) => {
-          let errorCode = error.code;
-          let errorMessage = error.message;
-          let email = error.email;
-          let credential = error.credential;
+          console.log(error)
+          // let errorCode = error.code;
+          // let errorMessage = error.message;
+          // let email = error.email;
+          // let credential = error.credential;
         });
     } else {
       toast.error("이용약관 및 개인정보처리방침에 동의해주세요!");
@@ -115,7 +109,8 @@ const Header = () => {
         })
         .then((response) => {
         
-          SetUser(true);
+          SetUser({isuser: true});
+          console.log('user',isuser);
           SetProfile({
             ...profile,
             userName: response.data.name,
@@ -151,7 +146,7 @@ const Header = () => {
   useEffect(() => {
     refreshProfile();
     requestProfile();
-  });
+  },);
 
   return (
     <>
@@ -262,7 +257,7 @@ const Header = () => {
           </Nav>
         </>
       )}
-      <Modal onClick={HandleModals} open={isOpen} close={closeModal} title='Login'>
+      <Modal onClick={HandleModals} open={isOpen} close={HandleModals} title='Login'>
         <div className='AvatarBox'>
           <img src='/user.png' alt='singinUser' className='loginAvatar' />
         </div>
@@ -312,20 +307,23 @@ const Header = () => {
         >
           <div className='afterLogin'>
             <div className='Username'>
-              <p>{userName}</p>
+              <p>{userName} 님</p>
             </div>
-            <div>
-              <p>
+            <p className="plan">
                 {localStorage.getItem("plan") === "undefined"
                   ? "Guest"
                   : localStorage.getItem("plan")}
-              </p>
-              <div className='logout'>
-                <Button primary label='logout' onClick={signOut}></Button>
+              </p> 
+            <hr style={{width:'100%',color:'#3b2477'}}/>
+            <div className="afterLoginBottom">
+
+              <p><Link to='/'>팅젤 보관함</Link></p>
+                <p><Link to='/mypage'>마이 페이지</Link></p>
+                <button onClick={signOut}>로그아웃</button>
               </div>
             </div>
           </div>
-        </div>
+      
       )}
     </>
   );
