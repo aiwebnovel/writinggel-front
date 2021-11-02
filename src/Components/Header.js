@@ -1,5 +1,5 @@
-import React, { useContext, useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import React, { useContext, useState, useEffect, useCallback } from "react";
+import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 import { Header as HeaderLayout, Nav, Avatar, Anchor, Button } from "grommet";
 import { User, Menu, Google, FacebookOption, Down } from "grommet-icons";
@@ -26,8 +26,18 @@ const Header = () => {
     userName: "Guest",
     userImage: `유저`,
   });
+  const [isSubMenu, SetSubMenu] = useState(false)
+  const [MobileSubMenu, SetMobileSubMenu] = useState(false)
 
   const { userName, userImage } = profile;
+
+  const HandleSubMenu = () => {
+    SetSubMenu(!isSubMenu);
+  }
+
+  const HandleMobile = () => {
+    SetMobileSubMenu(!MobileSubMenu);
+  }
 
   const HandleModals = () => {
     SetOpen(!isOpen);
@@ -41,6 +51,10 @@ const Header = () => {
   const HandleShow = () => {
     SetShow(!isShow);
   };
+
+  const closeModal = () => {
+
+  }
 
   const signIn = async (event) => {
     if (isChecked === true) {
@@ -77,7 +91,7 @@ const Header = () => {
     }
   };
 
-  const refreshProfile = async () => {
+  const refreshProfile = useCallback(async () => {
     authService.onAuthStateChanged(async (user) => {
       if (authService.currentUser) {
         authService.currentUser
@@ -86,13 +100,13 @@ const Header = () => {
             await localStorage.setItem("token", data);
           })
           .catch(async (error) => {
-            //console.log(error);
+            console.log(error);
           });
       }
     });
-  };
+  });
 
-  const requestProfile = async () => {
+  const requestProfile =  useCallback(async () => {
     let user = await localStorage.getItem("token");
     if (user !== null) {
       axios
@@ -114,24 +128,15 @@ const Header = () => {
           localStorage.setItem("plan", response.data.plan);
           localStorage.setItem("isBill", response.data.isBill);
 
-          this.closeModal();
+          SetOpen(false);
         })
         .catch((error) => {});
     }
-  };
+  });
 
   const showMenu = () => {
     SetShowMenu(!isShowMenu);
-    // event.preventDefault();
-    // event.stopPropagation();
 
-    // if (isShowMenu) {
-    //   SetShowMenu(false)
-    //   document.removeEventListener("click", this.closeMenu);
-    // } else {
-    //   this.setState({ showMenu: true });
-    //   document.addEventListener("click", this.closeMenu);
-    // }
   };
 
   const signOut = async() => {
@@ -146,7 +151,7 @@ const Header = () => {
   useEffect(() => {
     refreshProfile();
     requestProfile();
-  }, []);
+  });
 
   return (
     <>
@@ -190,7 +195,7 @@ const Header = () => {
                   <Link to='/webnovelDetail'>첫문장 자판기</Link>
                 </li>
               </ul>
-            </span>
+              </span>
             <Link to='/newsletter'>뉴스레터</Link>
             <Link to='/ask'>문의</Link>
             {localStorage.getItem("token") ? (
@@ -212,14 +217,15 @@ const Header = () => {
           </Nav>
         )}
       </HeaderLayout>
-      {isShow && (
+      {size === 'small' && isShow && (
         <>
           <Nav direction='column' className='MobileMenus' gap='large'>
             <Link to='/explain'>멤버쉽 가입</Link>
             <Link to='/brand'>브랜드 소개</Link>
-            <span className='DropMenu'>
-              인공지능 글쓰기 서비스 <Down size='small' />
-              <ul className='DropDown'>
+            <span className='DropMenu' onClick={HandleMobile}>
+              인공지능 글쓰기 서비스 <Down size='small' /></span>
+                {MobileSubMenu && (
+                <ul className='MobileDropDown'>
                 <li>
                   <Link to='/webnovelDetail'>웹소설 창작</Link>
                 </li>
@@ -245,18 +251,18 @@ const Header = () => {
                   <Link to='/webnovelDetail'>첫문장 자판기</Link>
                 </li>
               </ul>
-            </span>
+                )}
             <Link to='/newsletter'>뉴스레터</Link>
             <Link to='/ask'>문의</Link>
             {localStorage.getItem("token") ? (
-              <span onClick={showMenu}>MY page</span>
+              <Link to='/mypage'>My page</Link>
             ) : (
               <span onClick={HandleModals}>Login</span>
             )}
           </Nav>
         </>
       )}
-      <Modal open={isOpen} close={HandleModals} title='Login'>
+      <Modal onClick={HandleModals} open={isOpen} close={closeModal} title='Login'>
         <div className='AvatarBox'>
           <img src='/user.png' alt='singinUser' className='loginAvatar' />
         </div>
@@ -302,9 +308,7 @@ const Header = () => {
 
       {isShowMenu && (
         <div
-        // ref={(element) => {
-        //   this.dropdownMenu = element;
-        // }}
+
         >
           <div className='afterLogin'>
             <div className='Username'>

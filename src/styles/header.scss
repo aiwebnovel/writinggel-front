@@ -50,10 +50,17 @@
   box-sizing: border-box;
   line-height: 45px;
 
-  @media screen and (max-width: 768px) {
-    width: 100%;
+  // @media screen and (max-width: 768px) {
+  //   display: none;
+  //   width: 100%;
+  // }
 }
-  
+
+.MobileDropDown {
+  display: block;
+  padding: 0 10px;
+  box-sizing: border-box;
+  line-height: 45px;
 }
 
 .AvatarBox {
