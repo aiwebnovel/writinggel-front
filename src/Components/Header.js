@@ -1,10 +1,16 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Header as HeaderLayout, Nav } from "grommet";
+import axios from "axios";
+import { Header as HeaderLayout, Nav, Avatar, Anchor } from "grommet";
 import { User, Menu, Google, FacebookOption, Down } from "grommet-icons";
 import { ResponsiveContext } from "grommet";
 
+import { authService, firebaseInstance } from "../firebaseConfig";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 import Modal from "./Modal";
+import * as config from "../config";
 import "../styles/header.scss";
 import styled from "styled-components";
 
@@ -13,14 +19,129 @@ const Header = () => {
 
   const [isOpen, SetOpen] = useState(false);
   const [isShow, SetShow] = useState(false);
+  const [isChecked, SetChecked] = useState(false);
+  const [user, SetUser] = useState(false);
+  const [isShowMenu, SetShowMenu] = useState(false);
+  const [profile, SetProfile] = useState({
+    userName: "Guest",
+    userImage: `유저`,
+  });
+
+  const { userName, userImage } = profile;
 
   const HandleModals = () => {
     SetOpen(!isOpen);
   };
 
+  const HandleChecked = () => {
+    SetChecked(!isChecked);
+    console.log(isChecked);
+  };
+
   const HandleShow = () => {
     SetShow(!isShow);
   };
+
+  const signIn = async (event) => {
+    if (isChecked === true) {
+      const {
+        target: { name },
+      } = event;
+      let provider = new firebaseInstance.auth.GoogleAuthProvider();
+      if (name === "Facebook") {
+        provider = new firebaseInstance.auth.FacebookAuthProvider();
+      } else if (name === "Google") {
+        provider = new firebaseInstance.auth.GoogleAuthProvider();
+      }
+      await authService
+        .signInWithPopup(provider)
+        .then(async (result) => {
+          console.log(result);
+          /** @type {firebase.auth.OAuthCredential} */
+          let credential = result.credential;
+          let token = credential.idToken;
+
+          await localStorage.setItem("token", token);
+          SetUser(true);
+          toast.success(`로그인 되었습니다!`);
+          this.requestProfile();
+        })
+        .catch((error) => {
+          let errorCode = error.code;
+          let errorMessage = error.message;
+          let email = error.email;
+          let credential = error.credential;
+        });
+    } else {
+      toast.error("이용약관 및 개인정보처리방침에 동의해주세요!");
+    }
+  };
+
+  const refreshProfile = async () => {
+    authService.onAuthStateChanged(async (user) => {
+      if (authService.currentUser) {
+        authService.currentUser
+          .getIdToken()
+          .then(async (data) => {
+            await localStorage.setItem("token", data);
+          })
+          .catch(async (error) => {
+            //console.log(error);
+          });
+      }
+    });
+  };
+
+  const requestProfile = async () => {
+    let user = await localStorage.getItem("token");
+    if (user !== null) {
+      axios
+        .get(`${config.SERVER_URL}/profile`, {
+          headers: { authentication: user },
+        })
+        .then((response) => {
+          console.log("res", response);
+          SetUser(true);
+          SetProfile({
+            ...profile,
+            userName: response.data.name,
+            userImage: response.data.photoURL,
+          });
+          // setState({ userToken: response.data.token });
+          // setState({ userTokenP: response.data.tokenP });
+          // setState({ userImage: response.data.photoURL });
+          localStorage.setItem("userUid", response.data.uid);
+          localStorage.setItem("plan", response.data.plan);
+          localStorage.setItem("isBill", response.data.isBill);
+
+          this.closeModal();
+        })
+        .catch((error) => {});
+    }
+  };
+
+  const showMenu = () => {
+    SetShowMenu(!isShowMenu);
+    // event.preventDefault();
+    // event.stopPropagation();
+
+    // if (isShowMenu) {
+    //   SetShowMenu(false)
+    //   document.removeEventListener("click", this.closeMenu);
+    // } else {
+    //   this.setState({ showMenu: true });
+    //   document.addEventListener("click", this.closeMenu);
+    // }
+  };
+
+  const signOut = () => {
+    console.log("singOut");
+  };
+
+  useEffect(() => {
+    refreshProfile();
+    requestProfile();
+  }, []);
 
   return (
     <>
@@ -31,7 +152,7 @@ const Header = () => {
           </Link>
         </Nav>
         {size !== "small" ? (
-          <Nav direction='row' className='Menus' gap='large'>
+          <Nav direction='row' className='Menus' gap='large' align='center'>
             <Link to='/explain'>
               <Button>멤버쉽 가입</Button>
             </Link>
@@ -67,8 +188,18 @@ const Header = () => {
             </span>
             <Link to='/newsletter'>뉴스레터</Link>
             <Link to='/ask'>문의</Link>
-
-            <User color='brand' onClick={HandleModals} />
+            {localStorage.getItem("token") ? (
+              <Anchor>
+                <Avatar
+                  src={userImage}
+                  className='profileicon'
+                  style={{ width: "40px", height: "40px" }}
+                  onClick={showMenu}
+                />
+              </Anchor>
+            ) : (
+              <User color='brand' onClick={HandleModals} />
+            )}
           </Nav>
         ) : (
           <Nav>
@@ -112,8 +243,11 @@ const Header = () => {
             </span>
             <Link to='/newsletter'>뉴스레터</Link>
             <Link to='/ask'>문의</Link>
-
-            <span onClick={HandleModals}>Login</span>
+            {localStorage.getItem("token") ? (
+              <li>MY page</li>
+            ) : (
+              <span onClick={HandleModals}>Login</span>
+            )}
           </Nav>
         </>
       )}
@@ -123,7 +257,7 @@ const Header = () => {
         </div>
 
         <div className='signBox'>
-          <button className='googleButton'>
+          <button onClick={signIn} className='googleButton'>
             <Google color='plain' size='medium' /> Sign in with Google
           </button>
 
@@ -137,8 +271,8 @@ const Header = () => {
             <input
               type='checkbox'
               name='agree'
-              // value={this.state.isChecked}
-              // onClick={this.isChecked}
+              value={isChecked}
+              onClick={HandleChecked}
               style={{ width: "18px", height: "18px", marginRight: "5px" }}
             />
             <a
@@ -160,6 +294,30 @@ const Header = () => {
           </div>
         </div>
       </Modal>
+
+      {isShowMenu && (
+        <div
+        // ref={(element) => {
+        //   this.dropdownMenu = element;
+        // }}
+        >
+          <div className='afterLogin'>
+            <div className='Username'>
+              <p>{userName}</p>
+            </div>
+            <div>
+              <p>
+                {localStorage.getItem("plan") === "undefined"
+                  ? "Guest"
+                  : localStorage.getItem("plan")}
+              </p>
+              <div className='logout'>
+                <Button primary label='logout' onClick={signOut}></Button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 };

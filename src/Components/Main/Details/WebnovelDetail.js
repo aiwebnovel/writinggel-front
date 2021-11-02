@@ -1,4 +1,5 @@
 import React from "react";
+import  {Link} from 'react-router-dom';
 import Layout from "../../Layout";
 import { Box } from "grommet";
 
@@ -19,7 +20,7 @@ const WebnovelDetail = () => {
         <div className="DetailBody">
           <p>개별 서비스에 대한 설명이 들어갈 예정입니다.</p>
           <p>누가 사용하면 좋을까요? 어떻게 활용할 수 있을까요? 등등</p>
-          <button className='intoServiceBtn'>서비스 이용하기</button>
+          <button className='intoServiceBtn'><a target="_blank" rel="noreferrer" href='https://webnovel.world/'>서비스 이용하기</a></button>
         </div>
       </Box>
     </Layout>
