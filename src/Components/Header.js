@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import { Header as HeaderLayout, Nav, Avatar, Anchor } from "grommet";
+import { Header as HeaderLayout, Nav, Avatar, Anchor, Button } from "grommet";
 import { User, Menu, Google, FacebookOption, Down } from "grommet-icons";
 import { ResponsiveContext } from "grommet";
 
@@ -100,7 +100,7 @@ const Header = () => {
           headers: { authentication: user },
         })
         .then((response) => {
-          console.log("res", response);
+        
           SetUser(true);
           SetProfile({
             ...profile,
@@ -134,8 +134,13 @@ const Header = () => {
     // }
   };
 
-  const signOut = () => {
-    console.log("singOut");
+  const signOut = async() => {
+    await localStorage.removeItem("token");
+    SetUser(false);
+    SetShowMenu(false);
+  
+    await authService.signOut();
+    window.location.reload();
   };
 
   useEffect(() => {
@@ -154,7 +159,7 @@ const Header = () => {
         {size !== "small" ? (
           <Nav direction='row' className='Menus' gap='large' align='center'>
             <Link to='/explain'>
-              <Button>멤버쉽 가입</Button>
+              <MemButton>멤버쉽 가입</MemButton>
             </Link>
             <Link to='/brand'>브랜드 소개</Link>
             <span className='DropMenu'>
@@ -244,7 +249,7 @@ const Header = () => {
             <Link to='/newsletter'>뉴스레터</Link>
             <Link to='/ask'>문의</Link>
             {localStorage.getItem("token") ? (
-              <li>MY page</li>
+              <span onClick={showMenu}>MY page</span>
             ) : (
               <span onClick={HandleModals}>Login</span>
             )}
@@ -324,7 +329,7 @@ const Header = () => {
 
 export default Header;
 
-const Button = styled.button`
+const MemButton = styled.button`
   border: 1px solid #dedede;
   background-color: #fff;
   padding: 5px 20px;

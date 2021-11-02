@@ -1,13 +1,17 @@
-import React from "react";
+import React, {useContext} from "react";
 import  {Link} from 'react-router-dom';
 import Layout from "../../Layout";
-import { Box } from "grommet";
+import { Box, ResponsiveContext } from "grommet";
 
 const WebnovelDetail = () => {
+
+  const size = useContext(ResponsiveContext);
+
   return (
     <Layout>
       <Box
-      fill
+      width='100%'
+      height={size !=='small' ? '100%' : '80vh'}
       justify='center'
       align="center"
       pad="large"
