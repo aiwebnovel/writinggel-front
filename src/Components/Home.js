@@ -1,12 +1,24 @@
 import React, {useContext} from "react";
+import { useHistory } from 'react-router-dom'
 import Layout from "./Layout";
 import { Box, Grid, Card, CardBody, CardHeader, ResponsiveContext } from "grommet";
 import { Magic} from "grommet-icons";
 import "../styles/Main.scss";
+import { toast } from "react-toastify";
 
 const Home = () => {
     
     const size = useContext(ResponsiveContext)
+    let history = useHistory();
+
+    const StartService = () => {
+      let login = localStorage.getItem('token'); 
+      if(login !== null){
+        history.push(`/app`)
+      }else {
+        toast.info('로그인을 먼저 해주세요!');
+      }
+    }
 
   return (
     <Layout>
@@ -20,12 +32,12 @@ const Home = () => {
           gap='medium'
           fill={size !== 'small' ? false : true}
         >
-          <Card background='#f9f9f9'>
-            <CardHeader className='cardTop'>
-              <Magic color='#fff' />
-            </CardHeader>
-            <CardBody className='cardTitle'>웹소설 창작</CardBody>
-          </Card>
+            <Card background='#f9f9f9' onClick={StartService} >
+              <CardHeader className='cardTop'>
+                <Magic color='#fff' />
+              </CardHeader>
+              <CardBody className='cardTitle'>웹소설 창작</CardBody>
+            </Card>
           <Card background='#f9f9f9'>
             <CardHeader className='cardTop'>
               <Magic color='#fff' />

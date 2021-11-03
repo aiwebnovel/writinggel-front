@@ -14,6 +14,8 @@ import Mypage from '../Components/Main/mypage';
 import Modify from '../Components/Main/mypage/Modify';
 import PayResult from '../Components/Membership/PayResult';
 
+import ServiceHome from '../Components/app/Home';
+
 
 function App() {
   return (
@@ -21,7 +23,7 @@ function App() {
       <Switch>
         <Route exact path="/" component={Home}></Route>
         <Route exact path="/brand" component={Brand}></Route>
-        <Route exact path="/webnovelDetail" component={WebnovelDetail}></Route>
+        <Route exact path="/service/webnovel" component={WebnovelDetail}></Route>
         <Route exact path="/newsletter" component={NewsLetter}></Route>
         <Route exact path="/ask" component={Ask}></Route>
         <Route exact path="/faq" component={FaQ}></Route>
@@ -30,6 +32,9 @@ function App() {
         <Route exact path="/payment" component={PayResult}></Route>
         <Route exact path="/mypage" component={Mypage}></Route>
         <Route exact path="/mypage/modify" component={Modify}></Route>
+
+      {/* service */}
+        <Route exact path="/app" component={ServiceHome}></Route>
       </Switch>
     </BrowserRouter>
   );

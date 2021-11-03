@@ -5,13 +5,13 @@ import { Header as HeaderLayout, Nav, Avatar, Anchor } from "grommet";
 import { User, Menu, Google, FacebookOption, Down } from "grommet-icons";
 import { ResponsiveContext } from "grommet";
 
-import { authService, firebaseInstance } from "../firebaseConfig";
+import { authService, firebaseInstance } from "../../firebaseConfig";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-import Modal from "./Modal";
-import * as config from "../config";
-import "../styles/header.scss";
+import Modal from "../Modal";
+import * as config from "../../config";
+import "../../styles/header.scss";
 import styled from "styled-components";
 
 const Header = () => {
@@ -188,28 +188,28 @@ const Header = () => {
               인공지능 글쓰기 서비스 <Down size='small' />
               <ul className='DropDown'>
                 <li>
-                  <Link to='/service/webnovel'>웹소설 창작</Link>
+                  <Link to='/webnovelDetail'>웹소설 창작</Link>
                 </li>
                 <li>
-                  <Link to='/service/webnovel'>블로그</Link>
+                  <Link to='/webnovelDetail'>블로그</Link>
                 </li>
                 <li>
-                  <Link to='/service/webnovel'>동화 창작</Link>
+                  <Link to='/webnovelDetail'>동화 창작</Link>
                 </li>
                 <li>
-                  <Link to='/service/webnovel'>뉴스레터 콘텐츠 기획</Link>
+                  <Link to='/webnovelDetail'>뉴스레터 콘텐츠 기획</Link>
                 </li>
                 <li>
-                  <Link to='/service/webnovel'>영어 시 쓰기</Link>
+                  <Link to='/webnovelDetail'>영어 시 쓰기</Link>
                 </li>
                 <li>
-                  <Link to='/service/webnovel'>비지니스 아이디어</Link>
+                  <Link to='/webnovelDetail'>비지니스 아이디어</Link>
                 </li>
                 <li>
-                  <Link to='/service/webnovel'>연애편지 쓰기</Link>
+                  <Link to='/webnovelDetail'>연애편지 쓰기</Link>
                 </li>
                 <li>
-                  <Link to='/service/webnovel'>첫문장 자판기</Link>
+                  <Link to='/webnovelDetail'>첫문장 자판기</Link>
                 </li>
               </ul>
               </span>
@@ -244,28 +244,28 @@ const Header = () => {
                 {MobileSubMenu && (
                 <ul className='MobileDropDown'>
                 <li>
-                  <Link to='/service/webnovel'>웹소설 창작</Link>
+                  <Link to='/webnovelDetail'>웹소설 창작</Link>
                 </li>
                 <li>
-                  <Link to='/service/webnovel'>블로그 동화쓰기</Link>
+                  <Link to='/webnovelDetail'>블로그 동화쓰기</Link>
                 </li>
                 <li>
-                  <Link to='/service/webnovel'>동화 창작</Link>
+                  <Link to='/webnovelDetail'>동화 창작</Link>
                 </li>
                 <li>
-                  <Link to='/service/webnovel'>뉴스레터 콘텐츠 기획</Link>
+                  <Link to='/webnovelDetail'>뉴스레터 콘텐츠 기획</Link>
                 </li>
                 <li>
-                  <Link to='/service/webnovel'>영어 시 쓰기</Link>
+                  <Link to='/webnovelDetail'>영어 시 쓰기</Link>
                 </li>
                 <li>
-                  <Link to='/service/webnovel'>비지니스 아이디어</Link>
+                  <Link to='/webnovelDetail'>비지니스 아이디어</Link>
                 </li>
                 <li>
-                  <Link to='/service/webnovel'>연애편지 쓰기</Link>
+                  <Link to='/webnovelDetail'>연애편지 쓰기</Link>
                 </li>
                 <li>
-                  <Link to='/service/webnovel'>첫문장 자판기</Link>
+                  <Link to='/webnovelDetail'>첫문장 자판기</Link>
                 </li>
               </ul>
                 )}
