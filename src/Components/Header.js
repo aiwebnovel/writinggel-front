@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect, useCallback } from "react";
 import { Link} from "react-router-dom";
 import axios from "axios";
 import { Header as HeaderLayout, Nav, Avatar, Anchor } from "grommet";
-import { User, Menu, Google, FacebookOption, Down, CreditCard } from "grommet-icons";
+import { User, Menu, Google, FacebookOption, Down } from "grommet-icons";
 import { ResponsiveContext } from "grommet";
 
 import { authService, firebaseInstance } from "../firebaseConfig";
@@ -30,6 +30,115 @@ const Header = () => {
 
   const { userName, userImage } = profile;
 
+  const signIn = async (event) => {
+    if (isChecked === true) {
+      // console.log('mount3')
+      const {
+        target: { name },
+      } = event;
+      let provider = new firebaseInstance.auth.GoogleAuthProvider();
+      if (name === "Facebook") {
+        provider = new firebaseInstance.auth.FacebookAuthProvider();
+      } else if (name === "Google") {
+        provider = new firebaseInstance.auth.GoogleAuthProvider();
+      }
+      // console.log('mount12')
+      // refreshProfile()
+      await authService
+        .signInWithPopup(provider)
+        .then(async (result) => {
+          // console.log('mount13')
+          console.log(result);
+          /** @type {firebase.auth.OAuthCredential} */
+          let credential = result.credential;
+          let email = result.user.email;
+          let create = result.user.metadata.creationTime;
+          let token = credential.idToken;
+        
+          // console.log('mount4',credential)
+          await localStorage.setItem("token", token);
+          await localStorage.setItem("email", email);
+          await localStorage.setItem("create", create);
+          // await localStorage.getItem("token");
+          // console.log('mount5')
+          await requestProfile();
+          await SetUser(true);
+          await SetOpen(false);
+          // console.log('mount6')
+          refreshProfile();
+          window.location.reload();
+        })
+        .catch((error) => {
+          console.log(error)
+        });
+    } else {
+      toast.error("이용약관 및 개인정보처리방침에 동의해주세요!");
+    }
+  };
+
+
+  const requestProfile =  useCallback(async () => {
+    // console.log('mount')
+    // let user = await localStorage.getItem("token");
+    // console.log('mount11')
+    if (localStorage.getItem("token") !== null) {
+    
+      await axios
+        .get(`${config.SERVER_URL}/profile`, {
+          headers: { authentication: localStorage.getItem("token") },
+        })
+        .then((response) => {
+          // console.log('previus', profile);
+          SetProfile({
+            ...profile,
+            userName: response.data.name,
+            userImage: response.data.photoURL,
+          });
+          // console.log('profile', profile);
+          // console.log('mount7')
+          localStorage.setItem("userUid", response.data.uid);
+          localStorage.setItem("plan", response.data.plan);
+          localStorage.setItem("isBill", response.data.isBill);
+          // console.log('mount8')
+         
+        })
+        .catch((error) => 
+        {console.log(error)});
+    }
+  },[profile]);
+
+  const refreshProfile = useCallback(async () => {
+    // console.log('mount2')
+    authService.onAuthStateChanged(async (user) => {
+      if (authService.currentUser) {
+        authService.currentUser
+          .getIdToken()
+          .then(async (data) => {
+            await localStorage.setItem("token", data); 
+            // console.log('mount9')
+          })
+          .catch(async (error) => {
+            console.log(error);
+          });
+      }
+    });
+  },[]);
+
+  const signOut = async() => {
+    await localStorage.removeItem("token");
+    await localStorage.removeItem("email");
+    await localStorage.removeItem("userUid");
+    await localStorage.removeItem("plan");
+    await localStorage.removeItem("isBill");
+    await localStorage.removeItem("create");
+    
+    SetUser(false);
+    SetShowMenu(false);
+  
+    await authService.signOut();
+    window.location.reload();
+  };
+
   const HandleMobile = () => {
     SetMobileSubMenu(!MobileSubMenu);
   }
@@ -47,116 +156,15 @@ const Header = () => {
     SetShow(!isShow)
   };
 
-
-  const signIn = async (event) => {
-    if (isChecked === true) {
-      console.log('mount3')
-      const {
-        target: { name },
-      } = event;
-      let provider = new firebaseInstance.auth.GoogleAuthProvider();
-      if (name === "Facebook") {
-        provider = new firebaseInstance.auth.FacebookAuthProvider();
-      } else if (name === "Google") {
-        provider = new firebaseInstance.auth.GoogleAuthProvider();
-      }
-      console.log('mount12')
-      // refreshProfile()
-      await authService
-        .signInWithPopup(provider)
-        .then(async (result) => {
-          console.log('mount13')
-          console.log(result);
-          /** @type {firebase.auth.OAuthCredential} */
-          let credential = result.credential;
-          let token = credential.idToken;
-          console.log('mount4',credential)
-          await localStorage.setItem("token", token);
-          // await localStorage.getItem("token");
-          console.log('mount5')
-          await requestProfile();
-          await SetUser(true);
-          await SetOpen(false);
-          console.log('mount6')
-          window.location.reload();
-        })
-        .catch((error) => {
-          console.log(error)
-        });
-    } else {
-      toast.error("이용약관 및 개인정보처리방침에 동의해주세요!");
-    }
-    toast.success(`로그인 되었습니다!`);
-  };
-
-
-  const requestProfile =  useCallback(async () => {
-    console.log('mount')
-    // let user = await localStorage.getItem("token");
-    console.log('mount11')
-    if (localStorage.getItem("token") !== null) {
-      console.log('user', localStorage.getItem("token"))
-      await axios
-        .get(`${config.SERVER_URL}/profile`, {
-          headers: { authentication: localStorage.getItem("token") },
-        })
-        .then((response) => {
-          console.log('previus', profile);
-          SetProfile({
-            ...profile,
-            userName: response.data.name,
-            userImage: response.data.photoURL,
-          });
-          console.log('profile', profile);
-          console.log('mount7')
-          // localStorage.setItem('userName', profile.userName);
-          // localStorage.setItem('userImage',profile.userImage)
-          localStorage.setItem("userUid", response.data.uid);
-          localStorage.setItem("plan", response.data.plan);
-          localStorage.setItem("isBill", response.data.isBill);
-          console.log('mount8')
-         
-        })
-        .catch((error) => 
-        {console.log(error)});
-    }
-  },[profile]);
-
-  const refreshProfile = useCallback(async () => {
-    console.log('mount2')
-    authService.onAuthStateChanged(async (user) => {
-      if (authService.currentUser) {
-        authService.currentUser
-          .getIdToken()
-          .then(async (data) => {
-            await localStorage.setItem("token", data); 
-            console.log('mount9')
-          })
-          .catch(async (error) => {
-            console.log(error);
-          });
-      }
-    });
-  },[]);
-
   const showMenu = () => {
     SetShowMenu(!isShowMenu);
 
   };
 
-  const signOut = async() => {
-    await localStorage.removeItem("token");
-    
-    SetUser(false);
-    SetShowMenu(false);
-  
-    await authService.signOut();
-    window.location.reload();
-  };
 
   useEffect(() => {  
     refreshProfile();
-  });
+  },[]);
 
   useEffect(()=>{
     requestProfile(); 
@@ -183,7 +191,7 @@ const Header = () => {
                   <Link to='/webnovelDetail'>웹소설 창작</Link>
                 </li>
                 <li>
-                  <Link to='/webnovelDetail'>블로그 동화쓰기</Link>
+                  <Link to='/webnovelDetail'>블로그</Link>
                 </li>
                 <li>
                   <Link to='/webnovelDetail'>동화 창작</Link>

@@ -461,3 +461,47 @@ hr {
 
 
 //MyPage
+
+.MypageHeader {
+    font-weight: 900;
+}
+
+.modifyBtn {
+    background-color: $mainColor;
+    border: 1px solid $mainColor;
+    outline: 0;
+    color: #fff;
+    padding: 12px 45px;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.MypageLogout {
+    background-color: #fff;
+    border: 1px solid $mainColor;
+    outline: 0;
+    color: $mainColor;
+    padding: 12px 45px;
+    font-size: 1rem;
+    margin-top : 5px;
+}
+
+.UserContent, .BtnContent {
+    padding: 0 48px;
+}
+
+.UserContent {
+    width: 50%;
+    max-width: 800px;
+}
+
+.dataBox {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+
+    > p:first-child {
+        font-weight: 600;
+    }
+}
