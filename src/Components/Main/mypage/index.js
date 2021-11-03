@@ -71,18 +71,19 @@ const Mypage = () => {
           fill
           background='#3b2477'
           color='#fff'
-          pad='large'
           className='MypageHeader'
         >
           <h2>마이 페이지</h2>
         </Box>
         <Box
-          fill
+          width='100%'
+          height={size !=='small' ? '80vh' : '100%'}
           pad='large'
-          direction='row'
-          // justify='center'
+          direction={size !== 'small' ? 'row': 'column'}
+          align='center'
           justify='between'
           className='MypageContent'
+         
         >
           <Box 
           className="UserContent"

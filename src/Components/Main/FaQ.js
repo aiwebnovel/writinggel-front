@@ -23,7 +23,7 @@ const FaQ = () => {
         
         <Box
         width='100%'
-        height={size !=='small' ? '100%' : '80vh'}
+        height={size !=='small' ?  '100%' : '80vh'}
         justify='center'
         align='center'
         style={{padding: '48px'}}
