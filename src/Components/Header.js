@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect, useCallback } from "react";
 import { Link} from "react-router-dom";
 import axios from "axios";
 import { Header as HeaderLayout, Nav, Avatar, Anchor } from "grommet";
-import { User, Menu, Google, FacebookOption, Down } from "grommet-icons";
+import { User, Menu, Google, FacebookOption, Down, CreditCard } from "grommet-icons";
 import { ResponsiveContext } from "grommet";
 
 import { authService, firebaseInstance } from "../firebaseConfig";
@@ -20,11 +20,11 @@ const Header = () => {
   const [isOpen, SetOpen] = useState(false);
   const [isShow, SetShow] = useState(false);
   const [isChecked, SetChecked] = useState(false);
-  const [isuser, SetUser] = useState(false);
+  const [isUser, SetUser] = useState(false);
   const [isShowMenu, SetShowMenu] = useState(false);
   const [profile, SetProfile] = useState({
     userName: "Guest",
-    userImage: `유저`,
+    userImage: `User`,
   });
   const [MobileSubMenu, SetMobileSubMenu] = useState(false)
 
@@ -50,6 +50,7 @@ const Header = () => {
 
   const signIn = async (event) => {
     if (isChecked === true) {
+      console.log('mount3')
       const {
         target: { name },
       } = event;
@@ -59,75 +60,84 @@ const Header = () => {
       } else if (name === "Google") {
         provider = new firebaseInstance.auth.GoogleAuthProvider();
       }
+      console.log('mount12')
+      // refreshProfile()
       await authService
         .signInWithPopup(provider)
         .then(async (result) => {
+          console.log('mount13')
           console.log(result);
           /** @type {firebase.auth.OAuthCredential} */
           let credential = result.credential;
           let token = credential.idToken;
-
+          console.log('mount4',credential)
           await localStorage.setItem("token", token);
-          SetUser(true);
-          SetOpen(false);
-          toast.success(`로그인 되었습니다!`);
-          requestProfile();
+          // await localStorage.getItem("token");
+          console.log('mount5')
+          await requestProfile();
+          await SetUser(true);
+          await SetOpen(false);
+          console.log('mount6')
+          window.location.reload();
         })
         .catch((error) => {
           console.log(error)
-          // let errorCode = error.code;
-          // let errorMessage = error.message;
-          // let email = error.email;
-          // let credential = error.credential;
         });
     } else {
       toast.error("이용약관 및 개인정보처리방침에 동의해주세요!");
     }
+    toast.success(`로그인 되었습니다!`);
   };
 
+
+  const requestProfile =  useCallback(async () => {
+    console.log('mount')
+    // let user = await localStorage.getItem("token");
+    console.log('mount11')
+    if (localStorage.getItem("token") !== null) {
+      console.log('user', localStorage.getItem("token"))
+      await axios
+        .get(`${config.SERVER_URL}/profile`, {
+          headers: { authentication: localStorage.getItem("token") },
+        })
+        .then((response) => {
+          console.log('previus', profile);
+          SetProfile({
+            ...profile,
+            userName: response.data.name,
+            userImage: response.data.photoURL,
+          });
+          console.log('profile', profile);
+          console.log('mount7')
+          // localStorage.setItem('userName', profile.userName);
+          // localStorage.setItem('userImage',profile.userImage)
+          localStorage.setItem("userUid", response.data.uid);
+          localStorage.setItem("plan", response.data.plan);
+          localStorage.setItem("isBill", response.data.isBill);
+          console.log('mount8')
+         
+        })
+        .catch((error) => 
+        {console.log(error)});
+    }
+  },[profile]);
+
   const refreshProfile = useCallback(async () => {
+    console.log('mount2')
     authService.onAuthStateChanged(async (user) => {
       if (authService.currentUser) {
         authService.currentUser
           .getIdToken()
           .then(async (data) => {
-            await localStorage.setItem("token", data);
+            await localStorage.setItem("token", data); 
+            console.log('mount9')
           })
           .catch(async (error) => {
             console.log(error);
           });
       }
     });
-  });
-
-  const requestProfile =  useCallback(async () => {
-    let user = await localStorage.getItem("token");
-    if (user !== null) {
-      axios
-        .get(`${config.SERVER_URL}/profile`, {
-          headers: { authentication: user },
-        })
-        .then((response) => {
-        
-          SetUser({isuser: true});
-          console.log('user',isuser);
-          SetProfile({
-            ...profile,
-            userName: response.data.name,
-            userImage: response.data.photoURL,
-          });
-          // setState({ userToken: response.data.token });
-          // setState({ userTokenP: response.data.tokenP });
-          // setState({ userImage: response.data.photoURL });
-          localStorage.setItem("userUid", response.data.uid);
-          localStorage.setItem("plan", response.data.plan);
-          localStorage.setItem("isBill", response.data.isBill);
-
-          SetOpen(false);
-        })
-        .catch((error) => {});
-    }
-  });
+  },[]);
 
   const showMenu = () => {
     SetShowMenu(!isShowMenu);
@@ -136,6 +146,7 @@ const Header = () => {
 
   const signOut = async() => {
     await localStorage.removeItem("token");
+    
     SetUser(false);
     SetShowMenu(false);
   
@@ -143,10 +154,13 @@ const Header = () => {
     window.location.reload();
   };
 
-  useEffect(() => {
+  useEffect(() => {  
     refreshProfile();
-    requestProfile();
-  },);
+  });
+
+  useEffect(()=>{
+    requestProfile(); 
+  },[])
 
   return (
     <>
