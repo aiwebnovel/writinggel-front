@@ -23,7 +23,7 @@ const Webnovel = () => {
 
   return (
     <ServiceLayout>
-      <Box width='100%' height='100vh' justify='center' align='center'>
+      <Box justify='center' align='center' className="ServiceContainer">
         <Box>
           웹노블
         </Box> 

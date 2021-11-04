@@ -1,6 +1,15 @@
+$mainColor : #3b2477;
+$boxShadow : rgb(237 237 237) 2px 3px 8px;
+
+//서비스 공통
+
+.ServiceContainer {
+    width : 100%; 
+    height: 100vh;
+}
+
+
 //Header
-
-
 
 .ServiceHeader {
     padding: 15px 30px;
@@ -52,6 +61,12 @@
 
 }
 
+.ServiceDropMenu {
+
+    @media screen and (max-width: 768px) {
+        width:100%;
+    }
+}
 
 .ServiceDropDown {
     display: block;
@@ -141,4 +156,74 @@
     // @media screen and (max-width: 680px) {
     //    width:300px
     // }
+}
+
+
+//Lyrics
+
+.LyricInputBox{
+    width: 300px;
+
+   > button {
+    background-color: #3b2477;
+    border: 1px solid #3b2477;
+    outline: 0;
+    font-size: 1.05rem;
+    color: #fff;
+    padding: 14px 0;
+   }
+}
+
+.subjectTitle, .subjects {
+    margin-bottom: 15px;
+
+    > p {
+        font-weight: 600;
+        font-size: 1.05rem;
+        margin-bottom : 8px;
+    }
+
+    > input {
+        padding: 8px 10px;
+        width: 100%;
+        margin-bottom : 5px;
+        border: 1px solid #444;
+        font-size: 1rem;
+    }
+}
+
+.subjects {
+    display: flex;
+    flex-direction: column;
+}
+
+.LyricOutputBox {
+   width: 50%;
+
+    > textarea {
+        resize: none;
+        border-bottom : 0;
+        padding: 10px;
+        font-size: 1rem;
+        height: 500px;
+
+        &:focus {
+            outline: none;
+        }
+    }
+        
+}
+
+.icons {
+    border: 1px solid #444;
+    border-top : 0;
+    background-color : #f9f9f9;
+    padding: 10px 0;
+
+    > div {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 20px;
+    }
 }

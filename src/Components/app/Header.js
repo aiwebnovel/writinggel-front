@@ -126,7 +126,7 @@ const Header = () => {
             <Menu color='brand' size='medium' onClick={HandleShow} />
           </Nav>
         ) : (
-          <Nav >
+          <Nav>
             <Menu color='brand' size='medium' onClick={HandleShow} />
           </Nav>
         )}
@@ -148,6 +148,18 @@ const Header = () => {
           pad='large'
         >
           <Nav direction='column' gap='large' className='ServiceDropMenu'>
+            {size === 'small' &&
+              <Nav direction='row' gap='medium' align='center' justify={size ==='small' && 'between'}>
+              <Link to='/explain'>
+                <LinkBtn>멤버쉽 가입/변경</LinkBtn>
+              </Link>
+              <Avatar
+                src={userImage}
+                style={{ width: "40px", height: "40px" }}
+                onClick={showMenu}
+              />
+            </Nav>
+              }
             <ul className='ServiceDropDown'>
               <li>
                 <Link to='/app/webnovel'>릴레이 웹소설 쓰기</Link>

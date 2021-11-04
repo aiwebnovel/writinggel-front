@@ -23,7 +23,7 @@ const Businessitem = () => {
 
   return (
     <ServiceLayout>
-      <Box width='100%' height='100vh' justify='center' align='center' background="#f9f9f9">
+      <Box className="ServiceContainer" justify='center' align='center' background="#f9f9f9">
         <Box>
           비지니스 아이디어
         </Box> 

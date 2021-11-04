@@ -27,7 +27,7 @@ const Firstsentence = () => {
 
   return (
     <ServiceLayout>
-      <Box width='100%' height='100vh' justify='center' align='center' pad="large" background="#f9f9f9">
+      <Box className="ServiceContainer" justify='center' align='center' pad="large" background="#f9f9f9">
         <Box fill align='center' justify='start'>
           <RandomBtn onClick={()=>{SetOutput(!isOutput)}} style={{cursor:'pointer'}}> 랜덤 첫 문장 뽑기 💬 </RandomBtn>
           <Box className="printBox">

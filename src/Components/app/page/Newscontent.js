@@ -23,9 +23,9 @@ const Newscontent = () => {
 
   return (
     <ServiceLayout>
-      <Box width='100%' height='100vh' justify='center' align='center' background="#f9f9f9">
+      <Box className="ServiceContainer" justify='center' align='center' background="#f9f9f9">
         <Box>
-          뉴스레터 콘텐츠 기획
+          Comming Soon!
         </Box> 
       </Box>
     </ServiceLayout>

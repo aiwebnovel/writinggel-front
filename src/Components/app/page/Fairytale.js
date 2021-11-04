@@ -23,7 +23,7 @@ const Fairytale = () => {
 
   return (
     <ServiceLayout>
-      <Box width='100%' height='100vh' justify='center' align='center' background="#f9f9f9">
+      <Box className="ServiceContainer" justify='center' align='center' background="#f9f9f9">
         <Box>
           동화쓰기
         </Box> 
