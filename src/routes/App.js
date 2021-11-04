@@ -14,7 +14,7 @@ import Mypage from '../Components/Main/mypage';
 import Modify from '../Components/Main/mypage/Modify';
 import PayResult from '../Components/Membership/PayResult';
 
-import ServiceHome from '../Components/app/Home';
+import Webnovel from '../Components/app/Webnovel';
 
 
 function App() {
@@ -34,7 +34,15 @@ function App() {
         <Route exact path="/mypage/modify" component={Modify}></Route>
 
       {/* service */}
-        <Route exact path="/app" component={ServiceHome}></Route>
+        <Route exact path="/app/webnovel" component={Webnovel}></Route>
+
+        {/* <Route exact path="/app/bloger" component={Webnovel}></Route>
+        <Route exact path="/app/fairytale" component={Webnovel}></Route>
+        <Route exact path="/app/firstsentence" component={Webnovel}></Route>
+        <Route exact path="/app/lyrics" component={Webnovel}></Route>
+        <Route exact path="/app/discussion" component={Webnovel}></Route>
+        <Route exact path="/app/newscontent" component={Webnovel}></Route> */}
+
       </Switch>
     </BrowserRouter>
   );

@@ -1,17 +1,16 @@
 import React, { useContext, useState, useEffect, useCallback } from "react";
-import { Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import axios from "axios";
-import { Header as HeaderLayout, Nav, Avatar, Anchor } from "grommet";
-import { User, Menu, Google, FacebookOption, Down } from "grommet-icons";
+import { Box, Header as HeaderLayout, Nav, Avatar } from "grommet";
+import { Menu } from "grommet-icons";
 import { ResponsiveContext } from "grommet";
 
 import { authService, firebaseInstance } from "../../firebaseConfig";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-import Modal from "../Modal";
 import * as config from "../../config";
-import "../../styles/header.scss";
+import "../../styles/Service.scss";
 import styled from "styled-components";
 
 const Header = () => {
@@ -26,7 +25,7 @@ const Header = () => {
     userName: "Guest",
     userImage: `User`,
   });
-  const [MobileSubMenu, SetMobileSubMenu] = useState(false)
+  const [MobileSubMenu, SetMobileSubMenu] = useState(false);
 
   const { userName, userImage } = profile;
 
@@ -54,7 +53,7 @@ const Header = () => {
           let email = result.user.email;
           let create = result.user.metadata.creationTime;
           let token = credential.idToken;
-        
+
           // console.log('mount4',credential)
           await localStorage.setItem("token", token);
           await localStorage.setItem("email", email);
@@ -69,20 +68,18 @@ const Header = () => {
           window.location.reload();
         })
         .catch((error) => {
-          console.log(error)
+          console.log(error);
         });
     } else {
       toast.error("이용약관 및 개인정보처리방침에 동의해주세요!");
     }
   };
 
-
-  const requestProfile =  useCallback(async () => {
+  const requestProfile = useCallback(async () => {
     // console.log('mount')
     // let user = await localStorage.getItem("token");
     // console.log('mount11')
     if (localStorage.getItem("token") !== null) {
-    
       await axios
         .get(`${config.SERVER_URL}/profile`, {
           headers: { authentication: localStorage.getItem("token") },
@@ -100,12 +97,12 @@ const Header = () => {
           localStorage.setItem("plan", response.data.plan);
           localStorage.setItem("isBill", response.data.isBill);
           // console.log('mount8')
-         
         })
-        .catch((error) => 
-        {console.log(error)});
+        .catch((error) => {
+          console.log(error);
+        });
     }
-  },[profile]);
+  }, [profile]);
 
   const refreshProfile = useCallback(async () => {
     // console.log('mount2')
@@ -114,7 +111,7 @@ const Header = () => {
         authService.currentUser
           .getIdToken()
           .then(async (data) => {
-            await localStorage.setItem("token", data); 
+            await localStorage.setItem("token", data);
             // console.log('mount9')
           })
           .catch(async (error) => {
@@ -122,26 +119,26 @@ const Header = () => {
           });
       }
     });
-  },[]);
+  }, []);
 
-  const signOut = async() => {
+  const signOut = async () => {
     await localStorage.removeItem("token");
     await localStorage.removeItem("email");
     await localStorage.removeItem("userUid");
     await localStorage.removeItem("plan");
     await localStorage.removeItem("isBill");
     await localStorage.removeItem("create");
-    
+
     SetUser(false);
     SetShowMenu(false);
-  
+
     await authService.signOut();
     window.location.reload();
   };
 
   const HandleMobile = () => {
     SetMobileSubMenu(!MobileSubMenu);
-  }
+  };
 
   const HandleModals = () => {
     SetOpen(!isOpen);
@@ -153,199 +150,107 @@ const Header = () => {
   };
 
   const HandleShow = () => {
-    SetShow(!isShow)
+    SetShow(!isShow);
   };
 
   const showMenu = () => {
     SetShowMenu(!isShowMenu);
-
   };
 
-
-  useEffect(() => {  
+  useEffect(() => {
     refreshProfile();
-  },[]);
+  }, []);
 
-  useEffect(()=>{
-    requestProfile(); 
-  },[])
+  useEffect(() => {
+    requestProfile();
+  }, []);
 
   return (
     <>
-      <HeaderLayout className='headerStyle'>
-        <Nav>
+      <HeaderLayout className='ServiceHeader' align='center'>
+        <Nav className='MainLogo2'>
           <Link to='/'>
-            <img className='MainLogo' src='/logo.png' alt='logo' />
+            <img src='/logo2.png' alt='logo' />
           </Link>
         </Nav>
-        {size !== "small" ? (
-          <Nav direction='row' className='Menus' gap='large' align='center'>
-            <Link to='/explain'>
-              <MemButton>멤버쉽 가입</MemButton>
-            </Link>
-            <Link to='/brand'>브랜드 소개</Link>
-            <span className='DropMenu'>
-              인공지능 글쓰기 서비스 <Down size='small' />
-              <ul className='DropDown'>
-                <li>
-                  <Link to='/webnovelDetail'>웹소설 창작</Link>
-                </li>
-                <li>
-                  <Link to='/webnovelDetail'>블로그</Link>
-                </li>
-                <li>
-                  <Link to='/webnovelDetail'>동화 창작</Link>
-                </li>
-                <li>
-                  <Link to='/webnovelDetail'>뉴스레터 콘텐츠 기획</Link>
-                </li>
-                <li>
-                  <Link to='/webnovelDetail'>영어 시 쓰기</Link>
-                </li>
-                <li>
-                  <Link to='/webnovelDetail'>비지니스 아이디어</Link>
-                </li>
-                <li>
-                  <Link to='/webnovelDetail'>연애편지 쓰기</Link>
-                </li>
-                <li>
-                  <Link to='/webnovelDetail'>첫문장 자판기</Link>
-                </li>
-              </ul>
-              </span>
-            <Link to='/newsletter'>뉴스레터</Link>
-            <Link to='/ask'>문의</Link>
-            {localStorage.getItem("token") ? (
-              <Anchor>
-                <Avatar
-                  src={userImage}
-                  className='profileicon'
-                  style={{ width: "40px", height: "40px" }}
-                  onClick={showMenu}
-                />
-              </Anchor>
-            ) : (
-              <User color='brand' onClick={HandleModals} />
-            )}
-          </Nav>
-        ) : (
-          <Nav>
-            <Menu color='brand' size='medium' onClick={HandleShow} />
-          </Nav>
-        )}
+        <Nav direction='row' gap='large' align='center'>
+          <Link to='/explain'>
+            <LinkBtn>멤버쉽 가입/변경</LinkBtn>
+          </Link>
+          <Avatar
+            src={userImage}
+            style={{ width: "40px", height: "40px" }}
+            onClick={showMenu}
+          />
+          <Menu color='brand' size='medium' onClick={HandleShow} />
+        </Nav>
       </HeaderLayout>
-      {size === 'small' && isShow && (
-        <>
-          <Nav direction='column' className='MobileMenus' gap='large'>
-            <Link to='/explain'>멤버쉽 가입</Link>
-            <Link to='/brand'>브랜드 소개</Link>
-            <span className='DropMenu' onClick={HandleMobile}>
-              인공지능 글쓰기 서비스 <Down size='small' /></span>
-                {MobileSubMenu && (
-                <ul className='MobileDropDown'>
-                <li>
-                  <Link to='/webnovelDetail'>웹소설 창작</Link>
-                </li>
-                <li>
-                  <Link to='/webnovelDetail'>블로그 동화쓰기</Link>
-                </li>
-                <li>
-                  <Link to='/webnovelDetail'>동화 창작</Link>
-                </li>
-                <li>
-                  <Link to='/webnovelDetail'>뉴스레터 콘텐츠 기획</Link>
-                </li>
-                <li>
-                  <Link to='/webnovelDetail'>영어 시 쓰기</Link>
-                </li>
-                <li>
-                  <Link to='/webnovelDetail'>비지니스 아이디어</Link>
-                </li>
-                <li>
-                  <Link to='/webnovelDetail'>연애편지 쓰기</Link>
-                </li>
-                <li>
-                  <Link to='/webnovelDetail'>첫문장 자판기</Link>
-                </li>
-              </ul>
-                )}
-            <Link to='/newsletter'>뉴스레터</Link>
-            <Link to='/ask'>문의</Link>
-            {localStorage.getItem("token") ? (
-              <Link to='/mypage'>My page</Link>
-            ) : (
-              <span onClick={HandleModals}>Login</span>
-            )}
-          </Nav>
-        </>
-      )}
-      <Modal onClick={HandleModals} open={isOpen} close={HandleModals} title='Login'>
-        <div className='AvatarBox'>
-          <img src='/user.png' alt='singinUser' className='loginAvatar' />
-        </div>
+      {isShow && (
+        <Box
+        //768px 사이즈일 때 width 100%
+          width={size === 'small' && '100%' } 
+        //768px 사이즈가 아닐 때(pc버전만 height 100%)
+          height={size !== 'small' && '100%'}
+        //768px 이상 이면 왼쪽에서 오른쪽으로, 이하면 위에서 아래로
+          animation={size !== 'small' ? { type: "slideLeft", duration: 300 } : {type: "slideDown", duration: 300}}
 
-        <div className='signBox'>
-          <button onClick={signIn} className='googleButton'>
-            <Google color='plain' size='medium' /> Sign in with Google
-          </button>
-
-          <div className='signBox'>
-            <button className='facebookButton'>
-              <FacebookOption color='plain' size='medium' /> Sign in with
-              Facebook
-            </button>
-          </div>
-          <div className='isChecked'>
-            <input
-              type='checkbox'
-              name='agree'
-              value={isChecked}
-              onClick={HandleChecked}
-              style={{ width: "18px", height: "18px", marginRight: "5px" }}
-            />
-            <a
-              href='https://appplatform.notion.site/8be8232fff0341799cf8c13728610b6b'
-              target='_blank'
-              rel='noreferrer'
-            >
-              이용약관
-            </a>
-            과 &nbsp;
-            <a
-              href='https://www.notion.so/appplatform/d99f247a66d141bbbdf227739861a0a2'
-              target='_blank'
-              rel='noreferrer'
-            >
-              개인정보처리방침
-            </a>
-            에&nbsp;동의합니다.
-          </div>
-        </div>
-      </Modal>
-
-      {isShowMenu && (
-        <div
-
+          className='ServiceMenus'
+          align='center'
+          pad='large'
         >
-          <div className='afterLogin'>
+          <Nav direction='column' gap='large' className='ServiceDropMenu'>
+            <ul className='ServiceDropDown'>
+              <li>
+                <Link to='/app/webnovel'>릴레이 웹소설 쓰기</Link>
+              </li>
+              <li>
+                <Link to='/app/bloger'>블로그 글쓰기</Link>
+              </li>
+              <li>
+                <Link to='/app/fairytale'>동화 쓰기</Link>
+              </li>
+              <li>
+                <Link to='/app/firstsentence'>첫문장 자판기</Link>
+              </li>
+              <li>
+                <Link to='/app/lyrics'>영어 가사 쓰기</Link>
+              </li>
+              <li>
+                <Link to='/app/businessitem'>비지니스 아이디어</Link>
+              </li>
+              <li>
+                <Link to='/app/discussion'>찬반 논거</Link>
+              </li>
+              <li>
+                <Link to='/app/newscontent'>뉴스레터 콘텐츠 기획</Link>
+              </li>
+            </ul>
+          </Nav>
+        </Box>
+      )}
+      {isShowMenu && (
+        <div>
+          <div className='ServiceAfterLogin'>
             <div className='Username'>
               <p>{userName} 님</p>
             </div>
-            <p className="plan">
-                {localStorage.getItem("plan") === "undefined"
-                  ? "Guest"
-                  : localStorage.getItem("plan")}
-              </p> 
-            <hr style={{width:'100%',color:'#3b2477'}}/>
-            <div className="afterLoginBottom">
-
-              <p><Link to='/'>팅젤 보관함</Link></p>
-                <p><Link to='/mypage'>마이 페이지</Link></p>
-                <button onClick={signOut}>로그아웃</button>
-              </div>
+            <p className='plan'>
+              {localStorage.getItem("plan") === "undefined"
+                ? "Guest"
+                : localStorage.getItem("plan")}
+            </p>
+            <hr style={{ width: "100%", color: "#3b2477" }} />
+            <div className='afterLoginBottom'>
+              <p>
+                <Link to='/'>팅젤 보관함</Link>
+              </p>
+              <p>
+                <Link to='/mypage'>마이 페이지</Link>
+              </p>
+              <button onClick={signOut}>로그아웃</button>
             </div>
           </div>
-      
+        </div>
       )}
     </>
   );
@@ -353,9 +258,12 @@ const Header = () => {
 
 export default Header;
 
-const MemButton = styled.button`
-  border: 1px solid #dedede;
+const LinkBtn = styled.button`
   background-color: #fff;
-  padding: 5px 20px;
-  cursor: pointer;
+  border: 2px solid #3b2477;
+  outline: 0;
+  color: #3b2477;
+  font-weight: 600;
+  padding: 5px 10px;
+  border-radius: 8px;
 `;

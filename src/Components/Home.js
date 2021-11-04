@@ -1,24 +1,16 @@
 import React, {useContext} from "react";
-import { useHistory } from 'react-router-dom'
+import { Link} from 'react-router-dom'
 import Layout from "./Layout";
 import { Box, Grid, Card, CardBody, CardHeader, ResponsiveContext } from "grommet";
 import { Magic} from "grommet-icons";
 import "../styles/Main.scss";
 import { toast } from "react-toastify";
 
+import LinkObject from "./app/LinkObject";
+
 const Home = () => {
     
     const size = useContext(ResponsiveContext)
-    let history = useHistory();
-
-    const StartService = () => {
-      let login = localStorage.getItem('token'); 
-      if(login !== null){
-        history.push(`/app`)
-      }else {
-        toast.info('로그인을 먼저 해주세요!');
-      }
-    }
 
   return (
     <Layout>
@@ -32,54 +24,21 @@ const Home = () => {
           gap='medium'
           fill={size !== 'small' ? false : true}
         >
-            <Card background='#f9f9f9' onClick={StartService} >
-              <CardHeader className='cardTop'>
-                <Magic color='#fff' />
-              </CardHeader>
-              <CardBody className='cardTitle'>웹소설 창작</CardBody>
-            </Card>
-          <Card background='#f9f9f9'>
-            <CardHeader className='cardTop'>
-              <Magic color='#fff' />
-            </CardHeader>
-            <CardBody className='cardTitle'>블로그 쓰기</CardBody>
-          </Card>
-          <Card background='#f9f9f9'>
-            <CardHeader className='cardTop'>
-              <Magic color='#fff' />
-            </CardHeader>
-            <CardBody className='cardTitle'>동화창작</CardBody>
-          </Card>
-          <Card background='#f9f9f9'>
-            <CardHeader className='cardTop'>
-              <Magic color='#fff' />
-            </CardHeader>
-            <CardBody className='cardTitle'>뉴스레터 콘텐츠 기획</CardBody>
-          </Card>
-          <Card background='#f9f9f9'>
-            <CardHeader className='cardTop'>
-              <Magic color='#fff' />
-            </CardHeader>
-            <CardBody className='cardTitle'>영어 시 쓰기</CardBody>
-          </Card>
-          <Card background='#f9f9f9'>
-            <CardHeader className='cardTop'>
-              <Magic color='#fff' />
-            </CardHeader>
-            <CardBody className='cardTitle'>비지니스 아이디어</CardBody>
-          </Card>
-          <Card background='#f9f9f9'>
-            <CardHeader className='cardTop'>
-              <Magic color='#fff' />
-            </CardHeader>
-            <CardBody className='cardTitle'>연애편지 쓰기</CardBody>
-          </Card>
-          <Card background='#f9f9f9'>
-            <CardHeader className='cardTop'>
-              <Magic color='#fff' />
-            </CardHeader>
-            <CardBody className='cardTitle'>첫문장 자판기</CardBody>
-          </Card>
+          {LinkObject.map((item)=>(
+             <Link to={{
+               pathname:item.link,
+               state: {
+                 title : item.title
+               }
+             }}>
+             <Card background='#f9f9f9' key={item.id}>
+               <CardHeader className='cardTop'>
+                 <Magic color='#fff' />
+               </CardHeader>
+               <CardBody className='cardTitle'>{item.title}</CardBody>
+             </Card>
+           </Link>
+          ))}
         </Grid>
       </Box>
     </Layout>

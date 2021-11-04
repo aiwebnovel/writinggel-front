@@ -219,7 +219,6 @@ const Header = () => {
               <Anchor>
                 <Avatar
                   src={userImage}
-                  className='profileicon'
                   style={{ width: "40px", height: "40px" }}
                   onClick={showMenu}
                 />
@@ -324,9 +323,7 @@ const Header = () => {
       </Modal>
 
       {isShowMenu && (
-        <div
-
-        >
+        <div>
           <div className='afterLogin'>
             <div className='Username'>
               <p>{userName} 님</p>
