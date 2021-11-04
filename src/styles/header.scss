@@ -50,10 +50,17 @@
   box-sizing: border-box;
   line-height: 45px;
 
-  @media screen and (max-width: 768px) {
-    width: 100%;
+  // @media screen and (max-width: 768px) {
+  //   display: none;
+  //   width: 100%;
+  // }
 }
-  
+
+.MobileDropDown {
+  display: block;
+  padding: 0 10px;
+  box-sizing: border-box;
+  line-height: 45px;
 }
 
 .AvatarBox {
@@ -137,6 +144,7 @@
     width:300px;
     background-color: #fff;
     z-index:5;
+    top: 120px;
     right: 10px;
   
     padding: 20px;
@@ -148,18 +156,30 @@
   .Username {
     font-weight: 600;
   }
-  
-  .token {
+
+  .plan {
+    font-weight: 900;
     text-align: right;
   }
   
-  .token > span {
-    font-weight: 600;
-  }
-  
-  .logout {
-    text-align: center;
-    margin-top: 10px;
+  .afterLoginBottom {
+    text-align: right;
+
+    > p {
+      padding: 3px 0;
+    }
+
+    > button {
+      width: 100%;
+      background-color: #5600e8;
+      border: 1px solid #5600e8;
+      color: #fff;
+      outline: 0;
+      padding: 5px 0;
+      margin-top: 10px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
   }
 
 

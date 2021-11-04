@@ -88,9 +88,9 @@ $boxShadow : rgb(237 237 237) 2px 3px 8px;
 
 //Detail 폴더
 
-.DetailBox {
-    height: 100vh;
-}
+// .DetailBox {
+
+// }
 
 .DetailHeader, .DetailBody {
     text-align: center;
@@ -203,7 +203,18 @@ $boxShadow : rgb(237 237 237) 2px 3px 8px;
     line-height: 45px;
 
     > h2, h3 {
-        margin:0;  
+        font-weight: 600;
+      
+    }
+
+    >h2 {
+        font-size: 1.6em;
+    }
+
+    > h3
+    {
+        font-size : 1.5em;
+        margin-bottom: 35px;
     }
 }
 
@@ -277,6 +288,13 @@ $boxShadow : rgb(237 237 237) 2px 3px 8px;
 
 
 //FAQ
+
+.FaQHeader {
+    > h2 {
+        font-size: 1.6em;
+        font-weight: 600;
+    }
+}
 
 .Questions {
     padding: 48px 0 20px 0;
@@ -461,3 +479,151 @@ hr {
 
 
 //MyPage
+
+.MypageHeader {
+    font-weight: 900;
+    font-size: 1.6rem;
+    padding: 60px 48px;
+}
+
+.modifyBtn {
+    background-color: $mainColor;
+    border: 1px solid $mainColor;
+    outline: 0;
+    color: #fff;
+    padding: 12px 35px;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.MypageLogout {
+    background-color: #fff;
+    border: 1px solid $mainColor;
+    outline: 0;
+    color: $mainColor;
+    padding: 12px 45px;
+    font-size: 1rem;
+    margin-top : 5px;
+}
+
+// .UserContent, .BtnContent {
+//     padding: 0 48px;
+// }
+
+.UserContent {
+    width: 70%;
+    max-width: 800px;
+
+    @media screen and (max-width: 768px) {
+        width: 100%;
+    }
+
+}
+
+.BtnContent {
+    @media screen and (max-width: 768px) {
+        width: 100%;
+        margin: 15px 0;
+    }
+}
+
+.dataBox {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+
+    > p:first-child {
+        font-weight: 600;
+    }
+
+    @media screen and (max-width: 768px) {
+        display:flex;
+        flex-direction: column;
+        align-items: baseline;
+        gap: 5px;
+        
+    }
+}
+
+//modify
+
+
+.UserFormInputs {
+
+    width: 400px;
+    text-align: center;
+
+    > input {
+
+        width: 100%;
+        padding: 10px 5px;
+        font-size: 1rem;
+        border: 1px solid #051619;
+        margin-bottom: 10px;
+
+
+        @media screen and (max-width:768px){
+            width: 50%;
+        }
+
+        @media screen and (max-width:680px){
+            width: 80%;
+        }
+    }
+
+    @media screen and (max-width: 768px) {
+        width: 100%;
+    }
+
+}
+
+.ModifyContent {
+    height: 100%;
+
+    @media screen and (max-width: 1024px) {
+        height: 80vh;
+    }
+}
+
+
+.ModifyUserBtns {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    padding: 20px;
+
+    .checkStyle {
+        cursor: pointer;
+        margin-right : 10px;
+        width: 14px;
+        height: 14px;
+    }
+ 
+}
+
+.MBtn {
+    background-color: #3B2477;
+    color: #fff;
+    border: 0;
+    outline: 0;
+    padding: 0;
+    padding: 8px 20px;
+    font-size: 16px;
+    border-radius: 5px;
+    margin-top : 12px;
+    
+    cursor: pointer;
+}
+
+.OutBtn {
+    text-decoration: underline;
+    background: transparent;
+    border:0;
+    outline:0;
+    margin-top : 25px;
+    cursor: pointer;
+    font-size: 1rem;
+}
+

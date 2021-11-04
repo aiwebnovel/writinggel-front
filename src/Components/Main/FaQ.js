@@ -1,13 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import Layout from "../Layout";
-import { Box } from "grommet";
+import { Box, ResponsiveContext } from "grommet";
 import  { Down, BlockQuote } from 'grommet-icons'
 
 import styled from 'styled-components'
 
 const FaQ = () => {
   const [isopen, setOpen] = useState(false);
-
+  const size = useContext(ResponsiveContext);
+  
   return (
     <Layout>
       <Box fill justify='center' align='center'>
@@ -21,7 +22,8 @@ const FaQ = () => {
         </Box>
         
         <Box
-        fill
+        width='100%'
+        height={size !=='small' ?  '100%' : '80vh'}
         justify='center'
         align='center'
         style={{padding: '48px'}}
