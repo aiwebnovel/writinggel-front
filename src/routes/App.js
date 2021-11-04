@@ -14,7 +14,15 @@ import Mypage from '../Components/Main/mypage';
 import Modify from '../Components/Main/mypage/Modify';
 import PayResult from '../Components/Membership/PayResult';
 
-import Webnovel from '../Components/app/Webnovel';
+import Webnovel from '../Components/app/page/Webnovel';
+
+import Bloger from '../Components/app/page/Bloger';
+import Businessitem from '../Components/app/page/Businessitem';
+import Discussion from '../Components/app/page/Discussion';
+import Fairytale from '../Components/app/page/Fairytale';
+import Firstsentence from '../Components/app/page/Firstsentence';
+import Lyrics from '../Components/app/page/Lyrics';
+import Newscontent from '../Components/app/page/Newscontent';
 
 
 function App() {
@@ -36,12 +44,13 @@ function App() {
       {/* service */}
         <Route exact path="/app/webnovel" component={Webnovel}></Route>
 
-        {/* <Route exact path="/app/bloger" component={Webnovel}></Route>
-        <Route exact path="/app/fairytale" component={Webnovel}></Route>
-        <Route exact path="/app/firstsentence" component={Webnovel}></Route>
-        <Route exact path="/app/lyrics" component={Webnovel}></Route>
-        <Route exact path="/app/discussion" component={Webnovel}></Route>
-        <Route exact path="/app/newscontent" component={Webnovel}></Route> */}
+        <Route exact path="/app/bloger" component={Bloger}></Route>
+        <Route exact path="/app/businessitem" component={Businessitem}></Route>
+        <Route exact path="/app/fairytale" component={Fairytale}></Route>
+        <Route exact path="/app/firstsentence" component={Firstsentence}></Route>
+        <Route exact path="/app/lyrics" component={Lyrics}></Route>
+        <Route exact path="/app/discussion" component={Discussion}></Route>
+        <Route exact path="/app/newscontent" component={Newscontent}></Route>
 
       </Switch>
     </BrowserRouter>

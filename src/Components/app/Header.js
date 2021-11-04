@@ -25,55 +25,8 @@ const Header = () => {
     userName: "Guest",
     userImage: `User`,
   });
-  const [MobileSubMenu, SetMobileSubMenu] = useState(false);
 
   const { userName, userImage } = profile;
-
-  const signIn = async (event) => {
-    if (isChecked === true) {
-      // console.log('mount3')
-      const {
-        target: { name },
-      } = event;
-      let provider = new firebaseInstance.auth.GoogleAuthProvider();
-      if (name === "Facebook") {
-        provider = new firebaseInstance.auth.FacebookAuthProvider();
-      } else if (name === "Google") {
-        provider = new firebaseInstance.auth.GoogleAuthProvider();
-      }
-      // console.log('mount12')
-      // refreshProfile()
-      await authService
-        .signInWithPopup(provider)
-        .then(async (result) => {
-          // console.log('mount13')
-          console.log(result);
-          /** @type {firebase.auth.OAuthCredential} */
-          let credential = result.credential;
-          let email = result.user.email;
-          let create = result.user.metadata.creationTime;
-          let token = credential.idToken;
-
-          // console.log('mount4',credential)
-          await localStorage.setItem("token", token);
-          await localStorage.setItem("email", email);
-          await localStorage.setItem("create", create);
-          // await localStorage.getItem("token");
-          // console.log('mount5')
-          await requestProfile();
-          await SetUser(true);
-          await SetOpen(false);
-          // console.log('mount6')
-          refreshProfile();
-          window.location.reload();
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    } else {
-      toast.error("이용약관 및 개인정보처리방침에 동의해주세요!");
-    }
-  };
 
   const requestProfile = useCallback(async () => {
     // console.log('mount')
@@ -136,19 +89,6 @@ const Header = () => {
     window.location.reload();
   };
 
-  const HandleMobile = () => {
-    SetMobileSubMenu(!MobileSubMenu);
-  };
-
-  const HandleModals = () => {
-    SetOpen(!isOpen);
-  };
-
-  const HandleChecked = () => {
-    SetChecked(!isChecked);
-    console.log(isChecked);
-  };
-
   const HandleShow = () => {
     SetShow(!isShow);
   };
@@ -173,27 +113,36 @@ const Header = () => {
             <img src='/logo2.png' alt='logo' />
           </Link>
         </Nav>
-        <Nav direction='row' gap='large' align='center'>
-          <Link to='/explain'>
-            <LinkBtn>멤버쉽 가입/변경</LinkBtn>
-          </Link>
-          <Avatar
-            src={userImage}
-            style={{ width: "40px", height: "40px" }}
-            onClick={showMenu}
-          />
-          <Menu color='brand' size='medium' onClick={HandleShow} />
-        </Nav>
+        {size !== "small" ? (
+          <Nav direction='row' gap='medium' align='center'>
+            <Link to='/explain'>
+              <LinkBtn>멤버쉽 가입/변경</LinkBtn>
+            </Link>
+            <Avatar
+              src={userImage}
+              style={{ width: "40px", height: "40px" }}
+              onClick={showMenu}
+            />
+            <Menu color='brand' size='medium' onClick={HandleShow} />
+          </Nav>
+        ) : (
+          <Nav >
+            <Menu color='brand' size='medium' onClick={HandleShow} />
+          </Nav>
+        )}
       </HeaderLayout>
       {isShow && (
         <Box
-        //768px 사이즈일 때 width 100%
-          width={size === 'small' && '100%' } 
-        //768px 사이즈가 아닐 때(pc버전만 height 100%)
-          height={size !== 'small' && '100%'}
-        //768px 이상 이면 왼쪽에서 오른쪽으로, 이하면 위에서 아래로
-          animation={size !== 'small' ? { type: "slideLeft", duration: 300 } : {type: "slideDown", duration: 300}}
-
+          //768px 사이즈일 때 width 100%
+          width={size === "small" && "100%"}
+          //768px 사이즈가 아닐 때(pc버전만 height 100%)
+          height={size !== "small" && "100%"}
+          //768px 이상 이면 왼쪽에서 오른쪽으로, 이하면 위에서 아래로
+          animation={
+            size !== "small"
+              ? { type: "slideLeft", duration: 300 }
+              : { type: "slideDown", duration: 300 }
+          }
           className='ServiceMenus'
           align='center'
           pad='large'
@@ -231,16 +180,16 @@ const Header = () => {
       {isShowMenu && (
         <div>
           <div className='ServiceAfterLogin'>
-            <div className='Username'>
+            <div className='ServiceUsername'>
               <p>{userName} 님</p>
             </div>
-            <p className='plan'>
+            <p className='ServicePlan'>
               {localStorage.getItem("plan") === "undefined"
                 ? "Guest"
                 : localStorage.getItem("plan")}
             </p>
             <hr style={{ width: "100%", color: "#3b2477" }} />
-            <div className='afterLoginBottom'>
+            <div className='ServiceAfterLoginBottom'>
               <p>
                 <Link to='/'>팅젤 보관함</Link>
               </p>

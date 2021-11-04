@@ -4,7 +4,6 @@ import Layout from "./Layout";
 import { Box, Grid, Card, CardBody, CardHeader, ResponsiveContext } from "grommet";
 import { Magic} from "grommet-icons";
 import "../styles/Main.scss";
-import { toast } from "react-toastify";
 
 import LinkObject from "./app/LinkObject";
 
@@ -25,13 +24,12 @@ const Home = () => {
           fill={size !== 'small' ? false : true}
         >
           {LinkObject.map((item)=>(
-             <Link to={{
-               pathname:item.link,
-               state: {
-                 title : item.title
-               }
-             }}>
-             <Card background='#f9f9f9' key={item.id}>
+            //  <Link to={{
+            //   pathname: item.link,
+            //   state: { location: item.link}
+            //  }}>
+            <Link to={item.link} key={item.id}>
+             <Card background='#f9f9f9' >
                <CardHeader className='cardTop'>
                  <Magic color='#fff' />
                </CardHeader>
