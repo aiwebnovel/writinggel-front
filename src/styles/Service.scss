@@ -6,6 +6,16 @@ $boxShadow : rgb(237 237 237) 2px 3px 8px;
 .ServiceContainer {
     width : 100%; 
     height: 100vh;
+
+    @media screen and (max-width: 768px) {
+        height: 100%;
+    }
+}
+
+//내용이 없어서 height 100%으로 하면 빈 화면이 나올 때
+.ServiceContainerVh {
+    width : 100%; 
+    height: 100vh;
 }
 
 
@@ -165,8 +175,8 @@ $boxShadow : rgb(237 237 237) 2px 3px 8px;
     width: 300px;
 
    > button {
-    background-color: #3b2477;
-    border: 1px solid #3b2477;
+    background-color: $mainColor;
+    border: 1px solid $mainColor;
     outline: 0;
     font-size: 1.05rem;
     color: #fff;
@@ -226,4 +236,59 @@ $boxShadow : rgb(237 237 237) 2px 3px 8px;
         align-items: center;
         gap: 20px;
     }
+}
+
+//Business
+
+.itemInputBox {
+
+    > button  {
+        background-color: $mainColor;
+        border: 1px solid $mainColor;
+        outline: 0;
+        font-size: 1rem;
+        color: #fff;
+        padding: 0px 40px;
+        height: 100%;
+        margin-left : 10px;
+    }
+}
+
+.busiItem {
+
+    width: 500px;
+
+    > p {
+        font-weight: 600;
+        font-size: 1.05rem;
+        margin-bottom : 8px;
+    }
+
+    > input {
+        padding: 8px 10px;
+        width: 100%;
+        border: 1px solid #444;
+        font-size: 1rem;
+        
+    }
+}
+
+.SerCardHead {
+    padding: 10px;
+    font-family: 'NeoDunggeunmo'; 
+    background-color: #555;
+    color: #fff;
+    
+}
+
+.SerCardBody {
+    text-align: center;
+    padding: 48px;
+}
+
+.SerCardFoot {
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
 }
