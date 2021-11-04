@@ -33,7 +33,8 @@ const Firstsentence = () => {
           <Box className="printBox">
           {isOutput &&
             <Box 
-            className="SentenceBox">
+            className="SentenceBox"
+            animation={{type:'fadeIn', duration:400, size:'large'}}>
               <p>결과에용</p>
               <hr/>
               <p>영어 결과에용</p>
