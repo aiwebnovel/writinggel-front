@@ -1,4 +1,6 @@
 $mainColor : #3b2477;
+$white-1 : #fff;
+$white-2 : #f9f9f9;
 $boxShadow : rgb(237 237 237) 2px 3px 8px;
 
 //서비스 공통
@@ -23,7 +25,7 @@ $boxShadow : rgb(237 237 237) 2px 3px 8px;
 
 .ServiceHeader {
     padding: 15px 30px;
-    background-color: #fff;
+    background-color: $white-1;
 }
 
 .MainLogo2 {
@@ -53,7 +55,7 @@ $boxShadow : rgb(237 237 237) 2px 3px 8px;
 
 .ServiceMenus {
     // background-color: #3b2477;
-    background-color: #fff;
+    background-color: $white-1;
     border: 1px solid #444;
     border-right: 0;
     text-align: center;
@@ -93,7 +95,7 @@ $boxShadow : rgb(237 237 237) 2px 3px 8px;
 .ServiceAfterLogin {
     position: absolute;
     width: 300px;
-    background-color: #fff;
+    background-color: $white-1;
     z-index: 5;
     top: 60px;
     right: 15px;
@@ -123,7 +125,7 @@ $boxShadow : rgb(237 237 237) 2px 3px 8px;
         width: 100%;
         background-color: #5600e8;
         border: 1px solid #5600e8;
-        color: #fff;
+        color: $white-1;
         outline: 0;
         padding: 5px 0;
         margin-top: 10px;
@@ -151,7 +153,7 @@ $boxShadow : rgb(237 237 237) 2px 3px 8px;
 }
 
 .SentenceBox {
-    background-color: #fff;
+    background-color: $white-1;
    
     border: 1px solid #444;
     z-index: 3;
@@ -179,7 +181,7 @@ $boxShadow : rgb(237 237 237) 2px 3px 8px;
     border: 1px solid $mainColor;
     outline: 0;
     font-size: 1.05rem;
-    color: #fff;
+    color: $white-1;
     padding: 14px 0;
    }
 }
@@ -247,7 +249,7 @@ $boxShadow : rgb(237 237 237) 2px 3px 8px;
         border: 1px solid $mainColor;
         outline: 0;
         font-size: 1rem;
-        color: #fff;
+        color: $white-1;
         padding: 0px 40px;
         height: 100%;
         margin-left : 10px;
@@ -277,7 +279,7 @@ $boxShadow : rgb(237 237 237) 2px 3px 8px;
     padding: 10px;
     font-family: 'NeoDunggeunmo'; 
     background-color: #555;
-    color: #fff;
+    color: $white-1;
     
 }
 
@@ -291,4 +293,60 @@ $boxShadow : rgb(237 237 237) 2px 3px 8px;
     display: flex;
     align-items: center;
     justify-content: flex-end;
+}
+
+//discuss
+
+.DiscussInputBox, .DiscussOutputBox { 
+   width: 100%;
+}
+
+.InputAlign {
+        
+    max-width: 600px;
+    width: 100%;
+    
+    > p {
+        font-weight: 600;
+        font-size: 1.05rem;
+        margin-bottom : 8px;
+    }
+
+    > input {
+        padding: 8px 10px;
+        width: 100%;
+        border: 1px solid #444;
+        font-size: 1rem;
+    }
+}
+
+.Agree, .Opposite {
+
+    > button {
+        background-color: $mainColor;
+        border: 1px solid $mainColor;
+        outline: 0;
+        font-size: 1rem;
+        color: $white-1;
+        padding: 15px 50px;
+        margin-bottom : 10px;
+    }
+}
+
+.outputArea {
+
+    border: 1px solid $mainColor;
+    background-color : $white-1;
+    padding : 10px;
+
+    > div:first-child {
+        height: 100px;
+        width: 350px;
+
+        @media screen and (max-width: 680px){
+            width: 100%;
+        }
+
+    }
+
 }
