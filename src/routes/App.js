@@ -5,7 +5,7 @@ import '../App.css';
 import Home from '../Components/Home';
 import Brand from '../Components/Main/Brand';
 import WebnovelDetail from '../Components/Main/Details/WebnovelDetail';
-import NewsLetter from '../Components/Main/Newsletter';
+import NewsLetter from '../Components/Main/NewsLetter';
 import FaQ from '../Components/Main/FaQ';
 import Ask from '../Components/Main/Ask';
 import ExplainMember from '../Components/Main/ExplainMember';
@@ -22,7 +22,11 @@ import Discussion from '../Components/app/page/Discussion';
 import Fairytale from '../Components/app/page/Fairytale';
 import Firstsentence from '../Components/app/page/Firstsentence';
 import Lyrics from '../Components/app/page/Lyrics';
-import Newscontent from '../Components/app/page/Newscontent';
+import LoveLetter from '../Components/app/page/LoveLetter';
+import Dailywrite from '../Components/app/page/DailyWrite';
+import Storysrc from '../Components/app/page/Storysrc'
+
+import MbtiResult from '../Components/app/page/MbtiResult'
 
 
 function App() {
@@ -50,7 +54,14 @@ function App() {
         <Route exact path="/app/firstsentence" component={Firstsentence}></Route>
         <Route exact path="/app/lyrics" component={Lyrics}></Route>
         <Route exact path="/app/discussion" component={Discussion}></Route>
-        <Route exact path="/app/newscontent" component={Newscontent}></Route>
+        <Route exact path="/app/loveletter" component={LoveLetter}></Route>
+
+        <Route exact path="/app/dailywrite" component={Dailywrite}></Route>
+        <Route exact path="/app/storysrc" component={Storysrc}></Route>
+        
+      {/* mbti route */}
+      <Route exact path="/app/loveletter/mbti/:result" component={MbtiResult}></Route>
+
 
       </Switch>
     </BrowserRouter>

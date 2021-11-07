@@ -96,9 +96,8 @@ const Fairytale = () => {
                       </div>
                     </AccordionPanel>
                   ))}
+                  <div className="writeBtn"><button >write</button></div>
                 </Accordion>
-
-                <button className="writeBtn">write</button>
               </Box>
             </Box>
           ) : (
@@ -115,7 +114,7 @@ const Fairytale = () => {
             className='mainBox'
             justify='center'
             align='center'
-            pad='medium'
+            pad={size !== 'small' ? 'medium': 'large'}
           >
             <div className='mainOutputBox'>
               <div className='output1'>

@@ -239,7 +239,7 @@ $boxShadow : rgb(237 237 237) 2px 3px 8px;
     background-color: #f9f9f9;
     padding: 10px 0;
 
-    >div {
+    > div {
         display: flex;
         justify-content: center;
         align-items: center;
@@ -370,6 +370,7 @@ $boxShadow : rgb(237 237 237) 2px 3px 8px;
     height: 100vh;
     width: 250px;
     transition: width 0.4s ease;
+    overflow: hidden;
 
     @media screen and (max-width: 768px) {
         width: 100%;
@@ -466,12 +467,18 @@ $boxShadow : rgb(237 237 237) 2px 3px 8px;
 }
 
 .writeBtn {
+    display: flex;
+    justify-content: center;
+    margin-top: 35px;
+
+    > button {
     padding: 8px 15px;
     border: 1px solid #444;
     background-color: #ffd000;
     outline: 0;
     width: 180px;
     text-align: center;
+    }
 }
 
 .mainOutputBox {
@@ -512,4 +519,59 @@ $boxShadow : rgb(237 237 237) 2px 3px 8px;
 
 .output2 {
     padding: 10px 15px;
+}
+
+//MBTI & mbti result
+
+.ResultBox {
+   width: 100%;
+   max-width: 500px;
+}
+
+.ResultHeader{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    > div {
+        background-color: $mainColor;
+        color: $white-1;
+        padding: 10px 15px;
+    
+    }
+
+    > a > button {
+        background-color: transparent;
+        outline:0;
+        border:0;
+        text-decoration: underline;
+    }
+}
+
+.ResultContent {
+    border: 1px solid $dark-1;
+    padding: 15px;
+}
+
+.iconBox {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+ 
+}
+
+.ResultIcon {
+
+    margin-top: 10px;
+
+    > svg {
+        background-color: #444;
+        fill: #fff;
+        stroke: #fff;
+        padding: 2px;
+        width: 30px;
+        height: 30px;
+        padding: 4px;
+        border-radius: 5px;
+      }
 }

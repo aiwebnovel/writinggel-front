@@ -36,8 +36,28 @@ const LinkObject = [
   },
   {
     id:8,
-    title: "뉴스레터 콘텐츠 기획",
-    link: "/app/newscontent",
+    title: "MBTI 연애편지",
+    link: "/app/loveletter",
+  },
+  {
+    id:9,
+    title: "일상 기록 질문 자판기",
+    link: "/app/dailywrite",
+  },
+  {
+    id:10,
+    title: "이야기 재료 찾기",
+    link: "/app/storysrc",
+  },
+  {
+    id:10,
+    title: "Coming Soon!",
+    link: "/",
+  },
+  {
+    id:10,
+    title: "Coming Soon!",
+    link: "/",
   },
 ];
 

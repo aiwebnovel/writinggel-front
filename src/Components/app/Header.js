@@ -183,7 +183,13 @@ const Header = () => {
                 <Link to='/app/discussion'>찬반 논거</Link>
               </li>
               <li>
-                <Link to='/app/newscontent'>뉴스레터 콘텐츠 기획</Link>
+                <Link to='/app/loveletter'>MBTI 연애편지</Link>
+              </li>
+              <li>
+                <Link to='/app/dailywrite'>일상 기록 질문 자판기</Link>
+              </li>
+              <li>
+                <Link to='/app/storysrc'>이야기 재료 찾기</Link>
               </li>
             </ul>
           </Nav>
