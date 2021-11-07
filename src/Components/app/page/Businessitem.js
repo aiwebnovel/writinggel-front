@@ -42,7 +42,7 @@ const Businessitem = () => {
         <Box
           direction='row-responsive'
           justify='center'
-          align='center'
+          align='end'
           className='itemInputBox'
         >
           <div className='busiItem'>

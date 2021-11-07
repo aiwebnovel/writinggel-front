@@ -58,6 +58,7 @@ const RandomBtn = styled.button`
   padding: 8px 15px;
   width: 500px;
   font-size: 1rem;
+  
 
     @media screen and (max-width: 680px) {
       width: 80%;

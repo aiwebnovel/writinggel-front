@@ -155,6 +155,7 @@ const Icons = styled.div`
     height: 30px;
     padding: 4px;
     border-radius: 5px;
+    cursor: pointer;
   }
 `;
 

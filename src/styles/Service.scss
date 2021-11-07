@@ -151,6 +151,7 @@ $boxShadow : rgb(237 237 237) 2px 3px 8px;
     padding: 6px;
     position: relative;
     transition: all .5s ease-in-out;
+    
 
     @media screen and (max-width: 680px) {
         width: 80%;
@@ -171,6 +172,13 @@ $boxShadow : rgb(237 237 237) 2px 3px 8px;
     padding: 24px;
     text-align: center;
 
+    > div{
+        width: 100%;
+        display: flex;
+        justify-content: flex-end;
+        cursor: pointer;
+    }
+
     // @media screen and (max-width: 680px) {
     //    width:300px
     // }
@@ -189,6 +197,7 @@ $boxShadow : rgb(237 237 237) 2px 3px 8px;
         font-size: 1.05rem;
         color: $white-1;
         padding: 14px 0;
+        cursor: pointer;
     }
 }
 
@@ -244,6 +253,7 @@ $boxShadow : rgb(237 237 237) 2px 3px 8px;
         justify-content: center;
         align-items: center;
         gap: 20px;
+        cursor: pointer;
     }
 }
 
@@ -251,16 +261,18 @@ $boxShadow : rgb(237 237 237) 2px 3px 8px;
 
 .itemInputBox {
 
-    >button {
+    > button {
         background-color: $mainColor;
         border: 1px solid $mainColor;
         outline: 0;
         font-size: 1rem;
         color: $white-1;
-        padding: 0px 40px;
+        padding: 10px 40px;
         height: 100%;
         margin-left: 10px;
+        cursor: pointer;
     }
+
 }
 
 .busiItem {
@@ -300,6 +312,7 @@ $boxShadow : rgb(237 237 237) 2px 3px 8px;
     display: flex;
     align-items: center;
     justify-content: flex-end;
+    cursor: pointer;
 }
 
 //discuss
@@ -339,6 +352,7 @@ $boxShadow : rgb(237 237 237) 2px 3px 8px;
         color: $white-1;
         padding: 15px 50px;
         margin-bottom: 10px;
+        cursor: pointer;
     }
 }
 
@@ -478,6 +492,7 @@ $boxShadow : rgb(237 237 237) 2px 3px 8px;
     outline: 0;
     width: 180px;
     text-align: center;
+    cursor: pointer;
     }
 }
 
@@ -514,6 +529,7 @@ $boxShadow : rgb(237 237 237) 2px 3px 8px;
 
     >div {
         text-align: right;
+        cursor: pointer;
     }
 }
 

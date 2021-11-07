@@ -12,6 +12,7 @@ $boxShadow : rgb(237 237 237) 2px 3px 8px;
     width: 100%;
     padding: 48px;
     height: 100vh;
+    overflow: hidden;
 
     @media screen and (max-width: 768px) {
         height: 100%;
@@ -30,6 +31,7 @@ $boxShadow : rgb(237 237 237) 2px 3px 8px;
     text-align: center;
     padding: 50px;
     font-family: 'NeoDunggeunmo'; 
+    word-break: keep-all;
 
     @media screen and (max-width: 768px) {
         padding: 30px;
@@ -282,6 +284,7 @@ $boxShadow : rgb(237 237 237) 2px 3px 8px;
         color: #fff;
         padding: 15px 50px;
         border-radius: 10px;
+        cursor: pointer;
     }
 }
 
@@ -463,6 +466,7 @@ hr {
     cursor: pointer;
     border: 0;
     outline : 0;
+    
   
   }
   

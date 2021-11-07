@@ -1,20 +1,15 @@
-import {
-  Box,
-  Grid,
-  ResponsiveContext,
-} from "grommet";
+import { Box, Grid, ResponsiveContext } from "grommet";
 
 import React, { useEffect, useContext, useState } from "react";
 import { useHistory, Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import MBTI from './MBTI'
+import MBTI from "./MBTI";
 
 import ServiceLayout from "../Layout";
 import styled from "styled-components";
 
 const LoveLetter = () => {
-
   const size = useContext(ResponsiveContext);
   const History = useHistory();
 
@@ -45,18 +40,22 @@ const LoveLetter = () => {
           gap='medium'
           fill={size !== "small" ? false : true}
         >
-          {MBTI.map((mbti)=>(
-            <Card key={mbti.content} className="MbtiCard" onClick={()=> console.log('console', mbti.link)}>
-              <Link to={{
+          {MBTI.map((mbti) => (
+            <Link
+              to={{
                 pathname: `loveletter/${mbti.link}`,
-                state: mbti.content
-              }}>
+                state: mbti.content,
+              }}
+            >
+              <Card
+                key={mbti.content}
+                className='MbtiCard'
+                onClick={() => console.log("console", mbti.link)}
+              >
                 {mbti.content}
-                </Link>
-
-            </Card>
+              </Card>
+            </Link>
           ))}
-
         </Grid>
       </Box>
     </ServiceLayout>
@@ -69,10 +68,10 @@ const MainTitle = styled.div`
   font-weight: 600;
   font-size: 1.5rem;
   padding: 30px 0;
-`
+`;
 
 const Card = styled.div`
-  background-color : #fff;
+  background-color: #fff;
   border: 1px solid #444;
   width: 200px;
   padding: 48px;
@@ -81,8 +80,8 @@ const Card = styled.div`
   cursor: pointer;
   transition: all 300ms ease-in-out;
 
-  &:hover{
+  &:hover {
     background-color: #7d4cdb;
     color: #fff;
   }
-`
+`;
