@@ -3,7 +3,7 @@ import  {Link} from 'react-router-dom';
 import Layout from "../../Layout";
 import { Box, ResponsiveContext } from "grommet";
 
-const WebnovelDetail = () => {
+const BusinessItemDetail = () => {
 
   const size = useContext(ResponsiveContext);
 
@@ -22,9 +22,9 @@ const WebnovelDetail = () => {
           <button className='intoServiceBtn'>멤버십 가입</button>
         </div>
         <div className="DetailBody">
-          <p>웹노블 서비스에 대한 설명이 들어갈 예정입니다.</p>
+          <p>비지니스 아이디어 서비스에 대한 설명이 들어갈 예정입니다.</p>
           <p>누가 사용하면 좋을까요? 어떻게 활용할 수 있을까요? 등등</p>
-          <Link to='/app/webnovel'>
+          <Link to='/app/businessitem'>
             <button className='intoServiceBtn'>서비스 이용하기</button>
           </Link>
         </div>
@@ -33,4 +33,4 @@ const WebnovelDetail = () => {
   );
 };
 
-export default WebnovelDetail;
+export default BusinessItemDetail;
