@@ -187,29 +187,35 @@ const Header = () => {
             <span className='DropMenu'>
               인공지능 글쓰기 서비스 <Down size='small' />
               <ul className='DropDown'>
-                <li>
+              <li>
                   <Link to='/service/webnovel'>웹소설 창작</Link>
                 </li>
                 <li>
-                  <Link to='/service/webnovel'>블로그</Link>
+                  <Link to='/service/bloger'>블로그 글쓰기</Link>
                 </li>
                 <li>
-                  <Link to='/service/webnovel'>동화 창작</Link>
+                  <Link to='/service/fairytale'>동화 쓰기</Link>
                 </li>
                 <li>
-                  <Link to='/service/webnovel'>뉴스레터 콘텐츠 기획</Link>
+                  <Link to='/service/firstsentence'>첫문장 자판기</Link>
                 </li>
                 <li>
-                  <Link to='/service/webnovel'>영어 시 쓰기</Link>
+                  <Link to='/service/lyrics'>영어 가사 쓰기</Link>
                 </li>
                 <li>
-                  <Link to='/service/webnovel'>비지니스 아이디어</Link>
+                  <Link to='/service/businessitem'>비지니스 아이디어</Link>
                 </li>
                 <li>
-                  <Link to='/service/webnovel'>연애편지 쓰기</Link>
+                  <Link to='/service/discussion'>찬반 논거</Link>
                 </li>
                 <li>
-                  <Link to='/service/webnovel'>첫문장 자판기</Link>
+                  <Link to='/service/loveletter'>MBTI 연애편지</Link>
+                </li>
+                <li>
+                  <Link to='/service/dailywrite'>일상 기록 질문 자판기</Link>
+                </li>
+                <li>
+                  <Link to='/service/storysrc'>이야기 재료 찾기</Link>
                 </li>
               </ul>
               </span>
@@ -246,25 +252,31 @@ const Header = () => {
                   <Link to='/service/webnovel'>웹소설 창작</Link>
                 </li>
                 <li>
-                  <Link to='/service/webnovel'>블로그 동화쓰기</Link>
+                  <Link to='/service/bloger'>블로그 글쓰기</Link>
                 </li>
                 <li>
-                  <Link to='/service/webnovel'>동화 창작</Link>
+                  <Link to='/service/fairytale'>동화 쓰기</Link>
                 </li>
                 <li>
-                  <Link to='/service/webnovel'>뉴스레터 콘텐츠 기획</Link>
+                  <Link to='/service/firstsentence'>첫문장 자판기</Link>
                 </li>
                 <li>
-                  <Link to='/service/webnovel'>영어 시 쓰기</Link>
+                  <Link to='/service/lyrics'>영어 가사 쓰기</Link>
                 </li>
                 <li>
-                  <Link to='/service/webnovel'>비지니스 아이디어</Link>
+                  <Link to='/service/businessitem'>비지니스 아이디어</Link>
                 </li>
                 <li>
-                  <Link to='/service/webnovel'>연애편지 쓰기</Link>
+                  <Link to='/service/discussion'>찬반 논거</Link>
                 </li>
                 <li>
-                  <Link to='/service/webnovel'>첫문장 자판기</Link>
+                  <Link to='/service/loveletter'>MBTI 연애편지</Link>
+                </li>
+                <li>
+                  <Link to='/service/dailywrite'>일상 기록 질문 자판기</Link>
+                </li>
+                <li>
+                  <Link to='/service/storysrc'>이야기 재료 찾기</Link>
                 </li>
               </ul>
                 )}
