@@ -43,7 +43,13 @@ const Storysrc = () => {
         gap='large'
       >
         {/* 단어 뽑기 */}
-        <Box className='SrcPrintBtn' direction='row' align='start' gap='medium'>
+        <Box
+          className='SrcPrintBtn'
+          direction='row'
+          align='start'
+          justify='center'
+          gap='medium'
+        >
           <button
             onClick={() => {
               SetOutput(!isOutput);
@@ -105,12 +111,15 @@ const Storysrc = () => {
             <button onClick={() => SetResult(!isResult)}>예시보기</button>
           </Box>
           {isResult && (
-            <div className='StoryResults'>
-              &gt; 루크는 하루종일 농구를 해서 지쳤다. 그는 그의 개의 목줄을 잡았지만, 그가
-              코트를 떠나기 전에 한 남자가 루크가 다음 번에 득점하지 않도록
-              어떻게 하면 더 나은 수비를 할 수 있는지에 대한 의견을 가지고 그를
-              막았다.
-            </div>
+            <Box
+              className='StoryResults'
+              animation={{ type: "fadeIn", duration: 400, size: "large" }}
+            >
+              &gt; 루크는 하루종일 농구를 해서 지쳤다. 그는 그의 개의 목줄을
+              잡았지만, 그가 코트를 떠나기 전에 한 남자가 루크가 다음 번에
+              득점하지 않도록 어떻게 하면 더 나은 수비를 할 수 있는지에 대한
+              의견을 가지고 그를 막았다.
+            </Box>
           )}
         </Box>
       </Box>

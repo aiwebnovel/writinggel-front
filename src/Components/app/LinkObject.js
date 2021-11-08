@@ -50,12 +50,12 @@ const LinkObject = [
     link: "/app/storysrc",
   },
   {
-    id:10,
+    id:11,
     title: "Coming Soon!",
     link: "/",
   },
   {
-    id:10,
+    id:12,
     title: "Coming Soon!",
     link: "/",
   },
