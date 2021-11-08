@@ -15,9 +15,10 @@ const Brand = () => {
         direction={size !== 'small' ? 'row' : 'column'}
         gap='large'
         pad='large'
-        className="brandBox"
+        className="mainHome"
       >
-        <div className='brand_img'>
+        <h1>We Lighten up your Writing!</h1>
+        {/* <div className='brand_img'>
         <img src='/logo.png' alt='brand'/>
         </div>
         <div className='brand_paragraph'>
@@ -37,7 +38,7 @@ const Brand = () => {
             제공합니다. 더 나아가 <span style={{backgroundColor:'#3B2477', color:"#fff"}}>블로그, 웹소설, 동화 등 장르 맞춤형 창작
             서비스를 제공합니다.</span>
           </Paragraph>
-        </div>
+        </div> */}
       </Box>
     </Layout>
   );
