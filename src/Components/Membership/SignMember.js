@@ -16,7 +16,8 @@ const SignMember = () => {
   const [cardCvc, SetCardCvc] = useState("");
 
   const handleChange = (e) => {
-    toast.info("test 중입니다");
+    console.log('test', e);
+    // toast.info("test 중입니다");
   };
 
   return (

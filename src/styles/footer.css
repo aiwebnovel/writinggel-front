@@ -1,7 +1,13 @@
 .InfoBox {
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
-  flex-direction: column;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
 }
+
 .InfoBox > p,
 .InfoBox a {
   font-size: 0.75rem;
@@ -30,26 +36,29 @@ a {
 
 @media screen and (max-width: 680px) {
   .MobileFooterContainer {
-    flex-direction: column !important;
+    -webkit-box-orient: vertical !important;
+    -webkit-box-direction: normal !important;
+        -ms-flex-direction: column !important;
+            flex-direction: column !important;
   }
-
   .MobileFooter {
-    align-items: baseline;
+    -webkit-box-align: baseline;
+        -ms-flex-align: baseline;
+            align-items: baseline;
     width: 100%;
   }
-
   .footer-logo {
     display: none;
   }
-
   .MobileCopyRight {
-    flex-direction: column-reverse !important;
+    -webkit-box-orient: vertical !important;
+    -webkit-box-direction: reverse !important;
+        -ms-flex-direction: column-reverse !important;
+            flex-direction: column-reverse !important;
   }
-
   .Icon > svg {
     width: 20px;
     height: 20px;
   }
 }
-
 /*# sourceMappingURL=footer.css.map */

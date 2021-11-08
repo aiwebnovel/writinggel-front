@@ -4,12 +4,11 @@ import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-import ServiceLayout from "./Layout";
+import ServiceLayout from "../Layout";
 
-const Webnovel = (props) => {
+const Bloger = () => {
   const History = useHistory();
 
-  let title = console.log(props);
 
   useEffect(() => {
     const loginCheck = localStorage.getItem("token");
@@ -24,13 +23,13 @@ const Webnovel = (props) => {
 
   return (
     <ServiceLayout>
-      <Box width='100%' height='100vh' justify='center' align='center'>
+      <Box className="ServiceContainer" justify='center' align='center' background="#f9f9f9">
         <Box>
-          첫문장 자판기
+          블로그
         </Box> 
       </Box>
     </ServiceLayout>
   );
 };
 
-export default Webnovel;
+export default Bloger;

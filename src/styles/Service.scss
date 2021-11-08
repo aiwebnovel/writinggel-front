@@ -1,10 +1,35 @@
+$mainColor : #3b2477;
+$subColor : #7d4cdb;
+$highLight: #ffcc00;
+$white-1 : #fff;
+$white-2 : #f9f9f9;
+$dark-1 : #444;
+$boxShadow : rgb(237 237 237) 2px 3px 8px;
+
+//서비스 공통
+
+.ServiceContainer {
+    width: 100%;
+    height: 100%;
+}
+
+//내용이 없어서 height 100%으로 하면 빈 화면이 나올 때
+.ServiceContainerVh {
+    width: 100%;
+    height: 100vh;
+
+
+    @media screen and (max-width: 768px) {
+        height: 100%;
+    }
+}
+
+
 //Header
-
-
 
 .ServiceHeader {
     padding: 15px 30px;
-    background-color: #f9f9f9;
+    background-color: $white-1;
 }
 
 .MainLogo2 {
@@ -12,7 +37,7 @@
     >a {
         display: flex;
 
-        > img {
+        >img {
             width: 120px;
             margin: 0;
             padding: 0;
@@ -34,7 +59,7 @@
 
 .ServiceMenus {
     // background-color: #3b2477;
-    background-color: #fff;
+    background-color: $white-1;
     border: 1px solid #444;
     border-right: 0;
     text-align: center;
@@ -45,13 +70,19 @@
     padding: 48px 36px;
 
     @media screen and (max-width: 768px) {
-        border-left:0;
-        border-bottom : 1px solid #444;
-       
+        border-left: 0;
+        border-bottom: 1px solid #444;
+
     }
 
 }
 
+.ServiceDropMenu {
+
+    @media screen and (max-width: 768px) {
+        width: 100%;
+    }
+}
 
 .ServiceDropDown {
     display: block;
@@ -59,45 +90,18 @@
     box-sizing: border-box;
     line-height: 45px;
 
-    > li:hover, li:active, li:visited {
+    >li:hover,
+    li:active,
+    li:visited {
         text-decoration: underline;
         font-weight: 600;
     }
 }
 
-.AvatarBox {
-    text-align: center;
-    margin-bottom: 15px;
-}
-
-.loginAvatar {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-}
-
-.signBox {
-    text-align: center;
-}
-
-.isChecked {
-    font-size: 15px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 10px;
-}
-
-.isChecked>a {
-    font-size: 15px;
-    font-weight: 600;
-}
-
-
 .ServiceAfterLogin {
     position: absolute;
     width: 300px;
-    background-color: #fff;
+    background-color: $white-1;
     z-index: 5;
     top: 60px;
     right: 15px;
@@ -107,16 +111,16 @@
 
 }
 
-.Username {
+.ServiceUsername {
     font-weight: 600;
 }
 
-.plan {
+.ServicePlan {
     font-weight: 900;
     text-align: right;
 }
 
-.afterLoginBottom {
+.ServiceAfterLoginBottom {
     text-align: right;
 
     >p {
@@ -127,7 +131,7 @@
         width: 100%;
         background-color: #5600e8;
         border: 1px solid #5600e8;
-        color: #fff;
+        color: $white-1;
         outline: 0;
         padding: 5px 0;
         margin-top: 10px;
@@ -137,33 +141,537 @@
 }
 
 
-.modal {
-    display: none;
-    position: fixed;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    z-index: 99;
-    background-color: rgba(0, 0, 0, 0.6);
+//Firstsentence
+
+.printBox {
+    border: 1px solid #444;
+    border-radius: 15px;
+    width: 500px;
+    margin-top: 8px;
+    padding: 6px;
+    position: relative;
+    transition: all .5s ease-in-out;
+    
+
+    @media screen and (max-width: 680px) {
+        width: 80%;
+    }
 
 }
 
+.SentenceBox {
+    background-color: $white-1;
 
-.openModal {
+    border: 1px solid #444;
+    z-index: 3;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+
+    padding: 24px;
+    text-align: center;
+
+    > div{
+        width: 100%;
+        display: flex;
+        justify-content: flex-end;
+        cursor: pointer;
+    }
+
+    // @media screen and (max-width: 680px) {
+    //    width:300px
+    // }
+}
+
+
+//Lyrics
+
+.LyricInputBox {
+    width: 300px;
+
+    >button {
+        background-color: $mainColor;
+        border: 1px solid $mainColor;
+        outline: 0;
+        font-size: 1.05rem;
+        color: $white-1;
+        padding: 14px 0;
+        cursor: pointer;
+    }
+}
+
+.subjectTitle,
+.subjects {
+    margin-bottom: 15px;
+
+    >p {
+        font-weight: 600;
+        font-size: 1.05rem;
+        margin-bottom: 8px;
+    }
+
+    >input {
+        padding: 8px 10px;
+        width: 100%;
+        margin-bottom: 5px;
+        border: 1px solid #444;
+        font-size: 1rem;
+    }
+}
+
+.subjects {
+    display: flex;
+    flex-direction: column;
+}
+
+.LyricOutputBox {
+    width: 50%;
+
+    >textarea {
+        resize: none;
+        border-bottom: 0;
+        padding: 10px;
+        font-size: 1rem;
+        height: 500px;
+
+        &:focus {
+            outline: none;
+        }
+    }
+
+}
+
+.icons {
+    border: 1px solid #444;
+    border-top: 0;
+    background-color: #f9f9f9;
+    padding: 10px 0;
+
+    > div {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 20px;
+        cursor: pointer;
+    }
+}
+
+//Business
+
+.itemInputBox {
+
+    > button {
+        background-color: $mainColor;
+        border: 1px solid $mainColor;
+        outline: 0;
+        font-size: 1rem;
+        color: $white-1;
+        padding: 10px 40px;
+        height: 100%;
+        margin-left: 10px;
+        cursor: pointer;
+    }
+
+}
+
+.busiItem {
+
+    width: 500px;
+
+    >p {
+        font-weight: 600;
+        font-size: 1.05rem;
+        margin-bottom: 8px;
+    }
+
+    >input {
+        padding: 8px 10px;
+        width: 100%;
+        border: 1px solid #444;
+        font-size: 1rem;
+
+    }
+}
+
+.SerCardHead {
+    padding: 10px;
+    font-family: 'NeoDunggeunmo';
+    background-color: #555;
+    color: $white-1;
+
+}
+
+.SerCardBody {
+    text-align: center;
+    padding: 48px;
+}
+
+.SerCardFoot {
+    padding: 10px;
     display: flex;
     align-items: center;
-    /* 팝업이 열릴때 스르륵 열리는 효과 */
-    animation: modal-bg-show .3s;
+    justify-content: flex-end;
+    cursor: pointer;
+}
+
+//discuss
+
+.DiscussInputBox,
+.DiscussOutputBox {
+    width: 100%;
+}
+
+.InputAlign {
+
+    max-width: 600px;
+    width: 100%;
+
+    >p {
+        font-weight: 600;
+        font-size: 1.05rem;
+        margin-bottom: 8px;
+    }
+
+    >input {
+        padding: 8px 10px;
+        width: 100%;
+        border: 1px solid #444;
+        font-size: 1rem;
+    }
+}
+
+.Agree,
+.Opposite {
+
+    >button {
+        background-color: $mainColor;
+        border: 1px solid $mainColor;
+        outline: 0;
+        font-size: 1rem;
+        color: $white-1;
+        padding: 15px 50px;
+        margin-bottom: 10px;
+        cursor: pointer;
+    }
+}
+
+.outputArea {
+
+    border: 1px solid $mainColor;
+    background-color: $white-1;
+    padding: 10px;
+
+    >div:first-child {
+        height: 100px;
+        width: 350px;
+
+        @media screen and (max-width: 680px) {
+            width: 100%;
+        }
+
+    }
+
 }
 
 
-@keyframes modal-bg-show {
-    from {
-        opacity: 0;
+//fairyTale
+
+.sideContainer {
+    background-color: $white-1;
+    border-right: 1px solid $mainColor;
+    border-top: 1px solid $mainColor;
+    height: 100vh;
+    width: 250px;
+    transition: width 0.4s ease;
+    overflow: hidden;
+
+    @media screen and (max-width: 768px) {
+        width: 100%;
+        //height: 100%;
+        overflow: scroll;
+        z-index: 3;
+        border: 0;
+        border-top : 1px solid $mainColor;
+        border-bottom: 1px solid $mainColor;
+
+    }
+}
+
+.isSiderFalse {
+    width: 80px;
+    height: 50px;
+    background-color: $white-1;
+    border: 1px solid $mainColor;
+    border-left:0;
+    //box-shadow: $boxShadow;
+    transition: width 0.4s ease;
+
+    @media screen and (max-width: 768px){
+        width: 100%;
+        height: 50px;
+        border: 0;
+        border-bottom: 1px solid $mainColor;
+        border-top: 1px solid $mainColor;
+
+        
+    }
+}
+
+
+
+.AcoStyle {
+    width: 100%;
+}
+
+.AcoPanelStyle {
+    // padding: 10px 12px;
+    padding: 18px 12px 5px 12px;
+
+    > div {
+        padding: 0;
+
+        >h4 {
+            font-size: 16px;
+            margin: 0;
+
+            @media screen and (max-width: 768px) {
+                font-size: 18px;
+            }
+
+            &::after{
+                content: '❗️';
+            }
+        }
+
+        >svg {
+            width: 22px;
+            height: 22px;
+        }
+    }
+}
+
+.AcoInput {
+    width:100%;
+    padding: 10px;
+    // padding: 0 0 10px 10px;
+    
+    > input {
+        width: 70%;
+        padding:5px;
+        margin-right: 5px;;
+        border: 1px solid $dark-1;
+
+        &:focus {
+            outline: none;
+        }
+
+        @media screen and (max-width: 768px) {
+            height: 35px;
+        }
     }
 
-    to {
-        opacity: 1;
+    > button {
+        cursor: pointer;
+        background-color : $white-2;
+        border: 1px solid $white-2;
+        font-weight: 600;
+        padding: 5px 15px;
     }
+}
+
+.writeBtn {
+    display: flex;
+    justify-content: center;
+    margin-top: 35px;
+
+    > button {
+    padding: 8px 15px;
+    border: 1px solid #444;
+    background-color: #ffd000;
+    outline: 0;
+    width: 180px;
+    text-align: center;
+    cursor: pointer;
+    }
+}
+
+.mainOutputBox {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    width: 100%;
+
+    @media screen and (max-width:768px) {
+        flex-direction: column;
+    }
+}
+
+.output1,
+.output2 {
+    background-color: $white-1;
+    border: 1px solid #444;
+    max-width: 450px;
+    width: 100%;
+    height: 300px;
+
+    @media screen and (max-width: 768px) {
+        width: 90%;
+    }
+}
+
+.output1 {
+    padding: 15px 15px 5px 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    >div {
+        text-align: right;
+        cursor: pointer;
+    }
+}
+
+.output2 {
+    padding: 10px 15px;
+}
+
+//MBTI & mbti result
+
+.ResultBox {
+   width: 100%;
+   max-width: 500px;
+}
+
+.ResultHeader{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    > div {
+        background-color: $mainColor;
+        color: $white-1;
+        padding: 10px 15px;
+    
+    }
+
+    > a > button {
+        background-color: transparent;
+        outline:0;
+        border:0;
+        text-decoration: underline;
+    }
+}
+
+.ResultContent {
+    border: 1px solid $dark-1;
+    padding: 15px;
+}
+
+.iconBox {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.ResultIcon {
+
+    margin-top: 10px;
+
+    > svg {
+        background-color: #444;
+        fill: #fff;
+        stroke: #fff;
+        padding: 2px;
+        width: 30px;
+        height: 30px;
+        padding: 4px;
+        border-radius: 5px;
+      }
+}
+
+
+//DailyWrite
+
+
+.DailyiconBox {
+    width:100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 10px;
+
+}
+
+//Storysrc
+
+.SrcPrintBtn {
+    width: 100%;
+    height: 150px;
+    
+    > button {
+        background-color: $subColor;
+        border: 1px solid $subColor;
+        color: $white-1;
+        padding: 10px 8px;
+        width: 200px;
+        font-size : 1rem;
+        cursor: pointer;
+    }
+}
+
+
+.SrcResult {
+    width: 100%;
+    background-color: #ededed;
+    color : $dark-1;
+    padding: 8px;
+
+    > div > p {
+        font-weight: 600;
+        text-indent: 5px;
+    }
+
+    > div > button {
+        margin-left : 10px;
+        background-color: $dark-1;
+        color: $white-1;
+        border: 1px solid $dark-1;
+        border-radius: 8px;
+        cursor: pointer;
+    }
+}
+
+.SrcPrintBox {
+    border: 1px solid #444;
+    border-radius: 15px;
+    width: 200px;
+    padding: 6px;
+    position: relative;
+    transition: all 0.5s ease-in-out;
+}
+
+.SrcSentence {
+    background-color: $white-1;
+    border: 1px solid #444;
+    z-index: 3;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+
+    padding: 24px;
+    text-align: center;
+
+    // @media screen and (max-width: 680px) {
+    //    width:300px
+    // }
+}
+
+.StoryResults {
+    width: 100%;
+    background-color: #ededed;
+    color : $dark-1;
+    padding: 8px;
 }
