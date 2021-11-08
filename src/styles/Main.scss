@@ -1,9 +1,19 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap');
 
-$mainColor : #3b2477;
 $boxShadow : rgb(237 237 237) 2px 3px 8px;
 
+$point : #ff9300;
+$main : #372874;
+$sub1 : #b1b5e6;
+$sub2 : #ffce1f;
 // Home , /Main 쪽 파일들(Membership 폴더 제외)
+
+//공통
+
+.BoxContainer {
+    width: 100%;
+    height: 100%;
+}
 
 
 //Home
@@ -22,15 +32,15 @@ $boxShadow : rgb(237 237 237) 2px 3px 8px;
     }
 }
 
-.cardTop  {
+.cardTop {
     padding: 8px;
-    background-color:#3B2477; 
+    background-color: #3B2477;
 }
 
 .cardTitle {
     text-align: center;
     padding: 50px;
-    font-family: 'NeoDunggeunmo'; 
+    font-family: 'NeoDunggeunmo';
     word-break: keep-all;
 
     @media screen and (max-width: 768px) {
@@ -44,42 +54,106 @@ $boxShadow : rgb(237 237 237) 2px 3px 8px;
 //Brand
 
 
-.brandBox {
-    height: 80vh;
 
-    @media screen and (max-width:768px){
-        height: 100%;
+.LightBox {
+    font-family: 'NeoDunggeunmo';
+    text-align: center;
+
+    > img {
+        width: 200px;
+    }
+
+    >h1 {
+        font-size: 2rem;
+        font-weight: 600;
+        color: $main;
+        margin-bottom : 20px;
+        line-height: 40px;
+
+        > span {
+            color: $sub2;
+            // -webkit-text-stroke: 0.5px $main;
+        }
+    }
+}
+
+.paraBox {
+
+    > p {
+    @media screen and (max-width: 768px) {
+        font-size: 1.1rem;
+    }
+    }
+}
+
+.lanternBox {
+    text-align: center;
+
+    >img {
+        width: 180px;
     }
 }
 
 .brand_img {
+    width: 180px;
 
-    text-align: center;
-    overflow: hidden;
-    
-    > img{
-    
-    width: 400px;
-  
-
-    @media screen and (max-width: 768px) {
-       width: 300px;
-        }
-    
-
-    @media screen and (max-width: 680px) {
-        width: 90%;
-    }
+    >img {
+        width: 100%;
     }
 }
+
+.IntroTinggle {
     
+  > h4 {
+    font-family: "NeoDunggeunmo";
+
+  }
+
+  > ul {
+    max-width: 500px;
+    // list-style-type: disc;
+    margin-top: 20px;
+  }
+
+  .introduce {
+    margin-top: 20px;
+  }
+}
+
+// .brandBox {
+//     height: 80vh;
+
+//     @media screen and (max-width:768px){
+//         height: 100%;
+//     }
+// }
+
+// .brand_img {
+
+//     text-align: center;
+//     overflow: hidden;
+
+//     > img{
+
+//     width: 400px;
+
+
+//     @media screen and (max-width: 768px) {
+//        width: 300px;
+//         }
+
+
+//     @media screen and (max-width: 680px) {
+//         width: 90%;
+//     }
+//     }
+// }
+
 
 
 .brand_paragraph {
-    
-    font-family: 'NeoDunggeunmo'; 
 
-    @media screen and (max-width: 768px){
+    @media screen and (max-width: 768px) {
         display: flex;
         flex-direction: column;
         justify-content: center;
@@ -94,12 +168,13 @@ $boxShadow : rgb(237 237 237) 2px 3px 8px;
 
 // }
 
-.DetailHeader, .DetailBody {
+.DetailHeader,
+.DetailBody {
     text-align: center;
     padding: 20px 0;
-    
-    > p {
-        margin-bottom : 15px;
+
+    >p {
+        margin-bottom: 15px;
     }
 }
 
@@ -126,12 +201,12 @@ $boxShadow : rgb(237 237 237) 2px 3px 8px;
 .LetterHeader {
     width: 100%;
     background-color: #3B2477;
-    color : #fff;
+    color: #fff;
     text-align: center;
-    padding : 48px 0;
+    padding: 48px 0;
 
-    > h4 {
-        margin:0;
+    >h4 {
+        margin: 0;
     }
 }
 
@@ -141,7 +216,7 @@ $boxShadow : rgb(237 237 237) 2px 3px 8px;
     width: 400px;
     text-align: center;
 
-    > input {
+    >input {
 
         width: 100%;
         padding: 10px 5px;
@@ -150,7 +225,7 @@ $boxShadow : rgb(237 237 237) 2px 3px 8px;
         margin-bottom: 10px;
 
 
-        @media screen and (max-width:768px){
+        @media screen and (max-width:768px) {
             width: 200px;
         }
     }
@@ -171,11 +246,11 @@ $boxShadow : rgb(237 237 237) 2px 3px 8px;
 
     .checkStyle {
         cursor: pointer;
-        margin-right : 10px;
+        margin-right: 10px;
         width: 14px;
         height: 14px;
     }
- 
+
 }
 
 .subsBtn {
@@ -187,7 +262,7 @@ $boxShadow : rgb(237 237 237) 2px 3px 8px;
     padding: 8px 10px;
     font-size: 16px;
     border-radius: 5px;
-    margin-top : 12px;
+    margin-top: 12px;
 }
 
 
@@ -195,8 +270,8 @@ $boxShadow : rgb(237 237 237) 2px 3px 8px;
     width: 50%;
     text-align: center;
     font-weight: 600;
-    padding-top : 15px;
-    border-top : 1px solid #000;
+    padding-top: 15px;
+    border-top: 1px solid #000;
 }
 
 //Ask
@@ -205,18 +280,18 @@ $boxShadow : rgb(237 237 237) 2px 3px 8px;
 
     line-height: 45px;
 
-    > h2, h3 {
+    >h2,
+    h3 {
         font-weight: 600;
-      
+
     }
 
     >h2 {
         font-size: 1.6em;
     }
 
-    > h3
-    {
-        font-size : 1.5em;
+    >h3 {
+        font-size: 1.5em;
         margin-bottom: 35px;
     }
 }
@@ -240,17 +315,18 @@ $boxShadow : rgb(237 237 237) 2px 3px 8px;
 
     border-bottom: 0;
 
-    > label {
-        margin:0;
+    >label {
+        margin: 0;
         margin: 6px 0;
         font-size: 16px;
     }
 
-    > div {
+    >div {
         border: 0;
     }
 
-    .EmailInput, .PhoneInput {
+    .EmailInput,
+    .PhoneInput {
         padding: 10px 8px;
         border: 1px solid #444;
     }
@@ -277,7 +353,7 @@ $boxShadow : rgb(237 237 237) 2px 3px 8px;
     text-align: center;
     padding-top: 10px;
 
-    > button {
+    >button {
         font-size: 1rem;
         background-color: #3b2477;
         border: 1px solid #3b2477;
@@ -294,7 +370,7 @@ $boxShadow : rgb(237 237 237) 2px 3px 8px;
 //FAQ
 
 .FaQHeader {
-    > h2 {
+    >h2 {
         font-size: 1.6em;
         font-weight: 600;
     }
@@ -306,19 +382,19 @@ $boxShadow : rgb(237 237 237) 2px 3px 8px;
     font-size: 24px;
     border-bottom: 1px solid #444;
     margin-bottom: 40px;
-    font-family: 'NeoDunggeunmo'; 
+    font-family: 'NeoDunggeunmo';
 }
 
 .FAQContainer {
-    font-family: 'NeoDunggeunmo'; 
+    font-family: 'NeoDunggeunmo';
     padding: 0 10px;
-  
+
 }
 
 .FAQContent {
-background-color : #fff;
-  box-shadow: $boxShadow;
-  padding: 15px;
+    background-color: #fff;
+    box-shadow: $boxShadow;
+    padding: 15px;
 
 }
 
@@ -327,11 +403,11 @@ background-color : #fff;
 .ExplainHeader {
     text-align: center;
     line-height: 35px;
-    
-    > h2 {
+
+    >h2 {
         margin: 0;
         font-weight: 600;
-       
+
         @media screen and (max-width:768px) {
             font-size: 1.4em;
         }
@@ -341,17 +417,17 @@ background-color : #fff;
 .ExplainBtn {
     font-size: 1rem;
     background-color: #fff;
-    border: 1px solid $mainColor;
+    border: 1px solid $main;
     outline: 0;
     color: #444;
     padding: 15px 50px;
     border-radius: 10px;
-    margin-top : 30px;
+    margin-top: 30px;
 }
 
 .MemCardCon {
-    background-color : #fff;
-    border : 1px solid $mainColor;
+    background-color: #fff;
+    border: 1px solid $main;
     // transition: all 200ms ease-in-out;
 
     @media screen and (max-width: 768px) {
@@ -359,16 +435,16 @@ background-color : #fff;
     }
 
     &:hover {
-        border: 3px solid $mainColor
+        border: 3px solid $main
     }
 }
 
 .MemCardHead {
-    background-color : #fff;
+    background-color: #fff;
     display: flex;
     justify-content: flex-end;
 
-    > svg {
+    >svg {
         width: 35px;
         height: 35px;
     }
@@ -378,14 +454,15 @@ background-color : #fff;
     line-height: 35px;
     padding: 10px 20px 10px 15px;
 
-    > h4, p {
-        margin:0;
+    >h4,
+    p {
+        margin: 0;
     }
 }
 
 hr {
     width: 50%;
-    border-color : $mainColor;
+    border-color: $main;
 }
 
 .TextCon {
@@ -395,10 +472,10 @@ hr {
 .ExplainBottom {
     padding: 48px 0;
 
-    > a > button {
+    >a>button {
         font-size: 1rem;
         background-color: #fff;
-        border: 1px solid $mainColor;
+        border: 1px solid $main;
         outline: 0;
         color: #444;
         padding: 15px 50px;
@@ -411,7 +488,7 @@ hr {
 }
 
 .CreditBox {
-    border: 1px solid $mainColor;
+    border: 1px solid $main;
     border-radius: 10px;
     padding: 25px;
 }
@@ -420,59 +497,58 @@ hr {
     width: 100%;
     /* height: 30%; */
     padding-bottom: 15px;
-  }
-  
-  .creditCard > h3 {
-    padding-bottom : 20px;
-  }
-  
-  .ElementBox {
+}
+
+.creditCard>h3 {
+    padding-bottom: 20px;
+}
+
+.ElementBox {
     border-color: #ededed;
     padding-bottom: 10px;
-  }
-  
-  
-  .ElementBox
-  > p{
+}
+
+
+.ElementBox>p {
     font-size: 0.9em;
-  }
-  
-  .ElementBox > input {
+}
+
+.ElementBox>input {
     height: 30px;
     outline: 0;
     border: 1px solid #ededed;
     padding: 6px;
     border-radius: 5px;
-  }
-  
-  .PwElement {
+}
+
+.PwElement {
     width: 60px;
-  }
-  
-  .PriceBox {
+}
+
+.PriceBox {
     text-align: right;
     padding: 0 10px 10px 10px;
-    border-bottom : 1px solid #ededed;
+    border-bottom: 1px solid #ededed;
     font-size: 1.5em;
-  }
-  
-  
-  .creditCardButton {
+}
+
+
+.creditCardButton {
     background-color: #30009C;
-    font-size : 1rem;
+    font-size: 1rem;
     color: #ffffff;
     border-radius: 8px;
     padding: 10px 30px;
     text-align: center;
     cursor: pointer;
     border: 0;
-    outline : 0;
-    
-  
-  }
-  
-  .changeButton {
-   
+    outline: 0;
+
+
+}
+
+.changeButton {
+
     background-color: #5600E8;
     border: 1px solid #5600e8;
     color: #fff;
@@ -480,7 +556,7 @@ hr {
     padding: 5px 8px;
     text-align: center;
     cursor: pointer;
-  }
+}
 
 
 //MyPage
@@ -492,8 +568,8 @@ hr {
 }
 
 .modifyBtn {
-    background-color: $mainColor;
-    border: 1px solid $mainColor;
+    background-color: $main;
+    border: 1px solid $main;
     outline: 0;
     color: #fff;
     padding: 12px 35px;
@@ -503,12 +579,12 @@ hr {
 
 .MypageLogout {
     background-color: #fff;
-    border: 1px solid $mainColor;
+    border: 1px solid $main;
     outline: 0;
-    color: $mainColor;
+    color: $main;
     padding: 12px 45px;
     font-size: 1rem;
-    margin-top : 5px;
+    margin-top: 5px;
 }
 
 // .UserContent, .BtnContent {
@@ -538,16 +614,16 @@ hr {
     justify-content: space-between;
     padding: 10px;
 
-    > p:first-child {
+    >p:first-child {
         font-weight: 600;
     }
 
     @media screen and (max-width: 768px) {
-        display:flex;
+        display: flex;
         flex-direction: column;
         align-items: baseline;
         gap: 5px;
-        
+
     }
 }
 
@@ -559,7 +635,7 @@ hr {
     width: 400px;
     text-align: center;
 
-    > input {
+    >input {
 
         width: 100%;
         padding: 10px 5px;
@@ -568,11 +644,11 @@ hr {
         margin-bottom: 10px;
 
 
-        @media screen and (max-width:768px){
+        @media screen and (max-width:768px) {
             width: 50%;
         }
 
-        @media screen and (max-width:680px){
+        @media screen and (max-width:680px) {
             width: 80%;
         }
     }
@@ -601,11 +677,11 @@ hr {
 
     .checkStyle {
         cursor: pointer;
-        margin-right : 10px;
+        margin-right: 10px;
         width: 14px;
         height: 14px;
     }
- 
+
 }
 
 .MBtn {
@@ -617,18 +693,17 @@ hr {
     padding: 8px 20px;
     font-size: 16px;
     border-radius: 5px;
-    margin-top : 12px;
-    
+    margin-top: 12px;
+
     cursor: pointer;
 }
 
 .OutBtn {
     text-decoration: underline;
     background: transparent;
-    border:0;
-    outline:0;
-    margin-top : 25px;
+    border: 0;
+    outline: 0;
+    margin-top: 25px;
     cursor: pointer;
     font-size: 1rem;
 }
-
