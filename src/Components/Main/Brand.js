@@ -110,7 +110,7 @@ const Brand = () => {
         </Box>
         <Box fill pad='large' gap='large'>
           <TinggelTitle>팀원 소개</TinggelTitle>
-          <Box fill direction='row' justify='center' align='center' >
+          <Box fill direction='row' justify='center' align='center' style={{padding: '100px 0'}}>
             <Grid 
             gap='medium'
             fill={size !== 'small' ? false : true} 

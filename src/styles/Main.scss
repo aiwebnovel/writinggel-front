@@ -6,6 +6,9 @@ $point : #ff9300;
 $main : #372874;
 $sub1 : #b1b5e6;
 $sub2 : #ffce1f;
+$white-1 : #fff;
+$white-2 : #f9f9f9;
+$dark-1 : #444;
 // Home , /Main 쪽 파일들(Membership 폴더 제외)
 
 //공통
@@ -120,36 +123,6 @@ $sub2 : #ffce1f;
   }
 }
 
-// .brandBox {
-//     height: 80vh;
-
-//     @media screen and (max-width:768px){
-//         height: 100%;
-//     }
-// }
-
-// .brand_img {
-
-//     text-align: center;
-//     overflow: hidden;
-
-//     > img{
-
-//     width: 400px;
-
-
-//     @media screen and (max-width: 768px) {
-//        width: 300px;
-//         }
-
-
-//     @media screen and (max-width: 680px) {
-//         width: 90%;
-//     }
-//     }
-// }
-
-
 
 .brand_paragraph {
 
@@ -164,33 +137,177 @@ $sub2 : #ffce1f;
 
 //Detail 폴더
 
-// .DetailBox {
+.DetailHeader {
+    width: 100%;
+    height: 300px;
+    background-color: $white-1;
+    line-height: 40px;
+   
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
-// }
+    > h1 {
+        font-family: 'NeoDunggeunmo';
+        
+        font-size: 2rem;
+        font-weight: 400;
+    }
 
-.DetailHeader,
-.DetailBody {
-    text-align: center;
-    padding: 20px 0;
+    > h2 {
+        font-size: 1rem;
+        padding-bottom: 30px;
+    }
 
-    >p {
-        margin-bottom: 15px;
+    > hr {
+        width: 20%;
     }
 }
 
+.Detail1, .Detail2, .Detail3, .DetailBottom1, .DetailBottom2 {
+    padding: 80px 0;
+}
+
+.Detail-TextBox {
+    display: flex;
+    flex-direction: column;
+    max-width: 600px;
+    justify-content: center;
+    gap: 28px;
+
+    @media screen and (max-width: 768px) {
+        padding: 0 20px;
+    }
+
+    > div > h3 {
+        font-weight: 600;
+        font-size : 19px;
+        padding: 7px 0;
+    }
+
+    > div > p {
+        font-size : 17px;
+    }
+}
+
+.Detail2, .Detail3 {
+    > h3 {
+        font-weight: 600;
+        font-size : 25px;
+        
+    }
+}
+
+.Detail2-Content {
+
+    padding: 100px 0;
+    gap: 50px;
+
+    > div {
+        text-align: center;
+        width: 220px;
+        // border: 1px solid $dark-1;
+
+        > p {
+            font-size: 15px;
+        }
+
+    }
+}
+
+.Detail3-Content{
+    padding: 100px 0 80px 0;
+    gap: 50px;
+
+    > div {
+        text-align: center;
+        width: 220px;
+        // border: 1px solid $dark-1;
+
+        > p {
+            margin-top : 35px;
+            font-size: 16px;
+        }
+
+    }
+}
+
+
 .intoServiceBtn {
-    background-color: #3B2477;
+    text-align: center;
+    // margin-bottom: 40px;
+
+    > a > button {
+    background-color: $main;
     color: #fff;
     border: 0;
     outline: 0;
     padding: 0;
     width: 180px;
-    padding: 8px 0;
-    font-size: 16px;
+    padding: 15px 10px;
+    font-size: 18px;
     border-radius: 5px;
     cursor: pointer;
+    }
 }
 
+
+.DetailBottom1 {
+    padding: 100px 0px;
+    gap: 60px;
+
+    @media screen and (max-width: 768px) {
+        padding: 0 20px;
+    }
+}
+
+.Bottom1-Content {
+
+    background-color: #fff;
+    box-shadow: $boxShadow;
+    padding : 24px;
+
+    > h3 {
+        font-size: 18px;
+        font-weight: 600;
+        margin-bottom : 10px;
+    }
+
+    > p {
+        font-size : 16px;
+    }
+}
+
+.DetailBottom2 {
+    padding: 36px;
+    gap: 30px;
+}
+
+.Bottom2-Content {
+
+    > h4 {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        font-weight: 600;
+        font-size : 20px;
+        padding: 15px 0;
+        color: #000;
+
+        > svg {
+            fill:#000;
+            stroke:#000;;
+        }
+    }
+
+
+    > p {
+        color: #000;
+        &::before {
+        content:' ∙ '
+    }
+}
+}
 
 //newsletter
 

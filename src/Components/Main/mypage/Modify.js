@@ -6,15 +6,15 @@ import styled from "styled-components";
 
 const Modify = () => {
   const size = useContext(ResponsiveContext);
-  // const History = useHistory();
+  const History = useHistory();
 
-  // useEffect(()=>{
-  //     const loginCheck = localStorage.getItem('token');
-  //     console.log(loginCheck);
-  //     if(loginCheck === null ) {
-  //         History.replace('/')
-  //     }
-  // })
+  useEffect(()=>{
+      const loginCheck = localStorage.getItem('token');
+      console.log(loginCheck);
+      if(loginCheck === null ) {
+          History.replace('/')
+      }
+  })
 
   return (
     <Layout>
