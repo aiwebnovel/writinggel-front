@@ -18,7 +18,6 @@ const WebnovelDetail = () => {
           <hr />
         </Box>
 
-
         <Box fill className='DetailContainer'>
           <Box
             direction={size !== "small" ? "row" : "column"}
@@ -27,6 +26,7 @@ const WebnovelDetail = () => {
             align='center'
             className='Detail1'
           >
+            <Image src='/tinggle.png' alt='팅젤이' />
             <div className='Detail-TextBox'>
               <div>
                 <h3>웹소설 써보고 싶은데 시작을 망설이고 있나요?</h3>
@@ -47,11 +47,11 @@ const WebnovelDetail = () => {
                 </p>
               </div>
             </div>
-            <Image src='/pencli.png' alt='연필' />
           </Box>
 
           <Box className='Detail2' justify='center' align='center'>
             <h3>누가 활용할 수 있을까요?</h3>
+            <hr />
             <Box
               direction={size !== "small" ? "row" : "column"}
               className='Detail2-Content'
@@ -81,6 +81,7 @@ const WebnovelDetail = () => {
 
           <Box className='Detail3' justify='center' align='center'>
             <h3>어떻게 활용할 수 있을까요?</h3>
+            <hr />
             <Box
               direction={size !== "small" ? "row" : "column"}
               className='Detail3-Content'
@@ -105,12 +106,14 @@ const WebnovelDetail = () => {
               </div>
             </Box>
             <div className='intoServiceBtn'>
-              <Link to="/app/webnovel"><button>서비스 이용하기</button></Link>
+              <Link to='/app/webnovel'>
+                <button>서비스 이용하기</button>
+              </Link>
             </div>
           </Box>
         </Box>
 
-         {/* 멤버쉽 안내 구간 */}
+        {/* 멤버쉽 안내 구간 */}
         <Box fill className='DetailBottom1' justify='center' align='center'>
           <Grid
             // columns={size !== "small" ? { count: 2, size: "auto" } : "100%"}
@@ -144,7 +147,9 @@ const WebnovelDetail = () => {
             </div>
           </Grid>
           <div className='intoServiceBtn'>
-            <Link to='/signIn'><button style={{ marginBottom: '50px'}}>멤버쉽 가입하기</button></Link>
+            <Link to='/signIn'>
+              <button style={{ marginBottom: "50px" }}>멤버쉽 가입하기</button>
+            </Link>
           </div>
         </Box>
 
@@ -194,7 +199,7 @@ const WebnovelDetail = () => {
 export default WebnovelDetail;
 
 const Image = styled.img`
-  width: 200px;
+  width: 250px;
 
 
   @media screen and (max-width: 768px) {
