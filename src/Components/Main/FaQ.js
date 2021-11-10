@@ -90,15 +90,15 @@ const FaQ = () => {
                   <p>
                     라이팅젤 멤버십은 1개월/3개월/12개월의 정기 결제 서비스이며
                     멤버십을 시작한 날짜에 자동으로 정기 결제가 이루어집니다.
-                    (예: 11월 22일에 멤버십 시작 시, 결제일은 해당 월의 22일 )
                   </p>
-
+                  <p>(예: 11월 22일에 멤버십 시작 시, 결제일은 해당 월의 22일 )</p>
                   <p>
                     단, 결제 날짜가 특정 월에 포함되지 않은 날짜로 지정된 경우
-                    해당 월의 마지막 날에 결제됩니다. (예: 7월 31일에 멤버십
-                    시작 시, 31일이 포함되지 않은 달에는 해당 월의 마지막 날
-                    결제)
+                    해당 월의 마지막 날에 결제됩니다.
                   </p>
+                  <p>(예: 7월 31일에 멤버십
+                    시작 시, 31일이 포함되지 않은 달에는 해당 월의 마지막 날
+                    결제)</p>
                 </div>
               </AccordionPanel>
               <AccordionPanel
@@ -263,7 +263,7 @@ const FaQ = () => {
           </Box>
 
           <FaqMore fill >
-            <div className='Faq-Title'>
+            <div className='support'>
               <h2>
                 <Alert /> 궁금한 내용이 해결되지 않았다면?
               </h2>
@@ -291,10 +291,28 @@ const FaqMore = styled(Box)`
 border: 1px solid #444;
 border-radius : 10px;
 background-color: #ffce1f;
-padding: 36px;
+
+.support {
+  border-top-left-radius : 10px;
+  border-top-right-radius: 10px;
+  padding: 36px;
+
+  > h2 {
+    display:flex;
+    align-items: center;
+
+    font-size : 1.5rem;
+    font-weight: 900;
+
+    > svg {
+        margin-right: 5px;
+    }
+}
+}
 
 > p {
-  padding-top: 20px;
+  
+  padding: 0 36px 36px 36px;
 
   > a {
     cursor: pointer;
