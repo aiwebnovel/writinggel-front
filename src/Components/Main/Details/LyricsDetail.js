@@ -55,12 +55,12 @@ const LyricsDetail = () => {
               className='Detail2-Content'
             >
               <div>
-                <img src='/writer.png' alt='유저' className='Detail2-img' />
+                <img src='/boy.png' alt='유저' className='Detail2-img' />
                 <p style={{ marginTop: "25px" }}>영어로 나만의 창작물을</p>
                 <p>만들어 보고 싶은 사람</p>
               </div>
               <div>
-                <img src='/person.png' alt='유저' className='Detail2-img' />
+                <img src='/woman6.png' alt='유저' className='Detail2-img' />
                 <p style={{ marginTop: "25px" }}>
                 이제 막 배우기 시작한
                 </p>
@@ -68,7 +68,7 @@ const LyricsDetail = () => {
               </div>
               <div>
                 <img
-                  src='/grandmother.png'
+                  src='/man3.png'
                   alt='유저'
                   className='Detail2-img'
                 />

@@ -61,20 +61,20 @@ const FirstSentencelDetail = () => {
               className='Detail2-Content'
             >
               <div>
-                <img src='/writer.png' alt='유저' className='Detail2-img' />
+                <img src='/man4.png' alt='유저' className='Detail2-img' />
                 <p style={{ marginTop: "25px" }}>글 쓰려고 앉으면,</p>
                 <p>첫문장에서 막히는 사람</p>
               </div>
               <div>
-                <img src='/person.png' alt='유저' className='Detail2-img' />
+                <img src='/grandmother2.png' alt='유저' className='Detail2-img' />
                 <p style={{ marginTop: "25px" }}>
                 새로운 이야기에
                 </p>
-                <p>상상력을 필요한 사람</p>
+                <p>상상력이 필요한 사람</p>
               </div>
               <div>
                 <img
-                  src='/grandmother.png'
+                  src='/grandfather2.png'
                   alt='유저'
                   className='Detail2-img'
                 />
@@ -83,7 +83,7 @@ const FirstSentencelDetail = () => {
               </div>
               <div>
                 <img
-                  src='/grandmother.png'
+                  src='/woman2.png'
                   alt='유저'
                   className='Detail2-img'
                 />

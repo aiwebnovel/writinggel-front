@@ -55,12 +55,12 @@ const LoveLetterDetail = () => {
               className='Detail2-Content'
             >
               <div>
-                <img src='/writer.png' alt='유저' className='Detail2-img' />
+                <img src='/woman4.png' alt='유저' className='Detail2-img' />
                 <p style={{ marginTop: "25px" }}>내 안에 잠자는 연애세포와 창의력을 </p>
                 <p>동시에 자극하고 싶은 사람들</p>
               </div>
               <div>
-                <img src='/person.png' alt='유저' className='Detail2-img' />
+                <img src='/man2.png' alt='유저' className='Detail2-img' />
                 <p style={{ marginTop: "25px" }}>
                 썸 타고 있는 파트너에게 
                 </p>
@@ -69,7 +69,7 @@ const LoveLetterDetail = () => {
               </div>
               <div>
                 <img
-                  src='/grandmother.png'
+                  src='/woman.png'
                   alt='유저'
                   className='Detail2-img'
                 />

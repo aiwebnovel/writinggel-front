@@ -66,20 +66,20 @@ const StorySrcDetail = () => {
               className='Detail2-Content'
             >
               <div>
-                <img src='/writer.png' alt='유저' className='Detail2-img' />
+                <img src='/person.png' alt='유저' className='Detail2-img' />
                 <p style={{ marginTop: "25px" }}>
                 새로운 이야기 소재가
                 </p>
                 <p>필요한 창작자들</p>
               </div>
               <div>
-                <img src='/person.png' alt='유저' className='Detail2-img' />
+                <img src='/man.png' alt='유저' className='Detail2-img' />
                 <p style={{ marginTop: "25px" }}>오래동안 안 써서 굳어진 언어 감각을</p>
                 <p>유연하게 스트레칭하고 싶은 사람들</p>
               </div>
               <div>
                 <img
-                  src='/grandmother.png'
+                  src='/woman3.png'
                   alt='유저'
                   className='Detail2-img'
                 />

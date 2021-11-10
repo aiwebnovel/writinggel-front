@@ -53,19 +53,19 @@ const BlogerDetail = () => {
               className='Detail2-Content'
             >
               <div>
-                <img src='/writer.png' alt='유저' className='Detail2-img' />
+                <img src='/man.png' alt='유저' className='Detail2-img' />
                 <p style={{ marginTop: "25px" }}>블로그를 이제 막 시작하고 싶은</p>
                 <p>초보 블로거</p>
               </div>
               <div>
-                <img src='/person.png' alt='유저' className='Detail2-img' />
+                <img src='/woman4.png' alt='유저' className='Detail2-img' />
                 <p style={{ marginTop: "25px" }}>매일 새로운 콘텐츠를 만들어</p>
                 <p>많은 방문자 유입이 필요한</p>
                 <p>파워블로거</p>
               </div>
               <div>
                 <img
-                  src='/grandmother.png'
+                  src='/woman.png'
                   alt='유저'
                   className='Detail2-img'
                 />

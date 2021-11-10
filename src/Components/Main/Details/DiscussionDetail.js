@@ -42,21 +42,15 @@ const DiscussionDetail = () => {
                 <p style={{textAlign:'right'}}>- 제임스 블레이크</p>
               </QuoteBox>
               <div>
-                <h3>동화는 위대한 상상력의 장소입니다.</h3>
+                <h3>나의 의견과 관점이 담긴 글을 더 탄탄하게 만들 수 있습니다.</h3>
                 <p>
-                  동화 속 세계는 글쓰는 여러분이 자신의 삶에 대한 영감을 찾을 수
-                  있는 좋은 방법입니다. 실생활에서 경험할 수 없는 마법의 세계를
-                  탐험하고 금기를 깨거나 처음으로 경험했던 동화 기억을 떠올리며,
-                  상상력을 자극해보세요.
+                글을 탄탄하게 하려면 양쪽의 입장을 다 알아야 합니다. 균형잡힌 시각을 바탕으로 나만의 의견을 표현해보세요.
                 </p>
               </div>
               <div>
-                <h3>나이에 상관없이 우리는 모두 스토리텔러입니다.</h3>
+                <h3>관점이 넓어질 수 있습니다.</h3>
                 <p>
-                  우리가 이야기를 하는 것은 세상을 아름답게 변화시키기 위해 할
-                  수 있는 일 중 하나입니다. 아이부터 어른까지, 우리는 모두 각자
-                  품고 있는 아름다운 이야기로 재미있고 환상적인 여행으로 이끄는
-                  스토리텔러가 될 수 있습니다.
+                다양한 매체를 통해 개인이 미디어 권력을 가진 요즘, 더 경각심을 가지고 정보를 수집해야 합니다. 가짜뉴스나 편향된 의견이 아닌 양쪽의 의견을 두루 살펴보세요.
                 </p>
               </div>
             </div>
@@ -70,16 +64,16 @@ const DiscussionDetail = () => {
               className='Detail2-Content'
             >
               <div>
-                <img src='/writer.png' alt='유저' className='Detail2-img' />
-                <p style={{ marginTop: "25px" }}>동화를 한번 써보고 싶은</p>
-                <p>초보 창작자, 작가</p>
+                <img src='/teen.png' alt='유저' className='Detail2-img' />
+                <p style={{ marginTop: "25px" }}>논술, 토론 등 특정 이슈에</p>
+                <p>찬반 논거가 필요한 청소년</p>
               </div>
               <div>
-                <img src='/person.png' alt='유저' className='Detail2-img' />
+                <img src='/writer.png' alt='유저' className='Detail2-img' />
                 <p style={{ marginTop: "25px" }}>
-                  스토리텔링을 훈련해보고 싶은
+                청소년에게 논술 종류의 글쓰기나
                 </p>
-                <p>청소년, 크리에이터</p>
+                <p>토론을 지도하는 교사, 부모</p>
               </div>
               <div>
                 <img
@@ -87,8 +81,17 @@ const DiscussionDetail = () => {
                   alt='유저'
                   className='Detail2-img'
                 />
-                <p style={{ marginTop: "25px" }}>한때 문학청년이 꿈이었던</p>
-                <p>모든 어른</p>
+                <p style={{ marginTop: "25px" }}>시사 및 사회 이슈에 대해</p>
+                <p>글로 써보고 싶은 블로거, 기자 등</p>
+              </div>
+              <div>
+                <img
+                  src='/person.png'
+                  alt='유저'
+                  className='Detail2-img'
+                />
+                <p style={{ marginTop: "25px" }}>특정 이슈에 대해 찬성/반대하는 측의</p>
+                <p>논지가 궁금한 사람</p>
               </div>
             </Box>
           </Box>
@@ -107,16 +110,16 @@ const DiscussionDetail = () => {
                  className='Detail3-img'
                 />
                 <p>
-                  장르, 주인공, 장소, 소재, 주제 등 필수 입력 항목을 채워보세요.
+                논술이나 토론 등을 대비해 논거가 필요한 이슈를 입력합니다.
                 </p>
               </div>
               <div>
                 <img src='/ai.png' alt='ai'className='Detail3-img' />
-                <p>인공지능이 이를 인식해 이야기의 도입부를 만들어 줍니다.</p>
+                <p>결과로 나온 찬성, 반대 의견을 정리해 글에 담아보세요.</p>
               </div>
               <div>
                 <img src='/note.png' alt='writing'className='Detail3-img' />
-                <p>인공지능과 번갈아가며 동화를 전개해 보세요.</p>
+                <p>상대 측 의견에 반박하면서 나의 의견이 더 탄탄해질 수도 있습니다.</p>
               </div>
             </Box>
             <div className='intoServiceBtn'>

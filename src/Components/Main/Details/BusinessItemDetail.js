@@ -52,18 +52,18 @@ const BusinessItemDetail = () => {
               className='Detail2-Content'
             >
               <div>
-                <img src='/writer.png' alt='유저' className='Detail2-img' />
+                <img src='/woman5.png' alt='유저' className='Detail2-img' />
                 <p style={{ marginTop: "25px" }}>나만의 콘텐츠를 상품화할 방법을</p>
                 <p>모색하고 있는 사람</p>
               </div>
               <div>
-                <img src='/person.png' alt='유저' className='Detail2-img' />
+                <img src='/man2.png' alt='유저' className='Detail2-img' />
                 <p style={{ marginTop: "25px" }}>새로운 비지니스 아이디어를 위한</p>
                 <p>영감이 필요한 사람</p>
               </div>
               <div>
                 <img
-                  src='/grandmother.png'
+                  src='/grandmother2.png'
                   alt='유저'
                   className='Detail2-img'
                 />

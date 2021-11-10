@@ -85,20 +85,20 @@ const DailyWriteDetail = () => {
               className='Detail2-Content'
             >
               <div>
-                <img src='/writer.png' alt='유저' className='Detail2-img' />
+                <img src='/woman5.png' alt='유저' className='Detail2-img' />
                 <p style={{ marginTop: "25px" }}>
                   셀프 브랜딩, 자아 성장을 목적으로
                 </p>
                 <p>나 자신을 만나고 싶은 사람들</p>
               </div>
               <div>
-                <img src='/person.png' alt='유저' className='Detail2-img' />
+                <img src='/writer.png' alt='유저' className='Detail2-img' />
                 <p style={{ marginTop: "25px" }}>나, 그리고 나의 일상을</p>
                 <p>콘텐츠로 표현하고 싶은 사람들</p>
               </div>
               <div>
                 <img
-                  src='/grandmother.png'
+                  src='/grandfather.png'
                   alt='유저'
                   className='Detail2-img'
                 />

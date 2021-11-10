@@ -55,12 +55,12 @@ const FairyTaleDetail = () => {
               className='Detail2-Content'
             >
               <div>
-                <img src='/writer.png' alt='유저' className='Detail2-img' />
+                <img src='/girl.png' alt='유저' className='Detail2-img' />
                 <p style={{ marginTop: "25px" }}>동화를 한번 써보고 싶은</p>
                 <p>초보 창작자, 작가</p>
               </div>
               <div>
-                <img src='/person.png' alt='유저' className='Detail2-img' />
+                <img src='/teen.png' alt='유저' className='Detail2-img' />
                 <p style={{ marginTop: "25px" }}>
                   스토리텔링을 훈련해보고 싶은
                 </p>
@@ -68,7 +68,7 @@ const FairyTaleDetail = () => {
               </div>
               <div>
                 <img
-                  src='/grandmother.png'
+                  src='/grandfather.png'
                   alt='유저'
                   className='Detail2-img'
                 />
