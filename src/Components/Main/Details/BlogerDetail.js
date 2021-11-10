@@ -4,8 +4,6 @@ import Layout from "../../Layout";
 import { Box, Grid, ResponsiveContext } from "grommet";
 import { StatusGood } from "grommet-icons";
 
-import styled from "styled-components";
-
 const BlogerDetail = () => {
 
   const size = useContext(ResponsiveContext);
@@ -28,7 +26,7 @@ const BlogerDetail = () => {
             align='center'
             className='Detail1'
           >
-            <Image src='/tinggle.png' alt='팅젤이' />
+            <img src='/tinggle.png' alt='팅젤이' className="Detail-img"/>
             <div className='Detail-TextBox'>
               <div>
                 <h3>나만의 콘텐츠로 독자의 이목을 끌어보세요.</h3>
@@ -55,12 +53,12 @@ const BlogerDetail = () => {
               className='Detail2-Content'
             >
               <div>
-                <img src='/writer.png' alt='유저' style={{ width: "180px" }} />
+                <img src='/writer.png' alt='유저' className='Detail2-img' />
                 <p style={{ marginTop: "25px" }}>블로그를 이제 막 시작하고 싶은</p>
                 <p>초보 블로거</p>
               </div>
               <div>
-                <img src='/person.png' alt='유저' style={{ width: "180px" }} />
+                <img src='/person.png' alt='유저' className='Detail2-img' />
                 <p style={{ marginTop: "25px" }}>매일 새로운 콘텐츠를 만들어</p>
                 <p>많은 방문자 유입이 필요한</p>
                 <p>파워블로거</p>
@@ -69,7 +67,7 @@ const BlogerDetail = () => {
                 <img
                   src='/grandmother.png'
                   alt='유저'
-                  style={{ width: "180px" }}
+                  className='Detail2-img'
                 />
                 <p style={{ marginTop: "25px" }}>한 주제/분야 안에서</p>
                 <p>자신만의 콘텐츠를</p>
@@ -89,23 +87,23 @@ const BlogerDetail = () => {
                 <img
                   src='/agreement.png'
                   alt='문서'
-                  style={{ width: "150px" }}
+                  className='Detail3-img'
                 />
                 <p>
                 기본적으로 블로그로 쓰고 싶은 대주제를 입력하면 제목, 개요, 도입부 등을 제시합니다.
                 </p>
               </div>
               <div>
-                <img src='/ai.png' alt='ai' style={{ width: "150px" }} />
+                <img src='/ai.png' alt='ai' className='Detail3-img' />
                 <p>기본적으로 블로그로 쓰고 싶은 대주제를 입력하면 제목, 개요, 도입부 등을 제시합니다.</p>
               </div>
               <div>
-                <img src='/note.png' alt='writing' style={{ width: "150px" }} />
+                <img src='/note.png' alt='writing' className='Detail3-img' />
                 <p>이어쓰기를 활용해 블로그 콘텐츠를 채우는 수고를 덜어보세요.</p>
               </div>
             </Box>
             <div className='intoServiceBtn'>
-              <Link to="/app/webnovel"><button>서비스 이용하기</button></Link>
+              <Link to="/app/bloger"><button>서비스 이용하기</button></Link>
             </div>
           </Box>
         </Box>
@@ -193,12 +191,3 @@ const BlogerDetail = () => {
 
 export default BlogerDetail;
 
-const Image = styled.img`
-  width: 250px;
-
-
-  @media screen and (max-width: 768px) {
-    display: none;
-  }
-}
-`;

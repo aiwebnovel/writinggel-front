@@ -4,8 +4,6 @@ import Layout from "../../Layout";
 import { Box, Grid, ResponsiveContext } from "grommet";
 import { StatusGood } from "grommet-icons";
 
-import styled from "styled-components";
-
 const WebnovelDetail = () => {
   const size = useContext(ResponsiveContext);
 
@@ -26,7 +24,7 @@ const WebnovelDetail = () => {
             align='center'
             className='Detail1'
           >
-            <Image src='/tinggle.png' alt='팅젤이' />
+            <img src='/tinggle.png' alt='팅젤이' className="Detail-img"/>
             <div className='Detail-TextBox'>
               <div>
                 <h3>웹소설 써보고 싶은데 시작을 망설이고 있나요?</h3>
@@ -57,12 +55,12 @@ const WebnovelDetail = () => {
               className='Detail2-Content'
             >
               <div>
-                <img src='/writer.png' alt='유저' style={{ width: "180px" }} />
+                <img src='/writer.png' alt='유저' className='Detail2-img' />
                 <p style={{ marginTop: "25px" }}>웹소설을 한번 써보고 싶은</p>
                 <p>초보 창작자, 작가</p>
               </div>
               <div>
-                <img src='/person.png' alt='유저' style={{ width: "180px" }} />
+                <img src='/person.png' alt='유저'  className='Detail2-img' />
                 <p style={{ marginTop: "25px" }}>연재 마감에 쫓겨 매일</p>
                 <p>새로운 웹소설을 써내야 하는</p>
                 <p> 창작자, 작가</p>
@@ -71,7 +69,7 @@ const WebnovelDetail = () => {
                 <img
                   src='/grandmother.png'
                   alt='유저'
-                  style={{ width: "180px" }}
+                  className='Detail2-img'
                 />
                 <p style={{ marginTop: "25px" }}>한때 문학청년이 꿈이었던</p>
                 <p>모든 어른</p>
@@ -90,18 +88,18 @@ const WebnovelDetail = () => {
                 <img
                   src='/agreement.png'
                   alt='문서'
-                  style={{ width: "150px" }}
+                  className='Detail3-img'
                 />
                 <p>
                   장르, 주인공, 장소, 소재, 주제 등 필수 입력 항목을 채워보세요.
                 </p>
               </div>
               <div>
-                <img src='/ai.png' alt='ai' style={{ width: "150px" }} />
+                <img src='/ai.png' alt='ai' className='Detail3-img' />
                 <p>인공지능이 이를 인식해 이야기의 도입부를 만들어 줍니다.</p>
               </div>
               <div>
-                <img src='/note.png' alt='writing' style={{ width: "150px" }} />
+                <img src='/note.png' alt='writing' className='Detail3-img' />
                 <p>인공지능과 번갈아가며 웹소설을 전개해 보세요.</p>
               </div>
             </Box>
@@ -198,12 +196,4 @@ const WebnovelDetail = () => {
 
 export default WebnovelDetail;
 
-const Image = styled.img`
-  width: 250px;
 
-
-  @media screen and (max-width: 768px) {
-    display: none;
-  }
-}
-`;
