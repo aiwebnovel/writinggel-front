@@ -559,29 +559,53 @@ $dark-1 : #444;
     }
 }
 
-.Questions {
-    padding: 48px 0 20px 0;
-    /* font-weight: 900; */
-    font-size: 24px;
-    border-bottom: 1px solid #444;
-    margin-bottom: 40px;
-    font-family: 'NeoDunggeunmo';
+.FaqContainer {
+    padding: 100px 64px;
 }
 
-.FAQContainer {
-    font-family: 'NeoDunggeunmo';
-    padding: 0 10px;
+.Faq-Content {
+    border: 1px solid $dark-1;
+    border-radius : 10px;
+    background-color: $white-2;
+    padding: 36px;
+}
+
+.Faq-Title {
+    > h2 {
+        display:flex;
+        align-items: center;
+
+        font-size : 25px;
+        font-weight: 900;
+
+        > svg {
+            margin-right: 5px;
+        }
+    }
+}
+
+.Faq-Accordion {
+    margin-top: 35px;
+    gap: 15px;
+}
+
+.Faq-AccoPanel {
+
+
+    > div {
+        padding: 0;
+        padding: 10px 5px;
+    }
+}
+
+.Faq-PanelContent {
+    padding: 10px 5px;
 
 }
 
-.FAQContent {
-    background-color: #fff;
-    box-shadow: $boxShadow;
-    padding: 15px;
 
-}
+//Explain
 
-//ExplainMember , /membership/signmMember 
 
 .ExplainHeader {
     text-align: center;
