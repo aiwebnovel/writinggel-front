@@ -16,7 +16,7 @@ import LoveLetterDetail from '../Components/Main/Details/LoveLetterDetail';
 import DailyWriteDetail from '../Components/Main/Details/DailyWriteDeatil';
 import StorySrcDetail from '../Components/Main/Details/StorySrcDetail';
 
-import NewsLetter from '../Components/Main/NewsLetter';
+import NewsLetter from '../Components/Main/Newsletter';
 import FaQ from '../Components/Main/FaQ';
 import Ask from '../Components/Main/Ask';
 import ExplainMember from '../Components/Main/ExplainMember';

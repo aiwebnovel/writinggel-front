@@ -1,6 +1,7 @@
 import React from 'react'
 import { Footer as FooterLayout, Box} from 'grommet';
-import {Facebook, Instagram} from 'grommet-icons'
+import {Facebook, Instagram, Twitter} from 'grommet-icons'
+import styled from 'styled-components'
 
 import '../styles/footer.scss'
 
@@ -38,10 +39,13 @@ const Footer = () => {
         </FooterLayout>
         <FooterLayout className="Mobilefooter MobileCopyRight" background="light-3" pad="medium" justify="center" align="center">
           <p className="copyRight">©Appplatform, Inc All Rights Reserved</p>
+          <IconLicense>Icons made by <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></IconLicense>
           <Box direction="row" gap="small" className="Icon">
-            <Facebook size="medium"/>
-            <Instagram size="medium"/>
+          <a target="_blank" rel="noreferrer" href="https://facebook.com/ai.tinytingel/"><Facebook size="medium"/></a>
+          <a target="_blank" rel="noreferrer" href="https://www.instagram.com/tinytingel/"><Instagram size="medium"/></a>
+          <a target="_blank" rel="noreferrer" href="https://twitter.com/tinytingel"><Twitter size="medium"/></a>
           </Box>
+          
         </FooterLayout>
         </>
     )
@@ -54,3 +58,7 @@ const footerStyle = {
     justifyContent: 'center',
     alignItems: 'center'
   }
+
+const IconLicense = styled.div`
+  font-size: 13px;
+`
