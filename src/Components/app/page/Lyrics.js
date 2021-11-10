@@ -39,7 +39,7 @@ const Lyrics = () => {
       await axios(config)
       .then(async (response) => {
         console.log(response.data);
-        SetOutputContent(response.data[0]);
+        SetOutputContent(response.data);
       })
       .catch(async (error) => {
         console.log(error);
