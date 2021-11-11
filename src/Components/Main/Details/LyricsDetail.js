@@ -101,7 +101,7 @@ const LyricsDetail = () => {
               </div>
             </Box>
             <div className='intoServiceBtn'>
-              <Link to='/app/fairytale'>
+              <Link to='/app/Lyrics'>
                 <button>서비스 이용하기</button>
               </Link>
             </div>
