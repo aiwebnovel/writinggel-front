@@ -9,7 +9,7 @@ import { authService } from "../../../firebaseConfig";
 
 import styled from "styled-components";
 
-const Mypage = () => {
+const TingBox = () => {
   const size = useContext(ResponsiveContext);
   const History = useHistory();
 
@@ -73,7 +73,7 @@ const Mypage = () => {
           color='#fff'
           className='MypageHeader'
         >
-          <h2>마이 페이지</h2>
+          <h2>팅젤 보관함</h2>
         </Box>
         <Box
           width='100%'
@@ -102,7 +102,7 @@ const Mypage = () => {
           </div>
           <div className="dataBox">
               <p>결제 내역</p>
-              <p style={{textDecoration:'underline'}}>{isBill !== true ? (<Link to="/mypage/payment" >보러가기</Link>): '결제 내역이 없어요!' }</p>
+              <p>{isBill !== true ? (<Link to="/payment">보러가기</Link>): '결제 내역이 없어요!' }</p>
           </div>
           <hr style={{ width: '100%'}}/>
           <div className="dataBox">
@@ -144,4 +144,4 @@ const Mypage = () => {
   );
 };
 
-export default Mypage;
+export default TingBox;

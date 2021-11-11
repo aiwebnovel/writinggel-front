@@ -1,4 +1,5 @@
 import React, { useContext, useState } from "react";
+import {useHistory} from 'react-router-dom'
 import Layout from "../Layout";
 import { Box, Grid, ResponsiveContext } from "grommet";
 import { Bookmark } from "grommet-icons";
@@ -10,6 +11,8 @@ import styled from "styled-components";
 
 const SignMember = () => {
   const size = useContext(ResponsiveContext);
+  const history = useHistory();
+
 
   const [cardNum, SetCardNum] = useState("");
   const [cardExpire, SetCardExpire] = useState("");
@@ -173,7 +176,8 @@ const SignMember = () => {
                 className='creditCardButton'
                 //onClick={this.requestBill}
                 onClick={() => {
-                  toast.warn("🛠 공사 중 입니다!");
+                  // toast.warn("🛠 공사 중 입니다!");
+                  history.push('/payment')
                 }}
               >
                 결제하기

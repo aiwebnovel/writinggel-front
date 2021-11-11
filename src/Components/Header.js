@@ -348,7 +348,7 @@ const Header = () => {
             <hr style={{width:'100%',color:'#3b2477'}}/>
             <div className="afterLoginBottom">
 
-              <p><Link to='/'>팅젤 보관함</Link></p>
+              <p><Link to='/tingbox'>팅젤 보관함</Link></p>
                 <p><Link to='/mypage'>마이 페이지</Link></p>
                 <button onClick={signOut}>로그아웃</button>
               </div>

@@ -209,7 +209,7 @@ const Header = () => {
             <hr style={{ width: "100%", color: "#3b2477" }} />
             <div className='ServiceAfterLoginBottom'>
               <p>
-                <Link to='/'>팅젤 보관함</Link>
+                <Link to='/tingbox'>팅젤 보관함</Link>
               </p>
               <p>
                 <Link to='/mypage'>마이 페이지</Link>

@@ -942,3 +942,67 @@ hr {
     cursor: pointer;
     font-size: 1rem;
 }
+//payment
+
+.paymentBox {
+    padding: 150px 80px;
+    gap:50px;
+
+    @media screen and (max-width: 768px) {
+        padding-right:20px;
+        padding-left:20px;    
+        
+    }
+}
+
+.paymentContent {
+    border: 1px solid $dark-1;
+}
+
+.payBox {
+    display: flex;
+    padding: 15px 8px;
+    gap: 50px;
+
+    > h4 {
+        font-weight: 600;
+    }
+
+    @media screen and (max-width: 768px) {
+        flex-direction: column;
+        width: 100%;
+        gap: 20px;
+
+    }
+}
+
+.cancelBtn {
+    background-color: $sub1;
+    border: 1px solid $sub1;
+    outline: 0;
+    color: #fff;
+    padding: 12px 35px;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.listBtn {
+    background-color: $main;
+    border: 1px solid $main;
+    outline: 0;
+    color: #fff;
+    padding: 12px 35px;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+
+// .BtnContent {
+//     @media screen and (max-width: 768px) {
+//         width: 100%;
+//         margin: 15px 0;
+//     }
+// }
+
+//tingbox 
+
