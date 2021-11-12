@@ -37,7 +37,7 @@ $dark-1 : #444;
 
 .cardTop {
     padding: 8px;
-    background-color: #3B2477;
+    background-color: $main;
 }
 
 .cardTitle {
@@ -390,7 +390,7 @@ $dark-1 : #444;
 
 .LetterHeader {
     width: 100%;
-    background-color: #3B2477;
+    background-color: $main;
     color: #fff;
     text-align: center;
     padding: 48px 0;
@@ -403,8 +403,12 @@ $dark-1 : #444;
 
 .FormInputs {
 
-    width: 400px;
-    text-align: center;
+    width: 400px;    
+
+    > p{
+        font-size: 13px;
+        color : $point;
+    }
 
     >input {
 
@@ -412,16 +416,16 @@ $dark-1 : #444;
         padding: 10px 5px;
         font-size: 1rem;
         border: 1px solid #051619;
-        margin-bottom: 10px;
-
-
+        margin:0;
+    
         @media screen and (max-width:768px) {
-            width: 200px;
+            width: 300px;
         }
     }
 
     @media screen and (max-width: 768px) {
         width: 100%;
+        text-align: center;
     }
 
 }
@@ -444,11 +448,25 @@ $dark-1 : #444;
 }
 
 .subsBtn {
-    background-color: #3B2477;
+    background-color: $main;
     color: #fff;
     border: 0;
     outline: 0;
     padding: 0;
+    padding: 8px 10px;
+    font-size: 16px;
+    border-radius: 5px;
+    margin-top: 12px;
+    cursor: pointer;
+}
+
+.error {
+    background-color : #f9f9f9;
+    border: 1px solid  #444;
+    color : #444;
+    cursor: pointer;
+
+    outline: 0;
     padding: 8px 10px;
     font-size: 16px;
     border-radius: 5px;
@@ -545,8 +563,8 @@ $dark-1 : #444;
 
     >button {
         font-size: 1rem;
-        background-color: #3b2477;
-        border: 1px solid #3b2477;
+        background-color: $main;
+        border: 1px solid $main;
         outline: 0;
         color: #fff;
         padding: 15px 50px;
@@ -927,7 +945,7 @@ hr {
 }
 
 .MBtn {
-    background-color: #3B2477;
+    background-color: $main;
     color: #fff;
     border: 0;
     outline: 0;
