@@ -62,7 +62,7 @@ $dark-1 : #444;
     font-family: 'NeoDunggeunmo';
     text-align: center;
 
-    > img {
+    >img {
         width: 200px;
     }
 
@@ -70,10 +70,10 @@ $dark-1 : #444;
         font-size: 2rem;
         font-weight: 600;
         color: $main;
-        margin-bottom : 20px;
+        margin-bottom: 20px;
         line-height: 40px;
 
-        > span {
+        >span {
             color: $sub2;
             // -webkit-text-stroke: 0.5px $main;
         }
@@ -82,10 +82,10 @@ $dark-1 : #444;
 
 .paraBox {
 
-    > p {
-    @media screen and (max-width: 768px) {
-        font-size: 1.1rem;
-    }
+    >p {
+        @media screen and (max-width: 768px) {
+            font-size: 1.1rem;
+        }
     }
 }
 
@@ -106,21 +106,21 @@ $dark-1 : #444;
 }
 
 .IntroTinggle {
-    
-  > h4 {
-    font-family: "NeoDunggeunmo";
 
-  }
+    >h4 {
+        font-family: "NeoDunggeunmo";
 
-  > ul {
-    max-width: 500px;
-    // list-style-type: disc;
-    margin-top: 20px;
-  }
+    }
 
-  .introduce {
-    margin-top: 20px;
-  }
+    >ul {
+        max-width: 500px;
+        // list-style-type: disc;
+        margin-top: 20px;
+    }
+
+    .introduce {
+        margin-top: 20px;
+    }
 }
 
 
@@ -142,15 +142,15 @@ $dark-1 : #444;
     height: 300px;
     background-color: $white-1;
     line-height: 40px;
-   
+
     display: flex;
     justify-content: center;
     align-items: center;
     text-align: center;
 
-    > h1 {
+    >h1 {
         // font-family: 'NeoDunggeunmo';
-        
+
         font-size: 30px;
         font-weight: 900;
 
@@ -159,7 +159,7 @@ $dark-1 : #444;
         }
     }
 
-    > h2 {
+    >h2 {
         font-size: 16px;
         padding-bottom: 30px;
 
@@ -169,42 +169,46 @@ $dark-1 : #444;
         }
     }
 
-    > hr {
+    >hr {
         width: 20%;
     }
 }
 
-.Detail1, .Detail2, .Detail3, .DetailBottom1, .DetailBottom2 {
+.Detail1,
+.Detail2,
+.Detail3,
+.DetailBottom1,
+.DetailBottom2 {
     padding: 80px 0;
 }
 
 .Detail-img {
-  width: 250px;
+    width: 250px;
 
-  @media screen and (max-width: 768px) {
-    display: none;
-  }
+    @media screen and (max-width: 768px) {
+        display: none;
+    }
 }
 
 
 .Detail2-img {
     width: 180px;
-  
-  
+
+
     @media screen and (max-width: 768px) {
-      width: 150px
+        width: 150px
     }
 }
 
 .Detail3-img {
     width: 150px;
-  
-  
+
+
     @media screen and (max-width: 768px) {
-      width: 120px
+        width: 120px
     }
 }
-  
+
 
 
 
@@ -219,41 +223,42 @@ $dark-1 : #444;
         padding: 0 20px;
     }
 
-    > div > h3 {
+    >div>h3 {
         font-weight: 600;
-        font-size : 19px;
+        font-size: 19px;
         padding: 7px 0;
 
-        > a {
+        >a {
             font-weight: 600;
             text-decoration: underline;
         }
     }
 
-    > div > p {
-        font-size : 17px;
-        
-        > a {
+    >div>p {
+        font-size: 17px;
+
+        >a {
             font-weight: 600;
             text-decoration: underline;
         }
     }
 }
 
-.Detail2, .Detail3 {
-    > h3 {
+.Detail2,
+.Detail3 {
+    >h3 {
         font-weight: 600;
-        font-size : 25px;
-        padding-bottom : 30px;
-        
+        font-size: 25px;
+        padding-bottom: 30px;
+
 
         @media screen and (max-width: 768px) {
             font-size: 20px;
         }
-        
+
     }
 
-    > hr {
+    >hr {
         width: 15%;
     }
 }
@@ -265,33 +270,33 @@ $dark-1 : #444;
 
     @media screen and (max-width: 768px) {
         padding-right: 0;
-        padding-left : 0;
+        padding-left: 0;
     }
 
-    > div {
+    >div {
         text-align: center;
         width: 220px;
         // border: 1px solid $dark-1;
 
-        > p {
+        >p {
             font-size: 15px;
         }
 
     }
 }
 
-.Detail3-Content{
+.Detail3-Content {
     padding: 100px 0 80px 0;
     gap: 50px;
-    
 
-    > div {
+
+    >div {
         text-align: center;
         width: 220px;
         // border: 1px solid $dark-1;
 
-        > p {
-            margin-top : 35px;
+        >p {
+            margin-top: 35px;
             font-size: 16px;
         }
 
@@ -303,17 +308,17 @@ $dark-1 : #444;
     text-align: center;
     // margin-bottom: 40px;
 
-    > a > button {
-    background-color: $main;
-    color: #fff;
-    border: 0;
-    outline: 0;
-    padding: 0;
-    width: 180px;
-    padding: 15px 10px;
-    font-size: 18px;
-    border-radius: 5px;
-    cursor: pointer;
+    >a>button {
+        background-color: $main;
+        color: #fff;
+        border: 0;
+        outline: 0;
+        padding: 0;
+        width: 180px;
+        padding: 15px 10px;
+        font-size: 18px;
+        border-radius: 5px;
+        cursor: pointer;
     }
 }
 
@@ -331,16 +336,16 @@ $dark-1 : #444;
 
     background-color: #fff;
     box-shadow: $boxShadow;
-    padding : 24px;
+    padding: 24px;
 
-    > h3 {
+    >h3 {
         font-size: 18px;
         font-weight: 600;
-        margin-bottom : 10px;
+        margin-bottom: 10px;
     }
 
-    > p {
-        font-size : 16px;
+    >p {
+        font-size: 16px;
     }
 }
 
@@ -351,28 +356,30 @@ $dark-1 : #444;
 
 .Bottom2-Content {
 
-    > h4 {
+    >h4 {
         display: flex;
         align-items: center;
         gap: 5px;
         font-weight: 600;
-        font-size : 20px;
+        font-size: 20px;
         padding: 15px 0;
         color: #000;
 
-        > svg {
-            fill:#000;
-            stroke:#000;;
+        >svg {
+            fill: #000;
+            stroke: #000;
+            ;
         }
     }
 
 
-    > p {
+    >p {
         color: #000;
+
         &::before {
-        content:' ∙ '
+            content: ' ∙ '
+        }
     }
-}
 }
 
 //newsletter
@@ -576,26 +583,26 @@ $dark-1 : #444;
 
 .Faq-Content {
     border: 1px solid $dark-1;
-    border-radius : 10px;
+    border-radius: 10px;
     background-color: #fff;
-    
+
 }
 
 .Faq-Title {
 
     background-color: $white-2;
-    border-top-left-radius : 10px;
+    border-top-left-radius: 10px;
     border-top-right-radius: 10px;
     padding: 36px;
 
-    > h2 {
-        display:flex;
+    >h2 {
+        display: flex;
         align-items: center;
 
-        font-size : 1.5rem;
+        font-size: 1.5rem;
         font-weight: 900;
 
-        > svg {
+        >svg {
             margin-right: 5px;
         }
     }
@@ -610,12 +617,12 @@ $dark-1 : #444;
 .Faq-AccoPanel {
 
 
-    > div {
+    >div {
         padding: 0;
         padding: 10px 5px;
 
-        > h4 {
-            max-width : 800px;
+        >h4 {
+            max-width: 800px;
         }
     }
 }
@@ -625,7 +632,7 @@ $dark-1 : #444;
     padding: 10px 0px 10px 25px;
     max-width: 1100px;
 
-    > p {
+    >p {
         font-size: 17px;
         line-height: 25px;
     }
@@ -942,16 +949,17 @@ hr {
     cursor: pointer;
     font-size: 1rem;
 }
+
 //payment
 
 .paymentBox {
     padding: 150px 80px;
-    gap:50px;
+    gap: 50px;
 
     @media screen and (max-width: 768px) {
-        padding-right:20px;
-        padding-left:20px;    
-        
+        padding-right: 20px;
+        padding-left: 20px;
+
     }
 }
 
@@ -964,7 +972,7 @@ hr {
     padding: 15px 8px;
     gap: 50px;
 
-    > h4 {
+    >h4 {
         font-weight: 600;
     }
 
@@ -1000,18 +1008,87 @@ hr {
 
 .tingContainer {
     padding: 200px 64px;
+
+    @media screen and (max-width: 768px) {
+        padding-right:24px;
+        padding-left:24px;
+    }
 }
 
+
 .tingContent {
-    > div {
+    border: 1px solid $dark-1;
+
+}
+
+.SaveList {
+    padding: 35px 20px;
+    gap: 5px;
+
+    @media screen and (max-width: 768px) {
+        border-top: 1px solid $dark-1;
+        gap: 10px;
+    }   
+
+}
+
+
+.titleAcopy {
+    gap: 5px;
+ 
+    > h3 {
+        font-weight: 600;
+        width: 100px;
+        font-size: 20px;
         text-align: center;
 
-        > img {
+    }
+    
+    > button {
+        background-color: $point;
+        border: 1px solid $point;
+        color: $dark-1;
+        width: 50px; 
+        cursor: pointer;
+
+        font-size: 14px;
+    }
+
+
+    @media screen and (max-width: 768px) {
+        justify-content: space-between;
+
+        > h3 {
+            text-align: left;
+        }
+    }
+
+}
+
+
+
+.ListTitle {
+    padding: 18px 15px;
+    background-color: $sub2;
+    font-weight: 600;
+    border-bottom: 1px solid $dark-1;
+
+    @media screen and (max-width:768px) {
+        border-bottom: 0;
+    }
+}
+
+
+.tingNoContent {
+    >div {
+        text-align: center;
+
+        >img {
             width: 300px;
             opacity: 0.5;
         }
 
-        > p {
+        >p {
             padding: 40px 0;
             font-size: 25px;
             font-weight: 600;
@@ -1021,8 +1098,8 @@ hr {
     > a > button {
         border: 1px solid $sub1;
         background-color: $sub1;
-        color : $white-2;
-        font-size : 18px;
+        color: $white-2;
+        font-size: 18px;
         padding: 10px 15px;
         cursor: pointer;
         transition: all 200ms ease-in-out;
@@ -1030,7 +1107,7 @@ hr {
         &:hover {
             background-color: $point;
             border: 1px solid $point;
-            color: $dark-1;    
+            color: $dark-1;
         }
     }
 }
