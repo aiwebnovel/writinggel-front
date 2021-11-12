@@ -102,10 +102,14 @@ const TingBox = () => {
                 <Box
                   direction={size !== "small" ? "column" : "row"}
                   align='center'
-                  className='titleAcopy'
+               
+                  className='titleAbutton'
                 >
                   <h3>웹소설</h3>
-                  <button>복사</button>
+                  <div>
+                    <button>복사</button>
+                    <button style={{ backgroundColor: '#FF635C',border: '1px solid #FF635C', color:'#fff'}}>삭제</button>
+                  </div>
                 </Box>
                 <Grid
                   fill
@@ -139,10 +143,13 @@ const TingBox = () => {
                 <Box
                   direction={size !== "small" ? "column" : "row"}
                   align='center'
-                  className='titleAcopy'
+                  className='titleAbutton'
                 >
                   <h3>블로그</h3>
-                  <button>복사</button>
+                  <div>
+                    <button>복사</button>
+                    <button style={{ backgroundColor: '#FF635C',border: '1px solid #FF635C', color:'#fff'}}>삭제</button>
+                  </div>
                 </Box>
                 <Grid
                   fill

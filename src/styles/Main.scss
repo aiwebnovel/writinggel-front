@@ -534,12 +534,15 @@ $dark-1 : #444;
     }
 
     .EmailInput,
-    .PhoneInput {
+    .PhoneInput
+    {   
+        background-color: $white-1;
         padding: 10px 8px;
         border: 1px solid #444;
     }
 
     .selectStyle {
+        background-color: $white-1;
         padding: 10px 5px;
         border: 1px solid #444;
     }
@@ -549,6 +552,7 @@ $dark-1 : #444;
         min-height: 200px;
         resize: none;
         border: 1px solid #444;
+        background-color: $white-1;
 
         &::placeholder {
             font-size: 14px;
@@ -1051,7 +1055,7 @@ hr {
 }
 
 
-.titleAcopy {
+.titleAbutton {
     gap: 5px;
  
     > h3 {
@@ -1062,19 +1066,29 @@ hr {
 
     }
     
+    > div {
+        // width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 5px;
+        
     > button {
-        background-color: $point;
-        border: 1px solid $point;
-        color: $dark-1;
         width: 50px; 
         cursor: pointer;
-
         font-size: 14px;
+        background-color: $point;
+        border: 1px solid $point;
+        color: #000;
     }
-
+    }
 
     @media screen and (max-width: 768px) {
         justify-content: space-between;
+
+        > div {
+            flex-direction: row;
+        }
 
         > h3 {
             text-align: left;
@@ -1082,8 +1096,6 @@ hr {
     }
 
 }
-
-
 
 .ListTitle {
     padding: 18px 15px;
