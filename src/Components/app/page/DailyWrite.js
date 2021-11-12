@@ -8,17 +8,20 @@ import "react-toastify/dist/ReactToastify.css";
 import ServiceLayout from "../Layout";
 import styled from "styled-components";
 import Modal from "../../Modal";
+import * as configUrl from "../../../config";
+
+import axios from "axios";
 
 const Dailywrite = () => {
   const size = useContext(ResponsiveContext);
   const History = useHistory();
 
   const [isOpen, SetOpen] = useState(false);
+  const [OutputContent, SetOutputContent] = useState(["", ""]);
 
   const HandleModals = () => {
     SetOpen(!isOpen);
   };
-
 
   useEffect(() => {
     const loginCheck = localStorage.getItem("token");
@@ -31,60 +34,88 @@ const Dailywrite = () => {
     }
   }, []);
 
+  const DailywriteAxios = async () => {
+    SetOutputContent(["", ""]);
+    const config = {
+      method: "post",
+      url: `${configUrl.SERVER_URL}/writinggel/lifequestion`,
+      headers: { authentication: localStorage.getItem("token") },
+    };
+
+    await axios(config)
+      .then(async (response) => {
+        SetOutputContent(response.data);
+      })
+      .catch(async (error) => {
+        console.log(error);
+      });
+  };
+
   return (
     <>
-    <ServiceLayout>
-      <Box
-        className='ServiceContainerVh'
-        background='#f9f9f9'
-        pad='large'
-        justify='center'
-        align='center'
-        gap="large"
-      >
-        <Grid
-          columns={size !== "small" ? { count: 4, size: "auto" } : "100%"}
-          gap='medium'
-          fill={size !== "small" ? false : true}
+      <ServiceLayout>
+        <Box
+          className="ServiceContainerVh"
+          background="#f9f9f9"
+          pad="large"
+          justify="center"
+          align="center"
+          gap="large"
         >
-          <Card>
-            <img src='/logo.png' alt='로고' />
-          </Card>
-          <Card>
-            <img src='/logo.png' alt='로고' />
-          </Card>
-          <Card>
-            <img src='/logo.png' alt='로고' />
-          </Card>
-          <Card>
-            <img src='/logo.png' alt='로고' />
-          </Card>
-          <Card>
-            <img src='/logo.png' alt='로고' />
-          </Card>
-          <Card>
-            <img src='/logo.png' alt='로고' />
-          </Card>
-          <Card>
-            <img src='/logo.png' alt='로고' />
-          </Card>
-          <Card>
-            <img src='/logo.png' alt='로고' />
-          </Card>
-        </Grid>
+          <Grid
+            columns={size !== "small" ? { count: 4, size: "auto" } : "100%"}
+            gap="medium"
+            fill={size !== "small" ? false : true}
+          >
+            <Card>
+              <img src="/logo.png" alt="로고" />
+            </Card>
+            <Card>
+              <img src="/logo.png" alt="로고" />
+            </Card>
+            <Card>
+              <img src="/logo.png" alt="로고" />
+            </Card>
+            <Card>
+              <img src="/logo.png" alt="로고" />
+            </Card>
+            <Card>
+              <img src="/logo.png" alt="로고" />
+            </Card>
+            <Card>
+              <img src="/logo.png" alt="로고" />
+            </Card>
+            <Card>
+              <img src="/logo.png" alt="로고" />
+            </Card>
+            <Card>
+              <img src="/logo.png" alt="로고" />
+            </Card>
+          </Grid>
 
-        <DailyBtn onClick={HandleModals}>일상 기록 질문 뽑기</DailyBtn>
-      </Box>
-    </ServiceLayout>
-    <Modal onClick={HandleModals} open={isOpen} close={HandleModals}>
-      <ResultCard>
-        <div className="cardImg"><img src="/logo.png" alt='로고' /></div>
-        <div>만약 당신이 당신의 삶에 대한 이야기를 쓴다면, 제목은 무엇인가요?</div>
-        <hr style={{margin:'20px 0'}}/>
-        <div>If you were to write a story about your life, what would be the title?</div>
-        <div className="DailyiconBox"><Download/></div>
-      </ResultCard>
-    </Modal>
+          <DailyBtn
+            onClick={() => {
+              DailywriteAxios();
+              HandleModals();
+            }}
+          >
+            일상 기록 질문 뽑기
+          </DailyBtn>
+        </Box>
+      </ServiceLayout>
+      <Modal onClick={HandleModals} open={isOpen} close={HandleModals}>
+        <ResultCard>
+          <div className="cardImg">
+            <img src="/logo.png" alt="로고" />
+          </div>
+          <div>{OutputContent[0]}</div>
+          <hr style={{ margin: "20px 0" }} />
+          <div> {OutputContent[1]}</div>
+          <div className="DailyiconBox">
+            <Download />
+          </div>
+        </ResultCard>
+      </Modal>
     </>
   );
 };
@@ -109,7 +140,7 @@ const DailyBtn = styled.button`
   background-color: #3b2477;
   color: #fff;
   width: 200px;
-  font-size : 1rem;
+  font-size: 1rem;
   padding: 10px 15px;
   border: 1px solid #3b2477;
   cursor: pointer;
@@ -123,16 +154,14 @@ const ResultCard = styled.div`
 
   > div {
     width: 70%;
-
   }
 
   .cardImg {
     text-align: center;
-    margin-bottom : 10px;
-  
-  > img {
-      width: 80px;
+    margin-bottom: 10px;
 
+    > img {
+      width: 80px;
+    }
   }
-}
-`
+`;
