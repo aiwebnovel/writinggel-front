@@ -996,13 +996,41 @@ hr {
     font-weight: 600;
 }
 
-
-// .BtnContent {
-//     @media screen and (max-width: 768px) {
-//         width: 100%;
-//         margin: 15px 0;
-//     }
-// }
-
 //tingbox 
 
+.tingContainer {
+    padding: 200px 64px;
+}
+
+.tingContent {
+    > div {
+        text-align: center;
+
+        > img {
+            width: 300px;
+            opacity: 0.5;
+        }
+
+        > p {
+            padding: 40px 0;
+            font-size: 25px;
+            font-weight: 600;
+        }
+    }
+
+    > a > button {
+        border: 1px solid $sub1;
+        background-color: $sub1;
+        color : $white-2;
+        font-size : 18px;
+        padding: 10px 15px;
+        cursor: pointer;
+        transition: all 200ms ease-in-out;
+
+        &:hover {
+            background-color: $point;
+            border: 1px solid $point;
+            color: $dark-1;    
+        }
+    }
+}
