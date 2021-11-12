@@ -102,7 +102,7 @@ const Mypage = () => {
           </div>
           <div className="dataBox">
               <p>결제 내역</p>
-              <p>{isBill !== true ? (<Link to="/payment">보러가기</Link>): '결제 내역이 없어요!' }</p>
+              <p style={{textDecoration:'underline'}}>{isBill !== true ? (<Link to="/mypage/payment" >보러가기</Link>): '결제 내역이 없어요!' }</p>
           </div>
           <hr style={{ width: '100%'}}/>
           <div className="dataBox">

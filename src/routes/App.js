@@ -23,6 +23,7 @@ import ExplainMember from '../Components/Main/ExplainMember';
 import SignMember from '../Components/Membership/SignMember';
 import Mypage from '../Components/Main/mypage';
 import Modify from '../Components/Main/mypage/Modify';
+import TingBox from '../Components/Main/mypage/TingBox';
 import PayResult from '../Components/Membership/PayResult';
 
 import Webnovel from '../Components/app/page/Webnovel';
@@ -63,9 +64,10 @@ function App() {
         <Route exact path="/faq" component={FaQ}></Route>
         <Route exact path="/explain" component={ExplainMember}></Route>
         <Route exact path="/signIn" component={SignMember}></Route>
-        <Route exact path="/payment" component={PayResult}></Route>
+        <Route exact path="/mypage/payment" component={PayResult}></Route>
         <Route exact path="/mypage" component={Mypage}></Route>
         <Route exact path="/mypage/modify" component={Modify}></Route>
+        <Route exact path="/tingbox" component={TingBox}></Route>
 
 
 

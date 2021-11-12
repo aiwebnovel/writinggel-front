@@ -1,4 +1,4 @@
-import React, {useContext, useState} from "react";
+import React, {useContext} from "react";
 import { Link} from 'react-router-dom'
 import Layout from "./Layout";
 import { Box, Grid, Card, CardBody, CardHeader, ResponsiveContext} from "grommet";
@@ -24,7 +24,7 @@ const Home = () => {
           fill={size !== 'small' ? false : true}
         >
           {LinkObject.map((item)=>(
-            <Link to={item.detail} key={item.id}>
+            <Link to={item.detail || '/'} key={item.id}>
              <Card background='#f9f9f9' >
                <CardHeader className='cardTop'>
                  <Magic color='#fff' />

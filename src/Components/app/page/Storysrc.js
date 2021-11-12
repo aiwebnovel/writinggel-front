@@ -1,11 +1,8 @@
 import {
   Box,
-  Grid,
   ResponsiveContext,
-  Accordion,
-  AccordionPanel,
 } from "grommet";
-import { Update, Close, Add, Download } from "grommet-icons";
+import { Download } from "grommet-icons";
 import React, { useEffect, useContext, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";

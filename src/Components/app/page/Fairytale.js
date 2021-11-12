@@ -46,6 +46,56 @@ const Fairytale = () => {
     SetSider(!isSider);
   };
 
+  const [category, Setcategory] = useState({
+    story:'',
+    mainCharacter:'',
+    period:'',
+    location:'',
+    theme:'',
+  });
+
+  const { story, mainCharacter, period, location, theme} = category
+
+  const HandleInput = (e) => {
+    console.log('e',e);
+    console.log('category', e.target.name);
+    console.log('input', e.target.value)
+
+    if(e.target.name === '주요 인물') {
+      Setcategory({
+      ...category,
+      mainCharacter : e.target.value
+      })
+    }
+    if(e.target.name === '장소') {
+      Setcategory({
+      ...category,
+      location : e.target.value
+      })
+    }
+    if(e.target.name === '시간') {
+      Setcategory({
+      ...category,
+      period : e.target.value
+      })
+    }
+    if(e.target.name === '주요 사건') {
+      Setcategory({
+      ...category,
+      story : e.target.value
+      })
+    }
+    if(e.target.name === '소재') {
+      Setcategory({
+      ...category,
+      theme : e.target.value
+      })
+    }
+    console.log('result', story, mainCharacter, period, location, theme);
+
+  }
+
+
   useEffect(() => {
     const loginCheck = localStorage.getItem("token");
 
@@ -83,7 +133,7 @@ const Fairytale = () => {
                 <Close /> 
               </SiderBtn>
               <Box align='center' gap='large'>
-                <Accordion multiple className='AcoStyle'>
+                <Accordion className='AcoStyle' multiple >
                   {AccodianData.map((item) => (
                     <AccordionPanel
                       key={item.id}
@@ -91,7 +141,7 @@ const Fairytale = () => {
                       className='AcoPanelStyle'
                     >
                       <div className='AcoInput'>
-                        <input type='text' />
+                        <input type='text' name={item.title} onChange={(e) => HandleInput(e)}/>
                         <button>추가</button>
                       </div>
                     </AccordionPanel>
