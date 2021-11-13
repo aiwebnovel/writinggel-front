@@ -4,7 +4,7 @@ import Layout from "../../Layout";
 import { Box, Grid, ResponsiveContext } from "grommet";
 import { StatusGood } from "grommet-icons";
 
-import styled from "styled-components";
+// import styled from "styled-components";
 const BusinessItemDetail = () => {
   const size = useContext(ResponsiveContext);
 

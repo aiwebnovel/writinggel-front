@@ -75,7 +75,39 @@ const Firstsentence = () => {
         .catch(async (error) => {
           console.log(error);
         });
+      }else {
+        toast.info('결과가 나오지 않았습니다. 버튼을 한 번 더 눌러주세요!');  
       }
+  }
+
+  const SaveContent = async() => {
+    
+    if(OutputContent){
+      const config = {
+        method: "post",
+        url: `${configUrl.SERVER_URL}/archive`,
+        headers: { authentication: localStorage.getItem("token") },
+        data: {
+          story: OutputContent[0],
+          category:'첫문장 자판기',
+        }
+      };
+
+      await axios(config)
+        .then(async (response) => {
+         
+          await SetOutputContent(response.data);
+          console.log('성공?')
+          toast.success('저장완료!');
+        })
+        .catch(async (error) => {
+          console.log(error);
+        });
+      }else {
+        toast.info('저장할 결과가 없습니다!');  
+      }
+
+
   }
 
   return (
@@ -108,7 +140,7 @@ const Firstsentence = () => {
                 <p>{OutputContent[1]}</p>
                 <div style={{display: 'flex',alignItems:'center'}}>
                   <Cycle onClick={Request} style={{marginRight: '15px'}}/>
-                  <Download />
+                  <Download onClick={SaveContent} />
                 </div>
               </Box>
             )}

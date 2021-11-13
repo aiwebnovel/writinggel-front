@@ -1,18 +1,13 @@
-import {
-  Box,
-  ResponsiveContext,
-} from "grommet";
+import { Box } from "grommet";
 import { Download } from "grommet-icons";
-import React, { useEffect, useContext, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import ServiceLayout from "../Layout";
-import styled from "styled-components";
 
 const Storysrc = () => {
-  const size = useContext(ResponsiveContext);
   const History = useHistory();
 
   const [isOutput, SetOutput] = useState(false);
