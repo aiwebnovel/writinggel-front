@@ -11,8 +11,8 @@ const StorySrcDetail = () => {
 
   return (
     <Layout>
-      <Box justify='center' align='center' className='BoxContainer'>
-        <Box className='DetailHeader' pad='medium'>
+      <Box justify="center" align="center" className="BoxContainer">
+        <Box className="DetailHeader" pad="medium">
           <h1>이야기 재료 찾기</h1>
           <h2>
             모든 이야기는 점에서 시작합니다. 점을 선으로, 선을 면으로
@@ -21,68 +21,59 @@ const StorySrcDetail = () => {
           <hr />
         </Box>
 
-        <Box fill className='DetailContainer'>
+        <Box fill className="DetailContainer">
           <Box
             direction={size !== "small" ? "row" : "column"}
-            gap='large'
-            justify='center'
-            align='center'
-            className='Detail1'
+            gap="large"
+            justify="center"
+            align="center"
+            className="Detail1"
           >
-            <img src='/tinggle.png' alt='팅젤이' className='Detail-img' />
-            <div className='Detail-TextBox'>
+            <img src="/tinggle.png" alt="팅젤이" className="Detail-img" />
+            <div className="Detail-TextBox">
               <QuoteBox>
-                <h4>
-                  🖊 Creativity is just connecting things.
-                </h4>
+                <h4>🖊 Creativity is just connecting things.</h4>
                 <p>창의력은 단지 점들을 연결하는 것이다.</p>
                 <p style={{ textAlign: "right" }}>- 스티브 잡스</p>
               </QuoteBox>
               <div>
-                <h3>
-                거창한 이야기가 아닌, 아주 작은 단위에서 시작해보세요.
-                </h3>
+                <h3>거창한 이야기가 아닌, 아주 작은 단위에서 시작해보세요.</h3>
                 <p>
-                이 세상에 완전히 새로운 이야기는 없습니다. 우리에게 익숙한 단어들을 조합하다가 뜻밖의 이야기를 만나실지도 몰라요.
+                  이 세상에 완전히 새로운 이야기는 없습니다. 우리에게 익숙한
+                  단어들을 조합하다가 뜻밖의 이야기를 만나실지도 몰라요.
                 </p>
               </div>
               <div>
-                <h3>
-                언어 감각이 자연스럽게 자극되면서 창의력이 생길 거에요.
-                </h3>
+                <h3>언어 감각이 자연스럽게 자극되면서 창의력이 생길 거에요.</h3>
                 <p>
-                서로 상관 없어 보이는 단어들을 잇는 것만으로 언어 감각이 좋아집니다. 잠들어 있는 당신의 언어감각을 깨워보세요!
+                  서로 상관 없어 보이는 단어들을 잇는 것만으로 언어 감각이
+                  좋아집니다. 잠들어 있는 당신의 언어감각을 깨워보세요!
                 </p>
               </div>
-             
             </div>
           </Box>
 
-          <Box className='Detail2' justify='center' align='center'>
+          <Box className="Detail2" justify="center" align="center">
             <h3>누가 활용할 수 있을까요?</h3>
             <hr />
             <Box
               direction={size !== "small" ? "row" : "column"}
-              className='Detail2-Content'
+              className="Detail2-Content"
             >
               <div>
-                <img src='/person.png' alt='유저' className='Detail2-img' />
-                <p style={{ marginTop: "25px" }}>
-                새로운 이야기 소재가
-                </p>
+                <img src="/person.png" alt="유저" className="Detail2-img" />
+                <p style={{ marginTop: "25px" }}>새로운 이야기 소재가</p>
                 <p>필요한 창작자들</p>
               </div>
               <div>
-                <img src='/man.png' alt='유저' className='Detail2-img' />
-                <p style={{ marginTop: "25px" }}>오래동안 안 써서 굳어진 언어 감각을</p>
+                <img src="/man.png" alt="유저" className="Detail2-img" />
+                <p style={{ marginTop: "25px" }}>
+                  오래동안 안 써서 굳어진 언어 감각을
+                </p>
                 <p>유연하게 스트레칭하고 싶은 사람들</p>
               </div>
               <div>
-                <img
-                  src='/woman3.png'
-                  alt='유저'
-                  className='Detail2-img'
-                />
+                <img src="/woman3.png" alt="유저" className="Detail2-img" />
                 <p style={{ marginTop: "25px" }}>언어 기반의 게임으로</p>
                 <p>아동, 청소년들의 언어 능력을</p>
                 <p>향상시키고 싶은 교사, 부모들</p>
@@ -90,37 +81,37 @@ const StorySrcDetail = () => {
             </Box>
           </Box>
 
-          <Box className='Detail3' justify='center' align='center'>
+          <Box className="Detail3" justify="center" align="center">
             <h3>어떻게 활용할 수 있을까요?</h3>
             <hr />
             <Box
               direction={size !== "small" ? "row" : "column"}
-              className='Detail3-Content'
+              className="Detail3-Content"
             >
               <div>
-                <img src='/agreement.png' alt='문서' className='Detail3-img' />
+                <img src="/agreement.png" alt="문서" className="Detail3-img" />
                 <p>
                   매일 아침이나 저녁 일정한 시간에 일상 기록 질문 카드를 활용해
                   자신을 돌아볼 수 있습니다.
                 </p>
               </div>
               <div>
-                <img src='/ai.png' alt='ai' className='Detail3-img' />
+                <img src="/ai.png" alt="ai" className="Detail3-img" />
                 <p>
                   글을 쓰면서 얻은 영감을 바탕으로 새로운 이야기를 만들어낼 수
                   있습니다.
                 </p>
               </div>
               <div>
-                <img src='/note.png' alt='writing' className='Detail3-img' />
+                <img src="/note.png" alt="writing" className="Detail3-img" />
                 <p>
                   글을 쓰면서 얻은 영감을 바탕으로 새로운 이야기를 만들어낼 수
                   있습니다.
                 </p>
               </div>
             </Box>
-            <div className='intoServiceBtn'>
-              <Link to='/app/fairytale'>
+            <div className="intoServiceBtn">
+              <Link to="/app/Storysrc">
                 <button>서비스 이용하기</button>
               </Link>
             </div>
@@ -128,13 +119,13 @@ const StorySrcDetail = () => {
         </Box>
 
         {/* 멤버쉽 안내 구간 */}
-        <Box fill className='DetailBottom1' justify='center' align='center'>
+        <Box fill className="DetailBottom1" justify="center" align="center">
           <Grid
             // columns={size !== "small" ? { count: 2, size: "auto" } : "100%"}
-            columns='100%'
-            gap='large'
+            columns="100%"
+            gap="large"
           >
-            <div className='Bottom1-Content'>
+            <div className="Bottom1-Content">
               <h3>
                 ✨ 1750억개 매개변수를 학습한 자연어 처리 인공지능 기반으로 글이
                 완성됩니다.
@@ -145,7 +136,7 @@ const StorySrcDetail = () => {
               </p>
               <p> ✔️ 결과물의 저작권은 사용자에게 귀속합니다.</p>
             </div>
-            <div className='Bottom1-Content'>
+            <div className="Bottom1-Content">
               <h3>
                 ✨ 멤버십에 가입하시면, 해당 기간 동안 라이팅젤이 제공하는 모든
                 서비스를 무제한 이용하실 수 있습니다.
@@ -160,15 +151,15 @@ const StorySrcDetail = () => {
               </p>
             </div>
           </Grid>
-          <div className='intoServiceBtn'>
-            <Link to='/signIn'>
+          <div className="intoServiceBtn">
+            <Link to="/signIn">
               <button style={{ marginBottom: "50px" }}>멤버쉽 가입하기</button>
             </Link>
           </div>
         </Box>
 
-        <Box fill background='#b1b5e6' className='DetailBottom2'>
-          <div className='Bottom2-Content'>
+        <Box fill background="#b1b5e6" className="DetailBottom2">
+          <div className="Bottom2-Content">
             <h4>
               <StatusGood />
               멤버십 안내
@@ -190,7 +181,7 @@ const StorySrcDetail = () => {
               서비스를 이용할 수 있습니다.
             </p>
           </div>
-          <div className='Bottom2-Content'>
+          <div className="Bottom2-Content">
             <h4>
               <StatusGood />
               환불 안내
@@ -217,7 +208,8 @@ const QuoteBox = styled.div`
   padding: 15px;
   margin-top: 20px;
 
-  > h4, p {
+  > h4,
+  p {
     font-size: 16px;
   }
 `;
