@@ -75,7 +75,7 @@ const TingBox = () => {
 
     await axios(config)
       .then(async (response) => {
-        console.log("성공?", response.data);
+        //console.log("성공?", response.data);
 
         await SetData({
           ...SaveData,
@@ -90,7 +90,7 @@ const TingBox = () => {
           8: response.data[8],
           9: response.data[9],
         });
-        await console.log("성공", SaveData);
+        //await console.log("성공", SaveData);
       })
       .catch(async (error) => {
         console.log(error);

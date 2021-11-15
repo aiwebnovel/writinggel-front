@@ -692,7 +692,7 @@ $dark-1 : #444;
 .MemCardCon {
     background-color: #fff;
     border: 1px solid $main;
-    // transition: all 200ms ease-in-out;
+    cursor: pointer;
 
     @media screen and (max-width: 768px) {
         width: 100%;
@@ -701,6 +701,8 @@ $dark-1 : #444;
     &:hover {
         border: 3px solid $main
     }
+
+
 }
 
 .MemCardHead {
@@ -745,6 +747,61 @@ hr {
         padding: 15px 50px;
         border-radius: 10px;
     }
+}
+
+
+//Sign
+
+
+.SignMemCardCon {
+    background-color: #fff;
+    border: 1px solid $main;
+    cursor: pointer;
+
+    @media screen and (max-width: 768px) {
+        width: 100%;
+    }
+
+
+
+}
+
+.SignMemCardHead {
+    background-color: #fff;
+    display: flex;
+    justify-content: flex-end;
+
+    >svg {
+        width: 35px;
+        height: 35px;
+    }
+}
+
+.SignMemCardBody {
+    line-height: 35px;
+    padding: 10px 20px 10px 15px;
+
+    > img {
+        width: 75px;
+
+        @media screen and (max-width: 768px) {
+            display: none;
+        }
+
+    }
+
+    > h4, p {
+        margin: 0;
+    }
+
+    > h4 {
+        font-weight: 600;
+    }
+}
+
+
+.selected {
+    border: 3px solid $main;
 }
 
 .SignInHeader {

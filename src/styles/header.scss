@@ -24,6 +24,10 @@
   width: 100%;
   z-index: 5;
 
+  > a {
+    cursor: pointer;
+  }
+
   > li {
     background-color: #3b2477;
     color: #fff;
