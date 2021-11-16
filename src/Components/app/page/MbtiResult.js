@@ -42,7 +42,7 @@ import {
         >
             <div className='ResultBox'>
                 <div className='ResultHeader'>
-                    <div >Love Letter from {user} for <b>{result}</b></div>
+                    <div >Love Letter from <span>{user}</span> for <span>{result}</span></div>
                     <Link to="/app/loveletter">
                         <button style={{cursor:'pointer'}}>MBTI 다시 선택하기</button>
                     </Link>

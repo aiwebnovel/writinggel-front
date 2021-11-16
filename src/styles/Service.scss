@@ -621,6 +621,10 @@ $boxShadow : rgb(237 237 237) 2px 3px 8px;
         color: $dark-1;
         padding: 10px 15px;
 
+        > span {
+            font-weight: 600;
+        }
+
     }
 
     >a>button {

@@ -17,10 +17,9 @@ const LoveLetter = () => {
 
   const HandleUserMbti = (user) => {
     if(user){
-      console.log(user)
       SetUser(user);
     }else {
-      toast.info('mbti를 선택해주세요!');
+      console.log('에러');
     }
 
   }
