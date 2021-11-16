@@ -673,7 +673,7 @@ $dark-1 : #444;
         font-weight: 600;
 
         @media screen and (max-width:768px) {
-            font-size: 1.4em;
+            font-size: 20px;
         }
     }
 }
@@ -753,6 +753,13 @@ hr {
 
 //Sign
 
+.SignInHeader {
+    padding: 48px;
+
+    > h3 {
+        font-size: 1.3rem;
+    }
+}
 
 .SignMemCardCon {
     background-color: #fff;
@@ -785,11 +792,6 @@ hr {
 
     > img {
         width: 30px;
-
-        @media screen and (max-width: 768px) {
-            display: none;
-        }
-
     }
 
     > h4, p {
@@ -798,6 +800,15 @@ hr {
 
     > h4 {
         font-weight: 600;
+    }
+
+    @media screen and (max-width: 768px) {
+
+        width: 100%;
+
+        > img {
+        display: none;
+        }
     }
 }
 

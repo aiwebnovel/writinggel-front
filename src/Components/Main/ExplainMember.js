@@ -21,7 +21,7 @@ const ExplainMember = () => {
           justify='center'
           align='center'
         >
-          <h2>라이팅젤 멤버십에 가입 하시면</h2>
+          <h2>멤버십에 가입 하시면</h2>
           <h2>
             인공지능 기반 글쓰기 지원 서비스를 무제한 이용하실 수 있습니다.
           </h2>

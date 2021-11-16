@@ -207,7 +207,7 @@ const SignMember = () => {
           className='SignInHeader'
           justify='center'
           align='baseline'
-          pad='medium'
+    
         >
           <h3>멤버쉽 가입하기</h3>
         </Box>
@@ -234,7 +234,7 @@ const SignMember = () => {
                 <p style={{fontWeight: 600}}>월 19,000원</p>
                 <p>1개월마다 결제</p>
                 <ChoiceBtn
-                  name='1 19000'
+                  name='1 19,000'
                   onClick={(e) => HandleSelected(e)}
                 >
                   선택
@@ -407,8 +407,9 @@ const BookmarkFilled = styled(Bookmark)`
 const pStyle = {
   width: "100%",
   textAlign: "center",
-  marginTop: "40px",
+  margin: "40px 0",
   fontWeight: 900,
+  fontSize: '1rem'
 };
 
 const payButton = {

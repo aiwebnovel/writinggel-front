@@ -72,6 +72,41 @@ $boxShadow : rgb(237 237 237) 2px 3px 8px;
 
 }
 
+//웹노블, 동화 공통
+
+.sideContainer {
+    background-color: $white-1;
+    border-right: 1px solid $main;
+    border-top: 1px solid $main;
+    height: 100vh;
+    width: 250px;
+    transition: width 0.4s ease;
+    overflow: hidden;
+
+    @media screen and (max-width: 768px) {
+        width: 100%;
+        //height: 100%;
+        overflow: scroll;
+        z-index: 3;
+        border: 0;
+        border-top: 1px solid $main;
+        border-bottom: 1px solid $main;
+
+    }
+}
+
+.mainOutputBox {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    width: 100%;
+
+    @media screen and (max-width:768px) {
+        flex-direction: column;
+    }
+}
+
 
 //Header
 
@@ -187,6 +222,97 @@ $boxShadow : rgb(237 237 237) 2px 3px 8px;
         cursor: pointer;
     }
 }
+
+
+//WebNovel
+
+.SiderBox {
+    width: 100%;
+    text-align: center;
+
+    @media screen and (max-width: 768px) {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+}
+
+.dropdowncategory{
+    border: 0;
+    outline: 0;
+    border-radius: 5px;
+    width: 200px;
+    height: 30px;
+    margin : 20px 0;
+    color : #fff;
+    background-color: $main;
+    text-align: center;
+    cursor: pointer;
+  
+    /* select 화살표 없애기 */
+    appearance : none ;
+    -webkit-appearance : none ;
+  
+  }
+  
+  select::-ms-expand {
+    display : none ;
+  }
+  
+  .sub_input_text{
+    padding: 10px;
+    width: 200px;
+    margin-top: 15px;
+    border-radius: 5px;
+    resize: none;
+    outline: none;
+    border:0;
+    border-bottom: 1px solid #dedede;
+    border-right: 1px solid #dedede;
+  
+    background-color: transparent;
+
+    @media screen and (max-width: 768px) {
+        width: 80%;
+    }
+  }
+  
+  
+  .create{
+    margin: 30px 0;
+    font-size: 1rem;
+    width: 150px;
+    height: 30px;
+    border-radius: 10px;
+    background-color: $main;
+    color: #fff;
+    border: 0;
+    cursor: pointer;
+    transition: all 300ms ease-in-out;
+  }
+  
+  
+  .create:hover {
+    background-color: $sub2;
+    color: $dark-1;
+    
+  }
+
+  .outputKo, .outputEn {
+    background-color: $white-1;
+    border: 1px solid #444;
+    max-width: 450px;
+    width: 100%;
+    height: 300px;
+    resize: none;
+    font-size: 16px;
+    padding: 10px 15px;
+
+    @media screen and (max-width: 768px) {
+        width: 90%;
+    }
+  }
 
 
 //Firstsentence
@@ -425,26 +551,6 @@ $boxShadow : rgb(237 237 237) 2px 3px 8px;
 
 //fairyTale
 
-.sideContainer {
-    background-color: $white-1;
-    border-right: 1px solid $main;
-    border-top: 1px solid $main;
-    height: 100vh;
-    width: 250px;
-    transition: width 0.4s ease;
-    overflow: hidden;
-
-    @media screen and (max-width: 768px) {
-        width: 100%;
-        //height: 100%;
-        overflow: scroll;
-        z-index: 3;
-        border: 0;
-        border-top: 1px solid $main;
-        border-bottom: 1px solid $main;
-
-    }
-}
 
 .isSiderFalse {
     width: 80px;
@@ -545,17 +651,6 @@ $boxShadow : rgb(237 237 237) 2px 3px 8px;
     }
 }
 
-.mainOutputBox {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 15px;
-    width: 100%;
-
-    @media screen and (max-width:768px) {
-        flex-direction: column;
-    }
-}
 
 .output1,
 .output2 {
