@@ -1,10 +1,53 @@
-import React, {useContext} from "react";
+import React, {useContext, useState, useRef} from "react";
 import Layout from "../Layout";
 import { Box, Grid, Card, ResponsiveContext  } from "grommet";
+
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import styled from "styled-components";
 
 const NewsLetter = () => {
 
     const size = useContext(ResponsiveContext)
+    const [isChecked, SetChecked] = useState(false);
+    const [Email, SetEmail] = useState('');
+    const [isEmail, SetIsEmail] = useState(false);
+    const [ValiMessage, SetMessage] = useState('');
+  
+    console.log(isEmail)
+  
+    const HandleCheck = () => {
+      SetChecked(!isChecked);
+    };
+  
+    const HandleSubs = (e) => {
+      e.preventDefault();
+      if (isChecked) {
+        toast.success("성공");
+      } else {
+        toast.error("이메일 체크 및 개인정보 수집 및 이용에 동의해주세요");
+      }
+    };
+  
+    const ValidateEmail = (e) => {
+      const emailRegex  = /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+      const email = e.target.value;
+      SetEmail(email);
+      // console.log(email);
+      // console.log(emailRegex.test(email));
+  
+      if(!emailRegex.test(email)){
+        SetMessage('올바른 이메일 형식이 아닙니다.😭');
+        SetIsEmail(false);
+      }else {
+        SetMessage('올바른 이메일 형식이에요!👍');
+        SetIsEmail(true);
+      }
+    }
+
+    const ResetMessage = () => {
+      SetMessage('');
+    }
 
   return (
     <Layout>
@@ -17,19 +60,21 @@ const NewsLetter = () => {
 
         <Box fill justify='center' align='center' pad='large'>
           <div className='FormInputs'>
-            <input type='text' placeholder='이름' />
+            <input type='text' placeholder='이름' style={{marginBottom:'15px'}}/>
           </div>
 
           <div className='FormInputs'>
-            <input type='text' placeholder='이메일' />
+            <input type='text' placeholder='이메일' onChange={ValidateEmail} onFocus={ValidateEmail} onBlur={ResetMessage}/>
+            <p>{ValiMessage}</p>
+            
           </div>
           <div className='CheckSubs'>
             <label>
-              <input type='checkbox' className='checkStyle' />
+              <input onClick={HandleCheck} type='checkbox' className='checkStyle' />
               <span>개인정보 수집 및 이용에 동의합니다.</span>
             </label>
-            <button type='submit' className='subsBtn'>
-              라이팅젤 레터 구독하기
+            <button onClick={(e)=>HandleSubs(e)} type='submit' disabled={!isEmail} className={isEmail ? 'subsBtn ' : 'error'} >
+            {isEmail ? '라이팅젤 레터 신청하기' : '빈 칸을 채워주세요!'}
             </button>
           </div>
         </Box>

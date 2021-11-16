@@ -1,169 +1,392 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState, useCallback } from "react";
 import axios from "axios";
 import { useHistory, Link } from "react-router-dom";
 import Layout from "../../Layout";
-import { Box, Grid, ResponsiveContext } from "grommet";
 
-import * as config from "../../../config";
-import { authService } from "../../../firebaseConfig";
+import { Box, ResponsiveContext } from "grommet";
 
+import { CopyToClipboard } from "react-copy-to-clipboard";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import styled from "styled-components";
+
+import * as configUrl from "../../../config";
+import { Save } from "grommet-icons";
 
 const TingBox = () => {
   const size = useContext(ResponsiveContext);
   const History = useHistory();
 
-  const [isSave, SetSave] = useState("");
-
-  const [profile, SetProfile] = useState({
-    isBill: false,
-    userName: "",
-    plan: "",
-    uid: "",
-    email: "",
-    create: "",
+  const [SaveData, SetData] = useState({
+    0: "",
+    1: "",
+    2: "",
+    3: "",
+    4: "",
+    5: "",
+    6: "",
+    7: "",
+    8: "",
+    9: "",
   });
 
-  const { isBill, userName, plan, uid, email, create } = profile;
+  const [Copied, SetCopy] = useState(false);
 
-  const signOut = async () => {
-    await localStorage.removeItem("token");
-    await localStorage.removeItem("email");
-    await localStorage.removeItem("userUid");
-    await localStorage.removeItem("plan");
-    await localStorage.removeItem("isBill");
-    await localStorage.removeItem("create");
-
-    await authService.signOut();
-    window.location.reload();
+  const onCopied = () => {
+    if (SaveData[0] === "") {
+      toast.warn("복사할 내용이 없어요!😭");
+    } else {
+      SetCopy(true);
+      toast.success("Copied!");
+    }
   };
+
+  const DeleteSave = async (e) => {
+    console.log(e.target.value);
+    let uid = e.target.value;
+    if (window.confirm("정말 삭제하시겠습니까?")) {
+      const config = {
+        method: "delete",
+        url: `${configUrl.SERVER_URL}/archive/${uid}`,
+        headers: { authentication: localStorage.getItem("token") },
+        data: { uid: uid },
+      };
+
+      await axios(config)
+        .then(async (response) => {
+          console.log(response.data);
+          await window.location.reload();
+        })
+        .catch(async (error) => {
+          console.log(error);
+        });
+    } else {
+      toast.info("삭제 되지 않았습니다!");
+    }
+  };
+
+  // get
+  const load = useCallback(async () => {
+    const config = {
+      method: "get",
+      url: `${configUrl.SERVER_URL}/archive`,
+      headers: { authentication: localStorage.getItem("token") },
+    };
+
+    await axios(config)
+      .then(async (response) => {
+        //console.log("성공?", response.data);
+
+        await SetData({
+          ...SaveData,
+          0: response.data[0],
+          1: response.data[1],
+          2: response.data[2],
+          3: response.data[3],
+          4: response.data[4],
+          5: response.data[5],
+          6: response.data[6],
+          7: response.data[7],
+          8: response.data[8],
+          9: response.data[9],
+        });
+        //await console.log("성공", SaveData);
+      })
+      .catch(async (error) => {
+        console.log(error);
+      });
+  }, []);
 
   useEffect(() => {
     const loginCheck = localStorage.getItem("token");
-    const email = localStorage.getItem("email");
-    const create = localStorage.getItem("create");
 
     if (loginCheck !== null) {
-      axios
-        .get(`${config.SERVER_URL}/profile`, {
-          headers: { authentication: loginCheck },
-        })
-        .then((response) => {
-          // console.log(response.data);
-          let data = response.data;
-          SetProfile({
-            ...profile,
-            isBill: data.isBill,
-            userName: data.name,
-            plan: data.plan,
-            uid: data.uid,
-            email: email,
-            create: create,
-          });
-          // console.log(isBill, userName,plan,uid,email)
-        });
+      return;
     } else {
-      History.replace("/");
+      History.push("/");
+      setTimeout(toast.info("로그인을 해주세요!"), 300);
     }
+  }, [History]);
+
+  useEffect(() => {
+    load();
   }, []);
 
   return (
     <Layout>
-      <Box 
-        justify='center' 
-        align='center' 
-        className='BoxContainer'
-      >
-        <Box 
-          fill 
-          background='#3b2477' 
-          color='#fff' 
-          className='MypageHeader'
-        >
+      <Box justify='center' align='center' className='BoxContainer'>
+        <Box fill background='#3b2477' color='#fff' className='MypageHeader'>
           <h2>팅젤 보관함</h2>
         </Box>
-        <Box 
-          fill 
-          className='tingContainer' 
-          justify='center' 
-          align='center'
-        >
-          {!isSave ? (
+        <Box fill className='tingContainer' justify='center' align='center'>
+          {SaveData[0] !== undefined ? (
             <Box fill className='tingContent'>
               <div className='ListTitle'>
                 <h3>최근 저장된 콘텐츠</h3>
               </div>
-              {/* SaveList -> map으로 돌려야 */}
-              <Box
-                fill
-                className='SaveList'
-                direction={size !== "small" ? "row" : "column"}
-              >
-                <Box
-                  direction={size !== "small" ? "column" : "row"}
-                  align='center'
-                  className='titleAcopy'
-                >
-                  <h3>웹소설</h3>
-                  <button>복사</button>
-                </Box>
-                <Grid
+              {/* 저장 리스트 */}
+              {SaveData[0] !== undefined && (
+                <SaveList fill direction={size !== "small" ? "row" : "column"}>
+                  <Box
+                    direction={size !== "small" ? "column" : "row"}
+                    align='center'
+                    className='titleAbutton'
+                  >
+                    <h3>{SaveData[0].category}</h3>
+                    <div>
+                      <CopyToClipboard
+                        text={SaveData[0].content}
+                        onCopy={onCopied}
+                      >
+                        <button>복사</button>
+                      </CopyToClipboard>
+                      <button
+                        onClick={(e) => DeleteSave(e)}
+                        value={SaveData[0].uid}
+                        style={deleteStyle}
+                      >
+                        삭제
+                      </button>
+                    </div>
+                  </Box>
+                  <div className='SaveContent'>{SaveData[0].content}</div>
+                </SaveList>
+              )}
+              {SaveData[1] !== undefined && (
+                <SaveList fill direction={size !== "small" ? "row" : "column"}>
+                  <Box
+                    direction={size !== "small" ? "column" : "row"}
+                    align='center'
+                    className='titleAbutton'
+                  >
+                    <h3>{SaveData[1].category}</h3>
+                    <div>
+                      <CopyToClipboard
+                        text={SaveData[1].content}
+                        onCopy={onCopied}
+                      >
+                        <button>복사</button>
+                      </CopyToClipboard>
+                      <button
+                        onClick={(e) => DeleteSave(e)}
+                        value={SaveData[1].uid}
+                        style={deleteStyle}
+                      >
+                        삭제
+                      </button>
+                    </div>
+                  </Box>
+                  <div className='SaveContent'>{SaveData[1].content}</div>
+                </SaveList>
+              )}
+              {SaveData[2] !== undefined && (
+                <SaveList
                   fill
-                  columns={
-                    size !== "small" ? { count: 2, size: "small" } : "100%"
-                  }
-                  gap='medium'
+                  direction={size !== "small" ? "row" : "column"}
                 >
-                  <div>
-                    디즈니코리아는 보다 많은 소비자들이 편리하고 다양한 방법으로
-                    디즈니+를 즐길 수 있도록 국내 파트너사와의 협업에도 박차를
-                    가하고 있다. LG유플러스와 IPTV 및 모바일 제휴, KT와는 모바일
-                    제휴를 진행하며 통신사 이용자들은 신규 요금제를 통해
-                    디즈니+를 이용할 수 있다. 또한 SC제일은행과 현대카드 등
-                    파트너사와 함께 다양한 소비자 프로모션도 실시한다.
-                  </div>
-                  <div>
-                    Sed accumsan mi in lacus ultricies accumsan. Morbi mollis
-                    volutpat tortor vel tempor. Pellentesque varius egestas
-                    tellus et euismod. Suspendisse potenti. Phasellus tempus sem
-                    eu enim feugiat elementum. Vestibulum in elementum neque.
-                    Sed pulvinar dui lorem, vitae ullamcorper mauris iaculis et.
-                  </div>
-                </Grid>
-              </Box>
-              <Box
-                fill
-                className='SaveList'
-                direction={size !== "small" ? "row" : "column"}
-              >
-                <Box
-                  direction={size !== "small" ? "column" : "row"}
-                  align='center'
-                  className='titleAcopy'
-                >
-                  <h3>블로그</h3>
-                  <button>복사</button>
-                </Box>
-                <Grid
+                  <Box
+                    direction={size !== "small" ? "column" : "row"}
+                    align='center'
+                    className='titleAbutton'
+                  >
+                    <h3>{SaveData[2].category}</h3>
+                    <div>
+                    <CopyToClipboard 
+                      text={SaveData[2].content}
+                      onCopy={onCopied}
+                      >
+                      <button>복사</button>
+                      </CopyToClipboard>
+                      <button onClick={(e)=>DeleteSave(e)} value={SaveData[2].uid} style={deleteStyle}>
+                        삭제
+                      </button>
+                    </div>
+                  </Box>
+                  <div className="SaveContent">{SaveData[2].content}</div>
+                </SaveList>
+              )}
+              {SaveData[3] !== undefined && (
+                <SaveList
                   fill
-                  columns={
-                    size !== "small" ? { count: 2, size: "small" } : "100%"
-                  }
-                  gap='medium'
+                  direction={size !== "small" ? "row" : "column"}
                 >
-                  <div>
-                    제목 2. 소개(배경) 3. 모뎀 대 네트워크(내 필요에 가장 적합한
-                    모뎀/네트워크, 둘 사이의 차이점은 무엇입니까?) 4. 휴대폰
-                    선택(네트워크 사업자별 휴대폰 리뷰) 5.결론
-                  </div>
-                  <div>
-                    Title 2. Introduction (background) 3. Modem vs Network (what
-                    modem/network is best for my needs, what are the differences
-                    between the two?) 4. Cell phone choices (review of phones by
-                    network provider) 5. Conclusion
-                  </div>
-                </Grid>
-              </Box>
+                  <Box
+                    direction={size !== "small" ? "column" : "row"}
+                    align='center'
+                    className='titleAbutton'
+                  >
+                    <h3>{SaveData[3].category}</h3>
+                    <div>
+                    <CopyToClipboard 
+                      text={SaveData[3].content}
+                      onCopy={onCopied}
+                      >
+                      <button>복사</button>
+                      </CopyToClipboard>
+                      <button onClick={(e)=>DeleteSave(e)} value={SaveData[3].uid} style={deleteStyle}>
+                        삭제
+                      </button>
+                    </div>
+                  </Box>
+                  <div className="SaveContent">{SaveData[3].content}</div>
+                </SaveList>
+              )}
+              {SaveData[4] !== undefined && (
+                <SaveList
+                  fill
+                  direction={size !== "small" ? "row" : "column"}
+                >
+                  <Box
+                    direction={size !== "small" ? "column" : "row"}
+                    align='center'
+                    className='titleAbutton'
+                  >
+                    <h3>{SaveData[4].category}</h3>
+                    <div>
+                    <CopyToClipboard 
+                      text={SaveData[4].content}
+                      onCopy={onCopied}
+                      >
+                      <button>복사</button>
+                      </CopyToClipboard>
+                      <button onClick={(e)=>DeleteSave(e)} value={SaveData[4].uid} style={deleteStyle}>
+                        삭제
+                      </button>
+                    </div>
+                  </Box>
+                  <div className="SaveContent">{SaveData[4].content}</div>
+                </SaveList>
+              )}
+              {SaveData[5] !== undefined && (
+                <SaveList
+                  fill
+                  direction={size !== "small" ? "row" : "column"}
+                >
+                  <Box
+                    direction={size !== "small" ? "column" : "row"}
+                    align='center'
+                    className='titleAbutton'
+                  >
+                    <h3>{SaveData[5].category}</h3>
+                    <div>
+                    <CopyToClipboard 
+                      text={SaveData[5].content}
+                      onCopy={onCopied}
+                      >
+                      <button>복사</button>
+                      </CopyToClipboard>
+                      <button onClick={(e)=>DeleteSave(e)} value={SaveData[5].uid} style={deleteStyle}>
+                        삭제
+                      </button>
+                    </div>
+                  </Box>
+                  <div className="SaveContent">{SaveData[5].content}</div>
+                </SaveList>
+              )}
+              {SaveData[6] !== undefined && (
+                <SaveList
+                  fill
+                  direction={size !== "small" ? "row" : "column"}
+                >
+                  <Box
+                    direction={size !== "small" ? "column" : "row"}
+                    align='center'
+                    className='titleAbutton'
+                  >
+                    <h3>{SaveData[6].category}</h3>
+                    <div>
+                    <CopyToClipboard 
+                      text={SaveData[6].content}
+                      onCopy={onCopied}
+                      >
+                      <button>복사</button>
+                      </CopyToClipboard>
+                      <button onClick={(e)=>DeleteSave(e)} value={SaveData[6].uid} style={deleteStyle}>
+                        삭제
+                      </button>
+                    </div>
+                  </Box>
+                  <div className="SaveContent">{SaveData[6].content}</div>
+                </SaveList>
+              )}
+              {SaveData[7] !== undefined && (
+                <SaveList
+                  fill
+                  direction={size !== "small" ? "row" : "column"}
+                >
+                  <Box
+                    direction={size !== "small" ? "column" : "row"}
+                    align='center'
+                    className='titleAbutton'
+                  >
+                    <h3>{SaveData[7].category}</h3>
+                    <div>
+                    <CopyToClipboard 
+                      text={SaveData[7].content}
+                      onCopy={onCopied}
+                      >
+                      <button>복사</button>
+                      </CopyToClipboard>
+                      <button onClick={(e)=>DeleteSave(e)} value={SaveData[7].uid} style={deleteStyle}>
+                        삭제
+                      </button>
+                    </div>
+                  </Box>
+                  <div className="SaveContent">{SaveData[7].content}</div>
+                </SaveList>
+              )}
+              {SaveData[8] !== undefined && (
+                <SaveList
+                  fill
+                  direction={size !== "small" ? "row" : "column"}
+                >
+                  <Box
+                    direction={size !== "small" ? "column" : "row"}
+                    align='center'
+                    className='titleAbutton'
+                  >
+                    <h3>{SaveData[8].category}</h3>
+                    <div>
+                    <CopyToClipboard 
+                      text={SaveData[8].content}
+                      onCopy={onCopied}
+                      >
+                      <button>복사</button>
+                      </CopyToClipboard>
+                      <button onClick={(e)=>DeleteSave(e)} value={SaveData[8].uid} style={deleteStyle}>
+                        삭제
+                      </button>
+                    </div>
+                  </Box>
+                  <div className="SaveContent">{SaveData[8].content}</div>
+                </SaveList>
+              )}
+              {SaveData[9] !== undefined && (
+                <SaveList
+                  fill
+                  direction={size !== "small" ? "row" : "column"}
+                >
+                  <Box
+                    direction={size !== "small" ? "column" : "row"}
+                    align='center'
+                    className='titleAbutton'
+                  >
+                    <h3>{SaveData[9].category}</h3>
+                    <div>
+                    <CopyToClipboard 
+                      text={SaveData[9].content}
+                      onCopy={onCopied}
+                      >
+                      <button>복사</button>
+                      </CopyToClipboard>
+                      <button onClick={(e)=>DeleteSave(e)} value={SaveData[9].uid} style={deleteStyle}>
+                        삭제
+                      </button>
+                    </div>
+                  </Box>
+                  <div className="SaveContent">{SaveData[9].content}</div>
+                </SaveList>
+              )}
             </Box>
           ) : (
             <Box fill className='tingNoContent' justify='center' align='center'>
@@ -183,3 +406,19 @@ const TingBox = () => {
 };
 
 export default TingBox;
+
+const SaveList = styled(Box)`
+  padding: 35px 20px;
+  gap: 5px;
+
+  @media screen and (max-width: 768px) {
+    border-top: 1px solid $dark-1;
+    gap: 10px;
+  }
+`;
+
+const deleteStyle = {
+  backgroundColor: "#FF635C",
+  border: "1px solid #FF635C",
+  color: "#fff",
+};

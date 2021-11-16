@@ -1,30 +1,28 @@
 import {
     Box,
-    Grid,
     ResponsiveContext,
   } from "grommet";
   import  { Download, Update} from 'grommet-icons';
   import React, { useEffect, useContext, useState } from "react";
   import { useHistory, useParams, Link } from "react-router-dom";
   import { toast } from "react-toastify";
-  import "react-toastify/dist/ReactToastify.css";
-  import MBTI from './MBTI'
+  // import "react-toastify/dist/ReactToastify.css";
+  // import MBTI from './MBTI'
   
   import ServiceLayout from "../Layout";
-  import styled from "styled-components";
+  // import styled from "styled-components";
   
   const LoveLetter = ({location}) => {
   
-    const size = useContext(ResponsiveContext);
     const History = useHistory();
     let { result } = useParams();
     console.log('result', result);
     console.log('location', location);
   
-    const [isSider, SetSider] = useState(false);
-    const handleSider = () => {
-      SetSider(!isSider);
-    };
+    // const [isSider, SetSider] = useState(false);
+    // const handleSider = () => {
+    //   SetSider(!isSider);
+    // };
   
     useEffect(() => {
       const loginCheck = localStorage.getItem("token");

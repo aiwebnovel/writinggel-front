@@ -6,7 +6,7 @@ import { Box, ResponsiveContext, FormField } from "grommet";
 import styled from "styled-components";
 
 const Ask = () => {
-  const size = useContext(ResponsiveContext);
+  // const size = useContext(ResponsiveContext);
 
   return (
     <Layout>

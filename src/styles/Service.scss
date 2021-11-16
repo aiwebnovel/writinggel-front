@@ -1,15 +1,15 @@
-$mainColor : #3b2477;
-$subColor : #7d4cdb;
-$highLight: #ffcc00;
-$white-1 : #fff;
-$white-2 : #f9f9f9;
-$dark-1 : #444;
-$boxShadow : rgb(237 237 237) 2px 3px 8px;
-
 $point : #ff9300;
 $main : #372874;
 $sub1 : #b1b5e6;
 $sub2 : #ffce1f;
+$white-1 : #fff;
+$white-2 : #f9f9f9;
+$dark-1 : #444;
+
+$boxShadow : rgb(237 237 237) 2px 3px 8px;
+
+
+
 //서비스 공통
 
 .ServiceContainer {
@@ -26,6 +26,50 @@ $sub2 : #ffce1f;
     @media screen and (max-width: 768px) {
         height: 100%;
     }
+}
+
+.lodingBox {
+    z-index: 3;
+    font-family: 'NeoDunggeunmo';
+    background: rgb(255, 206, 31, 0.9);
+    display: none;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 99;
+
+    >div {
+
+        text-align: center;
+        animation-name: bounce;
+        animation-duration: 2s;
+        animation-iteration-count: infinite;
+
+        >img {
+            width: 300px;
+        }
+
+        >p {
+            margin-top: 15px
+        }
+    }
+
+    @keyframes bounce {
+        0% {
+            transform: translateY(0px)
+        }
+
+        40% {
+            transform: translateY(-40px);
+        }
+
+        100% {
+            transform: translateY(0px);
+        }
+    }
+
 }
 
 
@@ -155,7 +199,7 @@ $sub2 : #ffce1f;
     padding: 6px;
     position: relative;
     transition: all .5s ease-in-out;
-    
+
 
     @media screen and (max-width: 680px) {
         width: 80%;
@@ -174,9 +218,9 @@ $sub2 : #ffce1f;
     width: 90%;
 
     padding: 24px;
-    text-align: center;
+    //text-align: center;
 
-    > div{
+    >div {
         width: 100%;
         display: flex;
         justify-content: flex-end;
@@ -195,8 +239,8 @@ $sub2 : #ffce1f;
     width: 300px;
 
     >button {
-        background-color: $mainColor;
-        border: 1px solid $mainColor;
+        background-color: $main;
+        border: 1px solid $main;
         outline: 0;
         font-size: 1.05rem;
         color: $white-1;
@@ -252,7 +296,7 @@ $sub2 : #ffce1f;
     background-color: #f9f9f9;
     padding: 10px 0;
 
-    > div {
+    >div {
         display: flex;
         justify-content: center;
         align-items: center;
@@ -265,9 +309,9 @@ $sub2 : #ffce1f;
 
 .itemInputBox {
 
-    > button {
-        background-color: $mainColor;
-        border: 1px solid $mainColor;
+    >button {
+        background-color: $main;
+        border: 1px solid $main;
         outline: 0;
         font-size: 1rem;
         color: $white-1;
@@ -349,8 +393,8 @@ $sub2 : #ffce1f;
 .Opposite {
 
     >button {
-        background-color: $mainColor;
-        border: 1px solid $mainColor;
+        background-color: $main;
+        border: 1px solid $main;
         outline: 0;
         font-size: 1rem;
         color: $white-1;
@@ -362,7 +406,7 @@ $sub2 : #ffce1f;
 
 .outputArea {
 
-    border: 1px solid $mainColor;
+    border: 1px solid $main;
     background-color: $white-1;
     padding: 10px;
 
@@ -383,8 +427,8 @@ $sub2 : #ffce1f;
 
 .sideContainer {
     background-color: $white-1;
-    border-right: 1px solid $mainColor;
-    border-top: 1px solid $mainColor;
+    border-right: 1px solid $main;
+    border-top: 1px solid $main;
     height: 100vh;
     width: 250px;
     transition: width 0.4s ease;
@@ -396,8 +440,8 @@ $sub2 : #ffce1f;
         overflow: scroll;
         z-index: 3;
         border: 0;
-        border-top : 1px solid $mainColor;
-        border-bottom: 1px solid $mainColor;
+        border-top: 1px solid $main;
+        border-bottom: 1px solid $main;
 
     }
 }
@@ -406,19 +450,19 @@ $sub2 : #ffce1f;
     width: 80px;
     height: 50px;
     background-color: $white-1;
-    border: 1px solid $mainColor;
-    border-left:0;
+    border: 1px solid $main;
+    border-left: 0;
     //box-shadow: $boxShadow;
     transition: width 0.4s ease;
 
-    @media screen and (max-width: 768px){
+    @media screen and (max-width: 768px) {
         width: 100%;
         height: 50px;
         border: 0;
-        border-bottom: 1px solid $mainColor;
-        border-top: 1px solid $mainColor;
+        border-bottom: 1px solid $main;
+        border-top: 1px solid $main;
 
-        
+
     }
 }
 
@@ -432,7 +476,7 @@ $sub2 : #ffce1f;
     // padding: 10px 12px;
     padding: 18px 12px 5px 12px;
 
-    > div {
+    >div {
         padding: 0;
 
         >h4 {
@@ -443,7 +487,7 @@ $sub2 : #ffce1f;
                 font-size: 18px;
             }
 
-            &::after{
+            &::after {
                 content: '❗️';
             }
         }
@@ -456,14 +500,15 @@ $sub2 : #ffce1f;
 }
 
 .AcoInput {
-    width:100%;
+    width: 100%;
     padding: 10px;
     // padding: 0 0 10px 10px;
-    
-    > input {
+
+    >input {
         width: 70%;
-        padding:5px;
-        margin-right: 5px;;
+        padding: 5px;
+        margin-right: 5px;
+        ;
         border: 1px solid $dark-1;
 
         &:focus {
@@ -475,9 +520,9 @@ $sub2 : #ffce1f;
         }
     }
 
-    > button {
+    >button {
         cursor: pointer;
-        background-color : $white-2;
+        background-color: $white-2;
         border: 1px solid $white-2;
         font-weight: 600;
         padding: 5px 15px;
@@ -489,14 +534,14 @@ $sub2 : #ffce1f;
     justify-content: center;
     margin-top: 35px;
 
-    > button {
-    padding: 8px 15px;
-    border: 1px solid #444;
-    background-color: #ffd000;
-    outline: 0;
-    width: 180px;
-    text-align: center;
-    cursor: pointer;
+    >button {
+        padding: 8px 15px;
+        border: 1px solid #444;
+        background-color: #ffd000;
+        outline: 0;
+        width: 180px;
+        text-align: center;
+        cursor: pointer;
     }
 }
 
@@ -544,26 +589,26 @@ $sub2 : #ffce1f;
 //MBTI & mbti result
 
 .ResultBox {
-   width: 100%;
-   max-width: 500px;
+    width: 100%;
+    max-width: 500px;
 }
 
-.ResultHeader{
+.ResultHeader {
     display: flex;
     justify-content: space-between;
     align-items: center;
 
-    > div {
-        background-color: $mainColor;
+    >div {
+        background-color: $main;
         color: $white-1;
         padding: 10px 15px;
-    
+
     }
 
-    > a > button {
+    >a>button {
         background-color: transparent;
-        outline:0;
-        border:0;
+        outline: 0;
+        border: 0;
         text-decoration: underline;
     }
 }
@@ -583,7 +628,7 @@ $sub2 : #ffce1f;
 
     margin-top: 10px;
 
-    > svg {
+    >svg {
         background-color: #444;
         fill: #fff;
         stroke: #fff;
@@ -592,7 +637,7 @@ $sub2 : #ffce1f;
         height: 30px;
         padding: 4px;
         border-radius: 5px;
-      }
+    }
 }
 
 
@@ -600,7 +645,7 @@ $sub2 : #ffce1f;
 
 
 .DailyiconBox {
-    width:100%;
+    width: 100%;
     display: flex;
     align-items: center;
     justify-content: flex-end;
@@ -613,14 +658,14 @@ $sub2 : #ffce1f;
 .SrcPrintBtn {
     width: 100%;
     height: 150px;
-    
-    > button {
-        background-color: $subColor;
-        border: 1px solid $subColor;
+
+    >button {
+        background-color: $main;
+        border: 1px solid $main;
         color: $white-1;
         padding: 10px 8px;
         width: 200px;
-        font-size : 1rem;
+        font-size: 1rem;
         cursor: pointer;
     }
 }
@@ -629,16 +674,16 @@ $sub2 : #ffce1f;
 .SrcResult {
     width: 100%;
     background-color: #ededed;
-    color : $dark-1;
+    color: $dark-1;
     padding: 8px;
 
-    > div > p {
+    >div>p {
         font-weight: 600;
         text-indent: 5px;
     }
 
-    > div > button {
-        margin-left : 10px;
+    >div>button {
+        margin-left: 10px;
         background-color: $dark-1;
         color: $white-1;
         border: 1px solid $dark-1;
@@ -676,6 +721,6 @@ $sub2 : #ffce1f;
 .StoryResults {
     width: 100%;
     background-color: #ededed;
-    color : $dark-1;
+    color: $dark-1;
     padding: 8px;
 }

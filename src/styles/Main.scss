@@ -37,7 +37,7 @@ $dark-1 : #444;
 
 .cardTop {
     padding: 8px;
-    background-color: #3B2477;
+    background-color: $main;
 }
 
 .cardTitle {
@@ -390,7 +390,7 @@ $dark-1 : #444;
 
 .LetterHeader {
     width: 100%;
-    background-color: #3B2477;
+    background-color: $main;
     color: #fff;
     text-align: center;
     padding: 48px 0;
@@ -403,8 +403,12 @@ $dark-1 : #444;
 
 .FormInputs {
 
-    width: 400px;
-    text-align: center;
+    width: 400px;    
+
+    > p{
+        font-size: 13px;
+        color : $point;
+    }
 
     >input {
 
@@ -412,16 +416,16 @@ $dark-1 : #444;
         padding: 10px 5px;
         font-size: 1rem;
         border: 1px solid #051619;
-        margin-bottom: 10px;
-
-
+        margin:0;
+    
         @media screen and (max-width:768px) {
-            width: 200px;
+            width: 300px;
         }
     }
 
     @media screen and (max-width: 768px) {
         width: 100%;
+        text-align: center;
     }
 
 }
@@ -444,11 +448,25 @@ $dark-1 : #444;
 }
 
 .subsBtn {
-    background-color: #3B2477;
+    background-color: $main;
     color: #fff;
     border: 0;
     outline: 0;
     padding: 0;
+    padding: 8px 10px;
+    font-size: 16px;
+    border-radius: 5px;
+    margin-top: 12px;
+    cursor: pointer;
+}
+
+.error {
+    background-color : #f9f9f9;
+    border: 1px solid  #444;
+    color : #444;
+    cursor: pointer;
+
+    outline: 0;
     padding: 8px 10px;
     font-size: 16px;
     border-radius: 5px;
@@ -516,12 +534,15 @@ $dark-1 : #444;
     }
 
     .EmailInput,
-    .PhoneInput {
+    .PhoneInput
+    {   
+        background-color: $white-1;
         padding: 10px 8px;
         border: 1px solid #444;
     }
 
     .selectStyle {
+        background-color: $white-1;
         padding: 10px 5px;
         border: 1px solid #444;
     }
@@ -531,6 +552,7 @@ $dark-1 : #444;
         min-height: 200px;
         resize: none;
         border: 1px solid #444;
+        background-color: $white-1;
 
         &::placeholder {
             font-size: 14px;
@@ -545,8 +567,8 @@ $dark-1 : #444;
 
     >button {
         font-size: 1rem;
-        background-color: #3b2477;
-        border: 1px solid #3b2477;
+        background-color: $main;
+        border: 1px solid $main;
         outline: 0;
         color: #fff;
         padding: 15px 50px;
@@ -670,7 +692,7 @@ $dark-1 : #444;
 .MemCardCon {
     background-color: #fff;
     border: 1px solid $main;
-    // transition: all 200ms ease-in-out;
+    cursor: pointer;
 
     @media screen and (max-width: 768px) {
         width: 100%;
@@ -679,6 +701,8 @@ $dark-1 : #444;
     &:hover {
         border: 3px solid $main
     }
+
+
 }
 
 .MemCardHead {
@@ -723,6 +747,61 @@ hr {
         padding: 15px 50px;
         border-radius: 10px;
     }
+}
+
+
+//Sign
+
+
+.SignMemCardCon {
+    background-color: #fff;
+    border: 1px solid $main;
+    cursor: pointer;
+
+    @media screen and (max-width: 768px) {
+        width: 100%;
+    }
+
+
+
+}
+
+.SignMemCardHead {
+    background-color: #fff;
+    display: flex;
+    justify-content: flex-end;
+
+    >svg {
+        width: 35px;
+        height: 35px;
+    }
+}
+
+.SignMemCardBody {
+    line-height: 35px;
+    padding: 10px 20px 10px 15px;
+
+    > img {
+        width: 75px;
+
+        @media screen and (max-width: 768px) {
+            display: none;
+        }
+
+    }
+
+    > h4, p {
+        margin: 0;
+    }
+
+    > h4 {
+        font-weight: 600;
+    }
+}
+
+
+.selected {
+    border: 3px solid $main;
 }
 
 .SignInHeader {
@@ -927,7 +1006,7 @@ hr {
 }
 
 .MBtn {
-    background-color: #3B2477;
+    background-color: $main;
     color: #fff;
     border: 0;
     outline: 0;
@@ -1007,7 +1086,7 @@ hr {
 //tingbox 
 
 .tingContainer {
-    padding: 200px 64px;
+    padding: 215px 64px;
 
     @media screen and (max-width: 768px) {
         padding-right:24px;
@@ -1021,42 +1100,48 @@ hr {
 
 }
 
-.SaveList {
-    padding: 35px 20px;
-    gap: 5px;
 
-    @media screen and (max-width: 768px) {
-        border-top: 1px solid $dark-1;
-        gap: 10px;
-    }   
-
-}
-
-
-.titleAcopy {
+.titleAbutton {
     gap: 5px;
  
     > h3 {
         font-weight: 600;
-        width: 100px;
-        font-size: 20px;
+        width: 120px;
+        font-size: 17px;
         text-align: center;
 
     }
     
+    > div {
+        // width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 5px;
+        
     > button {
-        background-color: $point;
-        border: 1px solid $point;
-        color: $dark-1;
         width: 50px; 
         cursor: pointer;
-
         font-size: 14px;
+        background-color: $point;
+        border: 1px solid $point;
+        color: #000;
+
+        &:hover {
+            background-color: $sub2;
+            border: 1px solid $sub2;
+            
+        }
     }
 
+    }
 
     @media screen and (max-width: 768px) {
         justify-content: space-between;
+
+        > div {
+            flex-direction: row;
+        }
 
         > h3 {
             text-align: left;
@@ -1064,7 +1149,6 @@ hr {
     }
 
 }
-
 
 
 .ListTitle {
@@ -1078,9 +1162,16 @@ hr {
     }
 }
 
+.SaveContent {
+    max-width: 700px;
+    
+}
+
 
 .tingNoContent {
-    >div {
+
+
+    > div {
         text-align: center;
 
         >img {
