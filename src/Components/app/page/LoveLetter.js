@@ -13,6 +13,14 @@ const LoveLetter = () => {
   const size = useContext(ResponsiveContext);
   const History = useHistory();
 
+  const [UserMbti, SetUser] = useState('');
+  const [LoverMbti, SetLover] = useState('');
+
+  const HandleUserMbti = (user) => {
+    console.log(user)
+    SetUser(user);
+  }
+
   useEffect(() => {
     const loginCheck = localStorage.getItem("token");
 
@@ -34,6 +42,30 @@ const LoveLetter = () => {
         pad='large'
         gap='medium'
       >
+        {!UserMbti && (
+          <>
+        <MainTitle>✉️ 당신의 MBTI를 선택해주세요.</MainTitle>
+        <Grid
+          columns={size !== "small" ? { count: 4, size: "auto" } : "100%"}
+          gap='medium'
+          fill={size !== "small" ? false : true}
+        >
+          {MBTI.map((mbti) => (
+              <Card
+                key={`user_${mbti.content}`}
+                className='MbtiCard'
+                onClick={()=>{
+                  let user = mbti.content;
+                  HandleUserMbti(user);
+                }}
+              >
+                {mbti.content}
+              </Card>
+          ))}
+        </Grid>
+        </>)}
+        {UserMbti && (
+          <>
         <MainTitle>✉️ 연애편지를 받을 사람의 MBTI를 선택하세요.</MainTitle>
         <Grid
           columns={size !== "small" ? { count: 4, size: "auto" } : "100%"}
@@ -44,7 +76,10 @@ const LoveLetter = () => {
             <Link
               to={{
                 pathname: `loveletter/${mbti.link}`,
-                state: mbti.content,
+                state: {
+                  lover: mbti.content,
+                  user: UserMbti
+                },
               }}
             >
               <Card
@@ -57,6 +92,7 @@ const LoveLetter = () => {
             </Link>
           ))}
         </Grid>
+        </>)}
       </Box>
     </ServiceLayout>
   );
