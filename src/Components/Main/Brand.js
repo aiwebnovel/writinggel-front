@@ -192,7 +192,7 @@ const Team = styled.div`
 
   > h4 {
     background-color : #b1b5e6;
-    padding: 5px;
+    padding: 10px;
     font-weight: 600;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;

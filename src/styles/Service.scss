@@ -616,7 +616,7 @@ $boxShadow : rgb(237 237 237) 2px 3px 8px;
     justify-content: space-between;
     align-items: center;
 
-    >div {
+    > div {
         background-color: $sub2;
         color: $dark-1;
         padding: 10px 15px;
@@ -627,7 +627,7 @@ $boxShadow : rgb(237 237 237) 2px 3px 8px;
 
     }
 
-    >a>button {
+    > a > button {
         background-color: transparent;
         outline: 0;
         border: 0;

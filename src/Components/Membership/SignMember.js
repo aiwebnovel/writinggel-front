@@ -172,7 +172,7 @@ const SignMember = () => {
       
     }
 
-    if (month === "6") {
+    if (month === "3") {
       SetSelected({
         ...Selected,
         selected1: false,
@@ -184,7 +184,7 @@ const SignMember = () => {
       
     }
 
-    if (month === "12") {
+    if (month === "6") {
       SetSelected({
         ...Selected,
         selected1: false,
@@ -229,12 +229,12 @@ const SignMember = () => {
                 <BookmarkFilled size='medium' color='#3b2477' />
               </div>
               <div className='SignMemCardBody'>
-                <img src='/light.png' alt='이미지' />
+                <img src='/tinggle.png' alt='이미지' />
                 <h4>1개월 이용권</h4>
-                <p>월 49,000원</p>
+                <p style={{fontWeight: 600}}>월 19,000원</p>
                 <p>1개월마다 결제</p>
                 <ChoiceBtn
-                  name='1 49000'
+                  name='1 19000'
                   onClick={(e) => HandleSelected(e)}
                 >
                   선택
@@ -250,18 +250,14 @@ const SignMember = () => {
                 <BookmarkFilled size='medium' color='#3b2477' />
               </div>
               <div className='SignMemCardBody'>
-                <h4>6개월 이용권</h4>
-                <p>월 39,000원</p>
-                <p>(20%할인)</p>
-                <p>
-                  <span style={{ textDecoration: "line-through" }}>
-                    294,000원
-                  </span>{" "}
-                  234,000원
-                </p>
-                <p>/6개월마다 결제</p>
+                  <h4>3개월 이용권</h4>
+                  <p>월 16,000원</p>
+                  <p style={{fontWeight: 600}}>
+                    48,000원
+                  </p>
+                  <p>/3개월마다 결제</p>
                 <ChoiceBtn
-                  name='6 234,000'
+                  name='3 48,000'
                   onClick={(e) => HandleSelected(e)}
                 >
                   선택
@@ -277,18 +273,14 @@ const SignMember = () => {
                 <BookmarkFilled size='medium' color='#3b2477' />
               </div>
               <div className='SignMemCardBody'>
-                <h4>12개월 이용권</h4>
-                <p>월 35,000원</p>
-                <p>(30%할인)</p>
-                <p>
-                  <span style={{ textDecoration: "line-through" }}>
-                    588,000원
-                  </span>{" "}
-                  420,000원
-                </p>
-                <p>12개월마다 결제</p>
+                 <h4>6개월 이용권</h4>
+                  <p>월 10,000원</p>
+                  <p style={{fontWeight: 600}}>
+                    60,000원
+                  </p>
+                  <p>6개월마다 결제</p>
                 <ChoiceBtn
-                  name='12 420,000'
+                  name='6 60,000'
                   onClick={(e) => HandleSelected(e)}
                 >
                   선택

@@ -687,6 +687,7 @@ $dark-1 : #444;
     padding: 15px 50px;
     border-radius: 10px;
     margin-top: 30px;
+    cursor: pointer;
 }
 
 .MemCardCon {
@@ -718,7 +719,7 @@ $dark-1 : #444;
 
 .MemCardBody {
     line-height: 35px;
-    padding: 10px 20px 10px 15px;
+    padding: 10px 20px 20px 15px;
 
     >h4,
     p {
@@ -779,10 +780,11 @@ hr {
 
 .SignMemCardBody {
     line-height: 35px;
-    padding: 10px 20px 10px 15px;
+    width: 200px;
+    padding: 20px 20px 10px 15px;
 
     > img {
-        width: 75px;
+        width: 30px;
 
         @media screen and (max-width: 768px) {
             display: none;
