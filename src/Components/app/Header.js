@@ -233,4 +233,5 @@ const LinkBtn = styled.button`
   font-weight: 600;
   padding: 5px 10px;
   border-radius: 8px;
+  cursor: pointer;
 `;

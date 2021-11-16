@@ -44,7 +44,7 @@ import {
                 <div className='ResultHeader'>
                     <div >Love Letter from {user} for <b>{result}</b></div>
                     <Link to="/app/loveletter">
-                        <button>MBTI 다시 선택하기</button>
+                        <button style={{cursor:'pointer'}}>MBTI 다시 선택하기</button>
                     </Link>
                 </div>
                 <div className="ResultContent">

@@ -590,6 +590,22 @@ $boxShadow : rgb(237 237 237) 2px 3px 8px;
 
 //MBTI & mbti result
 
+.MbtiCard1 {
+    &:hover {
+        background-color: #7d4cdb;
+        color: #fff;
+      }
+}
+
+.MbtiCard2 {
+    &:hover {
+        // background-color: #ef0081;
+        
+        background-color: $sub1;
+        color: #fff;
+      }
+}
+
 .ResultBox {
     width: 100%;
     max-width: 500px;
@@ -601,8 +617,8 @@ $boxShadow : rgb(237 237 237) 2px 3px 8px;
     align-items: center;
 
     >div {
-        background-color: $main;
-        color: $white-1;
+        background-color: $sub2;
+        color: $dark-1;
         padding: 10px 15px;
 
     }
@@ -616,6 +632,7 @@ $boxShadow : rgb(237 237 237) 2px 3px 8px;
 }
 
 .ResultContent {
+    background-color: $white-1;
     border: 1px solid $dark-1;
     padding: 15px;
 }

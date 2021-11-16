@@ -14,11 +14,15 @@ const LoveLetter = () => {
   const History = useHistory();
 
   const [UserMbti, SetUser] = useState('');
-  const [LoverMbti, SetLover] = useState('');
 
   const HandleUserMbti = (user) => {
-    console.log(user)
-    SetUser(user);
+    if(user){
+      console.log(user)
+      SetUser(user);
+    }else {
+      toast.info('mbti를 선택해주세요!');
+    }
+
   }
 
   useEffect(() => {
@@ -44,7 +48,7 @@ const LoveLetter = () => {
       >
         {!UserMbti && (
           <>
-        <MainTitle>✉️ 당신의 MBTI를 선택해주세요.</MainTitle>
+        <MainTitle>🌟 당신의 MBTI를 선택해주세요.</MainTitle>
         <Grid
           columns={size !== "small" ? { count: 4, size: "auto" } : "100%"}
           gap='medium'
@@ -53,7 +57,7 @@ const LoveLetter = () => {
           {MBTI.map((mbti) => (
               <Card
                 key={`user_${mbti.content}`}
-                className='MbtiCard'
+                className='MbtiCard1'
                 onClick={()=>{
                   let user = mbti.content;
                   HandleUserMbti(user);
@@ -66,7 +70,7 @@ const LoveLetter = () => {
         </>)}
         {UserMbti && (
           <>
-        <MainTitle>✉️ 연애편지를 받을 사람의 MBTI를 선택하세요.</MainTitle>
+        <MainTitle>💌 연애편지를 받을 사람의 MBTI를 선택하세요.</MainTitle>
         <Grid
           columns={size !== "small" ? { count: 4, size: "auto" } : "100%"}
           gap='medium'
@@ -84,7 +88,7 @@ const LoveLetter = () => {
             >
               <Card
                 key={mbti.content}
-                className='MbtiCard'
+                className='MbtiCard2'
                 onClick={() => console.log("console", mbti.link)}
               >
                 {mbti.content}
@@ -116,8 +120,5 @@ const Card = styled.div`
   cursor: pointer;
   transition: all 300ms ease-in-out;
 
-  &:hover {
-    background-color: #7d4cdb;
-    color: #fff;
-  }
+
 `;
