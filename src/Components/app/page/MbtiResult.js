@@ -6,8 +6,7 @@ import {
   import React, { useEffect, useContext, useState } from "react";
   import { useHistory, useParams, Link } from "react-router-dom";
   import { toast } from "react-toastify";
-  // import "react-toastify/dist/ReactToastify.css";
-  // import MBTI from './MBTI'
+  import "react-toastify/dist/ReactToastify.css";
   
   import ServiceLayout from "../Layout";
   // import styled from "styled-components";
@@ -17,13 +16,10 @@ import {
     const History = useHistory();
     let { result } = useParams();
     console.log('result', result);
-    console.log('location', location);
-  
-    // const [isSider, SetSider] = useState(false);
-    // const handleSider = () => {
-    //   SetSider(!isSider);
-    // };
-  
+    console.log('location', location.state.user);
+
+    let user = location.state.user
+
     useEffect(() => {
       const loginCheck = localStorage.getItem("token");
   
@@ -46,9 +42,9 @@ import {
         >
             <div className='ResultBox'>
                 <div className='ResultHeader'>
-                    <div >Love Letter for <b>{result}</b></div>
+                    <div >Love Letter from <span>{user}</span> for <span>{result}</span></div>
                     <Link to="/app/loveletter">
-                        <button>MBTI 다시 선택하기</button>
+                        <button style={{cursor:'pointer'}}>MBTI 다시 선택하기</button>
                     </Link>
                 </div>
                 <div className="ResultContent">
