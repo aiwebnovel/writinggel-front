@@ -167,16 +167,13 @@ const Fairytale = () => {
             pad={size !== 'small' ? 'medium': 'large'}
           >
             <div className='mainOutputBox'>
-              <div className='output1'>
-                <p>결과가 나올예정이에요! </p>
-                <div>
-                  <Download />
-                </div>
-              </div>
-              <div className='output2'>영어가 들어갈 예정입니다.</div>
+              <textarea className='output1' placeholder='결과가 나올예정이에요!'>
+                
+              </textarea>
+              <textarea className='output2' placeholder='영어가 들어갈 예정입니다!'></textarea>
             </div>
             <Icons>
-              <Update /> <Close />
+            <Download />  <Update /> <Close />
             </Icons>
           </Box>
         </Grid>
