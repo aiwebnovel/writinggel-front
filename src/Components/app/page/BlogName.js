@@ -6,7 +6,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 import ServiceLayout from "../Layout";
 
-const Bloger = () => {
+const BlogName = () => {
   const History = useHistory();
 
 
@@ -25,11 +25,11 @@ const Bloger = () => {
     <ServiceLayout>
       <Box className="ServiceContainer" justify='center' align='center' background="#f9f9f9">
         <Box>
-          블로그
+          블로그 개요
         </Box> 
       </Box>
     </ServiceLayout>
   );
 };
 
-export default Bloger;
+export default BlogName;

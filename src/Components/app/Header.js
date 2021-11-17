@@ -165,7 +165,7 @@ const Header = () => {
                 <Link to='/app/webnovel'>릴레이 웹소설 쓰기</Link>
               </li>
               <li>
-                <Link to='/app/bloger'>블로그 글쓰기</Link>
+                <Link to='/app/bloger/idea'>블로그 글쓰기</Link>
               </li>
               <li>
                 <Link to='/app/fairytale'>동화 쓰기</Link>

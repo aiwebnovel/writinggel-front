@@ -100,9 +100,9 @@ const Webnovel = () => {
       const lngDetector = new LanguageDetect();
       const language = await lngDetector.detect(outputKorean, 1);
     
-      console.log(progress);
+      //console.log(progress);
 
-      console.log(((outputKorean.length - tempLength) * 100) / 150 );
+      //console.log(((outputKorean.length - tempLength) * 100) / 150 );
 
       if (progress >= 100) {
         SetStart("Continue");
@@ -121,7 +121,7 @@ const Webnovel = () => {
 
   const requestcontents = async() => {
 
-    console.log(progress, isHuman);
+    //console.log(progress, isHuman);
     if (localStorage.getItem("token") !== null) {
       let story = outputEnglish;
 
@@ -256,7 +256,7 @@ const Webnovel = () => {
 
   const SaveContent = async() => {
     console.log(outputKorean);
-    if(outputKorean !==''){
+    if(outputKorean){
       const config = {
         method: "post",
         url: `${configUrl.SERVER_URL}/archive`,
@@ -275,6 +275,10 @@ const Webnovel = () => {
         })
         .catch(async (error) => {
           console.log(error);
+
+          if( error.response.status === 500) {
+            toast.error('해당 에러는 관리자에게 문의해주세요!')
+          }
         });
       }else {
         toast.info('저장할 결과가 없습니다!');  

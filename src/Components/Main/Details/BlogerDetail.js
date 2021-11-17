@@ -103,7 +103,7 @@ const BlogerDetail = () => {
               </div>
             </Box>
             <div className='intoServiceBtn'>
-              <Link to="/app/bloger"><button>서비스 이용하기</button></Link>
+              <Link to="/app/bloger/idea"><button>서비스 이용하기</button></Link>
             </div>
           </Box>
         </Box>

@@ -19,7 +19,7 @@ const LoveLetter = () => {
     if(user){
       SetUser(user);
     }else {
-      console.log('에러');
+      console.log('유저를 선택해주세요!');
     }
 
   }
@@ -55,7 +55,7 @@ const LoveLetter = () => {
         >
           {MBTI.map((mbti) => (
               <Card
-                key={`user_${mbti.content}`}
+                key={`user${mbti.content}`}
                 className='MbtiCard1'
                 onClick={()=>{
                   let user = mbti.content;
