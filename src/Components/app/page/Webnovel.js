@@ -35,41 +35,26 @@ const Webnovel = () => {
     Material: "",
   });
 
-  const [before, SetBefore] = useState({
-    before_Main_character: "",
-    before_Place: "",
-    before_Time: "",
-    before_Main_Events: "",
-    before_Material: "",
-    before_outputEnglish: "",
-  });
 
   const [output, SetOutput] = useState({
     outputKorean: "",
     outputEnglish: "",
     result: "",
+    tempLength: 0,
+    tempWrite: ''
   });
 
   const [isHuman, SetHuman] = useState(false);
   const [isChange, SetChange] = useState(false);
-
-  const { Main_character, Place, Time, Main_Events, Material } = subInput;
-  // const {
-  //   before_Main_character,
-  //   before_Place,
-  //   before_Time,
-  //   before_Main_Events,
-  //   before_Material,
-  //   before_outputEnglish,
-  // } = before;
-  const { outputKorean, outputEnglish, result } = output;
-
   const [Start, SetStart] = useState("Create a story");
   const [progress, SetProgress] = useState(0);
-  const [tempLength, SetLength] = useState(0);
-  const [tempWrite, SetTempWrite] = useState("");
+
   const [isLoading, SetLoading] = useState(false);
   const [isSider, SetSider] = useState(false);
+
+  const { Main_character, Place, Time, Main_Events, Material } = subInput;
+  const { outputKorean, outputEnglish, result, tempLength, tempWrite } = output;
+  
 
   const handleSider = () => {
     SetSider(!isSider);
@@ -110,30 +95,36 @@ const Webnovel = () => {
     if (isHuman === false) {
       if (outputKorean > 0) {
         SetStart("Need a story");
-      } else {
-        return;
-      }
+      } 
     } else {
       const lngDetector = new LanguageDetect();
       const language = await lngDetector.detect(outputKorean, 1);
+    
+      console.log(progress);
+
+      console.log(((outputKorean.length - tempLength) * 100) / 150 );
 
       if (progress >= 100) {
         SetStart("Continue");
       }
 
       if (language[0] === "english") {
-        SetProgress(((outputKorean.length - tempLength) * 100) / 150);
+        let length = ((outputKorean.length - tempLength) * 100) / 150 ;
+        
+        SetProgress(length);
       } else {
-        SetProgress(((outputKorean.length - tempLength) * 100) / 100);
+        let elseLeng = ((outputKorean.length - tempLength) * 100) / 100;
+        SetProgress(elseLeng);
       }
     }
   };
 
-  const requestcontents = async (e) => {
+  const requestcontents = async() => {
 
     console.log(progress, isHuman);
     if (localStorage.getItem("token") !== null) {
       let story = outputEnglish;
+
 
       if (isHuman === true && progress < 100) {
         toast.error(`추가 이야기의 길이(${100 - progress}자)가 부족해요😭`);
@@ -167,7 +158,7 @@ const Webnovel = () => {
       }
       
       SetLoading(true);
-      axios
+      await axios
         .post(
           `${configUrl.SERVER_URL}/complation`,
           {
@@ -184,20 +175,25 @@ const Webnovel = () => {
             timeout: 100000,
           }
         )
-        .then((response) => {
-          SetOutput({
+        .then(async(response) => {
+          //console.log(response)
+          //console.log('response', response.data[0]);
+          //console.log('response2', response.data[1]);
+
+          await SetOutput({
             ...output,
             outputKorean: outputKorean + response.data[0],
-            outputEnglish: outputEnglish + response.data[1],
+            outputEnglish:  outputEnglish+ response.data[1],
             result: outputKorean + "\n\n원본\n" + outputEnglish,
+            tempLength: (outputKorean+ response.data[0]).length,
+            tempWrite: outputKorean+ response.data[0]
           });
-          SetLoading(false);
-          SetChange(false);
-          SetLength(outputKorean.length);
-          SetTempWrite(outputKorean);
-          SetStart("Need a Story");
-          SetHuman(true);
-          console.log(response.data)
+
+          await SetLoading(false);
+          await SetChange(false);
+          await SetStart("Need a Story");
+          await SetHuman(true);
+        
           if (response.data[2] >= 2) {
             toast.error(
               `결과물에 유해한 내용이 들어가 버렸어요! 버튼을 다시 눌러주세요!`
@@ -208,16 +204,7 @@ const Webnovel = () => {
               `이어지는 내용을 100자 이상 쓰면, 이야기를 계속 이어갈 수 있습니다.`
             );
           }
-          SetBefore({
-            ...before,
-            before_selectOptions: selectOptions,
-            before_Main_character: Main_character,
-            before_Place: Place,
-            before_Time: Time,
-            before_Main_Events: Main_Events,
-            before_Material: Material,
-            before_outputEnglish: story,
-          });
+ 
         })
         .catch((error) => {
           console.log(error);
@@ -237,7 +224,7 @@ const Webnovel = () => {
               SetLoading(false);
             } else {
               SetLoading(false);
-              SetOutput({ result: "해당 오류는 관리자에게 문의해주세요!" });
+              SetOutput({...output, result: "해당 오류는 관리자에게 문의해주세요!" });
             }
           }
         });
@@ -267,6 +254,35 @@ const Webnovel = () => {
     SetProgress(0);
   };
 
+  const SaveContent = async() => {
+    console.log(outputKorean);
+    if(outputKorean !==''){
+      const config = {
+        method: "post",
+        url: `${configUrl.SERVER_URL}/archive`,
+        headers: { authentication: localStorage.getItem("token") },
+        data: {
+          story: outputKorean,
+          category:'릴레이 웹소설',
+        }
+      };
+
+      await axios(config)
+        .then(async (response) => {
+          
+          //console.log('성공?', response.data)
+          toast.success(`${response.data.log}`);
+        })
+        .catch(async (error) => {
+          console.log(error);
+        });
+      }else {
+        toast.info('저장할 결과가 없습니다!');  
+      }
+
+
+  }
+
   useEffect(() => {
     const loginCheck = localStorage.getItem("token");
 
@@ -276,7 +292,11 @@ const Webnovel = () => {
       History.push("/");
       setTimeout(toast.info("로그인을 해주세요!"), 300);
     }
-  }, []);
+  }, [History]);
+
+useEffect(()=> {
+  //console.log(outputKorean)
+},[outputKorean])
 
   return (
     <ServiceLayout>
@@ -363,9 +383,9 @@ const Webnovel = () => {
                     completed={progress}
                     bgColor='#3D138D'
                     width='220px'
-                    height='20px'
+                    height='15px'
                     margin='0 auto'
-                    isLabelVisible={true}
+                    isLabelVisible={false}
                   />
                   {/* </div> */}
                 </div>
@@ -404,7 +424,7 @@ const Webnovel = () => {
               ></textarea>
             </div>
             <Icons>
-              <Download /> <Update onClick={requestcontents} />{" "}
+              <Download onClick={SaveContent}/> <Update onClick={requestcontents} />{" "}
               <Close onClick={resetData} />
             </Icons>
           </Box>
