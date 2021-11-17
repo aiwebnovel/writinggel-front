@@ -505,8 +505,50 @@ select::-ms-expand {
     }
 }
 
+.BlogProgressBox {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    max-width: 400px;
+    padding: 20px;
+    width: 100%;
+    background-color: $white-1;
+    gap: 15px;
+    border-top: 3px solid #372874;
+
+   >h4 {
+       font-weight: 600;
+   }
+
+   > div {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+   }
+
+    > div >button {
+        background-color: $sub2;
+        border: 0;
+        outline: 0;
+        cursor: pointer;
+        padding: 8px 12px;
+        border-radius: 5px;
+    }
+
+ 
+    @media screen and (max-width: 680px) {
+        flex-direction: column;
+    }
+}
+
 .blogOutputKo,
-.blogOutputEn {
+.blogOutputEn,
+.blogFollowKo,
+.blogFollowEn
+{
     background-color: $white-1;
     border: 1px solid #444;
     max-width: 400px;
@@ -520,6 +562,11 @@ select::-ms-expand {
     @media screen and (max-width: 768px) {
         width: 90%;
     }
+}
+
+.blogFollowKo,
+.blogFollowEn {
+    resize: none;
 }
 
 

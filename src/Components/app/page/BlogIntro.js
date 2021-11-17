@@ -1,5 +1,5 @@
-import { Box , Grid, ResponsiveContext, } from "grommet";
-import { Copy, Close, Add, Download, FormDown } from "grommet-icons";
+import { Box, Grid, ResponsiveContext } from "grommet";
+import { Copy, Close, Add, Download} from "grommet-icons";
 import React, { useEffect, useState, useContext } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { CopyToClipboard } from "react-copy-to-clipboard";
@@ -14,14 +14,13 @@ import styled from "styled-components";
 import ServiceLayout from "../Layout";
 import Loading from "../../Loading";
 
-
 const BlogIntro = () => {
   const size = useContext(ResponsiveContext);
   const History = useHistory();
 
   const [isSider, SetSider] = useState(false);
   const [isLoading, SetLoading] = useState(false);
-  const [isOpen, SetOpen] = useState(true);
+  const [isOpen, SetOpen] = useState(false);
   const [Copied, SetCopy] = useState(false);
   const [input, SetInput] = useState("");
 
@@ -36,9 +35,10 @@ const BlogIntro = () => {
     SetSider(!isSider);
   };
 
-  const HandleToggle = () => {
+  const handleOpen = () => {
+    SetSider(false);
     SetOpen(!isOpen);
-  }
+  };
 
   const onCopied = () => {
     if (outputKorean === "") {
@@ -109,7 +109,7 @@ const BlogIntro = () => {
       SetLoading(true);
       await axios
         .post(
-          `${configUrl.SERVER_URL}/blog/idea`,
+          `${configUrl.SERVER_URL}/blog/intro`,
           {
             story: story,
           },
@@ -142,7 +142,7 @@ const BlogIntro = () => {
         .catch((error) => {
           //console.log(error);
           if (error.response.status === 412) {
-            this.setState({ loading: false });
+            SetLoading(false);
             toast.info(`🙅‍♀️ 로그인이 필요합니다!`, {
               style: { backgroundColor: "#fff", color: "#000" },
               progressStyle: { backgroundColor: "#7D4CDB" },
@@ -150,7 +150,7 @@ const BlogIntro = () => {
             localStorage.removeItem("token");
           } else {
             if (error.response.status === 403) {
-              this.setState({ loading: false });
+              SetLoading(false);
               toast.error(`토큰이 부족합니다!`);
             }
           }
@@ -174,12 +174,16 @@ const BlogIntro = () => {
     }
   }, []);
 
+  useEffect(() => {
+    //console.log(outputKorean)
+  }, [outputKorean, outputEnglish]);
+
 
   return (
     <ServiceLayout>
-           {isLoading && <Loading />}
+      {isLoading && <Loading />}
       <Box
-        className='ServiceContainer'
+        className='ServiceContainerVh'
         justify='center'
         align='center'
         background='#f9f9f9'
@@ -201,10 +205,10 @@ const BlogIntro = () => {
           }
         >
           {isSider ? (
-            <Box gridArea='sidebar' className='sideContainer100' gap='medium'>
-              <SiderBtn onClick={handleSider}>
+            <Box gridArea='sidebar' className='sideContainer' gap='medium'>
+              <div className='CloseSiderBtn' onClick={handleSider}>
                 <Close />
-              </SiderBtn>
+              </div>
               <Box align='center' gap='large'>
                 <div className='SiderBox'>
                   <MenuItem to='/app/bloger/idea'>블로그 아이디어</MenuItem>
@@ -217,48 +221,73 @@ const BlogIntro = () => {
               </Box>
             </Box>
           ) : (
-            <Box gridArea='sidebar' className='isSiderFalse' gap='medium'>
-              <SiderBtn onClick={handleSider}>
+            <Box
+              gridArea='sidebar'
+              className='isSiderFalse'
+              gap={size !== "small" && "medium"}
+            >
+              <div className='SiderBtn' onClick={handleSider}>
                 <Add size='small' />
                 <span>열기</span>
-              </SiderBtn>
+              </div>
+              <div className='OpenBtn' onClick={handleOpen}>
+                <span>📌 필독</span>
+              </div>
             </Box>
           )}
 
-          <Box gridArea='main' justify='center' align='center' className='blogMainBox'>
-            <div className="guide-Accordion">
-              <div className="guide-PanelHeader" onClick={HandleToggle}>📌 팅젤이를 어떻게 활용하면 좋을까요? (필독) <FormDown/></div>
-              {isOpen && (<Box className='guide-PanelContent ' animation={{ type: "slideDown", duration: 2000 }}>
-                <p>💫 팅젤이와 함께 글 쓰는 TING!</p>
-                <div>
-                  <img src='/tinggle.png' alt='tingting'/>
+          {isOpen && (
+            <Box
+              gridArea='sidebar'
+              className='sideContainer'
+              gap={size !== "small" && "medium"}
+            >
+              <div className='CloseSiderBtn' onClick={handleOpen}>
+                <Close />
+              </div>
+              <Box className='guide-Accordion'>
+                <div className='guide-PanelHeader'>Q. How to Use?</div>
+
+                <div className='guide-PanelContent '>
+                  <h4>💫 팅젤이와 함께 글 쓰는 TING!</h4>
                   <div>
-                    <p>1. 원하는 키워드나 글을 입력해주세요!</p>
-                    <p>2. 팅젤이가 글 위에 아이디어💡를 얹어줄거에요!</p>
-                    <p>3. 팅젤이가 얹어준 아이디어를 활용해봐요!</p>
+                    <img src='/tinggle.png' alt='tingting' />
+                    <div>
+                      <p>1. 원하는 키워드나 글을 입력해주세요!</p>
+                      <p>
+                        2. write 버튼을 누르면 팅젤이가 여러분의 글 위에
+                        아이디어💡를 얹어줄거에요!
+                      </p>
+                      <p>3. 팅젤이가 얹어준 아이디어를 활용해봐요!</p>
+                    </div>
                   </div>
                 </div>
-              </Box>)}
-            </div>        
-            <div className="BlogIdeaBox">
-                <input
-                  type='text'
-                  name='idea'
-                  placeholder='블로그 키워드를 하나 입력해주세요! ex) 글쓰기 방법'
-                  value={input}
-                  onChange={(e) => handleChange(e)}
-                />
-                <button onClick={requestcontents}>
-                  Write
-                </button>
+              </Box>
+            </Box>
+          )}
+
+          <Box
+            gridArea='main'
+            justify='center'
+            align='center'
+            className='blogMainBox'
+          >
+            <div className='BlogIdeaBox'>
+              <input
+                type='text'
+                placeholder='블로그 키워드를 하나 입력해주세요! ex) 글쓰기 방법'
+                value={input}
+                onChange={(e) => handleChange(e)}
+              />
+              <button onClick={requestcontents}>Write</button>
             </div>
             <div className='mainOutputBox'>
-              <div className='blogOutputKo'>{outputKorean[0]}</div>
-              <div className='blogOutputEn'>{outputEnglish[0]}</div>
+              <div className='blogOutputKo'>{outputKorean}</div>
+              <div className='blogOutputEn'>{outputEnglish}</div>
             </div>
-         
+
             <Icons>
-              <CopyToClipboard text={outputKorean[0]} onCopy={onCopied}>
+              <CopyToClipboard text={outputKorean} onCopy={onCopied}>
                 <Copy style={{ cursor: "pointer" }} />
               </CopyToClipboard>
               <Download onClick={SaveContent} />
@@ -272,16 +301,6 @@ const BlogIntro = () => {
 
 export default BlogIntro;
 
-const SiderBtn = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 2px;
-  padding: 10px;
-  cursor: pointer;
-  color: #444;
-  font-size: 13x;
-  font-weight: 600;
-`;
 
 const MenuItem = styled(Link)`
   display: block;
@@ -298,8 +317,7 @@ const MenuItem = styled(Link)`
 
   @media screen and (max-width: 768px) {
     width: 100%;
-    
-}
+  }
 `;
 
 const Icons = styled.div`

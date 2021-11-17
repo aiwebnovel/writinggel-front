@@ -2,10 +2,8 @@ import {
   Box,
   Grid,
   ResponsiveContext,
-  AccordionPanel,
-  Accordion,
 } from "grommet";
-import { Copy, Close, Add, Download, FormDown } from "grommet-icons";
+import { Copy, Close, Add, Download } from "grommet-icons";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import React, { useEffect, useState, useContext } from "react";
 import { Link, useHistory } from "react-router-dom";
@@ -44,10 +42,6 @@ const BlogIdea = () => {
 
   const handleOpen = () => {
     SetSider(false);
-    SetOpen(!isOpen);
-  };
-
-  const HandleToggle = () => {
     SetOpen(!isOpen);
   };
 
