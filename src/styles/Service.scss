@@ -15,6 +15,7 @@ $boxShadow : rgb(237 237 237) 2px 3px 8px;
 .ServiceContainer {
     width: 100%;
     height: 100%;
+    
 }
 
 //내용이 없어서 height 100%으로 하면 빈 화면이 나올 때
@@ -22,9 +23,49 @@ $boxShadow : rgb(237 237 237) 2px 3px 8px;
     width: 100%;
     height: 100vh;
 
-
     @media screen and (max-width: 768px) {
         height: 100%;
+    }
+}
+
+.sideContainer {
+    background-color: $white-1;
+    border-right: 1px solid $main;
+    border-top: 1px solid $main;
+    height: 100vh;
+    width: 250px;
+    transition: width 0.4s ease;
+    overflow: hidden;
+
+    @media screen and (max-width: 768px) {
+        width: 100%;
+        //height: 100%;
+        overflow: scroll;
+        z-index: 3;
+        border: 0;
+        border-top: 1px solid $main;
+        border-bottom: 1px solid $main;
+
+    }
+}
+
+.sideContainer100 {
+    background-color: $white-1;
+    border-right: 1px solid $main;
+    border-top: 1px solid $main;
+    height: 100%;
+    width: 250px;
+    transition: width 0.4s ease;
+    overflow: hidden;
+
+    @media screen and (max-width: 768px) {
+        width: 100%;
+        height: 100vh;
+        overflow: scroll;
+        z-index: 3;
+        border: 0;
+        border-top: 1px solid $main;
+        border-bottom: 1px solid $main;
     }
 }
 
@@ -74,15 +115,17 @@ $boxShadow : rgb(237 237 237) 2px 3px 8px;
 
 
 .guide-Accordion {
-    padding: 10px;
     gap: 15px;
-    background-color: $white-1;
+    max-width: 500px;
     width: 100%;
+    border: 1px solid $dark-1;
+    background-color: $white-1
 }
 
 .guide-PanelHeader {
-    padding: 0;
-    font-weight: 600;
+    background-color : $sub2;
+    padding: 8px;
+    font-size: 15px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -90,45 +133,38 @@ $boxShadow : rgb(237 237 237) 2px 3px 8px;
     cursor: pointer;
 }
 
-
-
 .guide-PanelContent {
-
+    background-color: $white-1;
     //padding: 10px 0px 10px 25px;
     padding: 10px;
-    max-width: 500px;
-    transition: all 300ms ease-in-out;
-    
+    width: 100%;
+
     >p {
-        font-size: 17px;
-        line-height: 25px;
+        font-size: 15px;
+        font-weight: 600;
     }
 
+    > div {
+        display:flex;
+        align-items: center;
+        justify-content: space-evenly;
+        font-size: 15px;
+        padding: 30px 0;
+        > img {
+            width: 100px;
+        }
+
+        @media screen and (max-width: 768px) {
+            gap: 20px;
+            flex-direction: column;
+        }
+    }
 }
 
 
 //웹노블, 동화 공통
 
-.sideContainer {
-    background-color: $white-1;
-    border-right: 1px solid $main;
-    border-top: 1px solid $main;
-    height: 100vh;
-    width: 250px;
-    transition: width 0.4s ease;
-    overflow: hidden;
 
-    @media screen and (max-width: 768px) {
-        width: 100%;
-        //height: 100%;
-        overflow: scroll;
-        z-index: 3;
-        border: 0;
-        border-top: 1px solid $main;
-        border-bottom: 1px solid $main;
-
-    }
-}
 
 .mainOutputBox {
     display: flex;
@@ -352,11 +388,10 @@ $boxShadow : rgb(237 237 237) 2px 3px 8px;
 
 //bloger
 
-.mainBox {
+.blogMainBox {
     width: 100%;
     gap: 30px;
-
-    padding: 120px;
+    padding: 210px 120px;
 
 
     @media screen and (max-width: 768px) {
@@ -365,6 +400,7 @@ $boxShadow : rgb(237 237 237) 2px 3px 8px;
     }
     
 }
+
 
 .BlogIdeaBox {  
 
@@ -384,7 +420,7 @@ $boxShadow : rgb(237 237 237) 2px 3px 8px;
     }
 
     > button {
-        background-color: $sub2;
+        background-color: $sub1;
         border: 0;
         outline: 0;
         cursor: pointer;
@@ -660,6 +696,21 @@ $boxShadow : rgb(237 237 237) 2px 3px 8px;
 
 
 //fairyTale
+
+
+// .mainBox {
+
+//     width: 100%;
+//     gap: 30px;
+//     padding: 120px;
+
+
+//     @media screen and (max-width: 768px) {
+//         padding-right: 30px;
+//         padding-left: 30px;
+//     }
+    
+// }
 
 
 .isSiderFalse {

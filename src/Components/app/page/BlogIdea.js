@@ -1,4 +1,4 @@
-import { Box, Grid, ResponsiveContext } from "grommet";
+import { Box, Grid, ResponsiveContext, AccordionPanel, Accordion } from "grommet";
 import { Copy, Close, Add, Download, FormDown } from "grommet-icons";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import React, { useEffect, useState, useContext } from "react";
@@ -177,7 +177,7 @@ const BlogIdea = () => {
     <ServiceLayout>
       {isLoading && <Loading />}
       <Box
-        className='ServiceContainerVh'
+        className='ServiceContainer'
         justify='center'
         align='center'
         background='#f9f9f9'
@@ -199,7 +199,7 @@ const BlogIdea = () => {
           }
         >
           {isSider ? (
-            <Box gridArea='sidebar' className='sideContainer' gap='medium'>
+            <Box gridArea='sidebar' className='sideContainer100' gap='medium'>
               <SiderBtn onClick={handleSider}>
                 <Close />
               </SiderBtn>
@@ -223,36 +223,21 @@ const BlogIdea = () => {
             </Box>
           )}
 
-          <Box gridArea='main' justify='center' align='center' className='mainBox'>
+          <Box gridArea='main' justify='center' align='center' className='blogMainBox'>
             <div className="guide-Accordion">
-              <div className="guide-PanelHeader" onClick={HandleToggle}>💫 팅젤이와 함께 글 쓰는 TING! (필독) <FormDown/></div>
-              {isOpen ? (<div className='guide-PanelContent'>
-                <p> 계정 삭제 시, 멤버십 가입 내역도 삭제됩니다. 멤버십에
-                    가입하여 서비스를 이용하는 중에 계정 삭제(탈퇴)를 하면 더
-                    이상 이용이 불가합니다. 신중한 결정 부탁드립니다.
-                </p>
-              </div>):(<div className='guide-PanelContent'><p>설명을 다시 보고 싶다면 클릭해주세요!</p></div>)}
-              
-            </div>
-          {/* <Accordion className='guide-Accordion' multiple>
-              <AccordionPanel
-                label='💫 팅젤이와 함께 글 쓰는 TING! (필독)'
-                className='guide-AccoPanel'
-              >
-                <div className='guide-PanelContent'>
-                  <p>
-                    1. 
-                  </p>
-
-                  <p>
-                    계정 삭제 시, 멤버십 가입 내역도 삭제됩니다. 멤버십에
-                    가입하여 서비스를 이용하는 중에 계정 삭제(탈퇴)를 하면 더
-                    이상 이용이 불가합니다. 신중한 결정 부탁드립니다.
-                  </p>
+              <div className="guide-PanelHeader" onClick={HandleToggle}>📌 팅젤이를 어떻게 활용하면 좋을까요? (필독) <FormDown/></div>
+              {isOpen && (<Box className='guide-PanelContent ' animation={{ type: "slideDown", duration: 2000 }}>
+                <p>💫 팅젤이와 함께 글 쓰는 TING!</p>
+                <div>
+                  <img src='/tinggle.png' alt='tingting'/>
+                  <div>
+                    <p>1. 원하는 키워드나 글을 입력해주세요!</p>
+                    <p>2. 팅젤이가 글 위에 아이디어💡를 얹어줄거에요!</p>
+                    <p>3. 팅젤이가 얹어준 아이디어를 활용해봐요!</p>
+                  </div>
                 </div>
-              </AccordionPanel>
-            </Accordion> */}
-        
+              </Box>)}
+            </div>        
             <div className="BlogIdeaBox">
                 <input
                   type='text'
