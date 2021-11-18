@@ -44,9 +44,6 @@ import LoveLetter from '../Components/app/page/LoveLetter';
 import Dailywrite from '../Components/app/page/DailyWrite';
 import Storysrc from '../Components/app/page/Storysrc';
 
-import MbtiResult from '../Components/app/page/MbtiResult'
-
-
 
 function App() {
   return (
@@ -97,9 +94,6 @@ function App() {
         <Route exact path="/app/dailywrite" component={Dailywrite}></Route>
         <Route exact path="/app/storysrc" component={Storysrc}></Route>
         
-      {/* mbti route */}
-      <Route exact path="/app/loveletter/mbti/:result" component={MbtiResult}></Route>
-
 
       </Switch>
     </BrowserRouter>
