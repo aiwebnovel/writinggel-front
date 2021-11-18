@@ -42,10 +42,19 @@ const Fairytale = () => {
   const History = useHistory();
 
   const [isSider, SetSider] = useState(false);
+  const [isOpen, SetOpen] = useState(false);
+
   const handleSider = () => {
     SetSider(!isSider);
   };
 
+
+  const handleOpen = () => {
+    SetSider(false);
+    SetOpen(!isOpen);
+  };
+
+  
   const [category, Setcategory] = useState({
     story:'',
     mainCharacter:'',
@@ -151,12 +160,53 @@ const Fairytale = () => {
               </Box>
             </Box>
           ) : (
-            <Box gridArea='sidebar' className='isSiderFalse' gap='medium'>
-              <SiderBtn onClick={handleSider}>
-                <Add size='small'/><span>열기</span>
-              </SiderBtn>
+            <Box
+            gridArea='sidebar'
+            className='isSiderFalse'
+            gap={size !== "small" && "medium"}
+            
+          >
+            <div className='SiderBtn' onClick={handleSider}>
+              <Add size='small' />
+              <span>열기</span>
+            </div>
+            <div className='OpenBtn' onClick={handleOpen}>
+              <span>📌 필독</span>
+            </div>
+          </Box>
+          )}
+
+
+{isOpen && (
+            <Box
+              gridArea='sidebar'
+              className='sideContainer'
+              gap={size !== "small" && "medium"}
+            >
+              <div className='CloseSiderBtn' onClick={handleOpen}>
+                <Close />
+              </div>
+              <Box className='guide-Accordion'>
+                <div className='guide-PanelHeader'>Q. How to Use?</div>
+
+                <div className='guide-PanelContent '>
+                  <h4>💫 팅젤이와 함께 글 쓰는 TING!</h4>
+                  <div>
+                    <img src='/tinggle.png' alt='tingting' />
+                    <div>
+                      <p>1. 원하는 키워드나 글을 입력해주세요!</p>
+                      <p>
+                        2. write 버튼을 누르면 팅젤이가 여러분의 글 위에
+                        아이디어💡를 얹어줄거에요!
+                      </p>
+                      <p>3. 팅젤이가 얹어준 아이디어를 활용해봐요!</p>
+                    </div>
+                  </div>
+                </div>
+              </Box>
             </Box>
           )}
+
 
           <Box
             fill

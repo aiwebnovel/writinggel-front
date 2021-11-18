@@ -71,7 +71,9 @@ $boxShadow : rgb(237 237 237) 2px 3px 8px;
 
 
 
-.CloseSiderBtn, .SiderBtn, .OpenBtn {
+.CloseSiderBtn,
+.SiderBtn,
+.OpenBtn {
     display: flex;
     align-items: center;
     padding: 10px;
@@ -86,10 +88,10 @@ $boxShadow : rgb(237 237 237) 2px 3px 8px;
     background-color: #fff;
     border: 1px solid #444;
     border-left: 0;
-     gap: 2px;
+    gap: 2px;
 
     @media screen and (max-width: 768px) {
-        border:0;
+        border: 0;
         border-bottom: 1px solid #444;
         border-top: 1px solid #444;
     }
@@ -100,9 +102,10 @@ $boxShadow : rgb(237 237 237) 2px 3px 8px;
     background-color: #ffce1f;
     border: 1px solid #444;
     border-left: 0;
+    transition: width 0.4s ease;
 
     @media screen and (max-width: 768px) {
-        border:0;
+        border: 0;
         border-bottom: 1px solid #444;
         //border-top: 1px solid #444;
     }
@@ -116,7 +119,7 @@ $boxShadow : rgb(237 237 237) 2px 3px 8px;
         width: 100%;
         height: 50px;
         border: 0;
-  
+
     }
 }
 
@@ -170,7 +173,7 @@ $boxShadow : rgb(237 237 237) 2px 3px 8px;
     gap: 15px;
     width: 100%;
     background-color: $white-1;
-    
+
 }
 
 .guide-PanelHeader {
@@ -193,7 +196,7 @@ $boxShadow : rgb(237 237 237) 2px 3px 8px;
 
     }
 
- 
+
     >div {
         display: flex;
         flex-direction: column;
@@ -209,11 +212,11 @@ $boxShadow : rgb(237 237 237) 2px 3px 8px;
             width: 150px;
         }
 
-        > div > p {
+        >div>p {
             font-size: 16px;
-            margin-bottom : 5px;
+            margin-bottom: 5px;
         }
-    
+
 
         @media screen and (max-width: 768px) {
             gap: 20px;
@@ -517,19 +520,19 @@ select::-ms-expand {
     gap: 15px;
     border-top: 3px solid #372874;
 
-   >h4 {
-       font-weight: 600;
-   }
+    >h4 {
+        font-weight: 600;
+    }
 
-   > div {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    gap: 20px;
-   }
+    >div {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        gap: 20px;
+    }
 
-    > div >button {
+    >div>button {
         background-color: $sub2;
         border: 0;
         outline: 0;
@@ -538,7 +541,7 @@ select::-ms-expand {
         border-radius: 5px;
     }
 
- 
+
     @media screen and (max-width: 680px) {
         flex-direction: column;
     }
@@ -547,8 +550,7 @@ select::-ms-expand {
 .blogOutputKo,
 .blogOutputEn,
 .blogFollowKo,
-.blogFollowEn
-{
+.blogFollowEn {
     background-color: $white-1;
     border: 1px solid #444;
     max-width: 400px;
@@ -569,6 +571,117 @@ select::-ms-expand {
     resize: none;
 }
 
+
+.KeyContainer{
+    width:100%;
+    display:flex;
+    flex-direction:column;
+    align-items: center;
+    max-width: 700px;
+    min-height: 400px;
+    background-color: #fff;
+    box-shadow: $boxShadow;
+    border: 1px solid $dark-1;
+}
+
+.keywordHeader {
+    width: 100%;
+    background-color: $white-2;
+    padding: 8px;
+      
+    > svg {
+        // background-color: #444;
+        fill: $dark-1;
+        stroke: $dark-1;
+        padding: 5px;
+        width: 30px;
+        height: 30px;
+        margin-right: 5px;
+  
+        border-radius: 50%;
+        cursor: pointer;
+      }
+
+      .close {
+          background-color : #f45752;
+      }
+
+      .copy {
+        background-color: $point;
+    }
+
+     .download {
+        background-color: $sub2;
+     }
+  
+}
+
+.keywordDiv {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-width: 900px;
+    gap: 15px;
+    width: 100%;
+    padding: 30px 10px;
+    transition: all 200ms ease-in-out;
+
+    background-color : $white-1;
+}
+
+
+
+.keywordInput {
+    background-color: $white-1;
+    border: 2px solid $main;
+    outline: 0;
+    word-wrap: keep-all;
+    width: 80%;
+    font-size: 0.9rem;
+    padding:8px;
+
+    >svg {
+        fill: $main;
+        stroke: $main;
+    }
+
+}
+
+
+.KeywordButtonStyle {
+    //background: transparent;
+    text-transform: none;
+    border: 0;
+    outline: 0;
+    cursor: pointer;
+    height: 100%;
+    background-color: $main;
+    border: 1px solid $main;
+    border-radius: 10px;
+
+    > svg {
+        fill:$white-1;
+        stroke: $white-1;
+    }
+
+}
+
+.resultBox {
+    width: 100%;
+    padding: 20px;
+    background-color : $white-1;
+    overflow: scroll;
+}
+
+.keywordResult {
+    border: 2px solid #55d4bc;
+    background-color:$white-2;
+    color: $dark-1;
+    padding: 5px;
+    border-radius: 15px;
+    cursor: pointer;
+   
+}
 
 
 //Firstsentence

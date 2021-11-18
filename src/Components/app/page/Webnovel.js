@@ -35,13 +35,12 @@ const Webnovel = () => {
     Material: "",
   });
 
-
   const [output, SetOutput] = useState({
     outputKorean: "",
     outputEnglish: "",
     result: "",
     tempLength: 0,
-    tempWrite: ''
+    tempWrite: "",
   });
 
   const [isHuman, SetHuman] = useState(false);
@@ -51,13 +50,18 @@ const Webnovel = () => {
 
   const [isLoading, SetLoading] = useState(false);
   const [isSider, SetSider] = useState(false);
+  const [isOpen, SetOpen] = useState(false);
 
   const { Main_character, Place, Time, Main_Events, Material } = subInput;
   const { outputKorean, outputEnglish, result, tempLength, tempWrite } = output;
-  
 
   const handleSider = () => {
     SetSider(!isSider);
+  };
+
+  const handleOpen = () => {
+    SetSider(false);
+    SetOpen(!isOpen);
   };
 
   const onSelect = (e) => {
@@ -95,11 +99,11 @@ const Webnovel = () => {
     if (isHuman === false) {
       if (outputKorean > 0) {
         SetStart("Need a story");
-      } 
+      }
     } else {
       const lngDetector = new LanguageDetect();
       const language = await lngDetector.detect(outputKorean, 1);
-    
+
       //console.log(progress);
 
       //console.log(((outputKorean.length - tempLength) * 100) / 150 );
@@ -109,8 +113,8 @@ const Webnovel = () => {
       }
 
       if (language[0] === "english") {
-        let length = ((outputKorean.length - tempLength) * 100) / 150 ;
-        
+        let length = ((outputKorean.length - tempLength) * 100) / 150;
+
         SetProgress(length);
       } else {
         let elseLeng = ((outputKorean.length - tempLength) * 100) / 100;
@@ -119,12 +123,10 @@ const Webnovel = () => {
     }
   };
 
-  const requestcontents = async() => {
-
+  const requestcontents = async () => {
     //console.log(progress, isHuman);
     if (localStorage.getItem("token") !== null) {
       let story = outputEnglish;
-
 
       if (isHuman === true && progress < 100) {
         toast.error(`추가 이야기의 길이(${100 - progress}자)가 부족해요😭`);
@@ -156,7 +158,7 @@ const Webnovel = () => {
         toast.error(`소재를 입력해 주세요!`);
         return;
       }
-      
+
       SetLoading(true);
       await axios
         .post(
@@ -175,7 +177,7 @@ const Webnovel = () => {
             timeout: 100000,
           }
         )
-        .then(async(response) => {
+        .then(async (response) => {
           //console.log(response)
           //console.log('response', response.data[0]);
           //console.log('response2', response.data[1]);
@@ -183,17 +185,17 @@ const Webnovel = () => {
           await SetOutput({
             ...output,
             outputKorean: outputKorean + response.data[0],
-            outputEnglish:  outputEnglish+ response.data[1],
+            outputEnglish: outputEnglish + response.data[1],
             result: outputKorean + "\n\n원본\n" + outputEnglish,
-            tempLength: (outputKorean+ response.data[0]).length,
-            tempWrite: outputKorean+ response.data[0]
+            tempLength: (outputKorean + response.data[0]).length,
+            tempWrite: outputKorean + response.data[0],
           });
 
           await SetLoading(false);
           await SetChange(false);
           await SetStart("Need a Story");
           await SetHuman(true);
-        
+
           if (response.data[2] >= 2) {
             toast.error(
               `결과물에 유해한 내용이 들어가 버렸어요! 버튼을 다시 눌러주세요!`
@@ -204,7 +206,6 @@ const Webnovel = () => {
               `이어지는 내용을 100자 이상 쓰면, 이야기를 계속 이어갈 수 있습니다.`
             );
           }
- 
         })
         .catch((error) => {
           console.log(error);
@@ -224,7 +225,10 @@ const Webnovel = () => {
               SetLoading(false);
             } else {
               SetLoading(false);
-              SetOutput({...output, result: "해당 오류는 관리자에게 문의해주세요!" });
+              SetOutput({
+                ...output,
+                result: "해당 오류는 관리자에게 문의해주세요!",
+              });
             }
           }
         });
@@ -247,45 +251,42 @@ const Webnovel = () => {
       ...subInput,
       Main_character: "",
       Place: "",
-      Time:'',
+      Time: "",
       Main_Events: "",
       Material: "",
     });
     SetProgress(0);
   };
 
-  const SaveContent = async() => {
+  const SaveContent = async () => {
     console.log(outputKorean);
-    if(outputKorean){
+    if (outputKorean) {
       const config = {
         method: "post",
         url: `${configUrl.SERVER_URL}/archive`,
         headers: { authentication: localStorage.getItem("token") },
         data: {
           story: outputKorean,
-          category:'릴레이 웹소설',
-        }
+          category: "릴레이 웹소설",
+        },
       };
 
       await axios(config)
         .then(async (response) => {
-          
           //console.log('성공?', response.data)
           toast.success(`${response.data.log}`);
         })
         .catch(async (error) => {
           console.log(error);
 
-          if( error.response.status === 500) {
-            toast.error('해당 에러는 관리자에게 문의해주세요!')
+          if (error.response.status === 500) {
+            toast.error("해당 에러는 관리자에게 문의해주세요!");
           }
         });
-      }else {
-        toast.info('저장할 결과가 없습니다!');  
-      }
-
-
-  }
+    } else {
+      toast.info("저장할 결과가 없습니다!");
+    }
+  };
 
   useEffect(() => {
     const loginCheck = localStorage.getItem("token");
@@ -298,9 +299,9 @@ const Webnovel = () => {
     }
   }, [History]);
 
-useEffect(()=> {
-  //console.log(outputKorean)
-},[outputKorean])
+  useEffect(() => {
+    //console.log(outputKorean)
+  }, [outputKorean]);
 
   return (
     <ServiceLayout>
@@ -396,11 +397,49 @@ useEffect(()=> {
               </Box>
             </Box>
           ) : (
-            <Box gridArea='sidebar' className='isSiderFalse' gap='medium'>
-              <SiderBtn onClick={handleSider}>
+            <Box
+              gridArea='sidebar'
+              className='isSiderFalse'
+              gap={size !== "small" && "medium"}
+            >
+              <div className='SiderBtn' onClick={handleSider}>
                 <Add size='small' />
                 <span>열기</span>
-              </SiderBtn>
+              </div>
+              <div className='OpenBtn' onClick={handleOpen}>
+                <span>📌 필독</span>
+              </div>
+            </Box>
+          )}
+
+          {isOpen && (
+            <Box
+              gridArea='sidebar'
+              className='sideContainer'
+              gap={size !== "small" && "medium"}
+            >
+              <div className='CloseSiderBtn' onClick={handleOpen}>
+                <Close />
+              </div>
+              <Box className='guide-Accordion'>
+                <div className='guide-PanelHeader'>Q. How to Use?</div>
+
+                <div className='guide-PanelContent '>
+                  <h4>💫 팅젤이와 함께 글 쓰는 TING!</h4>
+                  <div>
+                    <img src='/tinggle.png' alt='tingting' />
+                    <div>
+                      <p>1. 원하는 키워드나 글을 입력해주세요!</p>
+                      <p style={{color : 'gray'}}>❗️ +열기 버튼이 있는 경우는 눌러서 빈 칸을 채워주세요!(블로그 제외)</p>
+                      <p>
+                        2. write 버튼을 누르면 팅젤이가 여러분의 글 위에
+                        아이디어💡를 얹어줄거에요!
+                      </p>
+                      <p>3. 팅젤이가 얹어준 아이디어를 활용해봐요!</p>
+                    </div>
+                  </div>
+                </div>
+              </Box>
             </Box>
           )}
 
@@ -428,8 +467,8 @@ useEffect(()=> {
               ></textarea>
             </div>
             <Icons>
-              <Download onClick={SaveContent}/> <Update onClick={requestcontents} />{" "}
-              <Close onClick={resetData} />
+              <Download onClick={SaveContent} />{" "}
+              <Update onClick={requestcontents} /> <Close onClick={resetData} />
             </Icons>
           </Box>
         </Grid>

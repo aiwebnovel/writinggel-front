@@ -256,6 +256,7 @@ const BlogTitle = () => {
                     <img src='/tinggle.png' alt='tingting' />
                     <div>
                       <p>1. 원하는 키워드나 글을 입력해주세요!</p>
+                      <p style={{color : 'gray'}}>❗️ +열기 버튼이 있는 경우는 눌러서 빈 칸을 채워주세요!(블로그 제외)</p>
                       <p>
                         2. write 버튼을 누르면 팅젤이가 여러분의 글 위에
                         아이디어💡를 얹어줄거에요!
