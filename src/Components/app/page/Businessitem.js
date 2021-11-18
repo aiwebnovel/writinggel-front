@@ -14,7 +14,9 @@ import "react-toastify/dist/ReactToastify.css";
 
 import ServiceLayout from "../Layout";
 import * as configUrl from "../../../config";
+import Loading from "../../Loading";
 
+import styled from "styled-components";
 import axios from 'axios'
 
 
@@ -22,6 +24,7 @@ const Businessitem = () => {
   const size = useContext(ResponsiveContext);
   const History = useHistory();
 
+  const [isLoading, SetLoading] = useState(false);
   const [input, SetInput] = useState('');
   const [OutputContent, SetOutputContent] = useState(['','',''])
 
@@ -38,6 +41,8 @@ const Businessitem = () => {
   }, []);
 
     const BusinessitemAxios = async () => {
+    
+      SetLoading(true)
     if (input && input !== '') {
       const config = {
         method: 'post',
@@ -50,6 +55,7 @@ const Businessitem = () => {
       .then(async (response) => {
         console.log(response.data);
         SetOutputContent(response.data[0]);
+        SetLoading(false)
       })
       .catch(async (error) => {
         console.log(error);
@@ -61,19 +67,21 @@ const Businessitem = () => {
 
   return (
     <ServiceLayout>
+      {isLoading && <Loading />}
       <Box
-        className='ServiceContainer'
+        className='ServiceContainerVh'
         justify='center'
         align='center'
         background='#f9f9f9'
-        pad='large'
         gap="large"
+        style={size !== 'small' ? {padding: '48px'}: {padding: '100px 24px'}}
       >
         <Box
-          direction='row-responsive'
+          direction={size !=='small' ? 'row':'column'}
           justify='center'
-          align='end'
+          align={size !== 'small' ? 'end': 'center'}
           className='itemInputBox'
+          gap="medium"
         >
           <div className='busiItem'>
             <p>
@@ -83,32 +91,32 @@ const Businessitem = () => {
           </div>
           <button onClick = {()=>{BusinessitemAxios()}}>사업 아이템 찾기</button>
         </Box>
-        <Box  fill={size !== "small" ? false : true}>
+        <Box fill={size !== "small" ? false : true}>
           <Grid
             gap='medium'
             columns={size !== "small" ? { count: 3, size: "auto" } : "100%"}
           >
-            <Card style={{backgroundColor:'#fff', borderRadius:0}}>
+            <Cards >
               <CardHeader className='SerCardHead'>아이템</CardHeader>
               <CardBody className='SerCardBody'>{OutputContent[0]}</CardBody>
               <div className='SerCardFoot'>
                 <Download />
               </div>
-            </Card>
-            <Card style={{backgroundColor:'#fff', borderRadius:0}}>
+            </Cards>
+            <Cards>
               <CardHeader className='SerCardHead'>아이템</CardHeader>
               <CardBody className='SerCardBody'>{OutputContent[1]}</CardBody>
               <div className='SerCardFoot'>
                 <Download />
               </div>
-            </Card>
-            <Card style={{backgroundColor:'#fff', borderRadius:0}}>
+            </Cards>
+            <Cards>
               <CardHeader className='SerCardHead'>아이템</CardHeader>
               <CardBody className='SerCardBody'>{OutputContent[2]}</CardBody>
               <div className='SerCardFoot'>
                 <Download />
               </div>
-            </Card>
+            </Cards>
           </Grid>
         </Box>
       </Box>
@@ -117,3 +125,13 @@ const Businessitem = () => {
 };
 
 export default Businessitem;
+
+const Cards = styled(Card)`
+  background-color:'#fff'; 
+  border-radius:0;
+  width: 250px;
+
+  @media screen and (max-width: 768px) {
+    width: 100%;
+  }
+`

@@ -8,6 +8,7 @@ import "react-toastify/dist/ReactToastify.css";
 import ServiceLayout from "../Layout";
 import styled from "styled-components";
 import * as configUrl from "../../../config";
+import Loading from "../../Loading";
 
 import axios from 'axios'
 
@@ -15,6 +16,7 @@ const Discussion = () => {
   const size = useContext(ResponsiveContext);
   const History = useHistory();
 
+  const [isLoading, SetLoading] = useState(false);
   const [input, SetInput] = useState('');
   const [OutputContent, SetOutputContent] = useState(['','',''])
   const [option, SetOutputOption] = useState('')
@@ -32,6 +34,7 @@ const Discussion = () => {
 
     const DiscussionAxios = async () => {
     SetOutputContent('');
+    SetLoading(true)
     if (input && input !== '') {
       const config = {
         method: 'post',
@@ -44,6 +47,7 @@ const Discussion = () => {
       .then(async (response) => {
         console.log(response.data);
         SetOutputContent(response.data[0]);
+        SetLoading(false)
       })
       .catch(async (error) => {
         console.log(error);
@@ -56,8 +60,9 @@ const Discussion = () => {
 
   return (
     <ServiceLayout>
+       {isLoading && <Loading />}
       <Box
-        className='ServiceContainerVh'
+        className='DisContainer'
         justify='center'
         align='center'
         background='#f9f9f9'

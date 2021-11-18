@@ -1,6 +1,6 @@
-import { Box } from "grommet";
+import { Box, ResponsiveContext } from "grommet";
 import { Update, Download, Close } from 'grommet-icons'
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -8,9 +8,12 @@ import axios from 'axios'
 
 import ServiceLayout from "../Layout";
 import * as configUrl from "../../../config";
+import Loading from "../../Loading";
 
 const Lyrics = () => {
+  const size = useContext(ResponsiveContext);
   const History = useHistory();
+  const [isLoading, SetLoading] = useState(false);
   const [title, SetTitle] = useState('');
   const [story, SetStory] = useState(['','','']);
   const [content, SetOutputContent] = useState('')
@@ -28,6 +31,7 @@ const Lyrics = () => {
 
   const LyricsAxios = async () => {
     SetOutputContent('');
+    SetLoading(true)
     if (title !== '' && story) {
       const config = {
         method: 'post',
@@ -40,6 +44,7 @@ const Lyrics = () => {
       .then(async (response) => {
         console.log(response.data);
         SetOutputContent(response.data);
+        SetLoading(false)
       })
       .catch(async (error) => {
         console.log(error);
@@ -51,13 +56,15 @@ const Lyrics = () => {
 
   return (
     <ServiceLayout>
+      {isLoading && <Loading />}
       <Box
-        className='ServiceContainer'
+        className='ServiceContainerVh'
         justify='evenly'
         align='center'
-        direction='row'
+        direction={size !=='small' ? 'row': 'column'}
         background='#f9f9f9'
-        pad='large'
+        gap={size ==='small' && 'large'}
+        style={size !== 'small' ? {padding: '48px'} : {padding: '60px 24px'}}
       >
         <Box className='LyricInputBox'>
           <div className='subjectTitle'>

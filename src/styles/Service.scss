@@ -15,6 +15,7 @@ $boxShadow : rgb(237 237 237) 2px 3px 8px;
 .ServiceContainer {
     width: 100%;
     height: 100%;
+
 }
 
 //내용이 없어서 height 100%으로 하면 빈 화면이 나올 때
@@ -22,11 +23,107 @@ $boxShadow : rgb(237 237 237) 2px 3px 8px;
     width: 100%;
     height: 100vh;
 
-
     @media screen and (max-width: 768px) {
         height: 100%;
     }
 }
+
+.sideContainer {
+    background-color: $white-1;
+    border-right: 1px solid $main;
+    border-top: 1px solid $main;
+    height: 100vh;
+    width: 250px;
+    transition: width 0.4s ease;
+    overflow: hidden;
+
+    @media screen and (max-width: 768px) {
+        width: 100%;
+        //height: 100%;
+        overflow: scroll;
+        z-index: 3;
+        border: 0;
+        border-top: 1px solid $main;
+        border-bottom: 1px solid $main;
+
+    }
+}
+
+.sideContainer100 {
+    background-color: $white-1;
+    border-right: 1px solid $main;
+    border-top: 1px solid $main;
+    height: 100%;
+    width: 250px;
+    transition: width 0.4s ease;
+    overflow: hidden;
+
+    @media screen and (max-width: 768px) {
+        width: 100%;
+        height: 100vh;
+        overflow: scroll;
+        z-index: 3;
+        border: 0;
+        border-top: 1px solid $main;
+        border-bottom: 1px solid $main;
+    }
+}
+
+
+
+.CloseSiderBtn,
+.SiderBtn,
+.OpenBtn {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    cursor: pointer;
+    color: #444;
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.SiderBtn {
+
+    background-color: #fff;
+    border: 1px solid #444;
+    border-left: 0;
+    gap: 2px;
+
+    @media screen and (max-width: 768px) {
+        border: 0;
+        border-bottom: 1px solid #444;
+        border-top: 1px solid #444;
+    }
+}
+
+.OpenBtn {
+ 
+    gap: 2px;
+    background-color: #ffce1f;
+    border: 1px solid #444;
+    border-left: 0;
+ 
+
+    @media screen and (max-width: 768px) {
+        border: 0;
+        border-bottom: 1px solid #444;
+        
+    }
+}
+
+.isSiderFalse {
+    width: 80px;
+    transition: width 0.4s ease;
+
+    @media screen and (max-width: 768px) {
+        width: 100%;
+        height: 50px;
+        border: 0;
+        margin-bottom: 100px;
+    }
+}
+
 
 .lodingBox {
     z-index: 3;
@@ -70,6 +167,80 @@ $boxShadow : rgb(237 237 237) 2px 3px 8px;
         }
     }
 
+}
+
+
+.guide-Accordion {
+    gap: 15px;
+    width: 100%;
+    background-color: $white-1;
+
+}
+
+.guide-PanelHeader {
+    background-color: $sub2;
+    padding: 8px;
+    font-size: 17px;
+    font-weight: 600;
+    word-break: keep-all;
+}
+
+.guide-PanelContent {
+    background-color: $white-1;
+    //padding: 10px 0px 10px 25px;
+    padding: 15px;
+    width: 100%;
+
+    h4 {
+        font-size: 17px;
+        font-weight: 600;
+
+    }
+
+
+    >div {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 20px;
+        font-size: 15px;
+        padding: 30px 10px 0 15px;
+        word-break: keep-all;
+
+
+        >img {
+            width: 150px;
+        }
+
+        >div>p {
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+
+
+        @media screen and (max-width: 768px) {
+            gap: 20px;
+            flex-direction: column;
+        }
+    }
+}
+
+
+//웹노블, 동화 공통
+
+
+
+.mainOutputBox {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    width: 100%;
+
+    @media screen and (max-width:768px) {
+        flex-direction: column;
+    }
 }
 
 
@@ -189,10 +360,364 @@ $boxShadow : rgb(237 237 237) 2px 3px 8px;
 }
 
 
+//WebNovel
+
+.SiderBox {
+    width: 100%;
+    text-align: center;
+
+    @media screen and (max-width: 768px) {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+    }
+}
+
+.dropdowncategory {
+    border: 0;
+    outline: 0;
+    border-radius: 5px;
+    width: 200px;
+    height: 30px;
+    margin: 20px 0;
+    color: #fff;
+    background-color: $main;
+    text-align: center;
+    cursor: pointer;
+
+    /* select 화살표 없애기 */
+    appearance: none;
+    -webkit-appearance: none;
+
+}
+
+select::-ms-expand {
+    display: none;
+}
+
+.sub_input_text {
+    padding: 10px;
+    width: 200px;
+    margin-top: 15px;
+    border-radius: 5px;
+    resize: none;
+    outline: none;
+    border: 0;
+    border-bottom: 1px solid #dedede;
+    border-right: 1px solid #dedede;
+
+    background-color: transparent;
+
+    @media screen and (max-width: 768px) {
+        width: 80%;
+    }
+}
+
+
+.create {
+    margin: 30px 0;
+    font-size: 1rem;
+    width: 150px;
+    height: 30px;
+    border-radius: 10px;
+    background-color: $main;
+    color: #fff;
+    border: 0;
+    cursor: pointer;
+    transition: all 300ms ease-in-out;
+}
+
+
+.create:hover {
+    background-color: $sub2;
+    color: $dark-1;
+
+}
+
+.outputKo,
+.outputEn {
+    background-color: $white-1;
+    border: 1px solid #444;
+    max-width: 450px;
+    width: 100%;
+    height: 300px;
+    resize: none;
+    font-size: 16px;
+    padding: 10px 15px;
+
+    @media screen and (max-width: 768px) {
+        width: 90%;
+    }
+}
+
+//bloger
+
+.blogMainBox {
+    width: 100%;
+    gap: 30px;
+    padding: 0 120px;
+
+
+    @media screen and (max-width: 768px) {
+        padding: 60px 30px;
+    }
+
+}
+
+.BlogIdeaBox {
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    max-width: 600px;
+    width: 100%;
+
+    gap: 15px;
+
+    >input {
+        padding: 8px 10px;
+        width: 100%;
+        border: 1px solid #444;
+        font-size: 1rem;
+    }
+
+    >button {
+        background-color: $sub1;
+        border: 0;
+        outline: 0;
+        cursor: pointer;
+        padding: 8px 10px;
+        border-radius: 5px;
+    }
+
+    @media screen and (max-width: 768px) {
+        >input {
+            width: 60%;
+        }
+    }
+
+    @media screen and (max-width: 680px) {
+        flex-direction: column;
+
+        >input {
+            width: 100%;
+        }
+    }
+}
+
+.BlogProgressBox {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    max-width: 400px;
+    padding: 20px;
+    width: 100%;
+    background-color: $white-1;
+    gap: 15px;
+    border-top: 3px solid #372874;
+
+    >h4 {
+        font-weight: 600;
+    }
+
+    >div {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        gap: 20px;
+    }
+
+    >div>button {
+        background-color: $sub2;
+        border: 0;
+        outline: 0;
+        cursor: pointer;
+        padding: 8px 12px;
+        border-radius: 5px;
+    }
+
+
+    @media screen and (max-width: 680px) {
+        flex-direction: column;
+    }
+}
+
+.blogOutputKo,
+.blogOutputEn,
+.blogFollowKo,
+.blogFollowEn {
+    background-color: $white-1;
+    border: 1px solid #444;
+    max-width: 400px;
+    width: 100%;
+    height: 200px;
+    resize: none;
+    font-size: 16px;
+    padding: 10px 15px;
+    overflow: scroll;
+
+    @media screen and (max-width: 768px) {
+        width: 90%;
+    }
+}
+
+.blogFollowKo,
+.blogFollowEn {
+    resize: none;
+}
+
+
+
+.KeywordMainBox {
+    width: 100%;
+    gap: 30px;
+    padding: 0 120px;
+
+
+    @media screen and (max-width: 768px) {
+        padding: 120px 30px;
+    }
+   
+}
+
+
+
+
+.KeyContainer{
+    width:100%;
+    display:flex;
+    flex-direction:column;
+    align-items: center;
+    max-width: 700px;
+    min-height: 400px;
+    background-color: #fff;
+    box-shadow: $boxShadow;
+    border: 1px solid $dark-1;
+}
+
+.keywordHeader {
+    width: 100%;
+    background-color: $white-2;
+    padding: 8px;
+      
+    > svg {
+        // background-color: #444;
+        fill: $dark-1;
+        stroke: $dark-1;
+        padding: 5px;
+        width: 30px;
+        height: 30px;
+        margin-right: 5px;
+  
+        border-radius: 50%;
+        cursor: pointer;
+      }
+
+      .close {
+          background-color : #f45752;
+      }
+
+      .copy {
+        background-color: $point;
+    }
+
+     .download {
+        background-color: $sub2;
+     }
+  
+}
+
+.keywordDiv {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-width: 900px;
+    gap: 15px;
+    width: 100%;
+    padding: 30px 10px;
+    transition: all 200ms ease-in-out;
+
+    background-color : $white-1;
+}
+
+
+
+.keywordInput {
+    background-color: $white-1;
+    border: 2px solid $main;
+    outline: 0;
+    word-wrap: keep-all;
+    width: 80%;
+    font-size: 0.9rem;
+    padding:8px;
+
+    >svg {
+        fill: $main;
+        stroke: $main;
+    }
+
+}
+
+
+.KeywordButtonStyle {
+    //background: transparent;
+    text-transform: none;
+    border: 0;
+    outline: 0;
+    cursor: pointer;
+    height: 100%;
+    background-color: $main;
+    border: 1px solid $main;
+    border-radius: 10px;
+
+    > svg {
+        fill:$white-1;
+        stroke: $white-1;
+    }
+
+}
+
+.resultBox {
+    width: 100%;
+    padding: 20px;
+    background-color : $white-1;
+    overflow: scroll;
+}
+
+.keywordResult {
+    border: 2px solid #55d4bc;
+    background-color:$white-2;
+    color: $dark-1;
+    padding: 5px;
+    border-radius: 15px;
+    word-break: break-all;
+   
+}
+
+
 //Firstsentence
+
+.FirstContainer {
+    width: 100%;
+    height: 100vh;
+
+    @media screen and (max-width: 768px) {
+        padding: 150px 0;
+    }
+}
+
+.FirstBox {
+    width: 100%;
+}
+
 
 .printBox {
     border: 1px solid #444;
+    background-color : #fff;
     border-radius: 15px;
     width: 500px;
     margin-top: 8px;
@@ -288,6 +813,10 @@ $boxShadow : rgb(237 237 237) 2px 3px 8px;
         }
     }
 
+    @media screen and (max-width: 768px) {
+        width: 90%;  
+    }
+
 }
 
 .icons {
@@ -308,6 +837,7 @@ $boxShadow : rgb(237 237 237) 2px 3px 8px;
 //Business
 
 .itemInputBox {
+    width: 100%;
 
     >button {
         background-color: $main;
@@ -315,7 +845,7 @@ $boxShadow : rgb(237 237 237) 2px 3px 8px;
         outline: 0;
         font-size: 1rem;
         color: $white-1;
-        padding: 10px 40px;
+        padding: 10px 35px;
         height: 100%;
         margin-left: 10px;
         cursor: pointer;
@@ -325,7 +855,8 @@ $boxShadow : rgb(237 237 237) 2px 3px 8px;
 
 .busiItem {
 
-    width: 500px;
+    max-width: 500px;
+    width: 100%;
 
     >p {
         font-weight: 600;
@@ -364,6 +895,20 @@ $boxShadow : rgb(237 237 237) 2px 3px 8px;
 }
 
 //discuss
+
+.DisContainer {
+    width: 100%;
+    height: 100%;
+
+    @media screen and (max-width: 768px) {
+        height: 100vh;
+    }
+}
+
+.FirstBox {
+    width: 100%;
+}
+
 
 .DiscussInputBox,
 .DiscussOutputBox {
@@ -425,46 +970,22 @@ $boxShadow : rgb(237 237 237) 2px 3px 8px;
 
 //fairyTale
 
-.sideContainer {
-    background-color: $white-1;
-    border-right: 1px solid $main;
-    border-top: 1px solid $main;
-    height: 100vh;
-    width: 250px;
-    transition: width 0.4s ease;
-    overflow: hidden;
+
+.mainBox {
+
+    width: 100%;
+    gap: 30px;
+    padding: 120px;
+
 
     @media screen and (max-width: 768px) {
-        width: 100%;
-        //height: 100%;
-        overflow: scroll;
-        z-index: 3;
-        border: 0;
-        border-top: 1px solid $main;
-        border-bottom: 1px solid $main;
-
+        padding-right: 30px;
+        padding-left: 30px;
     }
+
 }
 
-.isSiderFalse {
-    width: 80px;
-    height: 50px;
-    background-color: $white-1;
-    border: 1px solid $main;
-    border-left: 0;
-    //box-shadow: $boxShadow;
-    transition: width 0.4s ease;
 
-    @media screen and (max-width: 768px) {
-        width: 100%;
-        height: 50px;
-        border: 0;
-        border-bottom: 1px solid $main;
-        border-top: 1px solid $main;
-
-
-    }
-}
 
 
 
@@ -545,17 +1066,6 @@ $boxShadow : rgb(237 237 237) 2px 3px 8px;
     }
 }
 
-.mainOutputBox {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 15px;
-    width: 100%;
-
-    @media screen and (max-width:768px) {
-        flex-direction: column;
-    }
-}
 
 .output1,
 .output2 {
@@ -590,25 +1100,49 @@ $boxShadow : rgb(237 237 237) 2px 3px 8px;
 
 //MBTI & mbti result
 
+
+.MbtiContainerVh {
+    width: 100%;
+    height: 100vh;
+
+    
+    @media screen and (max-width: 768px) {
+        height: 100%;
+        padding: 180px 60px;
+    }
+
+    @media screen and (max-width: 680px) {
+        padding-right:24px;
+        padding-left: 24px;
+    }
+}
+
 .MbtiCard1 {
     &:hover {
         background-color: #7d4cdb;
         color: #fff;
-      }
+    }
 }
 
 .MbtiCard2 {
     &:hover {
         // background-color: #ef0081;
-        
+
         background-color: $sub1;
         color: #fff;
-      }
+    }
 }
 
 .ResultBox {
     width: 100%;
     max-width: 500px;
+
+        
+    @media screen and (max-width: 768px) {
+        font-size: 15px;
+    
+    }
+
 }
 
 .ResultHeader {
@@ -621,10 +1155,9 @@ $boxShadow : rgb(237 237 237) 2px 3px 8px;
         color: $dark-1;
         padding: 10px 15px;
 
-        > span {
+        >span {
             font-weight: 600;
         }
-
     }
 
     >a>button {
@@ -667,6 +1200,23 @@ $boxShadow : rgb(237 237 237) 2px 3px 8px;
 //DailyWrite
 
 
+.DailyContainerVh {
+    width: 100%;
+    height: 100vh;
+
+    
+    @media screen and (max-width: 768px) {
+        height: 100%;
+        padding: 100px 60px;
+    }
+
+    @media screen and (max-width: 680px) {
+        padding-right:24px;
+        padding-left: 24px;
+    }
+}
+
+
 .DailyiconBox {
     width: 100%;
     display: flex;
@@ -678,9 +1228,25 @@ $boxShadow : rgb(237 237 237) 2px 3px 8px;
 
 //Storysrc
 
+.StoryContainerVh {
+    width: 100%;
+    height: 100vh;
+    padding: 48px;
+    
+    @media screen and (max-width: 768px) {
+        height: 100%;
+        padding: 60px;
+    }
+
+    @media screen and (max-width: 680px) {
+        padding-right:24px;
+        padding-left: 24px;
+    }
+}
+
 .SrcPrintBtn {
     width: 100%;
-    height: 150px;
+    height: 200px;
 
     >button {
         background-color: $main;
@@ -691,14 +1257,29 @@ $boxShadow : rgb(237 237 237) 2px 3px 8px;
         font-size: 1rem;
         cursor: pointer;
     }
+
+    @media screen and (max-width: 768px) {
+        height: 100vh;
+    }
+}
+
+.PrintContainer{
+    gap: 30px;
+
+
+    @media screen and (max-width: 768px) {
+        gap: 170px;
+    }
 }
 
 
 .SrcResult {
     width: 100%;
+    max-width: 1200px;
     background-color: #ededed;
     color: $dark-1;
     padding: 8px;
+    margin: 50px 0;
 
     >div>p {
         font-weight: 600;
@@ -712,12 +1293,25 @@ $boxShadow : rgb(237 237 237) 2px 3px 8px;
         border: 1px solid $dark-1;
         border-radius: 8px;
         cursor: pointer;
+
+
+        &:nth-child(3) {
+            background-color : $sub2;
+            border:1px solid $sub2;
+            color: $dark-1;
+            transition: all 300ms ease-in-out;
+
+            &:hover {
+                background-color: $point;
+            }
+        }
     }
 }
 
 .SrcPrintBox {
     border: 1px solid #444;
     border-radius: 15px;
+    background-color: #fff;
     width: 200px;
     padding: 6px;
     position: relative;
@@ -745,5 +1339,6 @@ $boxShadow : rgb(237 237 237) 2px 3px 8px;
     width: 100%;
     background-color: #ededed;
     color: $dark-1;
-    padding: 8px;
+    padding: 15px 10px;
+    overflow: scroll;
 }

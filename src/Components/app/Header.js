@@ -133,11 +133,7 @@ const Header = () => {
       </HeaderLayout>
       {isShow && (
         <Box
-          //768px 사이즈일 때 width 100%
-          width={size === "small" && "100%"}
-          //768px 사이즈가 아닐 때(pc버전만 height 100%)
-          height={size !== "small" && "100%"}
-          //768px 이상 이면 왼쪽에서 오른쪽으로, 이하면 위에서 아래로
+          style={size === "small" ? {width: '100%'} : {height:'100%'}}
           animation={
             size !== "small"
               ? { type: "slideLeft", duration: 300 }
@@ -165,7 +161,7 @@ const Header = () => {
                 <Link to='/app/webnovel'>릴레이 웹소설 쓰기</Link>
               </li>
               <li>
-                <Link to='/app/bloger'>블로그 글쓰기</Link>
+                <Link to='/app/bloger/idea'>블로그 글쓰기</Link>
               </li>
               <li>
                 <Link to='/app/fairytale'>동화 쓰기</Link>

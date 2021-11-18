@@ -36,15 +36,15 @@ import {
         <Box
           justify='center'
           align='center'
-          className='ServiceContainer'
+          className='MbtiContainerVh'
           background='#f9f9f9'
-          pad='large'
+         
         >
             <div className='ResultBox'>
                 <div className='ResultHeader'>
                     <div >Love Letter from <span>{user}</span> for <span>{result}</span></div>
                     <Link to="/app/loveletter">
-                        <button style={{cursor:'pointer'}}>MBTI 다시 선택하기</button>
+                        <button style={{cursor:'pointer', fontSize:'15px'}}>다시 선택하기</button>
                     </Link>
                 </div>
                 <div className="ResultContent">

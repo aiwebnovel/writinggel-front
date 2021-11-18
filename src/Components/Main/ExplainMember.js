@@ -21,7 +21,7 @@ const ExplainMember = () => {
           justify='center'
           align='center'
         >
-          <h2>라이팅젤 멤버십에 가입 하시면</h2>
+          <h2>멤버십에 가입 하시면</h2>
           <h2>
             인공지능 기반 글쓰기 지원 서비스를 무제한 이용하실 수 있습니다.
           </h2>
@@ -46,8 +46,21 @@ const ExplainMember = () => {
                 </div>
                 <div className='MemCardBody'>
                   <h4>1개월 이용권</h4>
-                  <p>월 49,000원</p>
-                  <p>1개월마다 결제</p>
+                  <p style={{fontWeight: 600}}>월 19,000원</p>
+                  <p>/ 1개월마다 결제</p>
+                </div>
+              </div>
+              <div className='MemCardCon'>
+                <div className='MemCardHead'>
+                  <BookmarkFilled size='medium' color='#3b2477' />
+                </div>
+                <div className='MemCardBody'>
+                  <h4>3개월 이용권</h4>
+                  <p>월 16,000원</p>
+                  <p style={{fontWeight: 600}}>
+                    48,000원
+                  </p>
+                  <p>/ 3개월마다 결제</p>
                 </div>
               </div>
               <div className='MemCardCon'>
@@ -56,32 +69,11 @@ const ExplainMember = () => {
                 </div>
                 <div className='MemCardBody'>
                   <h4>6개월 이용권</h4>
-                  <p>월 39,000원</p>
-                  <p>(20%할인)</p>
-                  <p>
-                    <span style={{ textDecoration: "line-through" }}>
-                      294,000원
-                    </span>{" "}
-                    234,000원
+                  <p>월 10,000원</p>
+                  <p style={{fontWeight: 600}}>
+                    60,000원
                   </p>
-                  <p>/6개월마다 결제</p>
-                </div>
-              </div>
-              <div className='MemCardCon'>
-                <div className='MemCardHead'>
-                  <BookmarkFilled size='medium' color='#3b2477' />
-                </div>
-                <div className='MemCardBody'>
-                  <h4>12개월 이용권</h4>
-                  <p>월 35,000원</p>
-                  <p>(30%할인)</p>
-                  <p>
-                    <span style={{ textDecoration: "line-through" }}>
-                      588,000원
-                    </span>{" "}
-                    420,000원
-                  </p>
-                  <p>12개월마다 결제</p>
+                  <p>/ 6개월마다 결제</p>
                 </div>
               </div>
             </Grid>

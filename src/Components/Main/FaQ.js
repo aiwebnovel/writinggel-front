@@ -7,7 +7,7 @@ import { CircleQuestion, Alert, BlockQuote } from "grommet-icons";
 import styled from "styled-components";
 
 const FaQ = () => {
-  const [isopen, setOpen] = useState(false);
+
   const size = useContext(ResponsiveContext);
 
   return (

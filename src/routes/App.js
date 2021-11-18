@@ -27,7 +27,14 @@ import TingBox from '../Components/Main/mypage/TingBox';
 import PayResult from '../Components/Membership/PayResult';
 
 import Webnovel from '../Components/app/page/Webnovel';
-import Bloger from '../Components/app/page/Bloger';
+
+import BlogIdea from '../Components/app/page/BlogIdea';
+import BlogName from '../Components/app/page/BlogName';
+import BlogTitle from '../Components/app/page/BlogTitle';
+import BlogIntro from '../Components/app/page/BlogIntro';
+import BlogKeyword from '../Components/app/page/BlogKeyword';
+import BlogFollow from '../Components/app/page/BlogFollow';
+
 import Businessitem from '../Components/app/page/Businessitem';
 import Discussion from '../Components/app/page/Discussion';
 import Fairytale from '../Components/app/page/Fairytale';
@@ -73,7 +80,14 @@ function App() {
 
       {/* service */}
         <Route exact path="/app/webnovel" component={Webnovel}></Route>
-        <Route exact path="/app/bloger" component={Bloger}></Route>
+        
+        <Route exact path="/app/bloger/idea" component={BlogIdea}></Route>
+        <Route exact path="/app/bloger/name" component={BlogName}></Route>
+        <Route exact path="/app/bloger/title" component={BlogTitle}></Route>
+        <Route exact path="/app/bloger/intro" component={BlogIntro}></Route>
+        <Route exact path="/app/bloger/keyword" component={BlogKeyword}></Route>
+        <Route exact path="/app/bloger/follow" component={BlogFollow}></Route>
+
         <Route exact path="/app/businessitem" component={Businessitem}></Route>
         <Route exact path="/app/fairytale" component={Fairytale}></Route>
         <Route exact path="/app/firstsentence" component={Firstsentence}></Route>
