@@ -449,7 +449,7 @@ const Webnovel = () => {
             className='mainBox'
             justify='center'
             align='center'
-            pad={size !== "small" ? "medium" : "large"}
+            // pad={size !== "small" ? "medium" : "large"}
           >
             <div className='mainOutputBox'>
               <textarea

@@ -13,6 +13,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 import ServiceLayout from "../Layout";
 import styled from "styled-components";
+import Loading from "../../Loading";
 
 const Fairytale = () => {
   const AccodianData = [
@@ -43,6 +44,7 @@ const Fairytale = () => {
 
   const [isSider, SetSider] = useState(false);
   const [isOpen, SetOpen] = useState(false);
+  const [isLoading, SetLoading] = useState(false);
 
   const handleSider = () => {
     SetSider(!isSider);
@@ -118,6 +120,7 @@ const Fairytale = () => {
 
   return (
     <ServiceLayout>
+       {isLoading && <Loading />}
       <Box className='ServiceContainerVh' background='#f9f9f9'>
         <Grid
           fill
@@ -214,7 +217,7 @@ const Fairytale = () => {
             className='mainBox'
             justify='center'
             align='center'
-            pad={size !== 'small' ? 'medium': 'large'}
+            // pad={size !== 'small' ? 'medium': 'large'}
           >
             <div className='mainOutputBox'>
               <textarea className='output1' placeholder='결과가 나올예정이에요!'>

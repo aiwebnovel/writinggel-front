@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-import { Box } from "grommet";
+import { Box, ResponsiveContext } from "grommet";
 import { Download, Cycle } from "grommet-icons";
 
 import * as configUrl from "../../../config";
@@ -14,6 +14,7 @@ import styled from "styled-components";
 import axios from "axios";
 
 const Firstsentence = () => {
+  const size = useContext(ResponsiveContext);
   const History = useHistory();
   const [isOutput, SetOutput] = useState(false);
   const [OutputContent, SetOutputContent] = useState(["", ""]);
@@ -112,13 +113,12 @@ const Firstsentence = () => {
     <ServiceLayout>
       {isLoading && <Loading />}
       <Box
-        className='ServiceContainerVh'
-        justify='center'
+        className='FirstContainer'
+        justify={size !== 'small' ? 'center':'start'}
         align='center'
-        pad='large'
         background='#f9f9f9'
       >
-        <Box fill align='center' justify='start'>
+        <Box align='center' className="FirstBox">
           <RandomBtn
             onClick={() => {
               FirstsentenceAxios();

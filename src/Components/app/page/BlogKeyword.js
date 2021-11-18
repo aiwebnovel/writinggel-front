@@ -25,11 +25,13 @@ const BlogKeyword = () => {
   const [keywordOutput, SetOutput] = useState([]);
 
   const handleSider = () => {
+    console.log('click');
     SetOpen(false);
     SetSider(!isSider);
   };
 
   const handleOpen = () => {
+    console.log('click');
     SetSider(false);
     SetOpen(!isOpen);
   };
@@ -221,7 +223,7 @@ const BlogKeyword = () => {
             gridArea='main'
             justify='center'
             align='center'
-            className='blogMainBox'
+            className='KeywordMainBox'
           >
             <div  className='KeyContainer'>
               <div className='keywordHeader'>

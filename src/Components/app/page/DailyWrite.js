@@ -17,10 +17,31 @@ const Dailywrite = () => {
   const History = useHistory();
 
   const [isOpen, SetOpen] = useState(false);
+  const [isLoading, SetLoading] = useState(false);
   const [OutputContent, SetOutputContent] = useState(["", ""]);
 
   const HandleModals = () => {
     SetOpen(!isOpen);
+  };
+
+  const DailywriteAxios = async () => {
+    SetOutputContent(["", ""]);
+    SetLoading(true);
+    const config = {
+      method: "post",
+      url: `${configUrl.SERVER_URL}/writinggel/lifequestion`,
+      headers: { authentication: localStorage.getItem("token") },
+    };
+
+    await axios(config)
+      .then(async (response) => {
+        SetOutputContent(response.data);
+        SetOpen(true);
+        SetLoading(false);
+      })
+      .catch(async (error) => {
+        console.log(error);
+      });
   };
 
   useEffect(() => {
@@ -34,62 +55,48 @@ const Dailywrite = () => {
     }
   }, []);
 
-  const DailywriteAxios = async () => {
-    SetOutputContent(["", ""]);
-    const config = {
-      method: "post",
-      url: `${configUrl.SERVER_URL}/writinggel/lifequestion`,
-      headers: { authentication: localStorage.getItem("token") },
-    };
-
-    await axios(config)
-      .then(async (response) => {
-        SetOutputContent(response.data);
-      })
-      .catch(async (error) => {
-        console.log(error);
-      });
-  };
-
   return (
     <>
       <ServiceLayout>
         <Box
-          className="ServiceContainerVh"
-          background="#f9f9f9"
-          pad="large"
-          justify="center"
-          align="center"
-          gap="large"
+          className='DailyContainerVh'
+          background='#f9f9f9'
+          justify='center'
+          align='center'
+          gap='large'
         >
           <Grid
-            columns={size !== "small" ? { count: 4, size: "auto" } : "100%"}
-            gap="medium"
-            fill={size !== "small" ? false : true}
+            columns={
+              size !== "small"
+                ? { count: 4, size: "auto" }
+                : { count: 2, size: "auto" }
+            }
+            gap='medium'
+            // fill={size !== "small" ? false : true}
           >
             <Card>
-              <img src="/logo.png" alt="로고" />
+              <img src='/logo.png' alt='로고' />
             </Card>
             <Card>
-              <img src="/logo.png" alt="로고" />
+              <img src='/logo.png' alt='로고' />
             </Card>
             <Card>
-              <img src="/logo.png" alt="로고" />
+              <img src='/logo.png' alt='로고' />
             </Card>
             <Card>
-              <img src="/logo.png" alt="로고" />
+              <img src='/logo.png' alt='로고' />
             </Card>
             <Card>
-              <img src="/logo.png" alt="로고" />
+              <img src='/logo.png' alt='로고' />
             </Card>
             <Card>
-              <img src="/logo.png" alt="로고" />
+              <img src='/logo.png' alt='로고' />
             </Card>
             <Card>
-              <img src="/logo.png" alt="로고" />
+              <img src='/logo.png' alt='로고' />
             </Card>
             <Card>
-              <img src="/logo.png" alt="로고" />
+              <img src='/logo.png' alt='로고' />
             </Card>
           </Grid>
 
@@ -103,24 +110,65 @@ const Dailywrite = () => {
           </DailyBtn>
         </Box>
       </ServiceLayout>
-      <Modal onClick={HandleModals} open={isOpen} close={HandleModals}>
-        <ResultCard>
-          <div className="cardImg">
-            <img src="/logo.png" alt="로고" />
-          </div>
-          <div>{OutputContent[0]}</div>
-          <hr style={{ margin: "20px 0" }} />
-          <div> {OutputContent[1]}</div>
-          <div className="DailyiconBox">
-            <Download />
-          </div>
-        </ResultCard>
+      <Modal open={isOpen} close={HandleModals}>
+        {isLoading ? (
+          <LoadingCard>
+            <img src='/couch.png' alt='카우치' />
+            <p>Now Loading...</p>
+          </LoadingCard>
+        ) : (
+          <ResultCard>
+            <div className='cardImg'>
+              <img src='/logo.png' alt='로고' />
+            </div>
+            <div>{OutputContent[0]}</div>
+            <hr style={{ margin: "20px 0" }} />
+            <div> {OutputContent[1]}</div>
+            <div className='DailyiconBox'>
+              <Download />
+            </div>
+          </ResultCard>
+        )}
       </Modal>
     </>
   );
 };
 
 export default Dailywrite;
+
+const LoadingCard = styled.div`
+  text-align: center;
+  animation-name: bounce;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+  font-family: 'NeoDunggeunmo';
+
+  >img {
+      width: 180px;
+
+      @media screen and (max-width: 768px) {
+        width: 150px;
+      }
+  }
+
+  >p {
+      margin-top: 15px
+  }
+
+  @keyframes bounce {
+    0% {
+        transform: translateY(0px)
+    }
+
+    40% {
+        transform: translateY(-40px);
+    }
+
+    100% {
+        transform: translateY(0px);
+    }
+}
+`;
 
 const Card = styled.div`
   border: 1px solid #444;
@@ -133,6 +181,10 @@ const Card = styled.div`
 
   > img {
     width: 100%;
+  }
+
+  @media screen and (max-width: 300px) {
+    width: 100px;
   }
 `;
 
