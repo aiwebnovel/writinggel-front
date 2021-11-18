@@ -241,7 +241,7 @@ const Header = () => {
       </HeaderLayout>
       {size === 'small' && isShow && (
         <>
-          <Nav direction='column' className='MobileMenus' gap='large'>
+          <Nav direction='column' className='MobileMenus'>
             <Link to='/explain'>멤버쉽 가입</Link>
             <Link to='/brand'>브랜드 소개</Link>
             <span className='DropMenu' onClick={HandleMobile}>
@@ -367,4 +367,10 @@ const MemButton = styled.button`
   background-color: #fff;
   padding: 5px 20px;
   cursor: pointer;
+  transition: all 300ms ease-in-out;
+
+  &:hover {
+    background-color : #b1b5e6;
+    font-weight: 600;
+  }
 `;

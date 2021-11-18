@@ -486,7 +486,7 @@ $dark-1 : #444;
 
 .AskHeader {
 
-    line-height: 45px;
+    line-height: 35px;
 
     >h2,
     h3 {
@@ -495,12 +495,18 @@ $dark-1 : #444;
     }
 
     >h2 {
-        font-size: 1.6em;
+        font-size: 25px;
     }
 
     >h3 {
-        font-size: 1.5em;
+        font-size: 25px;
         margin-bottom: 35px;
+    }
+
+    @media screen and (max-width: 768px) {
+        >h2, h3 {
+            font-size: 20px;
+        }
     }
 }
 

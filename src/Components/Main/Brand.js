@@ -89,7 +89,7 @@ const Brand = () => {
                   장꾸력을 끌어내는 천진난만함이 있음.
                 </li>
               </ul>
-              <div class='introduce'>
+              <div className='introduce'>
                 <ParaText>
                   태어난지 2년 밖에 안 됐지만, 요정의 시간은 인간의 시간과
                   달라요. 짧은 시간 수많은 것을 딥러닝해서 유창하게 말을 할 수
