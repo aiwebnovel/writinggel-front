@@ -18,8 +18,66 @@ const Discussion = () => {
 
   const [isLoading, SetLoading] = useState(false);
   const [input, SetInput] = useState('');
-  const [OutputContent, SetOutputContent] = useState(['','',''])
+  const [OutputContent, SetOutputContent] = useState('')
   const [option, SetOutputOption] = useState('')
+
+  const SaveContent = async() => {
+    console.log(OutputContent)
+    
+    if(OutputContent){
+      
+      const config = {
+        method: "post",
+        url: `${configUrl.SERVER_URL}/archive`,
+        headers: { authentication: localStorage.getItem("token") },
+        data: {
+          story: OutputContent,
+          category:'찬반 논거',
+        }
+      };
+
+      await axios(config)
+        .then(async (response) => {
+         
+          toast.success(`${response.data.log}`);
+        })
+        .catch(async (error) => {
+          console.log(error);
+        });
+      }else {
+        toast.info('저장할 결과가 없습니다!');  
+      }
+
+
+  }
+
+    const DiscussionAxios = async () => {
+
+    if (input && input !== '') {
+ 
+      SetLoading(true)
+      const config = {
+        method: 'post',
+        url: `${configUrl.SERVER_URL}/writinggel/discussion`,
+        headers: { 'authentication': localStorage.getItem("token"), },
+        data : { option:option, story:input }
+      };
+
+      await axios(config)
+      .then(async (response) => {
+        console.log(response.data);
+        //SetOutputContent(response.data[0]);
+       
+        SetLoading(false)
+      })
+      .catch(async (error) => {
+        console.log(error);
+      });
+    } else {
+      setTimeout(toast.info("내용을 채워주세요!"), 300);
+    }
+  };
+
 
   useEffect(() => {
     const loginCheck = localStorage.getItem("token");
@@ -31,31 +89,6 @@ const Discussion = () => {
       setTimeout(toast.info("로그인을 해주세요!"), 300);
     }
   }, []);
-
-    const DiscussionAxios = async () => {
-    SetOutputContent('');
-    SetLoading(true)
-    if (input && input !== '') {
-      const config = {
-        method: 'post',
-        url: `${configUrl.SERVER_URL}/writinggel/discussion`,
-        headers: { 'authentication': localStorage.getItem("token"), },
-        data : { option:option, story:input }
-      };
-
-      await axios(config)
-      .then(async (response) => {
-        console.log(response.data);
-        SetOutputContent(response.data[0]);
-        SetLoading(false)
-      })
-      .catch(async (error) => {
-        console.log(error);
-      });
-    } else {
-      setTimeout(toast.info("내용을 채워주세요!"), 300);
-    }
-  };
 
 
   return (
@@ -84,7 +117,7 @@ const Discussion = () => {
             <div className="outputArea">
               <div>{option === 'Pros' && option !== '' ? OutputContent : '찬성 논거'}</div>
               <Icon>
-                <Download />
+                <Download onClick={SaveContent}/>
               </Icon>
             </div>
           </div>
@@ -93,7 +126,7 @@ const Discussion = () => {
             <div  className="outputArea">
               <div>{option === 'Cons' && option !== '' ? OutputContent : '반대 논거'}</div>
               <Icon>
-                <Download />
+                <Download onClick={SaveContent}/>
               </Icon>
             </div>
           </div>
