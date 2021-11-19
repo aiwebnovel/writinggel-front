@@ -43,6 +43,13 @@ const Discussion = () => {
         })
         .catch(async (error) => {
           console.log(error);
+          if(error.response.status === 403) {
+            toast.error('보관함이 꽉 찼습니다!');
+          }
+
+          if (error.response.status === 500) {
+            toast.error("해당 에러는 관리자에게 문의해주세요!");
+          }
         });
       }else {
         toast.info('저장할 결과가 없습니다!');  
@@ -66,7 +73,7 @@ const Discussion = () => {
       await axios(config)
       .then(async (response) => {
         console.log(response.data);
-        //SetOutputContent(response.data[0]);
+        SetOutputContent(response.data[0]);
        
         SetLoading(false)
       })

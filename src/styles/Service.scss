@@ -128,7 +128,8 @@ $boxShadow : rgb(237 237 237) 2px 3px 8px;
 .lodingBox {
     z-index: 3;
     font-family: 'NeoDunggeunmo';
-    background: rgb(255, 206, 31, 0.9);
+    // background: rgb(255, 206, 31, 0.9);
+    background: rgb(255, 245, 242, 0.9);
     display: none;
     position: fixed;
     top: 0;
@@ -704,10 +705,8 @@ select::-ms-expand {
 .FirstContainer {
     width: 100%;
     height: 100vh;
+    padding: 150px 0;
 
-    @media screen and (max-width: 768px) {
-        padding: 150px 0;
-    }
 }
 
 .FirstBox {
