@@ -43,7 +43,6 @@ const Header = () => {
         provider = new firebaseInstance.auth.GoogleAuthProvider();
       }
       // console.log('mount12')
-      // refreshProfile()
       await authService
         .signInWithPopup(provider)
         .then(async (result) => {
@@ -54,11 +53,13 @@ const Header = () => {
           let email = result.user.email;
           let create = result.user.metadata.creationTime;
           let token = credential.idToken;
+          // let phoneNumber = credential.phoneNumber;
         
           // console.log('mount4',credential)
           await localStorage.setItem("token", token);
           await localStorage.setItem("email", email);
           await localStorage.setItem("create", create);
+          // await localStorage.setItem("phone", phoneNumber);
           // await localStorage.getItem("token");
           // console.log('mount5')
           await requestProfile();
@@ -131,6 +132,7 @@ const Header = () => {
     await localStorage.removeItem("plan");
     await localStorage.removeItem("isBill");
     await localStorage.removeItem("create");
+    await localStorage.removeItem("phone");
     
     SetUser(false);
     SetShowMenu(false);

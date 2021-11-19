@@ -25,11 +25,11 @@ const Home = () => {
         >
           {LinkObject.map((item)=>(
             <Link to={item.detail || '/'} key={item.id}>
-             <Card background='#f9f9f9' >
+             <Card background='#f9f9f9' height='small'>
                <CardHeader className='cardTop'>
                  <Magic color='#fff' />
                </CardHeader>
-               <CardBody className='cardTitle'>{item.title}</CardBody>
+               <CardBody className='cardTitle' justify='center'>{item.title}</CardBody>
              </Card>
            </Link>
           ))}
