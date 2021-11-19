@@ -1178,13 +1178,10 @@ select::-ms-expand {
     display: flex;
     align-items: center;
     justify-content: flex-end;
-}
-
-.ResultIcon {
-
+    gap: 10px;
     margin-top: 10px;
 
-    >svg {
+    > svg {
         background-color: #444;
         fill: #fff;
         stroke: #fff;
@@ -1193,9 +1190,9 @@ select::-ms-expand {
         height: 30px;
         padding: 4px;
         border-radius: 5px;
+        cursor: pointer;
     }
 }
-
 
 //DailyWrite
 
