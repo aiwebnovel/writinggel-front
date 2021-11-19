@@ -63,8 +63,8 @@ const Lyrics = () => {
         align='center'
         direction={size !=='small' ? 'row': 'column'}
         background='#f9f9f9'
-        gap={size ==='small' && 'large'}
-        style={size !== 'small' ? {padding: '48px'} : {padding: '60px 24px'}}
+        // gap={size ==='small' && 'large'}
+        style={size !== 'small' ? {padding: '48px'} : {padding: '60px 24px', gap:'48px'}}
       >
         <Box className='LyricInputBox'>
           <div className='subjectTitle'>
@@ -80,7 +80,7 @@ const Lyrics = () => {
           <button onClick = {()=>{LyricsAxios();}}>영어 가사 쓰기</button>
         </Box>
         <Box className='LyricOutputBox'>
-            <textarea value={content}/>
+            <textarea value={content} readOnly/>
             <div className='icons'> <div><Close />  <Update/> <Download/> </div> </div>
         </Box>
       </Box>
