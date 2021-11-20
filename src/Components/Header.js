@@ -287,7 +287,7 @@ const Header = () => {
             {localStorage.getItem("token") ? (
               <Link to='/mypage'>My page</Link>
             ) : (
-              <span onClick={HandleModals}>Login</span>
+              <span onClick={HandleModals} style={{cursor:'pointer', fontWeight:600}}>Login</span>
             )}
           </Nav>
         </>

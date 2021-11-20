@@ -10,15 +10,12 @@ import "react-toastify/dist/ReactToastify.css";
 
 import Loading from "../../Loading";
 import * as config from "../../../config";
-import { firebaseInstance } from "../../../firebaseConfig";
+import {authService} from "../../../firebaseConfig";
 import {
   getAuth,
   updateProfile,
   updateEmail,
-  reauthenticateWithCredential,
-  EmailAuthProvider,
-  AuthCredential,
-  reauthenticateWithRedirect,
+  deleteUser
 } from "@firebase/auth";
 import firebase from "@firebase/app-compat";
 
@@ -55,6 +52,7 @@ const Modify = () => {
         .catch((error) => {
           // An error occurred
           console.log(error);
+          toast.error("이름을 수정할 수 없습니다!");
         });
       await updateEmail(auth.currentUser, userEmail)
         .then(() => {
@@ -62,10 +60,11 @@ const Modify = () => {
         })
         .catch((error) => {
           console.log(error);
-
-          if (error.response.status === 400) {
-            toast.error("이미 누군가가 사용 중인 이메일입니다!");
-          }
+          toast.error("이메일을 수정할 수 없습니다!");
+          SetLoading(false);
+          // if (error.response.status === 400) {
+          //   toast.error("이미 누군가가 사용 중인 이메일입니다!");
+          // }
         });
       await RefreshProfile();
       SetLoading(false);
@@ -149,6 +148,39 @@ const Modify = () => {
     }
   }, [Userprofile]);
 
+  const DeleteUser = () => {
+
+    const auth = getAuth();
+    const user = auth.currentUser;
+    console.log(user);
+    if (window.confirm("정말 삭제하시겠습니까?")) {
+      deleteUser(user).then(async() => {
+        // User deleted.
+        console.log('삭제 되었습니다!');
+        await signOut();
+        setTimeout(toast.success('삭제되었습니다!'),5000);
+      }).catch((error) => {
+        // An error ocurred
+        console.log(error);
+        toast.error('재로그인 후 다시 시도해주세요!')
+      });
+    }
+    
+  }
+
+  const signOut = async() => {
+    await localStorage.removeItem("token");
+    await localStorage.removeItem("email");
+    await localStorage.removeItem("userUid");
+    await localStorage.removeItem("plan");
+    await localStorage.removeItem("isBill");
+    await localStorage.removeItem("create");
+    await localStorage.removeItem("phone");
+  
+    await authService.signOut();
+    window.location.reload();
+  }
+
   useEffect(() => {
     const loginCheck = localStorage.getItem("token");
 
@@ -207,7 +239,7 @@ const Modify = () => {
             <button type='submit' className='MBtn' onClick={ModifyUser}>
               회원정보 수정
             </button>
-            <button type='submit' className='OutBtn'>
+            <button type='submit' className='OutBtn' onClick={DeleteUser}>
               탈퇴하기
             </button>
           </div>
