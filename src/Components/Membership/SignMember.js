@@ -67,7 +67,7 @@ const SignMember = () => {
     console.log(Price, Plan);
     if(user !== null ){
       if(selected1 === false && selected2 === false && selected3 === false) {
-        toast.error('멤버쉽을 선택해주세요!');
+        toast.error('멤버십을 선택해주세요!');
       }else {
         console.log('결제');
         const now = new Date();
@@ -239,10 +239,11 @@ const SignMember = () => {
           align='baseline'
     
         >
+
           <h3>{localStorage.getItem('isBill') !== true ? '멤버쉽 가입하기' : '멤버쉽 변경하기'}</h3>
         </Box>
 
-        <p style={pStyle}>1. 원하시는 멤버쉽 주기를 클릭해주세요.</p>
+        <p style={pStyle}>1. 원하시는 멤버십 주기를 클릭해주세요.</p>
         <Box fill={size !== "small" ? false : true} pad='large'>
           <Grid
             fill={size !== "small" ? false : true}

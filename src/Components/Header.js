@@ -183,7 +183,7 @@ const Header = () => {
         {size !== "small" ? (
           <Nav direction='row' className='Menus' gap='large' align='center'>
             <Link to='/explain'>
-              <MemButton>멤버쉽 가입</MemButton>
+              <MemButton>멤버십 가입</MemButton>
             </Link>
             <Link to='/brand'>브랜드 소개</Link>
             <span className='DropMenu'>
@@ -244,7 +244,7 @@ const Header = () => {
       {size === 'small' && isShow && (
         <>
           <Nav direction='column' className='MobileMenus'>
-            <Link to='/explain'>멤버쉽 가입</Link>
+            <Link to='/explain'>멤버십 가입</Link>
             <Link to='/brand'>브랜드 소개</Link>
             <span className='DropMenu' onClick={HandleMobile}>
               인공지능 글쓰기 서비스 <Down size='small' /></span>

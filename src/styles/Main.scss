@@ -178,11 +178,17 @@ $dark-1 : #444;
 }
 
 .Detail1,
-.Detail2,
-.Detail3,
 .DetailBottom1,
 .DetailBottom2 {
     padding: 80px 0;
+}
+
+.Detail2 {
+    padding: 80px 0 0 0;
+}
+
+.Detail3 {
+    padding: 0 0 80px 0;
 }
 
 .Detail-img {
