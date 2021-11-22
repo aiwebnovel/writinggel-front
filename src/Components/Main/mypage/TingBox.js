@@ -11,7 +11,7 @@ import "react-toastify/dist/ReactToastify.css";
 import styled from "styled-components";
 
 import * as configUrl from "../../../config";
-import { Save } from "grommet-icons";
+import Loading from '../../Loading'
 
 const TingBox = () => {
   const size = useContext(ResponsiveContext);
@@ -31,6 +31,7 @@ const TingBox = () => {
   });
 
   const [Copied, SetCopy] = useState(false);
+  const [isLoading, SetLoading] = useState(false);
 
   const onCopied = () => {
     if (SaveData[0] === "") {
@@ -42,9 +43,10 @@ const TingBox = () => {
   };
 
   const DeleteSave = async (e) => {
-    console.log(e.target.value);
+
     let uid = e.target.value;
     if (window.confirm("정말 삭제하시겠습니까?")) {
+      SetLoading(true)
       const config = {
         method: "delete",
         url: `${configUrl.SERVER_URL}/archive/${uid}`,
@@ -55,6 +57,7 @@ const TingBox = () => {
       await axios(config)
         .then(async (response) => {
           console.log(response.data);
+          SetLoading(false);
           await window.location.reload();
         })
         .catch(async (error) => {
@@ -67,6 +70,7 @@ const TingBox = () => {
 
   // get
   const load = useCallback(async () => {
+    SetLoading(true)
     const config = {
       method: "get",
       url: `${configUrl.SERVER_URL}/archive`,
@@ -91,6 +95,7 @@ const TingBox = () => {
           9: response.data[9],
         });
         //await console.log("성공", SaveData);
+        SetLoading(false)
       })
       .catch(async (error) => {
         console.log(error);
@@ -114,6 +119,7 @@ const TingBox = () => {
 
   return (
     <Layout>
+      {isLoading && <Loading/>}
       <Box justify='center' align='center' className='BoxContainer'>
         <Box fill background='#3b2477' color='#fff' className='MypageHeader'>
           <h2>팅젤 보관함</h2>

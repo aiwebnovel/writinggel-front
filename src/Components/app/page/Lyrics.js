@@ -18,16 +18,6 @@ const Lyrics = () => {
   const [story, SetStory] = useState(['','','']);
   const [content, SetOutputContent] = useState('')
 
-  useEffect(() => {
-    const loginCheck = localStorage.getItem("token");
-
-    if (loginCheck !== null) {
-      return;
-    } else {
-      History.push("/");
-      setTimeout(toast.info("로그인을 해주세요!"), 300);
-    }
-  }, []);
 
   const LyricsAxios = async () => {
     SetOutputContent('');
@@ -50,9 +40,61 @@ const Lyrics = () => {
         console.log(error);
       });
     } else {
+      SetLoading(false)
       setTimeout(toast.info("내용을 채워주세요!"), 300);
     }
   };
+
+
+
+  const SaveContent = async() => {
+    console.log(content)
+    if(content){
+      const config = {
+        method: "post",
+        url: `${configUrl.SERVER_URL}/archive`,
+        headers: { authentication: localStorage.getItem("token") },
+        data: {
+          story: content[0],
+          category:'동화',
+        }
+      };
+
+      await axios(config)
+        .then(async (response) => {
+         
+          toast.success(`${response.data.log}`);
+        })
+        .catch(async (error) => {
+          console.log(error);
+          if(error.response.status === 403) {
+          toast.error('보관함이 꽉 찼습니다!');
+        }
+        });
+      }else {
+        toast.info('저장할 결과가 없습니다!');  
+      }
+
+  }
+
+  const ResetData = () => {
+    SetTitle('');
+    SetStory(['','','']);
+    SetOutputContent('')
+  }
+
+
+  useEffect(() => {
+    const loginCheck = localStorage.getItem("token");
+
+    if (loginCheck !== null) {
+      return;
+    } else {
+      History.push("/");
+      setTimeout(toast.info("로그인을 해주세요!"), 300);
+    }
+  }, []);
+
 
   return (
     <ServiceLayout>
@@ -69,19 +111,19 @@ const Lyrics = () => {
         <Box className='LyricInputBox'>
           <div className='subjectTitle'>
             <p>제목<span style={{color:'red'}}>*</span></p>
-            <input type='text' placeholder='제목을 적어주세요!' required onChange={(e)=>{SetTitle(e.target.value)}}/>
+            <input type='text' placeholder='제목을 적어주세요!' value={title} required onChange={(e)=>{SetTitle(e.target.value)}}/>
           </div>
           <div className='subjects'>
             <p>주제(3개 입력)<span style={{color:'red'}}>*</span></p>
-            <input type='text' placeholder='주제를 적어주세요!' required onChange={(e)=>{SetStory([e.target.value,story[1],story[2]])}}/>
-            <input type='text' placeholder='주제를 적어주세요!' required onChange={(e)=>{SetStory([story[0],e.target.value,story[2]])}}/>
-            <input type='text' placeholder='주제를 적어주세요!' required onChange={(e)=>{SetStory([story[0],story[1],e.target.value])}}/>
+            <input type='text' placeholder='주제를 적어주세요!' value={story[0]} required onChange={(e)=>{SetStory([e.target.value,story[1],story[2]])}}/>
+            <input type='text' placeholder='주제를 적어주세요!' value={story[1]} required onChange={(e)=>{SetStory([story[0],e.target.value,story[2]])}}/>
+            <input type='text' placeholder='주제를 적어주세요!' value={story[2]} required onChange={(e)=>{SetStory([story[0],story[1],e.target.value])}}/>
           </div>
           <button onClick = {()=>{LyricsAxios();}}>영어 가사 쓰기</button>
         </Box>
         <Box className='LyricOutputBox'>
             <textarea value={content} readOnly/>
-            <div className='icons'> <div><Close />  <Update/> <Download/> </div> </div>
+            <div className='icons'> <div><Close onClick={ResetData}/>  <Update onClick={LyricsAxios}/> <Download onClick={SaveContent}/> </div> </div>
         </Box>
       </Box>
     </ServiceLayout>

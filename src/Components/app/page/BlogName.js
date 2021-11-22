@@ -69,6 +69,9 @@ const BlogName = () => {
         })
         .catch(async (error) => {
           console.log(error);
+          if(error.response.status === 403) {
+            toast.error('보관함이 꽉 찼습니다!');
+          }
 
           if (error.response.status === 500) {
             toast.error("해당 에러는 관리자에게 문의해주세요!");
