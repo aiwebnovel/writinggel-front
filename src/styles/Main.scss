@@ -393,9 +393,7 @@ $dark-1 : #444;
 
 //newsletter
 
-.LetterContainer {
-    padding: 48px 0;
-}
+
 
 .LetterHeader {
     width: 100%;
@@ -409,11 +407,63 @@ $dark-1 : #444;
     }
 }
 
+.LetterBox {
+    padding: 150px 0;
+
+    @media screen and (max-width:768px){
+        padding-right: 20px;
+        padding-left: 20px;
+    }
+}
+
+
+.tingLetterImg {
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    > img {
+    width: 250px;
+    margin : 35px 0;
+
+    @media screen and (max-width: 768px) {
+        width: 200px;
+    }
+}
+}
+
+.speech {
+    position: relative;
+	background: $sub2;
+	border-radius: .4em;
+    padding: 15px;
+
+    > h2 {
+        font-family: 'NeoDunggeunmo';
+        text-align: center;
+
+    }
+
+    &::after {
+    content: '';
+	position: absolute;
+	bottom: 0;
+	left: 50%;
+	width: 0;
+	height: 0;
+	border: 20px solid transparent;
+	border-top-color: $sub2;
+	border-bottom: 0;
+	margin-left: -20px;
+	margin-bottom: -20px;
+    }
+}
 
 .FormInputs {
 
-    width: 400px;    
-
+    max-width: 400px;    
+    width: 100%;
     > p{
         font-size: 13px;
         color : $point;
@@ -427,16 +477,25 @@ $dark-1 : #444;
         border: 1px solid #051619;
         margin:0;
     
-        @media screen and (max-width:768px) {
-            width: 300px;
-        }
+        // @media screen and (max-width:768px) {
+        //     width: 300px;
+        // }
     }
 
     @media screen and (max-width: 768px) {
-        width: 100%;
+        // width: 100%;
         text-align: center;
     }
 
+}
+
+
+.correct {
+    color: #ff9300;
+}
+
+.incorrect {
+color : red;
 }
 
 .CheckSubs {
@@ -482,14 +541,34 @@ $dark-1 : #444;
     margin-top: 12px;
 }
 
+.PrevLetter {
+    padding: 40px 0;
 
-.preHeader {
-    width: 50%;
-    text-align: center;
-    font-weight: 600;
-    padding-top: 15px;
-    border-top: 1px solid #000;
+    > div > a {
+        background-color : $sub2;
+        border:1px solid $sub2;
+        border-radius: 5px;
+        padding: 10px 15px;
+        transition: all 300ms ease-in-out;
+
+        &:hover {
+        background-color : $point;
+        border:1px solid $point;
+
+        font-weight: 600;
+        }
+    }
 }
+
+// .preHeader {
+//     width: 50%;
+//     text-align: center;
+//     font-weight: 600;
+//     padding-top: 15px;
+//     border-top: 1px solid #000;
+// }
+
+
 
 //Ask
 
