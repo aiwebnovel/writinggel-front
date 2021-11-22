@@ -976,6 +976,36 @@ hr {
     }
 }
 
+.payData {
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    >p {
+        font-weight: 600;
+    }
+
+    > div {
+        > button, a > button {
+            background-color: $sub2;
+            margin-left: 10px;
+            border:1px solid $sub2;
+            border-radius: 5px;
+            padding: 5px 8px;
+            outline: 0;
+            font-size: 15px;
+            cursor: pointer;
+            transition: all 300ms ease-in-out;
+
+            &:hover{
+                background-color: $sub1;
+                border: 1px solid $sub1;
+            }
+        }
+    }
+}
+
 //modify
 
 
@@ -1103,6 +1133,13 @@ hr {
     padding: 12px 35px;
     font-size: 1rem;
     font-weight: 600;
+    cursor: pointer;
+    transition: all 300ms ease-in-out;
+
+    &:hover {
+        background-color:  #f45752;
+        border: 1px solid  #f45752;
+    }
 }
 
 .listBtn {
