@@ -80,6 +80,7 @@ const Modify = () => {
 
     if (user !== null) {
       user.providerData.forEach(async (profile) => {
+        console.log(profile);
         console.log("Sign-in provider: " + profile.providerId);
         // console.log("  Provider-specific UID: " + profile.uid);
         console.log("  Name: " + profile.displayName);

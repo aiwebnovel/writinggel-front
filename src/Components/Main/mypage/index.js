@@ -120,12 +120,15 @@ const Mypage = () => {
             <div className='dataBox'>
               <p>구독 상품</p>
               <div className='payData'>
-                <p>6개월 정기 결제</p>
+                <p>{localStorage.getItem('plan') === 'free' ? '결제한 구독 상품이 없습니다!' : `${localStorage.getItem('plan')}개월 구독 상품`}</p>
                 <div>
+                  {localStorage.getItem('plan') !== 'free' && (
+                    <>
                   <Link to='/signIn'>
                   <button>멤버십 변경</button>
                   </Link>
                   <button onClick={HandleDelete}>멤버십 해제</button>
+                  </>)}
                 </div>
               </div>
             </div>

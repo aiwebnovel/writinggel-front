@@ -116,7 +116,8 @@ const SignMember = () => {
                 method: 'post',
                 url: `${configUrl.SERVER_URL}/pay`,
                 headers: { 'authentication': localStorage.getItem("token"), },
-                data : { billKey: data.billKey,
+                data : { 
+                  billKey: data.billKey,
                     name: buyerName,
                     plan: plans,
                   }
@@ -126,7 +127,7 @@ const SignMember = () => {
              axios(config)
                 .then((response) => {
                   console.log("response", response);
-                  localStorage.setItem('plan', `${plans}개월 구독 중` )
+                  localStorage.setItem('plan',Plan )
                   toast.success(response.data.log);
                  
                 })
@@ -149,10 +150,38 @@ const SignMember = () => {
     }else {
     toast.warn("로그인을 먼저 해주세요!");
     }
-   
-
-
+  
   };
+
+
+  //결제 변경
+
+  const ChangeBill = () => {
+    
+    if(Plan !== localStorage.getItem('plan')) {
+      let plans = parseInt(Plan);
+      
+      const config = {
+        method: "put",
+        url: `${configUrl.SERVER_URL}/pay`,
+        headers: { authentication: localStorage.getItem("token") },
+        data : {
+          plan: plans,
+        }
+      };
+      axios(config)
+        .then((response) => {
+          console.log(response);
+          toast.success(response.data.log);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }else {
+      toast.warn('기존에 쓰던 멤버쉽을 선택하셨습니다.')
+    }
+    
+  }
 
   const HandleSelected = (e) => {
     console.log(e.target.name.split(" "));
@@ -210,7 +239,7 @@ const SignMember = () => {
           align='baseline'
     
         >
-          <h3>{localStorage.getItem('plan')}멤버쉽 가입하기</h3>
+          <h3>{localStorage.getItem('isBill') !== true ? '멤버쉽 가입하기' : '멤버쉽 변경하기'}</h3>
         </Box>
 
         <p style={pStyle}>1. 원하시는 멤버쉽 주기를 클릭해주세요.</p>
@@ -386,8 +415,8 @@ const SignMember = () => {
               <p>₩{Price}</p>
             </div>
             <div style={payButton}>
-              <button className='creditCardButton' onClick={RequestBill}>
-                결제하기
+              <button className='creditCardButton' onClick={localStorage.getItem('isBill') !== true ? RequestBill : ChangeBill}>
+                {localStorage.getItem('isBill') !== true ? '결제하기' :'변경하기'}
               </button>
             </div>
           </div>

@@ -164,9 +164,9 @@ const Header = () => {
   };
 
 
-  useEffect(() => {  
-    refreshProfile();
-  },[]);
+  // useEffect(() => {  
+  //   refreshProfile();
+  // },[]);
 
   useEffect(()=>{
     requestProfile(); 
