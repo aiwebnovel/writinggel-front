@@ -65,6 +65,34 @@ const Businessitem = () => {
     }
   };
 
+  const SaveContent = async(output) => {
+    
+    if(output){
+      const config = {
+        method: "post",
+        url: `${configUrl.SERVER_URL}/archive`,
+        headers: { authentication: localStorage.getItem("token") },
+        data: {
+          story: output,
+          category:'비즈니스 아이템',
+        }
+      };
+
+      await axios(config)
+        .then(async (response) => {
+         
+          toast.success(`${response.data.log}`);
+        })
+        .catch(async (error) => {
+          console.log(error);
+        });
+      }else {
+        toast.info('저장할 결과가 없습니다!');  
+      }
+
+
+  }
+
   return (
     <ServiceLayout>
       {isLoading && <Loading />}
@@ -100,21 +128,27 @@ const Businessitem = () => {
               <CardHeader className='SerCardHead'>아이템</CardHeader>
               <CardBody className='SerCardBody'>{OutputContent[0]}</CardBody>
               <div className='SerCardFoot'>
-                <Download />
+                <Download onClick={()=> {
+                  let output = OutputContent[0]
+                  SaveContent(output)}}/>
               </div>
             </Cards>
             <Cards>
               <CardHeader className='SerCardHead'>아이템</CardHeader>
               <CardBody className='SerCardBody'>{OutputContent[1]}</CardBody>
               <div className='SerCardFoot'>
-                <Download />
+                <Download onClick={()=> {
+                  let output = OutputContent[1]
+                  SaveContent(output)}}/>
               </div>
             </Cards>
             <Cards>
               <CardHeader className='SerCardHead'>아이템</CardHeader>
               <CardBody className='SerCardBody'>{OutputContent[2]}</CardBody>
               <div className='SerCardFoot'>
-                <Download />
+                <Download onClick={()=> {
+                  let output = OutputContent[2]
+                  SaveContent(output)}}/>
               </div>
             </Cards>
           </Grid>

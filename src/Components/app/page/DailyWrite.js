@@ -44,6 +44,34 @@ const Dailywrite = () => {
       });
   };
 
+  const SaveContent = async() => {
+    
+    if(OutputContent){
+      const config = {
+        method: "post",
+        url: `${configUrl.SERVER_URL}/archive`,
+        headers: { authentication: localStorage.getItem("token") },
+        data: {
+          story: OutputContent[0],
+          category:'일상 기록 질문',
+        }
+      };
+
+      await axios(config)
+        .then(async (response) => {
+         
+          toast.success(`${response.data.log}`);
+        })
+        .catch(async (error) => {
+          console.log(error);
+        });
+      }else {
+        toast.info('저장할 결과가 없습니다!');  
+      }
+
+
+  }
+
   useEffect(() => {
     const loginCheck = localStorage.getItem("token");
 
@@ -125,7 +153,7 @@ const Dailywrite = () => {
             <hr style={{ margin: "20px 0" }} />
             <div> {OutputContent[1]}</div>
             <div className='DailyiconBox'>
-              <Download />
+              <Download onClick={SaveContent}/>
             </div>
           </ResultCard>
         )}
