@@ -78,7 +78,7 @@ const FaQ = () => {
           <Box fill className='Faq-Content'>
             <div className='Faq-Title'>
               <h2>
-                <CircleQuestion /> 멤버쉽
+                <CircleQuestion /> 멤버십
               </h2>
             </div>
             <Accordion className='Faq-Accordion' multiple>
