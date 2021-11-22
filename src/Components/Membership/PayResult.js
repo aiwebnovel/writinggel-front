@@ -4,10 +4,11 @@ import { useHistory, Link } from "react-router-dom";
 import Layout from "../Layout";
 import { Box, ResponsiveContext } from "grommet";
 
-import * as config from "../../config";
+import * as configUrl from "../../config";
 import { authService } from "../../firebaseConfig";
 
 import styled from "styled-components";
+import { toast } from "react-toastify";
 
 const PayResult = () => {
   const size = useContext(ResponsiveContext);
@@ -36,6 +37,28 @@ const PayResult = () => {
     window.location.reload();
   };
 
+  const DeletePay = () => {
+    if (window.confirm("구독을 취소하시겠습니까?")) {
+      const config = {
+        method: "delete",
+        url: `${configUrl.SERVER_URL}/pay`,
+        headers: { authentication: localStorage.getItem("token") },
+      };
+      axios(config)
+        .then((response) => {
+          console.log(response);
+          toast.success(response.data.log, {
+            icon: '😭',
+            style:{backgroundColor:'#fff', color:'#000'},
+             progressStyle:{backgroundColor:'#7D4CDB'}
+            });
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+  };
+
   useEffect(() => {
     const loginCheck = localStorage.getItem("token");
     const email = localStorage.getItem("email");
@@ -43,7 +66,7 @@ const PayResult = () => {
 
     if (loginCheck !== null) {
       axios
-        .get(`${config.SERVER_URL}/profile`, {
+        .get(`${configUrl.SERVER_URL}/profile`, {
           headers: { authentication: loginCheck },
         })
         .then((response) => {
@@ -103,7 +126,9 @@ const PayResult = () => {
             </div>
           </Box>
           <BtnContent>
-            <button className='cancelBtn'>구독 취소</button>
+            <button className='cancelBtn' onClick={DeletePay}>
+              구독 취소
+            </button>
             <button className='listBtn'>
               <Link to='/mypage'>목록보기</Link>
             </button>

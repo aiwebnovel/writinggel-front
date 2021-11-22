@@ -126,7 +126,8 @@ const SignMember = () => {
              axios(config)
                 .then((response) => {
                   console.log("response", response);
-                  toast.success("결제가 완료 됐습니다!");
+                  localStorage.setItem('plan', `${plans}개월 구독 중` )
+                  toast.success(response.data.log);
                  
                 })
                 .catch((error) => {
@@ -209,7 +210,7 @@ const SignMember = () => {
           align='baseline'
     
         >
-          <h3>멤버쉽 가입하기</h3>
+          <h3>{localStorage.getItem('plan')}멤버쉽 가입하기</h3>
         </Box>
 
         <p style={pStyle}>1. 원하시는 멤버쉽 주기를 클릭해주세요.</p>
