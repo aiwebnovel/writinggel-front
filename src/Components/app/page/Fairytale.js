@@ -37,7 +37,7 @@ const Fairytale = () => {
     },
     {
       id: 5,
-      title: "소재",
+      title: "장르",
     },
   ];
 
@@ -99,7 +99,7 @@ const Fairytale = () => {
         genre: e.target.value,
       });
     }
-    if (e.target.name === "소재") {
+    if (e.target.name === "장르") {
       Setcategory({
         ...category,
         theme: e.target.value,
@@ -190,29 +190,45 @@ const Fairytale = () => {
     } else {
       setTimeout(toast.info("내용을 채워주세요!"), 300);
     }
-    // SetOutputContent("");
-    // SetLoading(true);
-    // if (input && input !== "") {
-    //   const config = {
-    //     method: "post",
-    //     url: `${configUrl.SERVER_URL}/writinggel/discussion`,
-    //     headers: { authentication: localStorage.getItem("token") },
-    //     data: { option: option, story: input },
-    //   };
-
-    //   await axios(config)
-    //     .then(async (response) => {
-    //       console.log(response.data);
-    //       SetOutputContent(response.data[0]);
-    //       SetLoading(false);
-    //     })
-    //     .catch(async (error) => {
-    //       console.log(error);
-    //     });
-    // } else {
-    //   setTimeout(toast.info("내용을 채워주세요!"), 300);
-    // }
   };
+
+  const SaveContent = async() => {
+    
+    if(Output){
+      const config = {
+        method: "post",
+        url: `${configUrl.SERVER_URL}/archive`,
+        headers: { authentication: localStorage.getItem("token") },
+        data: {
+          story: Output[0],
+          category:'동화',
+        }
+      };
+
+      await axios(config)
+        .then(async (response) => {
+         
+          toast.success(`${response.data.log}`);
+        })
+        .catch(async (error) => {
+          console.log(error);
+          if(error.response.status === 403) {
+            toast.error('보관함이 꽉 찼습니다!');
+          }
+
+          if (error.response.status === 500) {
+            toast.error("해당 에러는 관리자에게 문의해주세요!");
+          }
+        });
+      }else {
+        toast.info('저장할 결과가 없습니다!');  
+      }
+  }
+
+  const ResetData = () => {
+    SetOutput(["", ""]);
+    SetOutputTemp('');
+  }
 
   useEffect(() => {
     const loginCheck = localStorage.getItem("token");
@@ -264,7 +280,7 @@ const Fairytale = () => {
                           name={item.title}
                           onChange={(e) => HandleInput(e)}
                         />
-                        <button>추가</button>
+                        {/* <button>추가</button> */}
                       </div>
                     </AccordionPanel>
                   ))}
@@ -339,10 +355,11 @@ const Fairytale = () => {
                 className="output2"
                 placeholder="영어가 들어갈 예정입니다!"
                 value={Output[1]}
+                readOnly
               ></textarea>
             </div>
             <Icons>
-              <Download /> <Update /> <Close />
+              <Download onClick={SaveContent}/> <Update onClick={FairytaleAxios}/> <Close onClick={ResetData}/>
             </Icons>
           </Box>
         </Grid>
