@@ -116,7 +116,7 @@ const Header = () => {
         {size !== "small" ? (
           <Nav direction='row' gap='medium' align='center'>
             <Link to='/explain'>
-              <LinkBtn>멤버쉽 가입/변경</LinkBtn>
+              <LinkBtn>멤버십 가입/변경</LinkBtn>
             </Link>
             <Avatar
               src={userImage}
@@ -147,7 +147,7 @@ const Header = () => {
             {size === 'small' &&
               <Nav direction='row' gap='medium' align='center' justify={size ==='small' && 'between'}>
               <Link to='/explain'>
-                <LinkBtn>멤버쉽 가입/변경</LinkBtn>
+                <LinkBtn>멤버십 가입/변경</LinkBtn>
               </Link>
               <Avatar
                 src={userImage}
