@@ -153,7 +153,7 @@ const StorySrcDetail = () => {
           </Grid>
           <div className="intoServiceBtn">
             <Link to="/signIn">
-              <button style={{ marginBottom: "50px" }}>멤버쉽 가입하기</button>
+              <button style={{ marginBottom: "50px" }}>멤버십 가입하기</button>
             </Link>
           </div>
         </Box>
