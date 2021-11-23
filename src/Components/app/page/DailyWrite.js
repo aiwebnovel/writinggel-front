@@ -1,5 +1,5 @@
 import { Box, Grid, ResponsiveContext } from "grommet";
-import { Update, Close, Add, Download } from "grommet-icons";
+import {Cycle, Download } from "grommet-icons";
 import React, { useEffect, useContext, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -148,7 +148,7 @@ const Dailywrite = () => {
       <Modal open={isOpen} close={HandleModals}>
         {isLoading ? (
           <LoadingCard>
-            <img src='/couch.png' alt='카우치' />
+            <img src='/lantern.png' alt='카우치' />
             <p>Now Loading...</p>
           </LoadingCard>
         ) : (
@@ -160,7 +160,7 @@ const Dailywrite = () => {
             <hr style={{ margin: "20px 0" }} />
             <div> {OutputContent[1]}</div>
             <div className='DailyiconBox'>
-              <Download onClick={SaveContent}/>
+           <Cycle onClick={DailywriteAxios}/> <Download onClick={SaveContent}/>
             </div>
           </ResultCard>
         )}
@@ -177,9 +177,10 @@ const LoadingCard = styled.div`
   animation-duration: 2s;
   animation-iteration-count: infinite;
   font-family: 'NeoDunggeunmo';
+  padding: 20px;
 
   >img {
-      width: 180px;
+      width: 200px;
 
       @media screen and (max-width: 768px) {
         width: 150px;
@@ -240,7 +241,7 @@ const ResultCard = styled.div`
   align-items: center;
 
   > div {
-    width: 70%;
+    width: 80%;
   }
 
   .cardImg {
@@ -248,7 +249,7 @@ const ResultCard = styled.div`
     margin-bottom: 10px;
 
     > img {
-      width: 80px;
+      width: 120px;
     }
   }
 `;
