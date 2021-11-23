@@ -803,17 +803,23 @@ color : red;
 .MemCardHead {
     background-color: #fff;
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
+    
+    padding: 0 3px;
 
-    >svg {
-        width: 35px;
-        height: 35px;
+    > p {
+        padding: 5px;
     }
 }
 
 .MemCardBody {
-    line-height: 35px;
+    height: 100%;
+    line-height: 25px;
     padding: 10px 20px 20px 15px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
 
     >h4,
     p {
