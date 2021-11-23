@@ -28,7 +28,7 @@ const Discussion = () => {
   const { ProsOutput, ConsOutput} = OutputContent
 
   const SaveContent = async() => {
-    console.log(OutputContent)
+    //console.log(OutputContent)
     
     if(OutputContent){
       if(option === 'Pros'){
@@ -112,7 +112,7 @@ const Discussion = () => {
 
       await axios(config)
       .then(async (response) => {
-        console.log(response.data);
+        //console.log(response.data);
         SetOutputContent({...OutputContent,
           ProsOutput: response.data[0]
         });
@@ -129,7 +129,7 @@ const Discussion = () => {
 
 
   const ConsDiscussionAxios = async (e) => {
-    console.log(e.target.name)
+    //console.log(e.target.name)
     
     if (input && input !== '') {
       SetOutputOption('Cons'); 
@@ -165,7 +165,7 @@ const Discussion = () => {
     if (loginCheck !== null) {
       return;
     } else {
-      History.push("/");
+      History.push("/service/discussion");
       setTimeout(toast.info("로그인을 해주세요!"), 300);
     }
   }, []);

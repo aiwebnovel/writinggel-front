@@ -294,7 +294,7 @@ const Webnovel = () => {
     if (loginCheck !== null) {
       return;
     } else {
-      History.push("/");
+      History.push("/service/webnovel");
       setTimeout(toast.info("로그인을 해주세요!"), 300);
     }
   }, [History]);

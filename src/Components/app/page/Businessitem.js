@@ -29,17 +29,6 @@ const Businessitem = () => {
   const [OutputContent, SetOutputContent] = useState(['','',''])
 
 
-  useEffect(() => {
-    const loginCheck = localStorage.getItem("token");
-
-    if (loginCheck !== null) {
-      return;
-    } else {
-      History.push("/");
-      setTimeout(toast.info("로그인을 해주세요!"), 300);
-    }
-  }, []);
-
     const BusinessitemAxios = async () => {
     
       SetLoading(true)
@@ -96,9 +85,21 @@ const Businessitem = () => {
       }else {
         toast.info('저장할 결과가 없습니다!');  
       }
-
-
   }
+
+
+  useEffect(() => {
+    const loginCheck = localStorage.getItem("token");
+
+    if (loginCheck !== null) {
+      return;
+    } else {
+      History.push("/service/businessitem");
+      setTimeout(toast.info("로그인을 해주세요!"), 300);
+    }
+  }, []);
+
+
 
   return (
     <ServiceLayout>
