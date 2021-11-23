@@ -257,13 +257,13 @@ const SignMember = () => {
               }
             >
               <div className='SignMemCardHead'>
-                <BookmarkFilled size='medium' color='#3b2477' />
+                <span></span><BookmarkFilled size='medium' color='#3b2477' />
               </div>
               <div className='SignMemCardBody'>
-                <img src='/tinggle.png' alt='이미지' />
-                <h4>1개월 이용권</h4>
-                <p style={{fontWeight: 600}}>월 19,000원</p>
-                <p>1개월마다 결제</p>
+              <h3>1개월 이용권</h3>
+              <h4 style={{ marginBottom: '20px'}}>월 25,000원</h4>
+                  <p>1개월마다 결제</p>
+                  <br/>
                 <ChoiceBtn
                   name='1 19,000'
                   onClick={(e) => HandleSelected(e)}
@@ -278,15 +278,15 @@ const SignMember = () => {
               }
             >
               <div className='SignMemCardHead'>
-                <BookmarkFilled size='medium' color='#3b2477' />
+              <span>20% 할인</span><BookmarkFilled size='medium' color='#3b2477' />
               </div>
               <div className='SignMemCardBody'>
-                  <h4>3개월 이용권</h4>
-                  <p>월 16,000원</p>
-                  <p style={{fontWeight: 600}}>
-                    48,000원
+              <h3>3개월 이용권</h3>
+                  <h4>월 20,000원</h4>
+                  <p style={{ marginBottom: '20px', fontSize:'15px'}}>
+                  <span>75,000</span> 60,000원
                   </p>
-                  <p>/3개월마다 결제</p>
+                  <p>3개월마다 결제</p>
                 <ChoiceBtn
                   name='3 48,000'
                   onClick={(e) => HandleSelected(e)}
@@ -301,13 +301,13 @@ const SignMember = () => {
               }
             >
               <div className='SignMemCardHead'>
-                <BookmarkFilled size='medium' color='#3b2477' />
+              <span>40% 할인</span><BookmarkFilled size='medium' color='#3b2477' />
               </div>
               <div className='SignMemCardBody'>
-                 <h4>6개월 이용권</h4>
-                  <p>월 10,000원</p>
-                  <p style={{fontWeight: 600}}>
-                    60,000원
+              <h3>6개월 이용권</h3>
+                  <h4>월 15,000원</h4>
+                  <p style={{ marginBottom: '20px', fontSize:'15px'}}>
+                  <span>150,000</span> 90,000원
                   </p>
                   <p>6개월마다 결제</p>
                 <ChoiceBtn
