@@ -132,7 +132,7 @@ const Businessitem = () => {
             columns={size !== "small" ? { count: 3, size: "auto" } : "100%"}
           >
             <Cards >
-              <CardHeader className='SerCardHead'>아이템</CardHeader>
+              <CardHeader className='SerCardHead'>아이템 1</CardHeader>
               <CardBody className='SerCardBody'>{OutputContent[0]}</CardBody>
               <div className='SerCardFoot'>
                 <Download onClick={()=> {
@@ -141,7 +141,7 @@ const Businessitem = () => {
               </div>
             </Cards>
             <Cards>
-              <CardHeader className='SerCardHead'>아이템</CardHeader>
+              <CardHeader className='SerCardHead'>아이템 2</CardHeader>
               <CardBody className='SerCardBody'>{OutputContent[1]}</CardBody>
               <div className='SerCardFoot'>
                 <Download onClick={()=> {
@@ -150,7 +150,7 @@ const Businessitem = () => {
               </div>
             </Cards>
             <Cards>
-              <CardHeader className='SerCardHead'>아이템</CardHeader>
+              <CardHeader className='SerCardHead'>아이템 3</CardHeader>
               <CardBody className='SerCardBody'>{OutputContent[2]}</CardBody>
               <div className='SerCardFoot'>
                 <Download onClick={()=> {

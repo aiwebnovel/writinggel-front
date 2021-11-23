@@ -178,7 +178,7 @@ const SignMember = () => {
           console.log(error);
         });
     }else {
-      toast.warn('기존에 쓰던 멤버쉽을 선택하셨습니다.')
+      toast.warn('기존에 쓰던 멤버십을 선택하셨습니다.')
     }
     
   }
@@ -240,7 +240,7 @@ const SignMember = () => {
     
         >
 
-          <h3>{localStorage.getItem('isBill') !== true ? '멤버쉽 가입하기' : '멤버쉽 변경하기'}</h3>
+          <h3>{localStorage.getItem('isBill') !== true ? '멤버십 가입하기' : '멤버십 변경하기'}</h3>
         </Box>
 
         <p style={pStyle}>1. 원하시는 멤버십 주기를 클릭해주세요.</p>

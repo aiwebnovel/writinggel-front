@@ -222,7 +222,8 @@ const Header = () => {
               </ul>
               </span>
             <Link to='/newsletter'>뉴스레터</Link>
-            <Link to='/ask'>문의</Link>
+            <Link to='/faq'>FAQ</Link>
+            {/* <Link to='/ask'>문의</Link> */}
             {localStorage.getItem("token") ? (
               <Anchor>
                 <Avatar
@@ -283,7 +284,8 @@ const Header = () => {
               </ul>
                 )}
             <Link to='/newsletter'>뉴스레터</Link>
-            <Link to='/ask'>문의</Link>
+            {/* <Link to='/ask'>문의</Link> */}
+            <Link to='/faq'>FAQ</Link>
             {localStorage.getItem("token") ? (
               <Link to='/mypage'>My page</Link>
             ) : (

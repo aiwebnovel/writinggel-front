@@ -33,6 +33,7 @@ const FaQ = () => {
           <FaqIntro>
             라이팅젤 유저들이 많이 찾는 질문을 확인해보세요.
             <BlockQuote size='medium' />
+            <p>기타 문의사항은 <span>support@appplatform.co.kr</span>로 보내주세요</p>
           </FaqIntro>
 
           <Box fill className='Faq-Content'>
@@ -248,14 +249,8 @@ const FaQ = () => {
                 <div className='Faq-PanelContent'>
                   <p>
                     멤버십에 가입하신 분들을 위해 새로운 서비스를 계속 준비하고
-                    있습니다. 제안하실 내용이 있으시면, 문의하기 또는
-                    support@appplatform.co.kr로 보내주세요.
-                  </p>
-
-                  <p>
-                    계정 삭제 시, 멤버십 가입 내역도 삭제됩니다. 멤버십에
-                    가입하여 서비스를 이용하는 중에 계정 삭제(탈퇴)를 하면 더
-                    이상 이용이 불가합니다. 신중한 결정 부탁드립니다.
+                    있습니다. 제안하실 내용이 있으시면, 문의하기 또는 &nbsp;
+                    <a href="mailto:support@appplatform.co.kr" style={{textDecoration:'underline', color:'#444'}}>support@appplatform.co.kr</a>로 메일을 보내주세요.
                   </p>
                 </div>
               </AccordionPanel>
@@ -268,7 +263,7 @@ const FaQ = () => {
                 <Alert /> 궁금한 내용이 해결되지 않았다면?
               </h2>
             </div>
-            <p><Link to='/ask'>문의하기</Link> 또는 <span>support@appplatform.co.kr</span>로 문의해주세요.</p>
+            <p><a href="mailto:support@appplatform.co.kr" style={{textDecoration:'underline', color:'#444'}}>support@appplatform.co.kr</a>로 문의해주세요.</p>
           </FaqMore>
         </Box>
       </Box>
@@ -279,12 +274,24 @@ const FaQ = () => {
 export default FaQ;
 
 const FaqIntro = styled.div`
-  padding: 48px 0 20px 0;
+  padding: 48px 0 5px 0;
   /* font-weight: 900; */
   font-size: 24px;
   border-bottom: 1px solid #444;
   margin-bottom: 40px;
   font-family: "NeoDunggeunmo";
+
+  > p {
+    text-align: center;
+    line-height: 40px;
+    font-family: -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,Cantarell,'Open Sans','Helvetica Neue',sans-serif;
+    font-size: 14px;
+    color: #444;
+
+    > span {
+      background-color: #ffce1f;
+    }
+  }
 `;
 
 const FaqMore = styled(Box)`
@@ -319,9 +326,6 @@ background-color: #ffce1f;
     font-weight: 600;
   }
 
-  > span {
-    text-decoration: underline;
-  }
 }
 
 `

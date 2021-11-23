@@ -167,7 +167,7 @@ const Mypage = () => {
     <Modal open={isOpen} close={HandleModals} >
       <div>
         <div>
-        <p>멤버쉽을 해지하시겠어요?</p>
+        <p>멤버십을 해지하시겠어요?</p>
         <p>해지 후에도 현 결제 주기 마지막 날까지는 이용할 수 있습니다.</p>
         </div>
         <div>
