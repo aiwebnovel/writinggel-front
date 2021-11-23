@@ -18,50 +18,90 @@ const Discussion = () => {
 
   const [isLoading, SetLoading] = useState(false);
   const [input, SetInput] = useState('');
-  const [OutputContent, SetOutputContent] = useState('')
+  const [OutputContent, SetOutputContent] = useState({
+    ProsOutput:'',
+    ConsOutput:''
+  })
   const [option, SetOutputOption] = useState('')
+
+
+  const { ProsOutput, ConsOutput} = OutputContent
 
   const SaveContent = async() => {
     console.log(OutputContent)
     
     if(OutputContent){
-      
-      const config = {
-        method: "post",
-        url: `${configUrl.SERVER_URL}/archive`,
-        headers: { authentication: localStorage.getItem("token") },
-        data: {
-          story: OutputContent,
-          category:'찬반 논거',
+      if(option === 'Pros'){
+        const config = {
+          method: "post",
+          url: `${configUrl.SERVER_URL}/archive`,
+          headers: { authentication: localStorage.getItem("token") },
+          data: {
+            story: ProsOutput,
+            category:'찬반 논거',
+          }
+        };
+  
+        await axios(config)
+          .then(async (response) => {
+           
+            toast.success(`${response.data.log}`);
+          })
+          .catch(async (error) => {
+            console.log(error);
+            if(error.response.status === 403) {
+              toast.error('보관함이 꽉 찼습니다!');
+            }
+  
+            if (error.response.status === 500) {
+              toast.error("해당 에러는 관리자에게 문의해주세요!");
+            }
+          });
         }
-      };
 
-      await axios(config)
-        .then(async (response) => {
-         
-          toast.success(`${response.data.log}`);
-        })
-        .catch(async (error) => {
-          console.log(error);
-          if(error.response.status === 403) {
-            toast.error('보관함이 꽉 찼습니다!');
-          }
+        if(option=== 'Cons') {
+          const config = {
+            method: "post",
+            url: `${configUrl.SERVER_URL}/archive`,
+            headers: { authentication: localStorage.getItem("token") },
+            data: {
+              story: ConsOutput,
+              category:'찬반 논거',
+            }
+          };
+    
+          await axios(config)
+            .then(async (response) => {
+             
+              toast.success(`${response.data.log}`);
+            })
+            .catch(async (error) => {
+              console.log(error);
+              if(error.response.status === 403) {
+                toast.error('보관함이 꽉 찼습니다!');
+              }
+    
+              if (error.response.status === 500) {
+                toast.error("해당 에러는 관리자에게 문의해주세요!");
+              }
+            });
+        }
 
-          if (error.response.status === 500) {
-            toast.error("해당 에러는 관리자에게 문의해주세요!");
-          }
-        });
+
+
       }else {
         toast.info('저장할 결과가 없습니다!');  
       }
 
+     
+
 
   }
 
-    const DiscussionAxios = async () => {
+    const ProsDiscussionAxios = async () => {
 
     if (input && input !== '') {
- 
+      SetOutputOption('Pros'); 
       SetLoading(true)
       const config = {
         method: 'post',
@@ -73,7 +113,40 @@ const Discussion = () => {
       await axios(config)
       .then(async (response) => {
         console.log(response.data);
-        SetOutputContent(response.data[0]);
+        SetOutputContent({...OutputContent,
+          ProsOutput: response.data[0]
+        });
+       
+        SetLoading(false)
+      })
+      .catch(async (error) => {
+        console.log(error);
+      });
+    } else {
+      setTimeout(toast.info("내용을 채워주세요!"), 300);
+    }
+  };
+
+
+  const ConsDiscussionAxios = async (e) => {
+    console.log(e.target.name)
+    
+    if (input && input !== '') {
+      SetOutputOption('Cons'); 
+      SetLoading(true)
+      const config = {
+        method: 'post',
+        url: `${configUrl.SERVER_URL}/writinggel/discussion`,
+        headers: { 'authentication': localStorage.getItem("token"), },
+        data : { option:option, story:input }
+      };
+
+      await axios(config)
+      .then(async (response) => {
+        console.log(response.data);
+        SetOutputContent({...OutputContent,
+        ConsOutput: response.data[0]
+        });
        
         SetLoading(false)
       })
@@ -120,18 +193,24 @@ const Discussion = () => {
         </Box>
         <Box direction='row-responsive' justify='center' align='center' gap='medium' className='DiscussOutputBox'>
           <div className="Agree">
-            <button onClick = {()=>{SetOutputOption('Pros'); DiscussionAxios('Pros');}}>찬성 논거 찾기</button>
+            <button name='Pros' onClick = {()=> ProsDiscussionAxios()}>찬성 논거 찾기</button>
             <div className="outputArea">
-              <div>{option === 'Pros' && option !== '' ? OutputContent : '찬성 논거'}</div>
+              <div>{ProsOutput.split('\n').map((line)=>(
+                  <span>{line}<br/></span>
+              ))}</div>
               <Icon>
-                <Download onClick={SaveContent}/>
+                <Download onClick={()=> {
+                  SetOutputOption('Pros')
+                  SaveContent()}}/>
               </Icon>
             </div>
           </div>
           <div className="Opposite">
-            <button onClick = {()=>{SetOutputOption('Cons'); DiscussionAxios();}}>반대 논거 찾기</button>
+            <button name='Cons' onClick = {(e)=> ConsDiscussionAxios(e)}>반대 논거 찾기</button>
             <div  className="outputArea">
-              <div>{option === 'Cons' && option !== '' ? OutputContent : '반대 논거'}</div>
+            <div>{ConsOutput.split('\n').map((line)=>(
+                  <span>{line}<br/></span>
+              ))}</div>
               <Icon>
                 <Download onClick={SaveContent}/>
               </Icon>
