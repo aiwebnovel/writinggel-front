@@ -205,7 +205,7 @@ const Storysrc = () => {
                 StoryAxios();
               }}
             >
-              예시보기
+              {isResult ? '다시 쓰기' : '예시보기'}
             </button>
             <button onClick={SaveContent}>저장하기</button>
           </Box>

@@ -33,7 +33,7 @@ const Lyrics = () => {
       await axios(config)
       .then(async (response) => {
         console.log(response.data);
-        SetOutputContent(response.data);
+        SetOutputContent(response.data[1]);
         SetLoading(false)
       })
       .catch(async (error) => {
@@ -55,8 +55,8 @@ const Lyrics = () => {
         url: `${configUrl.SERVER_URL}/archive`,
         headers: { authentication: localStorage.getItem("token") },
         data: {
-          story: content[0],
-          category:'동화',
+          story: content[1],
+          category:'영어 가사',
         }
       };
 
