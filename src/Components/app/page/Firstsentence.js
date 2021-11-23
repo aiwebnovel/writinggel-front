@@ -17,25 +17,20 @@ const Firstsentence = () => {
   const size = useContext(ResponsiveContext);
   const History = useHistory();
   const [isOutput, SetOutput] = useState(false);
-  const [OutputContent, SetOutputContent] = useState(["", ""]);
+  const [OutputContent, SetOutputContent] = useState({
+    KorOutput:'',
+    EngOutput:''
+  });
 
   const [isLoading, SetLoading] = useState(false);
 
-  useEffect(() => {
-    const loginCheck = localStorage.getItem("token");
 
-    if (loginCheck !== null) {
-      return;
-    } else {
-      History.push("/");
-      setTimeout(toast.info("로그인을 해주세요!"), 300);
-    }
-  }, []);
+  const {KorOutput, EngOutput} = OutputContent;
 
   const FirstsentenceAxios = async () => {
     SetLoading(true);
-    SetOutput(!isOutput);
-    if (!isOutput || OutputContent !== '' ) {
+
+    if (OutputContent !== '') {
       const config = {
         method: "post",
         url: `${configUrl.SERVER_URL}/writinggel/firstsentence`,
@@ -44,10 +39,29 @@ const Firstsentence = () => {
 
       await axios(config)
         .then(async (response) => {
-          SetLoading(false);
-          await SetOutputContent(response.data);
-          console.log(response.data);
-        
+          
+           console.log(response.data);
+           console.log(response.data[0].split('\n\n'));
+           let splitKor = response.data[0].split('\n\n');
+           let splitEng = response.data[1].split('\n\n');
+          console.log(splitKor,splitEng);
+           if(splitKor[0] === splitKor[1]) {
+            await SetOutputContent({...OutputContent,
+              KorOutput: splitKor[0],
+              EngOutput: splitEng[1]
+            });
+            SetOutput(true);
+            SetLoading(false);
+           }else {
+            SetOutputContent({
+              ...OutputContent,
+              KorOutput: response.data[0],
+              EngOutput : response.data[1]
+            });
+            SetOutput(true);
+            SetLoading(false);
+            
+           }
         })
         .catch(async (error) => {
           console.log(error);
@@ -58,28 +72,6 @@ const Firstsentence = () => {
     
   };
 
-  const Request = async() =>  {
-    SetLoading(true);
-    if(isOutput){
-      const config = {
-        method: "post",
-        url: `${configUrl.SERVER_URL}/writinggel/firstsentence`,
-        headers: { authentication: localStorage.getItem("token") },
-      };
-
-      await axios(config)
-        .then(async (response) => {
-          SetLoading(false);
-          await SetOutputContent(response.data);
-        
-        })
-        .catch(async (error) => {
-          console.log(error);
-        });
-      }else {
-        toast.info('결과가 나오지 않았습니다. 버튼을 한 번 더 눌러주세요!');  
-      }
-  }
 
   const SaveContent = async() => {
     
@@ -89,7 +81,7 @@ const Firstsentence = () => {
         url: `${configUrl.SERVER_URL}/archive`,
         headers: { authentication: localStorage.getItem("token") },
         data: {
-          story: OutputContent[0],
+          story: KorOutput,
           category:'첫문장 자판기',
         }
       };
@@ -112,9 +104,18 @@ const Firstsentence = () => {
       }else {
         toast.info('저장할 결과가 없습니다!');  
       }
-
-
   }
+
+  useEffect(() => {
+    const loginCheck = localStorage.getItem("token");
+
+    if (loginCheck !== null) {
+      return;
+    } else {
+      History.push("/service/firstsentence");
+      setTimeout(toast.info("로그인을 해주세요!"), 300);
+    }
+  }, []);
 
   return (
     <ServiceLayout>
@@ -141,11 +142,11 @@ const Firstsentence = () => {
                 className='SentenceBox'
                 animation={{ type: "fadeIn", duration: 400, size: "large" }}
               >
-                <p>{OutputContent[0]}</p>
+                <p style={{marginBottom: '10px'}}>{KorOutput && KorOutput}</p>
                 <hr />
-                <p>{OutputContent[1]}</p>
-                <div style={{display: 'flex',alignItems:'center'}}>
-                  <Cycle onClick={Request} style={{marginRight: '15px'}}/>
+                <p style={{marginTop: '10px'}}>{EngOutput && EngOutput}</p>
+                <div style={{display: 'flex',alignItems:'center', marginTop:'5px'}}>
+                  <Cycle onClick={FirstsentenceAxios} style={{marginRight: '15px'}}/>
                   <Download onClick={SaveContent} />
                 </div>
               </Box>
