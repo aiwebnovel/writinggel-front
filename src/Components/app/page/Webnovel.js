@@ -178,29 +178,34 @@ const Webnovel = () => {
           }
         )
         .then(async (response) => {
-          //console.log(response)
+          console.log(response.data)
           //console.log('response', response.data[0]);
           //console.log('response2', response.data[1]);
-
-          await SetOutput({
-            ...output,
-            outputKorean: outputKorean + response.data[0],
-            outputEnglish: outputEnglish + response.data[1],
-            result: outputKorean + "\n\n원본\n" + outputEnglish,
-            tempLength: (outputKorean + response.data[0]).length,
-            tempWrite: outputKorean + response.data[0],
-          });
-
-          await SetLoading(false);
-          await SetChange(false);
-          await SetStart("Need a Story");
-          await SetHuman(true);
-
+          if(response.data[0] === ''){
+              toast.error('적어주신 키워드가 적절하지 않은 것 같습니다.😭 재시도 해주세요!');
+              SetLoading(false);
+          }else {
+            await SetOutput({
+              ...output,
+              outputKorean: outputKorean + response.data[0],
+              outputEnglish: outputEnglish + response.data[1],
+              result: outputKorean + "\n\n원본\n" + outputEnglish,
+              tempLength: (outputKorean + response.data[0]).length,
+              tempWrite: outputKorean + response.data[0],
+            });
+  
+            await SetLoading(false);
+            await SetChange(false);
+            await SetStart("Need a Story");
+            await SetHuman(true);
+          }
+         
           if (response.data[2] >= 2) {
             toast.error(
-              `결과물에 유해한 내용이 들어가 버렸어요! 버튼을 다시 눌러주세요!`
+              `결과물에 유해한 내용이 들어가 버렸어요. 😭 `
             );
             SetHuman(false);
+            
           } else {
             toast.info(
               `이어지는 내용을 100자 이상 쓰면, 이야기를 계속 이어갈 수 있습니다.`

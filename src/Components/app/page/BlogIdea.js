@@ -110,7 +110,7 @@ const BlogIdea = () => {
       localStorage.setItem("time", date);
 
       if (story === " " || story === "") {
-        toast.error(`키워드를 입력해 주세요!`);
+        toast.warn(`키워드를 입력해 주세요!`);
         return;
       }
       SetLoading(true);
@@ -128,23 +128,29 @@ const BlogIdea = () => {
           let resK = [];
           let resE = [];
 
+          if(response.data[0] === ''){
+            toast.error(
+              toast.error('적어주신 키워드가 적절하지 않은 것 같습니다.😭 재시도 해주세요!')
+            );
+             SetLoading(false);
+          } else {
+            for (let i = 0; i < response.data.length; i++) {
+              await resK.push(response.data[i][0]);
+              await resE.push(response.data[i][1]);
+            }
+            SetOutput({
+              ...output,
+              outputKorean: resK,
+              outputEnglish: resE,
+            });
+            
+            SetLoading(false);
+          }
           if (response.data[2] >= 2) {
             toast.error(
-              `결과물에 유해한 내용이 포함되어 있어서 표시할 수 없습니다. 입력하신 내용을 수정해서 다시 입력해보세요!`
+              `결과물에 유해한 내용이 들어가 버렸어요. 😭 `
             );
-          }
-          for (let i = 0; i < response.data.length; i++) {
-            await resK.push(response.data[i][0]);
-            await resE.push(response.data[i][1]);
-          }
-
-          SetOutput({
-            ...output,
-            outputKorean: resK,
-            outputEnglish: resE,
-          });
-          console.log(output);
-          SetLoading(false);
+          }         
         })
         .catch((error) => {
           //console.log(error);
@@ -158,7 +164,7 @@ const BlogIdea = () => {
           } else {
             if (error.response.status === 403) {
               this.setState({ loading: false });
-              toast.error(`토큰이 부족합니다!`);
+              toast.error(`허용되지 않은 접근입니다!`);
             }
           }
         });

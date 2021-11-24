@@ -65,13 +65,20 @@ const LoveLetter = () => {
       await axios(config)
         .then(async (response) => {
           console.log("res", response.data);
-          SetLetter({
-            ...LoveLetter,
-            LoveKor: response.data[0],
-            LoveEng: response.data[1],
-          });
-          SetResult(true);
-          SetLoading(false);
+          if (response.data[0] === "") {
+            toast.error(
+              "결과물에 유해한 내용이 들어가 버렸어요. 😭 재시도 해주세요!"
+            );
+            SetLoading(false);
+          } else {
+            SetLetter({
+              ...LoveLetter,
+              LoveKor: response.data[0],
+              LoveEng: response.data[1],
+            });
+            SetResult(true);
+            SetLoading(false);
+          }
         })
         .catch(async (error) => {
           console.log(error);
@@ -83,40 +90,36 @@ const LoveLetter = () => {
     }
   };
 
-  const SaveContent = async() => {
-    
-    if(LoveLetter){
+  const SaveContent = async () => {
+    if (LoveLetter) {
       const config = {
         method: "post",
         url: `${configUrl.SERVER_URL}/archive`,
         headers: { authentication: localStorage.getItem("token") },
         data: {
           story: LoveLetter.LoveKor,
-          category:'MBTI 연애편지',
-        }
+          category: "MBTI 연애편지",
+        },
       };
 
       await axios(config)
         .then(async (response) => {
-         
           toast.success(`${response.data.log}`);
         })
         .catch(async (error) => {
           console.log(error);
-          if(error.response.status === 403) {
-            toast.error('보관함이 꽉 찼습니다!');
+          if (error.response.status === 403) {
+            toast.error("보관함이 꽉 찼습니다!");
           }
 
           if (error.response.status === 500) {
             toast.error("해당 에러는 관리자에게 문의해주세요!");
           }
         });
-      }else {
-        toast.info('저장할 결과가 없습니다!');  
-      }
-
-
-  }
+    } else {
+      toast.info("저장할 결과가 없습니다!");
+    }
+  };
 
   const resetData = () => {
     SetResult(false);
@@ -205,18 +208,15 @@ const LoveLetter = () => {
                     Love Letter from <span>{UserMbti}</span> for{" "}
                     <span>{LoverMbti}</span>
                   </div>
-                  <ReChoice
-                    onClick={resetData}
-                  >
-                    다시 선택하기
-                  </ReChoice>
+                  <ReChoice onClick={resetData}>다시 선택하기</ReChoice>
                 </div>
                 <div className='ResultContent'>
                   {LoveLetter.LoveKor}
                   <hr style={{ textAlign: "left", margin: "20px 0" }} />
                   {LoveLetter.LoveEng}
                   <div className='iconBox'>
-                  <Update onClick={HandleLetter}/> <Download onClick={SaveContent}/>
+                    <Update onClick={HandleLetter} />{" "}
+                    <Download onClick={SaveContent} />
                   </div>
                 </div>
               </div>
@@ -229,14 +229,22 @@ const LoveLetter = () => {
           <img src='/love-letter.png' alt='하트' style={{ width: "80px" }} />
           <div className='textZone'>
             <div className='fromTo'>
-              <p>From. <span>{UserMbti}</span></p>
-              <p>For. <span>{LoverMbti}</span></p>
+              <p>
+                From. <span>{UserMbti}</span>
+              </p>
+              <p>
+                For. <span>{LoverMbti}</span>
+              </p>
             </div>
             <div className='checkAbtn'>
               <p>위 사항이 맞나요?</p>
               <div>
-                <button className='cancel' onClick={resetData}>취소</button>
-                <button className='make' onClick={HandleLetter}>만들기</button>
+                <button className='cancel' onClick={resetData}>
+                  취소
+                </button>
+                <button className='make' onClick={HandleLetter}>
+                  만들기
+                </button>
               </div>
             </div>
           </div>
@@ -324,13 +332,13 @@ const LetterSure = styled.div`
 `;
 
 const ReChoice = styled.button`
-    cursor: pointer; 
-    font-size: 15px;
-    text-decoration: underline;
-    background: transparent;
-    outline:0;
-    border:0;
-`
+  cursor: pointer;
+  font-size: 15px;
+  text-decoration: underline;
+  background: transparent;
+  outline: 0;
+  border: 0;
+`;
 
 const MainTitle = styled.div`
   font-weight: 600;

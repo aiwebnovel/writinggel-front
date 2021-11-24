@@ -113,11 +113,17 @@ const Discussion = () => {
       await axios(config)
       .then(async (response) => {
         //console.log(response.data);
-        SetOutputContent({...OutputContent,
-          ProsOutput: response.data[0]
-        });
-       
-        SetLoading(false)
+        if (response.data[0] === "") {
+          toast.error(
+            "적어주신 키워드가 적절하지 않은 것 같습니다.😭 재시도 해주세요!"
+          );
+          SetLoading(false);
+        } else {
+          SetOutputContent({...OutputContent,
+            ProsOutput: response.data[0]
+          });
+          SetLoading(false)
+        }
       })
       .catch(async (error) => {
         console.log(error);
@@ -143,12 +149,20 @@ const Discussion = () => {
 
       await axios(config)
       .then(async (response) => {
-        console.log(response.data);
-        SetOutputContent({...OutputContent,
-        ConsOutput: response.data[0]
-        });
+        //console.log(response.data);
+        if (response.data[0] === "") {
+          toast.error(
+            "적어주신 키워드가 적절하지 않은 것 같습니다.😭 재시도 해주세요!"
+          );
+          SetLoading(false);
+        } else {
+          SetOutputContent({...OutputContent,
+            ConsOutput: response.data[0]
+            });
+           
+            SetLoading(false)
+        }
        
-        SetLoading(false)
       })
       .catch(async (error) => {
         console.log(error);
@@ -196,7 +210,7 @@ const Discussion = () => {
             <button name='Pros' onClick = {()=> ProsDiscussionAxios()}>찬성 논거 찾기</button>
             <div className="outputArea">
               <div>{ProsOutput.split('\n').map((line)=>(
-                  <span>{line}<br/></span>
+                  <span key={line}>{line}<br/></span>
               ))}</div>
               <Icon>
                 <Download onClick={()=> {
@@ -209,7 +223,7 @@ const Discussion = () => {
             <button name='Cons' onClick = {(e)=> ConsDiscussionAxios(e)}>반대 논거 찾기</button>
             <div  className="outputArea">
             <div>{ConsOutput.split('\n').map((line)=>(
-                  <span>{line}<br/></span>
+                  <span key={line}>{line}<br/></span>
               ))}</div>
               <Icon>
                 <Download onClick={SaveContent}/>

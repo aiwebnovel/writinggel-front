@@ -73,8 +73,11 @@ const BlogKeyword = () => {
               progressStyle: { backgroundColor: "#7D4CDB" },
             });
             localStorage.removeItem("token");
-          } else {
-            toast.error(`맞는 키워드가 없습니다`);
+          } 
+          
+         if(error.response.status === 500) {
+            toast.error(`적어주신 키워드가 적절하지 않은 것 같습니다.😭 재시도 해주세요!`);
+            SetLoading(false);
           }
         });
     } else {
