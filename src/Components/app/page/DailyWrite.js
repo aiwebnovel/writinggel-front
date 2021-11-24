@@ -35,9 +35,16 @@ const Dailywrite = () => {
 
     await axios(config)
       .then(async (response) => {
+        console.log('response', response.data)
+        if(response.data[0] === ''){
+          toast.error('결과물에 유해한 내용이 들어가 버렸어요. 😭  `재시도 해주세요!');
+          SetLoading(false);
+      }else {
         SetOutputContent(response.data);
         SetOpen(true);
         SetLoading(false);
+      }
+        
       })
       .catch(async (error) => {
         console.log(error);

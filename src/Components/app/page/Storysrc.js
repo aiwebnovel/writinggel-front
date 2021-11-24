@@ -77,12 +77,17 @@ const Storysrc = () => {
     await axios(config)
       .then(async (response) => {
         console.log(response.data);
+        if(response.data[0] === ''){
+          toast.error('결과물에 유해한 내용이 들어가 버렸어요.😭 재시도 해주세요!');
+          SetLoading(false);
+      }else { 
         SetWords([
-          [response.data["wordsT"][0], response.data["words"][0]],
-          [response.data["wordsT"][1], response.data["words"][1]],
-          [response.data["wordsT"][2], response.data["words"][2]],
-        ]);
-        SetLoading(false);
+        [response.data["wordsT"][0], response.data["words"][0]],
+        [response.data["wordsT"][1], response.data["words"][1]],
+        [response.data["wordsT"][2], response.data["words"][2]],
+      ]);
+      SetLoading(false);
+    }   
       })
       .catch(async (error) => {
         console.log(error);
@@ -103,8 +108,14 @@ const Storysrc = () => {
         await axios(config)
           .then(async (response) => {
             console.log(response.data);
+            if(response.data[0] === ''){
+              toast.error('결과물에 유해한 내용이 들어가 버렸어요.😭 재시도 해주세요!');
+              SetLoading(false);
+          }else {
             SetStory(response.data[0]);
             SetLoading(false);
+          }
+           
           })
           .catch(async (error) => {
             console.log(error);

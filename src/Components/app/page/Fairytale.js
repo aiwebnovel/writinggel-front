@@ -21,15 +21,15 @@ const Fairytale = () => {
   const AccodianData = [
     {
       id: 1,
-      title: "주요 인물",
+      title: "장르",
     },
     {
       id: 2,
-      title: "장소",
-    },
+      title: "주요 인물",
+    }, 
     {
       id: 3,
-      title: "시간",
+      title: "장소",
     },
     {
       id: 4,
@@ -37,7 +37,7 @@ const Fairytale = () => {
     },
     {
       id: 5,
-      title: "장르",
+      title: "주제",
     },
   ];
 
@@ -61,23 +61,30 @@ const Fairytale = () => {
   };
 
   const [category, Setcategory] = useState({
-    genre: "",
-    mainCharacter: "",
-    period: "",
-    location: "",
-    theme: "",
+    genre: "", // Genre
+    mainCharacter: "", //Main_Character
+    Case: "", //Period
+    location: "", //Location
+    theme: "", //Theme
   });
 
-  const { genre, mainCharacter, period, location, theme } = category;
+  const { genre, mainCharacter, Case, location, theme} = category;
 
   const HandleInput = (e) => {
-    console.log("e", e);
-    console.log("category", e.target.name);
-    console.log("input", e.target.value);
+    // console.log("e", e);
+    // console.log("category", e.target.name);
+    // console.log("input", e.target.value);
 
+    if (e.target.name === "장르") {
+      Setcategory({
+        ...category,
+        genre: e.target.value,
+      });
+    }
     if (e.target.name === "주요 인물") {
       Setcategory({
         ...category,
+        
         mainCharacter: e.target.value,
       });
     }
@@ -85,27 +92,22 @@ const Fairytale = () => {
       Setcategory({
         ...category,
         location: e.target.value,
-      });
-    }
-    if (e.target.name === "시간") {
-      Setcategory({
-        ...category,
-        period: e.target.value,
+        
       });
     }
     if (e.target.name === "주요 사건") {
       Setcategory({
         ...category,
-        genre: e.target.value,
+        Case: e.target.value,
       });
     }
-    if (e.target.name === "장르") {
+    if (e.target.name === "주제") {
       Setcategory({
         ...category,
         theme: e.target.value,
       });
     }
-    console.log("result", genre, mainCharacter, period, location, theme);
+    console.log("result", genre, mainCharacter, Case, location, theme);
   };
 
   const FairytaleAxios = async () => {
@@ -113,7 +115,7 @@ const Fairytale = () => {
     if (
       category.genre.length > 0 &&
       category.mainCharacter.length > 0 &&
-      category.period.length > 0 &&
+      category.Case.length > 0 &&
       category.location.length > 0 &&
       category.theme.length > 0
     ) {
@@ -128,7 +130,7 @@ const Fairytale = () => {
             Story: Output[0],
             Genre: category.genre,
             Main_character: category.mainCharacter,
-            Period: category.period,
+            Period: category.Case,
             Location: category.location,
             Theme: category.theme,
           },
@@ -137,12 +139,19 @@ const Fairytale = () => {
         await axios(config)
           .then((response) => {
             console.log(response.data);
+
+            if(!response.data){
+              toast.error('적어주신 키워드가 적절하지 않은 것 같습니다.😭 재시도 해주세요!');
+              SetLoading(false);
+            } else {
+
             SetOutput([
               Output[0] + response.data[0],
               Output[1] + response.data[1],
             ]);
             SetOutputTemp(Output[0]);
             SetIsHuman(true);
+          }
           })
           .catch((error) => {
             console.log(error);
@@ -162,7 +171,7 @@ const Fairytale = () => {
               Story: Output[0],
               Genre: category.genre,
               Main_character: category.mainCharacter,
-              Period: category.period,
+              Period: category.Case,
               Location: category.location,
               Theme: category.theme,
             },
@@ -184,11 +193,11 @@ const Fairytale = () => {
               SetLoading(false);
             });
         } else {
-          setTimeout(toast.info("추가 내용을 채워주세요!"), 300);
+          toast.info("추가 내용을 채워주세요!");
         }
       }
     } else {
-      setTimeout(toast.info("내용을 채워주세요!"), 300);
+      toast.info("내용을 채워주세요!");
     }
   };
 
@@ -228,6 +237,14 @@ const Fairytale = () => {
   const ResetData = () => {
     SetOutput(["", ""]);
     SetOutputTemp('');
+    Setcategory({
+      ...category,
+      genre: "",
+      mainCharacter: "",
+      Case: "",
+      location: "",
+      theme: "",
+    })
   }
 
   useEffect(() => {

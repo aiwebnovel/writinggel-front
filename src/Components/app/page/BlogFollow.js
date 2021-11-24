@@ -141,21 +141,26 @@ const BlogFollow = () => {
           //console.log("response", response.data[0]);
          // console.log("response2", response.data[1]);
 
+         if(response.data[0] === ''){
+          toast.error('적어주신 키워드가 적절하지 않은 것 같습니다.😭 재시도 해주세요!');
+          SetLoading(false);
+      }else {
+        SetOutput({
+          ...output,
+          outputLength: outputKorean.length + response.data[0].length,
+          outputKorean: outputKorean + response.data[0],
+          outputEnglish: outputEnglish + response.data[1],
+          tempLength: 0,
+        });
+        SetLoading(false);
+      }
+
           if (response.data[2] >= 2) {
             toast.error(
-              `AI가 만든 결과물에 유해한 내용이 포함되어 있어서 표시할 수 없습니다. 입력하신 내용을 수정해서 다시 입력해보세요`
+              `결과물에 유해한 내용이 들어가 버렸어요. 😭 `
             );
             SetLoading(false);
-          } else {
-            SetOutput({
-              ...output,
-              outputLength: outputKorean.length + response.data[0].length,
-              outputKorean: outputKorean + response.data[0],
-              outputEnglish: outputEnglish + response.data[1],
-              tempLength: 0,
-            });
-            SetLoading(false);
-          }
+          } 
         })
         .catch((error) => {
           console.log(error);
