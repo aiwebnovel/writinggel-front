@@ -50,6 +50,9 @@ const Fairytale = () => {
   const [isHuman, SetIsHuman] = useState(false);
   const [Output, SetOutput] = useState(["", ""]);
   const [OutputTemp, SetOutputTemp] = useState("");
+  const [tempLength, SetLength] = useState(0);
+  const [newLength, SetNewLength] = useState(0)
+  const [start, SetStart] = useState('write')
 
   const handleSider = () => {
     SetSider(!isSider);
@@ -68,7 +71,6 @@ const Fairytale = () => {
     theme: "", //Theme
   });
 
-  const { genre, mainCharacter, Case, location, theme} = category;
 
   const HandleInput = (e) => {
     // console.log("e", e);
@@ -107,11 +109,26 @@ const Fairytale = () => {
         theme: e.target.value,
       });
     }
-    console.log("result", genre, mainCharacter, Case, location, theme);
+    
   };
 
+  const HandleStory = (e) =>  {
+      SetStart('Need a Story');
+      SetOutput([e.target.value,Output[1]]);
+      let OutputLength = Output[0].length;
+      let Length = OutputLength - tempLength;
+      SetNewLength(Length);
+     // console.log(Length);
+      //console.log(newLength);
+
+      if(newLength> 100) {
+        SetStart('Continue');
+      } 
+    
+  }
+
   const FairytaleAxios = async () => {
-    console.log(category);
+
     if (
       category.genre.length > 0 &&
       category.mainCharacter.length > 0 &&
@@ -138,19 +155,22 @@ const Fairytale = () => {
 
         await axios(config)
           .then((response) => {
-            console.log(response.data);
+            // console.log(response.data);
 
-            if(!response.data){
+            if(response.data[0] === '' ){
               toast.error('적어주신 키워드가 적절하지 않은 것 같습니다.😭 재시도 해주세요!');
               SetLoading(false);
             } else {
-
             SetOutput([
-              Output[0] + response.data[0],
-              Output[1] + response.data[1],
+              response.data[0],
+              response.data[1],
             ]);
-            SetOutputTemp(Output[0]);
+            SetOutputTemp(Output[0]+response.data[0]);
+            SetLength((Output[0]+response.data[0]).length);
+            SetStart('Need a Story');
             SetIsHuman(true);
+
+
           }
           })
           .catch((error) => {
@@ -160,7 +180,7 @@ const Fairytale = () => {
             SetLoading(false);
           });
       } else {
-        if (OutputTemp.length + 100 < Output[0].length) {
+        if (newLength > 100) {
           SetLoading(true);
 
           const config = {
@@ -179,12 +199,19 @@ const Fairytale = () => {
 
           await axios(config)
             .then((response) => {
-              console.log(response.data);
-              SetOutput([
-                Output[0] + response.data[0],
-                Output[1] + response.data[1],
-              ]);
-              SetOutputTemp(Output[0]);
+              //console.log(response.data);
+              if(response.data[0] === '' ){
+                toast.error('결과물에 유해한 내용이 들어가 버렸어요. 😭 재시도 해주세요!');
+                SetLoading(false);
+              }else {
+                SetOutput([
+                  Output[0] + response.data[0],
+                  Output[1] + response.data[1],
+                ]);
+                SetOutputTemp(Output[0]+ response.data[0]);
+                SetLength((Output[0]+ response.data[0]).length);
+                SetStart('Need a Story');
+              }
             })
             .catch((error) => {
               console.log(error);
@@ -193,13 +220,70 @@ const Fairytale = () => {
               SetLoading(false);
             });
         } else {
-          toast.info("추가 내용을 채워주세요!");
+          toast.info(`${100-newLength}자를 더 채워주세요!`);
+
+          
         }
       }
     } else {
-      toast.info("내용을 채워주세요!");
+      toast.info("옆 메뉴에서 내용을 채워주세요!");
     }
   };
+
+
+  const UpdateFairytale = async() => {
+    //console.log('log',  Output, OutputTemp, tempLength,)
+
+    SetIsHuman(false);
+    if( category.genre.length > 0 &&
+      category.mainCharacter.length > 0 &&
+      category.Case.length > 0 &&
+      category.location.length > 0 &&
+      category.theme.length > 0){
+
+        SetLoading(true);
+
+        const config = {
+          method: "post",
+          url: `${configUrl.SERVER_URL}/writinggel/fairytale`,
+          headers: { authentication: localStorage.getItem("token") },
+          data: {
+            Story: '',
+            Genre: category.genre,
+            Main_character: category.mainCharacter,
+            Period: category.Case,
+            Location: category.location,
+            Theme: category.theme,
+          },
+        };
+
+        await axios(config)
+          .then((response) => {
+           // console.log(response.data);
+
+            if(response.data[0] === ''){
+              toast.error('결과물에 유해한 내용이 들어가 버렸어요. 😭 재시도 해주세요!');
+              SetLoading(false);
+            } else {
+            SetOutput([
+              response.data[0],
+              response.data[1],
+            ]);
+            SetOutputTemp(response.data[0]);
+            SetLength(response.data[0].length);
+            SetStart('Need a Story')
+            SetIsHuman(true);
+          }
+          })
+          .catch((error) => {
+            console.log(error);
+          })
+          .finally(() => {
+            SetLoading(false);
+          });
+
+      }
+  }
 
   const SaveContent = async() => {
     
@@ -234,17 +318,15 @@ const Fairytale = () => {
       }
   }
 
+
   const ResetData = () => {
     SetOutput(["", ""]);
     SetOutputTemp('');
-    Setcategory({
-      ...category,
-      genre: "",
-      mainCharacter: "",
-      Case: "",
-      location: "",
-      theme: "",
-    })
+    SetLength(0);
+    SetNewLength(0);
+    SetStart('write');
+    SetIsHuman(false);
+    handleSider(false);
   }
 
   useEffect(() => {
@@ -255,6 +337,7 @@ const Fairytale = () => {
     } else {
       History.push("/service/fairytale");
       setTimeout(toast.info("로그인을 해주세요!"), 300);
+      //console.log(OutputTemp, tempLength);
     }
   }, []);
 
@@ -302,7 +385,7 @@ const Fairytale = () => {
                     </AccordionPanel>
                   ))}
                   <div className="writeBtn">
-                    <button onClick={() => FairytaleAxios()}>write</button>
+                    <button onClick={() => FairytaleAxios()}>{start}</button>
                   </div>
                 </Accordion>
               </Box>
@@ -365,7 +448,7 @@ const Fairytale = () => {
               <textarea
                 className="output1"
                 placeholder="결과가 나올예정이에요!"
-                onChange={(e) => SetOutput([e.target.value,Output[1]])}
+                onChange={(e) => HandleStory(e)}
                 value={Output[0]}
               ></textarea>
               <textarea
@@ -376,7 +459,7 @@ const Fairytale = () => {
               ></textarea>
             </div>
             <Icons>
-              <Download onClick={SaveContent}/> <Update onClick={FairytaleAxios}/> <Close onClick={ResetData}/>
+              <Download onClick={SaveContent}/> <Update onClick={UpdateFairytale}/> <Close onClick={ResetData}/>
             </Icons>
           </Box>
         </Grid>
