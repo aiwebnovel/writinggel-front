@@ -1,14 +1,13 @@
-import React, { useState, useContext } from "react";
-import {Link} from 'react-router-dom';
+import React from "react";
 import Layout from "../Layout";
-import { Box, ResponsiveContext, Accordion, AccordionPanel } from "grommet";
+import { Box, Accordion, AccordionPanel } from "grommet";
 import { CircleQuestion, Alert, BlockQuote } from "grommet-icons";
 
 import styled from "styled-components";
 
 const FaQ = () => {
 
-  const size = useContext(ResponsiveContext);
+  //const size = useContext(ResponsiveContext);
 
   return (
     <Layout>
