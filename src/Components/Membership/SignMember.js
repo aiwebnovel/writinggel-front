@@ -1,8 +1,7 @@
 import React, { useContext, useState } from "react";
 import axios from 'axios';
-import { useHistory } from "react-router-dom";
 import Layout from "../Layout";
-import { Box, Grid, Paragraph, ResponsiveContext } from "grommet";
+import { Box, Grid, ResponsiveContext } from "grommet";
 import { Bookmark } from "grommet-icons";
 
 import * as configUrl from '../../config';
@@ -14,8 +13,6 @@ import styled from "styled-components";
 
 const SignMember = () => {
   const size = useContext(ResponsiveContext);
-  const history = useHistory();
-
   const [Selected, SetSelected] = useState({
   
     selected1: false,
@@ -70,7 +67,16 @@ const SignMember = () => {
         toast.error('멤버십을 선택해주세요!');
       }else {
         console.log('결제');
+
         const now = new Date();
+        let moidNum =  now.getFullYear() +
+        "" +
+        (now.getMonth() + 1) +
+        now.getDate() +
+        now.getHours() +
+        now.getMinutes() +
+        now.getSeconds(); //가맹점 주문번호
+
         const option = {
           arsUseYn: "N",
           buyerName: buyerName, //등록자 이름
@@ -81,14 +87,7 @@ const SignMember = () => {
           cardPwd: cardPwd, //카드 비밀번호 앞 2 자리
           idNum: idNum, //주민번호 앞 6 자리
           mid: "pgapppla1m", //상점 아이디
-          moid:
-            now.getFullYear() +
-            "" +
-            (now.getMonth() + 1) +
-            now.getDate() +
-            now.getHours() +
-            now.getMinutes() +
-            now.getSeconds(), //가맹점 주문번호
+          moid: moidNum, //가맹점 주문번호
           userId: (await localStorage.getItem("userUid")) + Math.random(),
         };
         console.log(option);
@@ -107,33 +106,63 @@ const SignMember = () => {
             }
   
             if (data.resultCode === "0000") {
-              let plans = parseInt(Plan);
-              console.log(plans);
-              console.log(data.billKey);
-              console.log(buyerName);
 
-              const config = {
-                method: 'post',
-                url: `${configUrl.SERVER_URL}/pay`,
-                headers: { 'authentication': localStorage.getItem("token"), },
-                data : { 
-                  billKey: data.billKey,
-                    name: buyerName,
-                    plan: plans,
-                  }
-              };
-              console.log(config.data)
+            
+
+              let plans = parseInt(Plan);
+              let prices = parseInt(Price);
+
+              const options =  {
+                amt:prices,
+                billKey : data.billKey,
+                buyerName: buyerName,
+                goodsName: `${Plan}개월 구독권`,
+                mid:"pgapppla1m",
+                moid:data.moid,
+                userId:data.userId,
+              }
+
+              axios
+              .post(`https://api.innopay.co.kr/api/payAutoCardBill`, options)
+              .then(async(res)=>{
+                console.log(res);
+                
+                if(res.data.resultCode === "0000") {
+                  const config = {
+                    method: 'post',
+                    url: `${configUrl.SERVER_URL}/pay`,
+                    headers: { 'authentication': localStorage.getItem("token"), },
+                    data : { 
+                      billKey: data.billKey,
+                        name: buyerName,
+                        plan: plans,
+                      }
+                  };
+                  console.log(config.data)
+                  
+                 axios(config)
+                    .then((response) => {
+                      console.log("response", response);
+                      localStorage.setItem('plan',Plan )
+                      toast.success(response.data.log);
+                     
+                    })
+                    .catch((error) => {
+                      console.log(error);
+                    });
+                }else {
+                  let resultCode = res.data.resultCode;
+                  let Msg = res.data.resultMsg;
+
+                  toast.error(`${resultCode}: ${Msg}`)
+                }
               
-             axios(config)
-                .then((response) => {
-                  console.log("response", response);
-                  localStorage.setItem('plan',Plan )
-                  toast.success(response.data.log);
-                 
-                })
-                .catch((error) => {
-                  console.log(error);
-                });
+              })
+              .catch((error)=>{
+                console.log(error)
+              })
+
+              
             } else {
               throw new Error();
             }
@@ -153,6 +182,22 @@ const SignMember = () => {
   
   };
 
+  // const deltePay = () => {
+      
+  //   const config = {
+  //     method: "delete",
+  //     url: `${configUrl.SERVER_URL}/pay`,
+  //     headers: { authentication: localStorage.getItem("token") },
+  //   };
+  //   axios(config)
+  //     .then((response) => {
+  //       console.log(response);
+  //       toast.success(response.data.log);
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  // }
 
   //결제 변경
 
@@ -237,9 +282,7 @@ const SignMember = () => {
           className='SignInHeader'
           justify='center'
           align='baseline'
-    
         >
-
           <h3>{localStorage.getItem('isBill') !== true ? '멤버십 가입하기' : '멤버십 변경하기'}</h3>
         </Box>
 
@@ -265,7 +308,7 @@ const SignMember = () => {
                   <p>1개월마다 결제</p>
                   <br/>
                 <ChoiceBtn
-                  name='1 19,000'
+                  name='1 25,000'
                   onClick={(e) => HandleSelected(e)}
                 >
                   선택
@@ -419,6 +462,7 @@ const SignMember = () => {
               <button className='creditCardButton' onClick={localStorage.getItem('isBill') !== true ? RequestBill : ChangeBill}>
                 {localStorage.getItem('isBill') !== true ? '결제하기' :'변경하기'}
               </button>
+              {/* <button className='creditCardButton' onClick={deltePay}>결제 취소</button> */}
             </div>
           </div>
         </Box>

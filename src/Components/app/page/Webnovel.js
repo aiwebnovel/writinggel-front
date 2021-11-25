@@ -53,7 +53,7 @@ const Webnovel = () => {
   const [isOpen, SetOpen] = useState(false);
 
   const { Main_character, Place, Time, Main_Events, Material } = subInput;
-  const { outputKorean, outputEnglish, result, tempLength, tempWrite } = output;
+  const { outputKorean, outputEnglish, tempLength } = output;
 
   const handleSider = () => {
     SetSider(!isSider);

@@ -30,48 +30,52 @@ const Header = () => {
 
   const { userName, userImage } = profile;
 
-  const signIn = async (event) => {
+  const signIn = async (e) => {
     if (isChecked === true) {
       // console.log('mount3')
-      const {
-        target: { name },
-      } = event;
-      let provider = new firebaseInstance.auth.GoogleAuthProvider();
+     let name = e.target.name;
+      // let provider = new firebaseInstance.auth.GoogleAuthProvider();
       if (name === "Facebook") {
-        provider = new firebaseInstance.auth.FacebookAuthProvider();
+       let provider = new firebaseInstance.auth.FacebookAuthProvider();
+        await authService.signInWithPopup(provider)
+        .then(async(dataFacebook)=> {
+          console.log(dataFacebook);
+        })
+        .catch((error) => {
+              console.log(error)
+        });
+        ;
       } else if (name === "Google") {
-        provider = new firebaseInstance.auth.GoogleAuthProvider();
-      }
-      // console.log('mount12')
-      await authService
-        .signInWithPopup(provider)
-        .then(async (result) => {
-          // console.log('mount13')
-          console.log(result);
-          /** @type {firebase.auth.OAuthCredential} */
-          let credential = result.credential;
-          let email = result.user.email;
-          let create = result.user.metadata.creationTime;
+        let provider = new firebaseInstance.auth.GoogleAuthProvider();
+        //await authService.signInWithRedirect(provider)
+        await authService.signInWithPopup(provider)
+        .then(async(dataGoogle)=>{
+          console.log(dataGoogle)
+
+          let credential = dataGoogle.credential;
+          let email = dataGoogle.user.email;
+          let create = dataGoogle.user.metadata.creationTime;
           let token = credential.idToken;
-          // let phoneNumber = credential.phoneNumber;
-        
-          // console.log('mount4',credential)
+          console.log('result',credential, email,create,token);
+
           await localStorage.setItem("token", token);
           await localStorage.setItem("email", email);
           await localStorage.setItem("create", create);
-          // await localStorage.setItem("phone", phoneNumber);
-          // await localStorage.getItem("token");
-          // console.log('mount5')
+
           await requestProfile();
           await SetUser(true);
           await SetOpen(false);
-          // console.log('mount6')
+
           refreshProfile();
           window.location.reload();
         })
         .catch((error) => {
-          console.log(error)
-        });
+              console.log(error)
+        });       
+        ;
+      }
+
+
     } else {
       toast.error("이용약관 및 개인정보처리방침에 동의해주세요!");
     }
@@ -79,9 +83,7 @@ const Header = () => {
 
 
   const requestProfile =  useCallback(async () => {
-    // console.log('mount')
-    // let user = await localStorage.getItem("token");
-    // console.log('mount11')
+
     if (localStorage.getItem("token") !== null) {
     
       await axios
@@ -116,7 +118,7 @@ const Header = () => {
           .getIdToken()
           .then(async (data) => {
             await localStorage.setItem("token", data); 
-            // console.log('mount9')
+        
           })
           .catch(async (error) => {
             console.log(error);
@@ -149,9 +151,9 @@ const Header = () => {
     SetOpen(!isOpen);
   };
 
-  const HandleChecked = () => {
-    SetChecked(!isChecked);
-    console.log(isChecked);
+  const HandleChecked = (e) => {
+    console.log(e.target.checked);
+    SetChecked(e.target.checked);
   };
 
   const HandleShow = () => {
@@ -163,14 +165,16 @@ const Header = () => {
 
   };
 
+  useEffect(() => {  
+    refreshProfile();
 
-  // useEffect(() => {  
-  //   refreshProfile();
-  // },[]);
+  console.log(isChecked);
+  },[]);
 
   useEffect(()=>{
     requestProfile(); 
   },[])
+
 
   return (
     <>
@@ -300,12 +304,12 @@ const Header = () => {
         </div>
 
         <div className='signBox'>
-          <button onClick={signIn} className='googleButton'>
+          <button className='googleButton' name="Google" onClick={(e) => signIn(e)} >
             <Google color='plain' size='medium' /> Sign in with Google
           </button>
 
           <div className='signBox'>
-            <button className='facebookButton'>
+            <button className='facebookButton' name="Facebook" onClick={(e) => signIn(e)} >
               <FacebookOption color='plain' size='medium' /> Sign in with
               Facebook
             </button>
@@ -314,8 +318,7 @@ const Header = () => {
             <input
               type='checkbox'
               name='agree'
-              value={isChecked}
-              onClick={HandleChecked}
+              onClick={(e)=> {HandleChecked(e)}}
               style={{ width: "18px", height: "18px", marginRight: "5px" }}
             />
             <a

@@ -1,16 +1,16 @@
-import React, { useContext, useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import React, {  useState, useEffect } from "react";
+//import { Link } from "react-router-dom";
 import axios from "axios";
 import Layout from "../Layout";
-import { Box, Grid, Card, ResponsiveContext } from "grommet";
+import { Box } from "grommet";
 import ReactGA from "react-ga";
 
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import styled from "styled-components";
+//import styled from "styled-components";
 
 const NewsLetter = () => {
-  const size = useContext(ResponsiveContext);
+  ////const size = useContext(ResponsiveContext);
   const [isChecked, SetChecked] = useState(false);
   const [Email, SetEmail] = useState("");
   const [Name, SetName] = useState("");

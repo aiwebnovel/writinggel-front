@@ -1,17 +1,15 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, {  useEffect, useState } from "react";
 import axios from "axios";
 import { useHistory, Link } from "react-router-dom";
 import Layout from "../Layout";
-import { Box, ResponsiveContext } from "grommet";
+import { Box } from "grommet";
 
 import * as configUrl from "../../config";
-import { authService } from "../../firebaseConfig";
-
 import styled from "styled-components";
 import { toast } from "react-toastify";
 
 const PayResult = () => {
-  const size = useContext(ResponsiveContext);
+  //const size = useContext(ResponsiveContext);
   const History = useHistory();
 
   const [profile, SetProfile] = useState({
@@ -23,19 +21,7 @@ const PayResult = () => {
     create: "",
   });
 
-  const { isBill, userName, plan, uid, email, create } = profile;
-
-  const signOut = async () => {
-    await localStorage.removeItem("token");
-    await localStorage.removeItem("email");
-    await localStorage.removeItem("userUid");
-    await localStorage.removeItem("plan");
-    await localStorage.removeItem("isBill");
-    await localStorage.removeItem("create");
-
-    await authService.signOut();
-    window.location.reload();
-  };
+  // const { isBill, userName, plan, uid, email, create } = profile;
 
   const DeletePay = () => {
     if (window.confirm("구독을 취소하시겠습니까?")) {
