@@ -1,10 +1,10 @@
-import React, { useContext, useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 import Layout from "../../Layout";
-import { Box, ResponsiveContext } from "grommet";
+import { Box } from "grommet";
 
-import styled from "styled-components";
+//import styled from "styled-components";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -20,7 +20,7 @@ import {
 import firebase from "@firebase/app-compat";
 
 const Modify = () => {
-  const size = useContext(ResponsiveContext);
+  //const size = useContext(ResponsiveContext);
   const History = useHistory();
 
   const [isLoading, SetLoading] = useState(false);

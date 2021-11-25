@@ -1,7 +1,7 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import Layout from "../Layout";
-import { Box, ResponsiveContext, FormField } from "grommet";
+import { Box, FormField } from "grommet";
 
 import styled from "styled-components";
 
