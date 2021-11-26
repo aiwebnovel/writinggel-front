@@ -51,7 +51,7 @@ const Header = () => {
         await authService.signInWithPopup(provider)
         .then(async(dataGoogle)=>{
           console.log(dataGoogle)
-
+          
           let credential = dataGoogle.credential;
           let email = dataGoogle.user.email;
           let create = dataGoogle.user.metadata.creationTime;

@@ -107,62 +107,31 @@ const SignMember = () => {
   
             if (data.resultCode === "0000") {
 
-            
-
               let plans = parseInt(Plan);
-              let prices = parseInt(Price);
+              //let prices = parseInt(Price);
+              let key = data.billKey;
+              const config = {
+                method: "post",
+                url: `${configUrl.SERVER_URL}/pay`,
+                headers: { authentication: localStorage.getItem("token") },
+                data : {
+                  billKey: key,
+                  plan: plans,
+                  name: buyerName,
+                }
+              };
 
-              const options =  {
-                amt:prices,
-                billKey : data.billKey,
-                buyerName: buyerName,
-                goodsName: `${Plan}개월 구독권`,
-                mid:"pgapppla1m",
-                moid:data.moid,
-                userId:data.userId,
-              }
-
-              axios
-              .post(`https://api.innopay.co.kr/api/payAutoCardBill`, options)
+              axios(config)
               .then(async(res)=>{
                 console.log(res);
-                
-                if(res.data.resultCode === "0000") {
-                  const config = {
-                    method: 'post',
-                    url: `${configUrl.SERVER_URL}/pay`,
-                    headers: { 'authentication': localStorage.getItem("token"), },
-                    data : { 
-                      billKey: data.billKey,
-                        name: buyerName,
-                        plan: plans,
-                      }
-                  };
-                  console.log(config.data)
-                  
-                 axios(config)
-                    .then((response) => {
-                      console.log("response", response);
-                      localStorage.setItem('plan',Plan )
-                      toast.success(response.data.log);
-                     
-                    })
-                    .catch((error) => {
-                      console.log(error);
-                    });
-                }else {
-                  let resultCode = res.data.resultCode;
-                  let Msg = res.data.resultMsg;
-
-                  toast.error(`${resultCode}: ${Msg}`)
-                }
-              
+                toast.success(`${res.data.log}`);
               })
-              .catch((error)=>{
-                console.log(error)
-              })
+              .catch((error) => {
+                  console.log(error);
+            
+              });
 
-              
+                           
             } else {
               throw new Error();
             }
