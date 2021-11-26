@@ -13,7 +13,7 @@ const DailyWriteDetail = () => {
     <Layout>
       <Box justify="center" align="center" className="BoxContainer">
         <Box className="DetailHeader" pad="medium">
-          <h1>일상 기록 질문 자판기</h1>
+          <h1>일상기록 질문 카드뽑기</h1>
           <h2>
             일상 기록은 영감의 원천입니다. 익숙하고 평범한 일상을 새로운
             관점으로 바라보세요!
@@ -129,8 +129,7 @@ const DailyWriteDetail = () => {
               <div>
                 <img src="/ai.png" alt="ai" className="Detail3-img" />
                 <p>
-                  글을 쓰면서 얻은 영감을 바탕으로 새로운 이야기를 만들어낼 수
-                  있습니다.
+                  하나 둘 씩 쌓이는 이야기를 활용해 하나의 콘텐츠로 발행할 수 있습니다.
                 </p>
               </div>
               <div>

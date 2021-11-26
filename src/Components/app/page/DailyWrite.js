@@ -148,7 +148,7 @@ const Dailywrite = () => {
               HandleModals();
             }}
           >
-            일상 기록 질문 뽑기
+            일상기록 질문 카드뽑기
           </DailyBtn>
         </Box>
       </ServiceLayout>
