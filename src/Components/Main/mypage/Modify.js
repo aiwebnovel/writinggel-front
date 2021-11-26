@@ -10,12 +10,12 @@ import "react-toastify/dist/ReactToastify.css";
 
 import Loading from "../../Loading";
 import * as config from "../../../config";
-import {authService} from "../../../firebaseConfig";
+import { authService } from "../../../firebaseConfig";
 import {
   getAuth,
   updateProfile,
   updateEmail,
-  deleteUser
+  deleteUser,
 } from "@firebase/auth";
 import firebase from "@firebase/app-compat";
 
@@ -25,23 +25,35 @@ const Modify = () => {
 
   const [isLoading, SetLoading] = useState(false);
   const [Userprofile, SetProfile] = useState({
-    userName: "Guest",
+    userName: "",
     userEmail: "",
-    userprovider: "",
   });
 
-  const { userName, userEmail, userprovider } = Userprofile;
+  const { userName, userEmail } = Userprofile;
 
   const HandleUser = (e) => {
     SetProfile({ ...Userprofile, [e.target.name]: e.target.value });
   };
 
+  //회원정보 수정 클릭시
   const ModifyUser = async () => {
     console.log(Userprofile);
-    if (Userprofile) {
+
+    const auth = getAuth();
+    const user = auth.currentUser;
+    if (user !== null) {
+      // The user object has basic properties such as display name, email, etc.
+      const displayName = user.displayName;
+      const email = user.email;
+      // The user's ID, unique to the Firebase project. Do NOT use
+      // this value to authenticate with your backend server, if
+      // you have one. Use User.getToken() instead.
+      const uid = user.uid;
+
+      console.log(displayName, email);
       SetLoading(true);
       console.log(userName);
-      const auth = getAuth();
+
       await updateProfile(auth.currentUser, {
         displayName: userName,
       })
@@ -54,122 +66,137 @@ const Modify = () => {
           console.log(error);
           toast.error("이름을 수정할 수 없습니다!");
         });
+
       await updateEmail(auth.currentUser, userEmail)
         .then(() => {
           console.log("email updated!");
+          localStorage.setItem("email", userEmail);
         })
         .catch((error) => {
           console.log(error);
           toast.error("이메일을 수정할 수 없습니다!");
           SetLoading(false);
-          // if (error.response.status === 400) {
-          //   toast.error("이미 누군가가 사용 중인 이메일입니다!");
-          // }
         });
-      await RefreshProfile();
+      await ReAuthProfile();
+
+      //setTimeout(toast.success('재로그인에 성공헀습니다!'),5000);
       SetLoading(false);
-    setTimeout((toast.success('재로그인 해주세요!'),300))
+
+      // if (displayName !== userName) {
+      //   SetLoading(true);
+      //   console.log(userName);
+
+      //   await updateProfile(auth.currentUser, {
+      //     displayName: userName,
+      //   })
+      //     .then(() => {
+      //       // Profile updated!
+      //       console.log("updated!");
+      //     })
+      //     .catch((error) => {
+      //       // An error occurred
+      //       console.log(error);
+      //       toast.error("이름을 수정할 수 없습니다!");
+      //     });
+      //   await ReAuthProfile();
+
+      //   //setTimeout(toast.success('재로그인에 성공헀습니다!'),5000);
+      //   SetLoading(false);
+      // }
+
+      // if(email !== userEmail) {
+      //   await updateEmail(auth.currentUser, userEmail)
+      //   .then(() => {
+      //     console.log("email updated!");
+      //     localStorage.setItem('email',userEmail)
+      //   })
+      //   .catch((error) => {
+      //     console.log(error);
+      //     toast.error("이메일을 수정할 수 없습니다!");
+      //     SetLoading(false);
+      //   });
+      //   await ReAuthProfile();
+
+      // }
     } else {
-      toast.info("유저 정보가 없습니다!");
+      signOut();
+      toast.info("유저 정보를 불러올 수 없어요. 다시 로그인해주세요!");
     }
   };
 
-  const RequestProfile = useCallback(() => {
+  const ReAuthProfile = async () => {
     const auth = getAuth();
     const user = auth.currentUser;
+    console.log(user, auth.currentUser);
 
     if (user !== null) {
-      user.providerData.forEach(async (profile) => {
-        console.log(profile);
-        console.log("Sign-in provider: " + profile.providerId);
-        // console.log("  Provider-specific UID: " + profile.uid);
-        console.log("  Name: " + profile.displayName);
-        console.log("  Email: " + profile.email);
-        console.log("  phone: " + profile.phoneNumber);
-        // console.log("  Photo URL: " + profile.photoURL);
+      let providerId = user.providerData[0].providerId;
 
-        let providerId = profile.providerId;
+      if (providerId === "google.com") {
+        let providerG = new firebase.auth.GoogleAuthProvider();
+        providerG.addScope("profile");
+        providerG.addScope("email");
 
-        await axios
-          .get(`${config.SERVER_URL}/profile`, {
-            headers: { authentication: localStorage.getItem("token") },
-          })
-          .then((response) => {
-            // console.log('previus', profile);
-            console.log("cons", response.data);
-            SetProfile({
-              ...Userprofile,
-              userName: response.data.name,
-              userEmail: localStorage.getItem("email"),
-              userprovider: providerId,
-            });
+        await authService.signOut();
+        await firebase
+          .auth()
+          .signInWithPopup(providerG)
+          .then(async function (result) {
+            // This gives you a Google Access Token.
+            console.log(result);
+            let token = result.credential.accessToken;
+            // The signed-in user info.
+            let user = result.user;
+
+            console.log(token, user);
+            window.location.reload();
           })
           .catch((error) => {
             console.log(error);
           });
-      });
-    }
-  }, [Userprofile]);
+      }
 
-  const RefreshProfile = useCallback(async () => {
-    const user = firebase.auth().currentUser;
-    console.log(user);
-
-    if (userprovider === "google.com") {
-      let providerG = new firebase.auth.GoogleAuthProvider();
-      providerG.addScope("profile");
-      providerG.addScope("email");
-      firebase
-        .auth()
-        .signInWithPopup(providerG)
-        .then(function (result) {
-          // This gives you a Google Access Token.
-          let token = result.credential.accessToken;
-          // The signed-in user info.
-          let user = result.user;
-          History.replace("/mypage");
-          console.log(token, user);
-        });
+      if (providerId === "facebook.com") {
+        let providerF = new firebase.auth.FacebookAuthProvider();
+        providerF.addScope("user_birthday");
+        firebase
+          .auth()
+          .signInWithPopup(providerF)
+          .then(function (result) {
+            // This gives you a Facebook Access Token.
+            let token = result.credential.accessToken;
+            // The signed-in user info.
+            let user = result.user;
+            console.log(token, user);
+            toast.success("재로그인 되었습니다.");
+          });
+      }
+    } else {
+      toast.error("다시 로그인 해주세요.");
     }
-
-    if (userprovider === "facebook.com") {
-      let providerF = new firebase.auth.FacebookAuthProvider();
-      providerF.addScope("user_birthday");
-      firebase
-        .auth()
-        .signInWithPopup(providerF)
-        .then(function (result) {
-          // This gives you a Facebook Access Token.
-          let token = result.credential.accessToken;
-          // The signed-in user info.
-          let user = result.user;
-          History.replace("/mypage");
-          console.log(token, user);
-        });
-    }
-  }, [Userprofile]);
+  };
 
   const DeleteUser = () => {
-
     const auth = getAuth();
     const user = auth.currentUser;
     console.log(user);
-    if (window.confirm("정말 삭제하시겠습니까?")) {
-      deleteUser(user).then(async() => {
-        // User deleted.
-        console.log('삭제 되었습니다!');
-        await signOut();
-        setTimeout(toast.success('삭제되었습니다!'),5000);
-      }).catch((error) => {
-        // An error ocurred
-        console.log(error);
-        toast.error('재로그인 후 다시 시도해주세요!')
-      });
+    if (window.confirm("정말 탈퇴하시겠습니까?")) {
+      deleteUser(user)
+        .then(async () => {
+          // User deleted.
+          console.log("탈퇴 되었습니다!");
+          await signOut();
+          setTimeout(toast.success("탈퇴 되었습니다!"), 5000);
+        })
+        .catch((error) => {
+          // An error ocurred
+          console.log(error);
+          toast.error("재로그인 후 다시 시도해주세요!");
+        });
     }
-    
-  }
+  };
 
-  const signOut = async() => {
+  const signOut = async () => {
     await localStorage.removeItem("token");
     await localStorage.removeItem("email");
     await localStorage.removeItem("userUid");
@@ -177,24 +204,33 @@ const Modify = () => {
     await localStorage.removeItem("isBill");
     await localStorage.removeItem("create");
     await localStorage.removeItem("phone");
-  
+
     await authService.signOut();
     window.location.reload();
-  }
+  };
 
   useEffect(() => {
     const loginCheck = localStorage.getItem("token");
+    const email = localStorage.getItem("email");
 
-    if (loginCheck === null) {
-      History.replace("/");
+    if (loginCheck !== null) {
+      axios
+        .get(`${config.SERVER_URL}/profile`, {
+          headers: { authentication: loginCheck },
+        })
+        .then((response) => {
+          console.log(response.data);
+          let data = response.data;
+          SetProfile({
+            ...Userprofile,
+            userName: data.name,
+            userEmail: email,
+          });
+        });
     } else {
-      return;
+      History.replace("/");
     }
   }, [History]);
-
-  useEffect(() => {
-    RequestProfile();
-  }, []);
 
   return (
     <Layout>
@@ -207,7 +243,11 @@ const Modify = () => {
           pad='large'
           className='MypageHeader'
         >
-          <h2>회원 정보 수정</h2>
+          <h2>
+            {localStorage.getItem("token") !== null
+              ? "회원 정보 수정"
+              : "회원정보가 없습니다!"}
+          </h2>
         </Box>
         <Box
           width='100%'
@@ -221,7 +261,7 @@ const Modify = () => {
               type='text'
               placeholder='이름'
               name='userName'
-              value={userName}
+              value={userName || ""}
               onChange={(e) => HandleUser(e)}
             />
           </div>
@@ -231,14 +271,26 @@ const Modify = () => {
               type='text'
               placeholder='이메일'
               name='userEmail'
-              value={userEmail}
+              value={userEmail || ""}
               onChange={(e) => HandleUser(e)}
             />
           </div>
 
           <div className='ModifyUserBtns'>
-            <button type='submit' className='MBtn' onClick={ModifyUser}>
-              회원정보 수정
+            <button
+              type='submit'
+              className='MBtn'
+              onClick={
+                localStorage.getItem("token") !== null
+                  ? ModifyUser
+                  : () => {
+                      toast.error("로그인 해주세요!");
+                    }
+              }
+            >
+              {localStorage.getItem("token") !== null
+                ? "회원정보 수정"
+                : "회원정보 없음"}
             </button>
             <button type='submit' className='OutBtn' onClick={DeleteUser}>
               탈퇴하기
