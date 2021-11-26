@@ -77,47 +77,10 @@ const Modify = () => {
           toast.error("이메일을 수정할 수 없습니다!");
           SetLoading(false);
         });
+         await toast.info('재인증을 위해 로그인을 다시 해주세요!');
       await ReAuthProfile();
-
-      //setTimeout(toast.success('재로그인에 성공헀습니다!'),5000);
       SetLoading(false);
 
-      // if (displayName !== userName) {
-      //   SetLoading(true);
-      //   console.log(userName);
-
-      //   await updateProfile(auth.currentUser, {
-      //     displayName: userName,
-      //   })
-      //     .then(() => {
-      //       // Profile updated!
-      //       console.log("updated!");
-      //     })
-      //     .catch((error) => {
-      //       // An error occurred
-      //       console.log(error);
-      //       toast.error("이름을 수정할 수 없습니다!");
-      //     });
-      //   await ReAuthProfile();
-
-      //   //setTimeout(toast.success('재로그인에 성공헀습니다!'),5000);
-      //   SetLoading(false);
-      // }
-
-      // if(email !== userEmail) {
-      //   await updateEmail(auth.currentUser, userEmail)
-      //   .then(() => {
-      //     console.log("email updated!");
-      //     localStorage.setItem('email',userEmail)
-      //   })
-      //   .catch((error) => {
-      //     console.log(error);
-      //     toast.error("이메일을 수정할 수 없습니다!");
-      //     SetLoading(false);
-      //   });
-      //   await ReAuthProfile();
-
-      // }
     } else {
       signOut();
       toast.info("유저 정보를 불러올 수 없어요. 다시 로그인해주세요!");
@@ -132,6 +95,7 @@ const Modify = () => {
     if (user !== null) {
       let providerId = user.providerData[0].providerId;
 
+
       if (providerId === "google.com") {
         let providerG = new firebase.auth.GoogleAuthProvider();
         providerG.addScope("profile");
@@ -143,12 +107,12 @@ const Modify = () => {
           .signInWithPopup(providerG)
           .then(async function (result) {
             // This gives you a Google Access Token.
-            console.log(result);
-            let token = result.credential.accessToken;
+            //console.log(result);
+            //let token = result.credential.accessToken;
             // The signed-in user info.
-            let user = result.user;
-
-            console.log(token, user);
+            // let user = result.user;
+            // let id = result.credential.idToken
+            // console.log(id);
             window.location.reload();
           })
           .catch((error) => {
@@ -228,7 +192,7 @@ const Modify = () => {
           });
         });
     } else {
-      History.replace("/");
+      //History.replace("/");
     }
   }, [History]);
 
