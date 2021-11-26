@@ -59,7 +59,7 @@ const Mypage = () => {
           headers: { authentication: loginCheck },
         })
         .then((response) => {
-          // console.log(response.data);
+          console.log(response.data);
           let data = response.data;
           SetProfile({
             ...profile,
