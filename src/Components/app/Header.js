@@ -182,7 +182,7 @@ const Header = () => {
                 <Link to='/app/loveletter'>MBTI 연애편지</Link>
               </li>
               <li>
-                <Link to='/app/dailywrite'>일상 기록 질문 자판기</Link>
+                <Link to='/app/dailywrite'>일상기록 질문 카드뽑기</Link>
               </li>
               <li>
                 <Link to='/app/storysrc'>이야기 재료 찾기</Link>
