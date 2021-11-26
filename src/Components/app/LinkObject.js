@@ -49,7 +49,7 @@ const LinkObject = [
   },
   {
     id:9,
-    title: "일상 기록 질문 자판기",
+    title: "일상기록 질문 카드뽑기",
     link: "/app/dailywrite",
     detail: '/service/dailywrite',
   },

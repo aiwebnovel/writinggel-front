@@ -122,17 +122,18 @@ const Modify = () => {
 
       if (providerId === "facebook.com") {
         let providerF = new firebase.auth.FacebookAuthProvider();
-        providerF.addScope("user_birthday");
+
+        await authService.signOut();
         firebase
           .auth()
           .signInWithPopup(providerF)
           .then(function (result) {
             // This gives you a Facebook Access Token.
-            let token = result.credential.accessToken;
+            //let token = result.credential.accessToken;
             // The signed-in user info.
-            let user = result.user;
-            console.log(token, user);
-            toast.success("재로그인 되었습니다.");
+            // let user = result.user;
+            // console.log(token, user);
+            window.location.reload();
           });
       }
     } else {
@@ -192,7 +193,7 @@ const Modify = () => {
           });
         });
     } else {
-      //History.replace("/");
+      History.replace("/");
     }
   }, [History]);
 

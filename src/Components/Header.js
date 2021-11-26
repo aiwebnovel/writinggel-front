@@ -6,6 +6,7 @@ import { User, Menu, Google, FacebookOption, Down } from "grommet-icons";
 import { ResponsiveContext } from "grommet";
 
 import { authService, firebaseInstance } from "../firebaseConfig";
+import  { FacebookAuthProvider} from 'firebase/auth'
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -37,12 +38,37 @@ const Header = () => {
       // let provider = new firebaseInstance.auth.GoogleAuthProvider();
       if (name === "Facebook") {
        let provider = new firebaseInstance.auth.FacebookAuthProvider();
+        //await authService.signInWithRedirect(provider)
         await authService.signInWithPopup(provider)
         .then(async(dataFacebook)=> {
           console.log(dataFacebook);
+          const credential = FacebookAuthProvider.credentialFromResult(dataFacebook);
+          console.log('cre', credential);
+
+          let credentials = dataFacebook.credential;
+          let id = dataFacebook.credential.providerId //facebook.com
+          let email = dataFacebook.user.email;
+          let create = dataFacebook.user.metadata.creationTime;
+          let token = credentials.accessToken;
+          //console.log('result',credentials, email,create,token, id);
+
+          await localStorage.setItem("token", token);
+          await localStorage.setItem("email", email);
+          await localStorage.setItem("create", create);
+
+          await requestProfile();
+          await SetUser(true);
+          await SetOpen(false);
+
+          refreshProfile();
+          window.location.reload();
         })
         .catch((error) => {
-              console.log(error)
+            console.log(error)
+            if (error.code === 'auth/account-exists-with-different-credential') {
+              toast.error('이미 구글로 로그인했던 계정입니다. 동일한 이메일 주소를 사용하여 여러 계정을 만들 수 없습니다.');
+
+            }
         });
         ;
       } else if (name === "Google") {
@@ -70,12 +96,13 @@ const Header = () => {
           window.location.reload();
         })
         .catch((error) => {
-              console.log(error)
+          console.log(error)
+          if (error.code === 'auth/account-exists-with-different-credential') {
+            toast.error('이미 페이스북으로 로그인했던 계정입니다. 동일한 이메일 주소를 사용하여 여러 계정을 만들 수 없습니다.');
+          }
         });       
         ;
       }
-
-
     } else {
       toast.error("이용약관 및 개인정보처리방침에 동의해주세요!");
     }
@@ -91,18 +118,15 @@ const Header = () => {
           headers: { authentication: localStorage.getItem("token") },
         })
         .then((response) => {
-          // console.log('previus', profile);
           SetProfile({
             ...profile,
             userName: response.data.name,
             userImage: response.data.photoURL,
           });
-          // console.log('profile', profile);
-          // console.log('mount7')
+
           localStorage.setItem("userUid", response.data.uid);
           localStorage.setItem("plan", response.data.plan);
           localStorage.setItem("isBill", response.data.isBill);
-          // console.log('mount8')
          
         })
         .catch((error) => 
@@ -111,7 +135,7 @@ const Header = () => {
   },[profile]);
 
   const refreshProfile = useCallback(async () => {
-    // console.log('mount2')
+
     authService.onAuthStateChanged(async (user) => {
       if (authService.currentUser) {
         authService.currentUser
@@ -167,8 +191,6 @@ const Header = () => {
 
   useEffect(() => {  
     refreshProfile();
-
-  console.log(isChecked);
   },[]);
 
   useEffect(()=>{
@@ -218,7 +240,7 @@ const Header = () => {
                   <Link to='/service/loveletter'>MBTI 연애편지</Link>
                 </li>
                 <li>
-                  <Link to='/service/dailywrite'>일상 기록 질문 자판기</Link>
+                  <Link to='/service/dailywrite'>일상기록 질문 카드뽑기</Link>
                 </li>
                 <li>
                   <Link to='/service/storysrc'>이야기 재료 찾기</Link>
@@ -280,7 +302,7 @@ const Header = () => {
                   <Link to='/service/loveletter'>MBTI 연애편지</Link>
                 </li>
                 <li>
-                  <Link to='/service/dailywrite'>일상 기록 질문 자판기</Link>
+                  <Link to='/service/dailywrite'>일상기록 질문 카드뽑기</Link>
                 </li>
                 <li>
                   <Link to='/service/storysrc'>이야기 재료 찾기</Link>

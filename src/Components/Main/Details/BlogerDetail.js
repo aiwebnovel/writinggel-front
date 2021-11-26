@@ -95,7 +95,7 @@ const BlogerDetail = () => {
               </div>
               <div>
                 <img src='/ai.png' alt='ai' className='Detail3-img' />
-                <p>기본적으로 블로그로 쓰고 싶은 대주제를 입력하면 제목, 개요, 도입부 등을 제시합니다.</p>
+                <p>블로그 연관 검색어를 활용해 주제를 더 독자의 관심에 맞춰 구체화해보세요</p>
               </div>
               <div>
                 <img src='/note.png' alt='writing' className='Detail3-img' />
