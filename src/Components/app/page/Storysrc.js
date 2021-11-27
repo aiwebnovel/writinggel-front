@@ -23,18 +23,22 @@ const Storysrc = () => {
     ["", ""],
     ["", ""],
   ]);
-  const [story, SetStory] = useState("");
+  const [story, SetStory] = useState({
+    storyKor:'',
+    storyEng:''
+  });
 
+  const { storyKor, storyEng} = story;
 
   const SaveContent = async () => {
-    console.log(story);
-    if (story) {
+    console.log(story, storyKor, storyEng);
+    if (storyKor) {
       const config = {
         method: "post",
         url: `${configUrl.SERVER_URL}/archive`,
         headers: { authentication: localStorage.getItem("token") },
         data: {
-          story: story,
+          story: storyKor,
           category: "이야기 재료",
         },
       };
@@ -68,6 +72,7 @@ const Storysrc = () => {
       ["", ""],
     ]);
     SetLoading(true);
+    
     const config = {
       method: "post",
       url: `${configUrl.SERVER_URL}/writinggel/pickwords`,
@@ -81,11 +86,14 @@ const Storysrc = () => {
           toast.error('결과물에 유해한 내용이 들어가 버렸어요.😭 재시도 해주세요!');
           SetLoading(false);
       }else { 
+        SetOutput(true);
         SetWords([
         [response.data["wordsT"][0], response.data["words"][0]],
         [response.data["wordsT"][1], response.data["words"][1]],
         [response.data["wordsT"][2], response.data["words"][2]],
       ]);
+      console.log(words);
+      
       SetLoading(false);
     }   
       })
@@ -95,9 +103,12 @@ const Storysrc = () => {
   };
 
   const StoryAxios = async () => {
-    if (!isResult) {
-      SetLoading(true);
+
+
+    // if (!isResult) {
+ 
       if (words[0][1] !== "" && words[1][1] !== "" && words[2][1] !== "") {
+        SetLoading(true);
         const config = {
           method: "post",
           url: `${configUrl.SERVER_URL}/writinggel/sentence`,
@@ -112,7 +123,11 @@ const Storysrc = () => {
               toast.error('결과물에 유해한 내용이 들어가 버렸어요.😭 재시도 해주세요!');
               SetLoading(false);
           }else {
-            SetStory(response.data[0]);
+            SetResult(true);
+            SetStory({...story, 
+              storyKor: response.data[0],
+              storyEng: response.data[1]
+            });
             SetLoading(false);
           }
            
@@ -122,8 +137,9 @@ const Storysrc = () => {
           });
       } else {
         setTimeout(toast.info("단어를 뽑아주세요!"), 300);
+        SetLoading(false);
       }
-    }
+    //}
   };
 
 
@@ -146,7 +162,7 @@ const Storysrc = () => {
         background='#f9f9f9'
         justify='center'
         align='center'
-        gap='large'
+        //gap='large'
       >
         {/* 단어 뽑기 */}
         <Box
@@ -157,10 +173,8 @@ const Storysrc = () => {
           gap='large'
         >
           <button
-            onClick={() => {
-              SetOutput(!isOutput);
-              StorysrcAxios();
-            }}
+            onClick={
+             StorysrcAxios}
           >
             이야기 재료로 쓸 단어 뽑기
           </button>
@@ -211,10 +225,7 @@ const Storysrc = () => {
           <Box direction='row'>
             <p>이 단어들을 활용해 어떤 이야기를 쓸 수 있을까요?</p>
             <button
-              onClick={() => {
-                SetResult(!isResult);
-                StoryAxios();
-              }}
+              onClick={StoryAxios}
             >
               {isResult ? '다시 쓰기' : '예시보기'}
             </button>
@@ -225,7 +236,11 @@ const Storysrc = () => {
               className='StoryResults'
               animation={{ type: "fadeIn", duration: 400, size: "large" }}
             >
-              &gt; {story}
+              &gt; 
+              <br/>
+              {storyKor}
+              <hr/>
+              {storyEng}
             </Box>
           )}
         </div>

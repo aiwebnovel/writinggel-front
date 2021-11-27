@@ -91,24 +91,22 @@ const StorySrcDetail = () => {
               <div>
                 <img src="/agreement.png" alt="문서" className="Detail3-img" />
                 <p>
-                  매일 아침이나 저녁 일정한 시간에 일상 기록 질문 카드를 활용해
-                  자신을 돌아볼 수 있습니다.
+                 무작위로 뽑힌 단어 세 개를 활용해 자신만의 이야기를 엮어보세요.
                 </p>
               </div>
               <div>
                 <img src="/ai.png" alt="ai" className="Detail3-img" />
                 <p>
-                  글을 쓰면서 얻은 영감을 바탕으로 새로운 이야기를 만들어낼 수
-                  있습니다.
+                함께 제시되는 예시를 보면서 힌트를 얻을 수 있습니다. 자신이 쓴 이야기와 비교해봐도 좋아요.
                 </p>
               </div>
-              <div>
+              {/* <div>
                 <img src="/note.png" alt="writing" className="Detail3-img" />
                 <p>
                   글을 쓰면서 얻은 영감을 바탕으로 새로운 이야기를 만들어낼 수
                   있습니다.
                 </p>
-              </div>
+              </div> */}
             </Box>
             <div className="intoServiceBtn">
               <Link to="/app/Storysrc">
