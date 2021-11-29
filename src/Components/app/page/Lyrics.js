@@ -31,7 +31,7 @@ const Lyrics = () => {
 
       await axios(config)
         .then(async (response) => {
-          console.log(response.data);
+          //console.log(response.data);
 
           if (response.data[0] === "") {
             toast.error(
@@ -41,6 +41,7 @@ const Lyrics = () => {
           } else {
             SetOutputContent(response.data[1]);
             SetLoading(false);
+          
           }
         })
         .catch(async (error) => {
@@ -60,7 +61,7 @@ const Lyrics = () => {
         url: `${configUrl.SERVER_URL}/archive`,
         headers: { authentication: localStorage.getItem("token") },
         data: {
-          story: content[1],
+          story: content,
           category: "영어 가사",
         },
       };
@@ -169,14 +170,13 @@ const Lyrics = () => {
           </button>
         </Box>
         <Box className='LyricOutputBox'>
-          <textarea value={content} readOnly />
-          <div className='icons'>
-            {" "}
-            <div>
-              <Close onClick={ResetData} /> <Update onClick={LyricsAxios} />{" "}
-              <Download onClick={SaveContent} />{" "}
-            </div>{" "}
-          </div>
+            <div className='LyricContent'>{content.split('\n').map((line, index)=>(
+              <span key={line !== '' ? line : index}>{line}<br/></span>
+            ))}</div>
+            <div className='icons'>
+              <Close onClick={ResetData} /> <Update onClick={LyricsAxios} />
+              <Download onClick={SaveContent} />
+            </div>
         </Box>
       </Box>
     </ServiceLayout>

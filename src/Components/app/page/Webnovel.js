@@ -449,11 +449,10 @@ const Webnovel = () => {
           )}
 
           <Box
-            fill
             gridArea='main'
-            className='mainBox'
             justify='center'
             align='center'
+            className='outputContainer'
             // pad={size !== "small" ? "medium" : "large"}
           >
             <div className='mainOutputBox'>
@@ -472,7 +471,7 @@ const Webnovel = () => {
               ></textarea>
             </div>
             <Icons>
-              <Download onClick={SaveContent} />{" "}
+              <Download onClick={SaveContent} />
               <Update onClick={requestcontents} /> <Close onClick={resetData} />
             </Icons>
           </Box>
@@ -485,7 +484,7 @@ const Webnovel = () => {
 export default Webnovel;
 
 const Icons = styled.div`
-  padding: 10px 0;
+  margin-top: 30px;
 
   display: flex;
   justify-content: center;
