@@ -3,6 +3,7 @@ import axios from "axios";
 import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { OuterClick } from "react-outer-click";
 
 import { Box, Grid, ResponsiveContext } from "grommet";
 import { Update, Close, Add, Download } from "grommet-icons";
@@ -178,13 +179,15 @@ const Webnovel = () => {
           }
         )
         .then(async (response) => {
-          console.log(response.data)
+          console.log(response.data);
           //console.log('response', response.data[0]);
           //console.log('response2', response.data[1]);
-          if(response.data[0] === ''){
-              toast.error('적어주신 키워드가 적절하지 않은 것 같습니다.😭 재시도 해주세요!');
-              SetLoading(false);
-          }else {
+          if (response.data[0] === "") {
+            toast.error(
+              "적어주신 키워드가 적절하지 않은 것 같습니다.😭 재시도 해주세요!"
+            );
+            SetLoading(false);
+          } else {
             await SetOutput({
               ...output,
               outputKorean: outputKorean + response.data[0],
@@ -193,19 +196,16 @@ const Webnovel = () => {
               tempLength: (outputKorean + response.data[0]).length,
               tempWrite: outputKorean + response.data[0],
             });
-  
+
             await SetLoading(false);
             await SetChange(false);
             await SetStart("Need a Story");
             await SetHuman(true);
           }
-         
+
           if (response.data[2] >= 2) {
-            toast.error(
-              `결과물에 유해한 내용이 들어가 버렸어요. 😭 `
-            );
+            toast.error(`결과물에 유해한 내용이 들어가 버렸어요. 😭 `);
             SetHuman(false);
-            
           } else {
             toast.info(
               `이어지는 내용을 100자 이상 쓰면, 이야기를 계속 이어갈 수 있습니다.`
@@ -330,76 +330,84 @@ const Webnovel = () => {
         >
           {isSider ? (
             <Box gridArea='sidebar' className='sideContainer' gap='medium'>
-              <SiderBtn onClick={handleSider}>
-                <Close />
-              </SiderBtn>
-              <Box align='center' gap='large'>
-                <div className='SiderBox'>
-                  <select
-                    defaultValue='default'
-                    className='dropdowncategory'
-                    onChange={onSelect}
-                  >
-                    <option value='default' disabled className='gradient'>
-                      장르를 선택해주세요! ✔
-                    </option>
-                    <option value={options[0]}>{options[0]}</option>
-                    <option value={options[1]}>{options[1]}</option>
-                    <option value={options[2]}>{options[2]}</option>
-                    <option value={options[3]}>{options[3]}</option>
-                    <option value={options[4]}>{options[4]}</option>
-                  </select>
+              <OuterClick
+                onOuterClick={(event) => {
+                  event.preventDefault();
+                  //console.log("Clicked outside");
+                  SetSider(false);
+                }}
+              >
+                <SiderBtn onClick={handleSider}>
+                  <Close />
+                </SiderBtn>
+                <Box align='center' gap='large'>
+                  <div className='SiderBox'>
+                    <select
+                      defaultValue='default'
+                      className='dropdowncategory'
+                      onChange={onSelect}
+                    >
+                      <option value='default' disabled className='gradient'>
+                        장르를 선택해주세요! ✔
+                      </option>
+                      <option value={options[0]}>{options[0]}</option>
+                      <option value={options[1]}>{options[1]}</option>
+                      <option value={options[2]}>{options[2]}</option>
+                      <option value={options[3]}>{options[3]}</option>
+                      <option value={options[4]}>{options[4]}</option>
+                    </select>
 
-                  <input
-                    className='sub_input_text'
-                    value={Main_character}
-                    onChange={(e) => handleChange(e)}
-                    name='Main_character'
-                    placeholder='주요 인물'
-                  />
-                  <input
-                    className='sub_input_text'
-                    value={Place}
-                    onChange={(e) => handleChange(e)}
-                    name='Place'
-                    placeholder='장소'
-                  />
-                  <input
-                    className='sub_input_text'
-                    value={Time}
-                    onChange={(e) => handleChange(e)}
-                    name='Time'
-                    placeholder='시간'
-                  />
-                  <input
-                    className='sub_input_text'
-                    value={Material}
-                    onChange={(e) => handleChange(e)}
-                    name='Material'
-                    placeholder='소재'
-                  />
-                  <input
-                    className='sub_input_text'
-                    value={Main_Events}
-                    onChange={(e) => handleChange(e)}
-                    name='Main_Events'
-                    placeholder='주요 사건'
-                  />
-                  <button className='create' onClick={requestcontents}>
-                    {Start}
-                  </button>
-                  {/* <div className='progress'> */}
-                  <ProgressBar
-                    completed={progress}
-                    bgColor='#3D138D'
-                    width='220px'
-                    height='15px'
-                    margin='0 auto'
-                    isLabelVisible={false}
-                  />
-                  {/* </div> */}
-                </div>
-              </Box>
+                    <input
+                      className='sub_input_text'
+                      value={Main_character}
+                      onChange={(e) => handleChange(e)}
+                      name='Main_character'
+                      placeholder='주요 인물'
+                    />
+                    <input
+                      className='sub_input_text'
+                      value={Place}
+                      onChange={(e) => handleChange(e)}
+                      name='Place'
+                      placeholder='장소'
+                    />
+                    <input
+                      className='sub_input_text'
+                      value={Time}
+                      onChange={(e) => handleChange(e)}
+                      name='Time'
+                      placeholder='시간'
+                    />
+                    <input
+                      className='sub_input_text'
+                      value={Material}
+                      onChange={(e) => handleChange(e)}
+                      name='Material'
+                      placeholder='소재'
+                    />
+                    <input
+                      className='sub_input_text'
+                      value={Main_Events}
+                      onChange={(e) => handleChange(e)}
+                      name='Main_Events'
+                      placeholder='주요 사건'
+                    />
+                    <button className='create' onClick={requestcontents}>
+                      {Start}
+                    </button>
+                    {/* <div className='progress'> */}
+                    <ProgressBar
+                      completed={progress}
+                      bgColor='#3D138D'
+                      width='220px'
+                      height='15px'
+                      margin='0 auto'
+                      isLabelVisible={false}
+                    />
+                    {/* </div> */}
+                  </div>
+                </Box>
+              </OuterClick>
             </Box>
           ) : (
             <Box
@@ -423,28 +431,39 @@ const Webnovel = () => {
               className='sideContainer'
               gap={size !== "small" && "medium"}
             >
-              <div className='CloseSiderBtn' onClick={handleOpen}>
-                <Close />
-              </div>
-              <Box className='guide-Accordion'>
-                <div className='guide-PanelHeader'>Q. How to Use?</div>
+              <OuterClick
+                onOuterClick={(event) => {
+                  event.preventDefault();
+                  //console.log("Clicked outside");
+                  SetOpen(false);
+                }}
+              >
+                <div className='CloseSiderBtn' onClick={handleOpen}>
+                  <Close />
+                </div>
+                <Box className='guide-Accordion'>
+                  <div className='guide-PanelHeader'>Q. How to Use?</div>
 
-                <div className='guide-PanelContent '>
-                  <h4>💫 팅젤이와 함께 글 쓰는 TING!</h4>
-                  <div>
-                    <img src='/tinggle.png' alt='tingting' />
+                  <div className='guide-PanelContent '>
+                    <h4>💫 팅젤이와 함께 글 쓰는 TING!</h4>
                     <div>
-                      <p>1. 원하는 키워드나 글을 입력해주세요!</p>
-                      <p style={{color : 'gray'}}>❗️ +열기 버튼이 있는 경우는 눌러서 빈 칸을 채워주세요!(블로그 제외)</p>
-                      <p>
-                        2. write 버튼을 누르면 팅젤이가 여러분의 글 위에
-                        아이디어💡를 얹어줄거에요!
-                      </p>
-                      <p>3. 팅젤이가 얹어준 아이디어를 활용해봐요!</p>
+                      <img src='/tinggle.png' alt='tingting' />
+                      <div>
+                        <p>1. 원하는 키워드나 글을 입력해주세요!</p>
+                        <p style={{ color: "gray" }}>
+                          ❗️ +열기 버튼이 있는 경우는 눌러서 빈 칸을
+                          채워주세요!(블로그 제외)
+                        </p>
+                        <p>
+                          2. write 버튼을 누르면 팅젤이가 여러분의 글 위에
+                          아이디어💡를 얹어줄거에요!
+                        </p>
+                        <p>3. 팅젤이가 얹어준 아이디어를 활용해봐요!</p>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </Box>
+                </Box>
+              </OuterClick>
             </Box>
           )}
 

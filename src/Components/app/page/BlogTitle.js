@@ -1,10 +1,11 @@
 import { Box, Grid, ResponsiveContext } from "grommet";
-import { Copy, Close, Add, Download} from "grommet-icons";
+import { Copy, Close, Add, Download } from "grommet-icons";
 import React, { useEffect, useState, useContext } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { OuterClick } from "react-outer-click";
 
 import axios from "axios";
 import * as configUrl from "../../../config";
@@ -14,9 +15,7 @@ import styled from "styled-components";
 import ServiceLayout from "../Layout";
 import Loading from "../../Loading";
 
-
 const BlogTitle = () => {
-
   const size = useContext(ResponsiveContext);
   const History = useHistory();
 
@@ -71,9 +70,9 @@ const BlogTitle = () => {
         })
         .catch(async (error) => {
           console.log(error);
-          
-          if(error.response.status === 403) {
-            toast.error('보관함이 꽉 찼습니다!');
+
+          if (error.response.status === 403) {
+            toast.error("보관함이 꽉 찼습니다!");
           }
 
           if (error.response.status === 500) {
@@ -127,15 +126,17 @@ const BlogTitle = () => {
           let resK = [];
           let resE = [];
 
-          if(response.data[0] === '') {
-            toast.error('적어주신 키워드가 적절하지 않은 것 같습니다.😭 재시도 해주세요!');
+          if (response.data[0] === "") {
+            toast.error(
+              "적어주신 키워드가 적절하지 않은 것 같습니다.😭 재시도 해주세요!"
+            );
             SetLoading(false);
-          }else {
+          } else {
             for (let i = 0; i < response.data.length; i++) {
               await resK.push(response.data[i][0]);
               await resE.push(response.data[i][1]);
             }
-            console.log(resK,resE);
+            console.log(resK, resE);
             SetOutput({
               ...output,
               outputKorean: resK,
@@ -146,11 +147,8 @@ const BlogTitle = () => {
           }
 
           if (response.data[2] >= 2) {
-            toast.error(
-              `결과물에 유해한 내용이 들어가 버렸어요. 😭`
-            );
+            toast.error(`결과물에 유해한 내용이 들어가 버렸어요. 😭`);
           }
-          
         })
         .catch((error) => {
           //console.log(error);
@@ -191,10 +189,9 @@ const BlogTitle = () => {
     //console.log(outputKorean)
   }, [outputKorean, outputEnglish]);
 
-
   return (
     <ServiceLayout>
-  {isLoading && <Loading />}
+      {isLoading && <Loading />}
       <Box
         className='ServiceContainerVh'
         justify='center'
@@ -219,19 +216,27 @@ const BlogTitle = () => {
         >
           {isSider ? (
             <Box gridArea='sidebar' className='sideContainer' gap='medium'>
-              <div className='CloseSiderBtn' onClick={handleSider}>
-                <Close />
-              </div>
-              <Box align='center' gap='large'>
-                <div className='SiderBox'>
-                  <MenuItem to='/app/bloger/idea'>블로그 아이디어</MenuItem>
-                  <MenuItem to='/app/bloger/name'>블로그 개요</MenuItem>
-                  <MenuItem to='/app/bloger/title'>블로그 제목</MenuItem>
-                  <MenuItem to='/app/bloger/intro'>블로그 도입부</MenuItem>
-                  <MenuItem to='/app/bloger/keyword'>블로그 키워드</MenuItem>
-                  <MenuItem to='/app/bloger/follow'>블로그 이어쓰기</MenuItem>
+              <OuterClick
+                onOuterClick={(event) => {
+                  //event.preventDefault();
+                  //console.log("Clicked outside");
+                  SetSider(false);
+                }}
+              >
+                <div className='CloseSiderBtn' onClick={handleSider}>
+                  <Close />
                 </div>
-              </Box>
+                <Box align='center' gap='large'>
+                  <div className='SiderBox'>
+                    <MenuItem to='/app/bloger/idea'>블로그 아이디어</MenuItem>
+                    <MenuItem to='/app/bloger/name'>블로그 개요</MenuItem>
+                    <MenuItem to='/app/bloger/title'>블로그 제목</MenuItem>
+                    <MenuItem to='/app/bloger/intro'>블로그 도입부</MenuItem>
+                    <MenuItem to='/app/bloger/keyword'>블로그 키워드</MenuItem>
+                    <MenuItem to='/app/bloger/follow'>블로그 이어쓰기</MenuItem>
+                  </div>
+                </Box>
+              </OuterClick>
             </Box>
           ) : (
             <Box
@@ -255,28 +260,39 @@ const BlogTitle = () => {
               className='sideContainer'
               gap={size !== "small" && "medium"}
             >
-              <div className='CloseSiderBtn' onClick={handleOpen}>
-                <Close />
-              </div>
-              <Box className='guide-Accordion'>
-                <div className='guide-PanelHeader'>Q. How to Use?</div>
+              <OuterClick
+                onOuterClick={(event) => {
+                  //event.preventDefault();
+                  //console.log("Clicked outside");
+                  SetOpen(false);
+                }}
+              >
+                <div className='CloseSiderBtn' onClick={handleOpen}>
+                  <Close />
+                </div>
+                <Box className='guide-Accordion'>
+                  <div className='guide-PanelHeader'>Q. How to Use?</div>
 
-                <div className='guide-PanelContent '>
-                  <h4>💫 팅젤이와 함께 글 쓰는 TING!</h4>
-                  <div>
-                    <img src='/tinggle.png' alt='tingting' />
+                  <div className='guide-PanelContent '>
+                    <h4>💫 팅젤이와 함께 글 쓰는 TING!</h4>
                     <div>
-                      <p>1. 원하는 키워드나 글을 입력해주세요!</p>
-                      <p style={{color : 'gray'}}>❗️ +열기 버튼이 있는 경우는 눌러서 빈 칸을 채워주세요!(블로그 제외)</p>
-                      <p>
-                        2. write 버튼을 누르면 팅젤이가 여러분의 글 위에
-                        아이디어💡를 얹어줄거에요!
-                      </p>
-                      <p>3. 팅젤이가 얹어준 아이디어를 활용해봐요!</p>
+                      <img src='/tinggle.png' alt='tingting' />
+                      <div>
+                        <p>1. 원하는 키워드나 글을 입력해주세요!</p>
+                        <p style={{ color: "gray" }}>
+                          ❗️ +열기 버튼이 있는 경우는 눌러서 빈 칸을
+                          채워주세요!(블로그 제외)
+                        </p>
+                        <p>
+                          2. write 버튼을 누르면 팅젤이가 여러분의 글 위에
+                          아이디어💡를 얹어줄거에요!
+                        </p>
+                        <p>3. 팅젤이가 얹어준 아이디어를 활용해봐요!</p>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </Box>
+                </Box>
+              </OuterClick>
             </Box>
           )}
 
@@ -314,7 +330,6 @@ const BlogTitle = () => {
 };
 
 export default BlogTitle;
-
 
 const MenuItem = styled(Link)`
   display: block;

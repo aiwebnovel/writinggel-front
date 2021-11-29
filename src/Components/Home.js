@@ -1,15 +1,29 @@
-import React, {useContext} from "react";
-import { Link} from 'react-router-dom'
+import React, {useContext, useEffect} from "react";
+import { Link, useHistory} from 'react-router-dom'
 import Layout from "./Layout";
 import { Box, Grid, Card, CardBody, CardHeader, ResponsiveContext} from "grommet";
 import { Magic} from "grommet-icons";
 import "../styles/Main.scss";
 
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 import LinkObject from "./app/LinkObject";
 
 const Home = () => {
     
-    const size = useContext(ResponsiveContext)
+  const size = useContext(ResponsiveContext)
+  const History = useHistory();
+  
+    // useEffect(() => {
+    //   const loginCheck = localStorage.getItem("token");
+  
+    //   if (loginCheck !== null) {
+    //     return;
+    //   } else {
+    //    toast.info("로그인을 해주세요!");
+    //   }
+    // }, [History]);
 
   return (
     <Layout>

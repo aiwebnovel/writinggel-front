@@ -4,6 +4,7 @@ import axios from "axios";
 import { Header as HeaderLayout, Nav, Avatar, Anchor } from "grommet";
 import { User, Menu, Google, FacebookOption, Down } from "grommet-icons";
 import { ResponsiveContext } from "grommet";
+import { OuterClick } from "react-outer-click";
 
 import { authService, firebaseInstance } from "../firebaseConfig";
 import  { FacebookAuthProvider} from 'firebase/auth'
@@ -158,8 +159,10 @@ const Header = () => {
     await localStorage.removeItem("plan");
     await localStorage.removeItem("isBill");
     await localStorage.removeItem("create");
-    await localStorage.removeItem("phone");
-    
+    await localStorage.removeItem("exp");
+    await localStorage.removeItem("moid");
+    await localStorage.removeItem("time");
+
     SetUser(false);
     SetShowMenu(false);
   
@@ -269,7 +272,10 @@ const Header = () => {
         )}
       </HeaderLayout>
       {size === 'small' && isShow && (
-        <>
+        <OuterClick onOuterClick={() => {
+          //console.log("Clicked outside");
+          SetShow(false);
+        }}>
           <Nav direction='column' className='MobileMenus'>
             <Link to='/explain'>멤버십 가입</Link>
             <Link to='/brand'>브랜드 소개</Link>
@@ -318,7 +324,7 @@ const Header = () => {
               <span onClick={HandleModals} style={{cursor:'pointer', fontWeight:600}}>Login</span>
             )}
           </Nav>
-        </>
+        </OuterClick>
       )}
       <Modal onClick={HandleModals} open={isOpen} close={HandleModals} title='Login'>
         <div className='AvatarBox'>
@@ -372,7 +378,7 @@ const Header = () => {
             <p className="plan">
                 {localStorage.getItem("plan") === "undefined"
                   ? "Guest"
-                  : localStorage.getItem("plan")}
+                  : `${localStorage.getItem("plan")}개월 구독`}
               </p> 
             <hr style={{width:'100%',color:'#3b2477'}}/>
             <div className="afterLoginBottom">

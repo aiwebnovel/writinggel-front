@@ -5,6 +5,7 @@ import { Link, useHistory } from "react-router-dom";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { OuterClick } from "react-outer-click";
 
 import axios from "axios";
 import * as configUrl from "../../../config";
@@ -215,6 +216,13 @@ const BlogName = () => {
         >
           {isSider ? (
             <Box gridArea='sidebar' className='sideContainer' gap='medium'>
+              <OuterClick
+                onOuterClick={(event) => {
+                  //event.preventDefault();
+                  //console.log("Clicked outside");
+                  SetSider(false);
+                }}
+              >
               <div className='CloseSiderBtn' onClick={handleSider}>
                 <Close />
               </div>
@@ -228,6 +236,7 @@ const BlogName = () => {
                   <MenuItem to='/app/bloger/follow'>블로그 이어쓰기</MenuItem>
                 </div>
               </Box>
+              </OuterClick>
             </Box>
           ) : (
             <Box
@@ -251,6 +260,13 @@ const BlogName = () => {
               className='sideContainer'
               gap={size !== "small" && "medium"}
             >
+              <OuterClick
+                onOuterClick={(event) => {
+                  //vent.preventDefault();
+                  //console.log("Clicked outside");
+                  SetOpen(false);
+                }}
+              >
               <div className='CloseSiderBtn' onClick={handleOpen}>
                 <Close />
               </div>
@@ -273,6 +289,7 @@ const BlogName = () => {
                   </div>
                 </div>
               </Box>
+              </OuterClick>
             </Box>
           )}
 

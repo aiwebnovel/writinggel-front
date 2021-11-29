@@ -3,6 +3,8 @@ import axios from "axios";
 import { useHistory, Link } from "react-router-dom";
 import Layout from "../Layout";
 import { Box } from "grommet";
+import moment from 'moment';
+
 
 import * as configUrl from "../../config";
 import styled from "styled-components";
@@ -21,7 +23,7 @@ const PayResult = () => {
     create: "",
   });
 
-  // const { isBill, userName, plan, uid, email, create } = profile;
+  const { isBill, userName, plan, uid, email, create, billStart, payId, exp } = profile;
 
   const DeletePay = () => {
     if (window.confirm("구독을 취소하시겠습니까?")) {
@@ -32,6 +34,7 @@ const PayResult = () => {
       };
       axios(config)
         .then((response) => {
+          localStorage.setItem('isBill', false)
           console.log(response);
           toast.success(response.data.log, {
             style: { backgroundColor: "#fff", color: "#000" },
@@ -57,6 +60,10 @@ const PayResult = () => {
         .then((response) => {
           // console.log(response.data);
           let data = response.data;
+          let MonthLater = moment(data.billStartDate).add(data.plan,'months').toDate();
+          let formatMonth = moment(MonthLater).format('YYYY-MM-DD');
+
+
           SetProfile({
             ...profile,
             isBill: data.isBill,
@@ -65,6 +72,9 @@ const PayResult = () => {
             uid: data.uid,
             email: email,
             create: create,
+            billStart: data.billStartDate,
+            payId: data.lastPayTid,
+            exp: formatMonth,
           });
           // console.log(isBill, userName,plan,uid,email)
         });
@@ -86,31 +96,33 @@ const PayResult = () => {
             <Box className='paymentContent'>
               <div className='payBox'>
                 <h4>주문번호</h4>
-                <p>주문번호가 들어갈 예정입니다.</p>
+                <p>{payId}</p>
               </div>
               <div className='payBox'>
                 <h4>구독 상품</h4>
-                <p>{localStorage.getItem('plan')}개월 정기결제</p>
+                <p>{plan}개월 정기결제</p>
               </div>
               <div className='payBox'>
                 <h4>이용 기간</h4>
-                <p>yyyy.mm.dd. hh:mm ~ yyyy.mm.dd. hh:mm</p>
+                <p>{`${moment(billStart).format('YYYY-MM-DD')} ~ ${exp}`}</p>
               </div>
               <div className='payBox' style={{ backgroundColor: "#f9f9f9" }}>
                 <h4>주문 총액</h4>
-                <p>₩ 234,000</p>
+                {plan === '1' && <p>₩ 25,000</p>}
+                {plan === '3' && <p>₩ 60,000</p>}
+                {plan === '6' && <p>₩ 90,000</p>}
               </div>
               <div className='payBox'>
                 <h4>주문일시</h4>
-                <p>yyyy-mm-dd hh:mm:ss</p>
+                <p>{billStart}</p>
               </div>
               <div className='payBox'>
                 <h4>주문 상태</h4>
-                <p>2021.11.03</p>
+                <p>{plan}개월 결제 중</p>
               </div>
               <div className='payBox'>
                 <h4>결제 수단</h4>
-                <p>2021.11.03 ~ 2022.11.03</p>
+                <p>{localStorage.getItem('isBill') && '신용카드/체크카드'}</p>
               </div>
             </Box>
             <BtnContent>

@@ -3,9 +3,11 @@ import axios from "axios";
 import { useHistory, Link } from "react-router-dom";
 import Layout from "../../Layout";
 import { Box, ResponsiveContext } from "grommet";
+import moment from 'moment';
 
-import * as config from "../../../config";
+import * as configUrl from "../../../config";
 import { authService } from "../../../firebaseConfig";
+import { toast } from "react-toastify";
 
 import styled from "styled-components";
 import Modal from "../../SmallModal";
@@ -13,6 +15,7 @@ import Modal from "../../SmallModal";
 const Mypage = () => {
   const size = useContext(ResponsiveContext);
   const History = useHistory();
+  let m = moment
 
   const [profile, SetProfile] = useState({
     isBill: false,
@@ -21,10 +24,13 @@ const Mypage = () => {
     uid: "",
     email: "",
     create: "",
+    billStart:"",
+    payId:"",
+    exp: '',
   });
   const [isOpen, SetOpen] = useState(false);
 
-  const { isBill, userName, plan, uid, email, create } = profile;
+  const { isBill, userName, plan, uid, email, create, billStart, payId, exp } = profile;
 
   const signOut = async () => {
     await localStorage.removeItem("token");
@@ -52,15 +58,20 @@ const Mypage = () => {
     const loginCheck = localStorage.getItem("token");
     const email = localStorage.getItem("email");
     const create = localStorage.getItem("create");
-
+    
     if (loginCheck !== null) {
       axios
-        .get(`${config.SERVER_URL}/profile`, {
+        .get(`${configUrl.SERVER_URL}/profile`, {
           headers: { authentication: loginCheck },
         })
         .then((response) => {
           console.log(response.data);
           let data = response.data;
+
+          let MonthLater = moment(data.billStartDate).add(data.plan,'months').toDate();
+          let formatMonth = moment(MonthLater).format('YYYY-MM-DD');
+          
+          console.log(MonthLater, formatMonth);
           SetProfile({
             ...profile,
             isBill: data.isBill,
@@ -69,6 +80,9 @@ const Mypage = () => {
             uid: data.uid,
             email: email,
             create: create,
+            billStart: data.billStartDate,
+            payId: data.lastPayTid,
+            exp: formatMonth,
           });
           // console.log(isBill, userName,plan,uid,email)
         });
@@ -76,6 +90,26 @@ const Mypage = () => {
       History.replace("/");
     }
   }, []);
+
+
+  useEffect(()=>{
+    authService.onAuthStateChanged(async (user) => {
+      if (authService.currentUser) {
+        authService.currentUser
+          .getIdToken()
+          .then(async (data) => {
+            await localStorage.setItem("token", data);
+
+          })
+          .catch(async (error) => {
+            toast.info(`로그인이 필요합니다!`, {
+              style:{backgroundColor:'#fff', color:'#000'},
+               progressStyle:{backgroundColor:'#7D4CDB'}
+              });
+          });
+      }
+  })},[]);
+
 
   return (
     <>
@@ -104,7 +138,7 @@ const Mypage = () => {
             </div>
             <div className='dataBox'>
               <p>회원가입 일시</p>
-              <p>{create}</p>
+              <p>{moment(create).format('YYYY-MM-DD hh:mm:ss')}</p>
             </div>
             <div className='dataBox'>
               <p>결제 내역</p>
@@ -120,9 +154,9 @@ const Mypage = () => {
             <div className='dataBox'>
               <p>구독 상품</p>
               <div className='payData'>
-                <p>{localStorage.getItem('plan') === 'free' ? '결제한 구독 상품이 없습니다!' : `${localStorage.getItem('plan')}개월 구독 상품`}</p>
+                <p>{plan === 'free' ? '결제한 구독 상품이 없습니다!' : `${plan}개월 구독 상품`}</p>
                 <div>
-                  {localStorage.getItem('plan') !== 'free' && (
+                  {plan !== 'free' && (
                     <>
                   <Link to='/signIn'>
                   <button>멤버십 변경</button>
@@ -134,23 +168,26 @@ const Mypage = () => {
             </div>
             <div className='dataBox'>
               <p>구독 시작일</p>
-              <p>2021.11.03</p>
+              <p>{localStorage.getItem('isBill') !== false ? billStart : '없음'}</p>
             </div>
             <div className='dataBox'>
               <p>이용 기간</p>
-              <p>2021.11.03 ~ 2022.11.03</p>
+              <p>{`${moment(billStart).format('YYYY-MM-DD')} ~ ${exp}`}</p>
             </div>
             <div className='dataBox'>
               <p>다음 결제 예정일</p>
-              <p>없음</p>
+              <p>{exp}</p>
             </div>
             <div className='dataBox'>
               <p>결제 예정 금액</p>
-              <p>없음</p>
+              {plan === '1' && <p>₩ 25,000</p>}
+              {plan === '3' && <p>₩ 60,000</p>}
+              {plan === '6' && <p>₩ 90,000</p>}
+              {plan === '' && <p>없음</p>}
             </div>
             <div className='dataBox'>
               <p>결제 수단</p>
-              <p>없음</p>
+              <p>{localStorage.getItem('isBill') !== false ? '신용카드/체크카드' : '없음'}</p>
             </div>
           </Box>
           <Box className='BtnContent'>
