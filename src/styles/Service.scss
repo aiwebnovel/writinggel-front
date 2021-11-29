@@ -453,16 +453,20 @@ select::-ms-expand {
     }
 }
 
+.outputContainer {
+    padding: 120px 0;
+}
+
 //bloger
 
 .blogMainBox {
     width: 100%;
     gap: 30px;
-    padding: 0 120px;
+    // padding: 0 120px;
 
 
     @media screen and (max-width: 768px) {
-        padding: 60px 30px;
+        padding: 100px 30px;
     }
 
 }
@@ -799,12 +803,11 @@ select::-ms-expand {
 
 .LyricOutputBox {
     width: 50%;
+    border: 1px solid $dark-1;
 
     >textarea {
         resize: none;
-        border-bottom: 0;
-        padding: 10px;
-        font-size: 1rem;
+ 
         height: 500px;
 
         &:focus {
@@ -818,19 +821,21 @@ select::-ms-expand {
 
 }
 
+.LyricContent {
+    background-color: $white-1;
+    height: 500px;
+    padding: 10px;
+    font-size: 1rem;
+}
+
 .icons {
-    border: 1px solid #444;
-    border-top: 0;
     background-color: #f9f9f9;
     padding: 10px 0;
-
-    >div {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 20px;
-        cursor: pointer;
-    }
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    cursor: pointer;
 }
 
 //Business
