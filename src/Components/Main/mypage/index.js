@@ -161,7 +161,7 @@ const Mypage = () => {
                   <Link to='/signIn'>
                   <button>멤버십 변경</button>
                   </Link>
-                  <button onClick={HandleDelete}>멤버십 해제</button>
+                  <button onClick={HandleDelete}>멤버십 해지</button>
                   </>)}
                 </div>
               </div>
@@ -202,13 +202,14 @@ const Mypage = () => {
       </Box>
     </Layout>
     <Modal open={isOpen} close={HandleModals} >
-      <div>
-        <div>
+      <div className="unSubBox">
+        <div className="unSubText">
         <p>멤버십을 해지하시겠어요?</p>
-        <p>해지 후에도 현 결제 주기 마지막 날까지는 이용할 수 있습니다.</p>
+        <p>해지 후에도 현재 결제 주기 마지막 날까지는</p>
+        <p>이용할 수 있습니다.</p>
         </div>
-        <div>
-          <button>계속 이용하기</button>
+        <div className="unSubBtn">
+          <button onClick={HandleModals}>계속 이용하기</button>
           <button>해지 하기</button>
         </div>
       </div>

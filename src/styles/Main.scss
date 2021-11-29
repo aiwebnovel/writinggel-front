@@ -9,6 +9,7 @@ $sub2 : #ffce1f;
 $white-1 : #fff;
 $white-2 : #f9f9f9;
 $dark-1 : #444;
+$red: #f45752;
 // Home , /Main 쪽 파일들(Membership 폴더 제외)
 
 //공통
@@ -1049,6 +1050,34 @@ hr {
     padding: 12px 45px;
     font-size: 1rem;
     margin-top: 5px;
+}
+
+.unSubText {
+    text-align: center;
+    margin-bottom : 15px;
+}
+
+.unSubBtn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    
+    > button:first-child {
+        background-color : $main;
+        border: 1px solid $main;
+        padding: 8px 15px;
+        color: $white-1;
+        cursor: pointer;
+    }
+
+    > button:nth-child(2) {
+        background-color: $red;
+        border: 1px solid $red;
+        padding: 8px 15px;
+        color: $white-1;
+        cursor: pointer;
+    }
 }
 
 // .UserContent, .BtnContent {

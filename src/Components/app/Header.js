@@ -206,7 +206,7 @@ const Header = () => {
             <p className='ServicePlan'>
               {localStorage.getItem("plan") === "undefined"
                 ? "Guest"
-                : localStorage.getItem("plan")}
+                : `${localStorage.getItem("plan")}개월 구독`}
             </p>
             <hr style={{ width: "100%", color: "#3b2477" }} />
             <div className='ServiceAfterLoginBottom'>
