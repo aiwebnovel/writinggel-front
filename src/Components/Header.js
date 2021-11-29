@@ -211,8 +211,8 @@ const Header = () => {
         </Nav>
         {size !== "small" ? (
           <Nav direction='row' className='Menus' gap='large' align='center'>
-            <Link to='/explain'>
-              <MemButton>멤버십 가입</MemButton>
+            <Link to={localStorage.getItem('isBill') === false ? '/explain' : '/signIn'}>
+              <MemButton>{localStorage.getItem('isBill') === false ? '멤버십 가입' : '멤버십 변경'}</MemButton>
             </Link>
             <Link to='/brand'>브랜드 소개</Link>
             <span className='DropMenu'>
@@ -277,7 +277,7 @@ const Header = () => {
           SetShow(false);
         }}>
           <Nav direction='column' className='MobileMenus'>
-            <Link to='/explain'>멤버십 가입</Link>
+            <Link to={localStorage.getItem('isBill') === false ? '/explain' : '/signIn'}>{localStorage.getItem('isBill') === false ? '멤버십 가입' : '멤버십 변경'}</Link>
             <Link to='/brand'>브랜드 소개</Link>
             <span className='DropMenu' onClick={HandleMobile}>
               인공지능 글쓰기 서비스 <Down size='small' /></span>

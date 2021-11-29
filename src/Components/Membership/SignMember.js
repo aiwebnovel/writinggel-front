@@ -188,8 +188,9 @@ const SignMember = () => {
   const ChangeBill = () => {
     
     if(Plan !== localStorage.getItem('plan')) {
+     
+      SetLoading(true);
       let plans = parseInt(Plan);
-      
       const config = {
         method: "put",
         url: `${configUrl.SERVER_URL}/pay`,
@@ -201,6 +202,7 @@ const SignMember = () => {
       axios(config)
         .then((response) => {
           console.log(response);
+          SetLoading(false)
           setTimeout(toast.success(response.data.log),5000);
         })
         .catch((error) => {
@@ -266,8 +268,6 @@ const SignMember = () => {
         })
         .then((response) => {
           console.log(response)
-          // // localStorage.setItem("userUid", response.data.uid);
-          // localStorage.setItem("plan", Plan);
           
         })
         .catch((error) => {
@@ -469,7 +469,7 @@ const SignMember = () => {
               <p>₩{Price}</p>
             </div>
             <div style={payButton}>
-              <button className='creditCardButton' onClick={localStorage.getItem('isBill') !== false ? RequestBill : ChangeBill}>
+              <button className='creditCardButton' onClick={localStorage.getItem('isBill') !== false ? ChangeBill:  RequestBill }>
                 {localStorage.getItem('isBill') !== false ? '변경하기' : '결제하기'}
               </button>
               {/* <button className='creditCardButton' onClick={deltePay}>결제 취소</button> */}
