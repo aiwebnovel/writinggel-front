@@ -8,6 +8,7 @@ import { ResponsiveContext } from "grommet";
 import { authService, firebaseInstance } from "../../firebaseConfig";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { OuterClick } from "react-outer-click";
 
 import * as config from "../../config";
 import "../../styles/Service.scss";
@@ -132,6 +133,10 @@ const Header = () => {
         )}
       </HeaderLayout>
       {isShow && (
+        <OuterClick onOuterClick={(event) => {
+          // event.preventDefault();
+          //console.log("Clicked outside");
+          SetShow(false);}}>
         <Box
           style={size === "small" ? {width: '100%'} : {height:'100%'}}
           animation={
@@ -190,6 +195,7 @@ const Header = () => {
             </ul>
           </Nav>
         </Box>
+        </OuterClick>
       )}
       {isShowMenu && (
         <div>

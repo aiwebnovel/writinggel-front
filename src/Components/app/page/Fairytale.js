@@ -11,6 +11,7 @@ import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
+import { OuterClick } from "react-outer-click";
 
 import ServiceLayout from "../Layout";
 import styled from "styled-components";
@@ -26,7 +27,7 @@ const Fairytale = () => {
     {
       id: 2,
       title: "주요 인물",
-    }, 
+    },
     {
       id: 3,
       title: "장소",
@@ -51,8 +52,8 @@ const Fairytale = () => {
   const [Output, SetOutput] = useState(["", ""]);
   const [OutputTemp, SetOutputTemp] = useState("");
   const [tempLength, SetLength] = useState(0);
-  const [newLength, SetNewLength] = useState(0)
-  const [start, SetStart] = useState('write')
+  const [newLength, SetNewLength] = useState(0);
+  const [start, SetStart] = useState("write");
 
   const handleSider = () => {
     SetSider(!isSider);
@@ -71,7 +72,6 @@ const Fairytale = () => {
     theme: "", //Theme
   });
 
-
   const HandleInput = (e) => {
     // console.log("e", e);
     // console.log("category", e.target.name);
@@ -86,7 +86,7 @@ const Fairytale = () => {
     if (e.target.name === "주요 인물") {
       Setcategory({
         ...category,
-        
+
         mainCharacter: e.target.value,
       });
     }
@@ -94,7 +94,6 @@ const Fairytale = () => {
       Setcategory({
         ...category,
         location: e.target.value,
-        
       });
     }
     if (e.target.name === "주요 사건") {
@@ -109,26 +108,23 @@ const Fairytale = () => {
         theme: e.target.value,
       });
     }
-    
   };
 
-  const HandleStory = (e) =>  {
-      SetStart('Need a Story');
-      SetOutput([e.target.value,Output[1]]);
-      let OutputLength = Output[0].length;
-      let Length = OutputLength - tempLength;
-      SetNewLength(Length);
-     // console.log(Length);
-      //console.log(newLength);
+  const HandleStory = (e) => {
+    SetStart("Need a Story");
+    SetOutput([e.target.value, Output[1]]);
+    let OutputLength = Output[0].length;
+    let Length = OutputLength - tempLength;
+    SetNewLength(Length);
+    // console.log(Length);
+    //console.log(newLength);
 
-      if(newLength> 100) {
-        SetStart('Continue');
-      } 
-    
-  }
+    if (newLength > 100) {
+      SetStart("Continue");
+    }
+  };
 
   const FairytaleAxios = async () => {
-
     if (
       category.genre.length > 0 &&
       category.mainCharacter.length > 0 &&
@@ -157,21 +153,18 @@ const Fairytale = () => {
           .then((response) => {
             // console.log(response.data);
 
-            if(response.data[0] === '' ){
-              toast.error('적어주신 키워드가 적절하지 않은 것 같습니다.😭 재시도 해주세요!');
+            if (response.data[0] === "") {
+              toast.error(
+                "적어주신 키워드가 적절하지 않은 것 같습니다.😭 재시도 해주세요!"
+              );
               SetLoading(false);
             } else {
-            SetOutput([
-              response.data[0],
-              response.data[1],
-            ]);
-            SetOutputTemp(Output[0]+response.data[0]);
-            SetLength((Output[0]+response.data[0]).length);
-            SetStart('Need a Story');
-            SetIsHuman(true);
-
-
-          }
+              SetOutput([response.data[0], response.data[1]]);
+              SetOutputTemp(Output[0] + response.data[0]);
+              SetLength((Output[0] + response.data[0]).length);
+              SetStart("Need a Story");
+              SetIsHuman(true);
+            }
           })
           .catch((error) => {
             console.log(error);
@@ -200,17 +193,19 @@ const Fairytale = () => {
           await axios(config)
             .then((response) => {
               //console.log(response.data);
-              if(response.data[0] === '' ){
-                toast.error('결과물에 유해한 내용이 들어가 버렸어요. 😭 재시도 해주세요!');
+              if (response.data[0] === "") {
+                toast.error(
+                  "결과물에 유해한 내용이 들어가 버렸어요. 😭 재시도 해주세요!"
+                );
                 SetLoading(false);
-              }else {
+              } else {
                 SetOutput([
                   Output[0] + response.data[0],
                   Output[1] + response.data[1],
                 ]);
-                SetOutputTemp(Output[0]+ response.data[0]);
-                SetLength((Output[0]+ response.data[0]).length);
-                SetStart('Need a Story');
+                SetOutputTemp(Output[0] + response.data[0]);
+                SetLength((Output[0] + response.data[0]).length);
+                SetStart("Need a Story");
               }
             })
             .catch((error) => {
@@ -220,9 +215,7 @@ const Fairytale = () => {
               SetLoading(false);
             });
         } else {
-          toast.info(`${100-newLength}자를 더 채워주세요!`);
-
-          
+          toast.info(`${100 - newLength}자를 더 채워주세요!`);
         }
       }
     } else {
@@ -230,104 +223,99 @@ const Fairytale = () => {
     }
   };
 
-
-  const UpdateFairytale = async() => {
+  const UpdateFairytale = async () => {
     //console.log('log',  Output, OutputTemp, tempLength,)
 
     SetIsHuman(false);
-    if( category.genre.length > 0 &&
+    if (
+      category.genre.length > 0 &&
       category.mainCharacter.length > 0 &&
       category.Case.length > 0 &&
       category.location.length > 0 &&
-      category.theme.length > 0){
+      category.theme.length > 0
+    ) {
+      SetLoading(true);
 
-        SetLoading(true);
+      const config = {
+        method: "post",
+        url: `${configUrl.SERVER_URL}/writinggel/fairytale`,
+        headers: { authentication: localStorage.getItem("token") },
+        data: {
+          Story: "",
+          Genre: category.genre,
+          Main_character: category.mainCharacter,
+          Period: category.Case,
+          Location: category.location,
+          Theme: category.theme,
+        },
+      };
 
-        const config = {
-          method: "post",
-          url: `${configUrl.SERVER_URL}/writinggel/fairytale`,
-          headers: { authentication: localStorage.getItem("token") },
-          data: {
-            Story: '',
-            Genre: category.genre,
-            Main_character: category.mainCharacter,
-            Period: category.Case,
-            Location: category.location,
-            Theme: category.theme,
-          },
-        };
+      await axios(config)
+        .then((response) => {
+          // console.log(response.data);
 
-        await axios(config)
-          .then((response) => {
-           // console.log(response.data);
-
-            if(response.data[0] === ''){
-              toast.error('결과물에 유해한 내용이 들어가 버렸어요. 😭 재시도 해주세요!');
-              SetLoading(false);
-            } else {
-            SetOutput([
-              response.data[0],
-              response.data[1],
-            ]);
+          if (response.data[0] === "") {
+            toast.error(
+              "결과물에 유해한 내용이 들어가 버렸어요. 😭 재시도 해주세요!"
+            );
+            SetLoading(false);
+          } else {
+            SetOutput([response.data[0], response.data[1]]);
             SetOutputTemp(response.data[0]);
             SetLength(response.data[0].length);
-            SetStart('Need a Story')
+            SetStart("Need a Story");
             SetIsHuman(true);
           }
-          })
-          .catch((error) => {
-            console.log(error);
-          })
-          .finally(() => {
-            SetLoading(false);
-          });
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+        .finally(() => {
+          SetLoading(false);
+        });
+    }
+  };
 
-      }
-  }
-
-  const SaveContent = async() => {
-    
-    if(Output){
+  const SaveContent = async () => {
+    if (Output) {
       const config = {
         method: "post",
         url: `${configUrl.SERVER_URL}/archive`,
         headers: { authentication: localStorage.getItem("token") },
         data: {
           story: Output[0],
-          category:'동화',
-        }
+          category: "동화",
+        },
       };
 
       await axios(config)
         .then(async (response) => {
-         
           toast.success(`${response.data.log}`);
         })
         .catch(async (error) => {
           console.log(error);
-          if(error.response.status === 403) {
-            toast.error('보관함이 꽉 찼습니다!');
+          if (error.response.status === 403) {
+            toast.error("보관함이 꽉 찼습니다!");
           }
 
           if (error.response.status === 500) {
             toast.error("해당 에러는 관리자에게 문의해주세요!");
           }
         });
-      }else {
-        toast.info('저장할 결과가 없습니다!');  
-      }
-  }
-
+    } else {
+      toast.info("저장할 결과가 없습니다!");
+    }
+  };
 
   const ResetData = () => {
     SetOutput(["", ""]);
-    SetOutputTemp('');
+    SetOutputTemp("");
     SetLength(0);
     SetNewLength(0);
-    SetStart('write');
+    SetStart("write");
     SetIsHuman(false);
     handleSider(false);
-  }
+  };
 
   useEffect(() => {
     const loginCheck = localStorage.getItem("token");
@@ -344,7 +332,7 @@ const Fairytale = () => {
   return (
     <ServiceLayout>
       {isLoading && <Loading />}
-      <Box className="ServiceContainerVh" background="#f9f9f9">
+      <Box className='ServiceContainerVh' background='#f9f9f9'>
         <Grid
           fill
           rows={size !== "small" ? ["auto", "flex"] : ["auto", "auto"]}
@@ -362,45 +350,53 @@ const Fairytale = () => {
           }
         >
           {isSider ? (
-            <Box gridArea="sidebar" className="sideContainer" gap="medium">
-              <SiderBtn onClick={handleSider}>
-                <Close />
-              </SiderBtn>
-              <Box align="center" gap="large">
-                <Accordion className="AcoStyle" multiple>
-                  {AccodianData.map((item) => (
-                    <AccordionPanel
-                      key={item.id}
-                      label={item.title}
-                      className="AcoPanelStyle"
-                    >
-                      <div className="AcoInput">
-                        <input
-                          type="text"
-                          name={item.title}
-                          onChange={(e) => HandleInput(e)}
-                        />
-                        {/* <button>추가</button> */}
-                      </div>
-                    </AccordionPanel>
-                  ))}
-                  <div className="writeBtn">
-                    <button onClick={() => FairytaleAxios()}>{start}</button>
-                  </div>
-                </Accordion>
-              </Box>
+            <Box gridArea='sidebar' className='sideContainer' gap='medium'>
+              <OuterClick
+                onOuterClick={(event) => {
+                  //event.preventDefault();
+                  //console.log("Clicked outside");
+                  SetSider(false);
+                }}
+              >
+                <SiderBtn onClick={handleSider}>
+                  <Close />
+                </SiderBtn>
+                <Box align='center' gap='large'>
+                  <Accordion className='AcoStyle' multiple>
+                    {AccodianData.map((item) => (
+                      <AccordionPanel
+                        key={item.id}
+                        label={item.title}
+                        className='AcoPanelStyle'
+                      >
+                        <div className='AcoInput'>
+                          <input
+                            type='text'
+                            name={item.title}
+                            onChange={(e) => HandleInput(e)}
+                          />
+                          {/* <button>추가</button> */}
+                        </div>
+                      </AccordionPanel>
+                    ))}
+                    <div className='writeBtn'>
+                      <button onClick={() => FairytaleAxios()}>{start}</button>
+                    </div>
+                  </Accordion>
+                </Box>
+              </OuterClick>
             </Box>
           ) : (
             <Box
-              gridArea="sidebar"
-              className="isSiderFalse"
+              gridArea='sidebar'
+              className='isSiderFalse'
               gap={size !== "small" && "medium"}
             >
-              <div className="SiderBtn" onClick={handleSider}>
-                <Add size="small" />
+              <div className='SiderBtn' onClick={handleSider}>
+                <Add size='small' />
                 <span>열기</span>
               </div>
-              <div className="OpenBtn" onClick={handleOpen}>
+              <div className='OpenBtn' onClick={handleOpen}>
                 <span>📌 필독</span>
               </div>
             </Box>
@@ -408,58 +404,67 @@ const Fairytale = () => {
 
           {isOpen && (
             <Box
-              gridArea="sidebar"
-              className="sideContainer"
+              gridArea='sidebar'
+              className='sideContainer'
               gap={size !== "small" && "medium"}
             >
-              <div className="CloseSiderBtn" onClick={handleOpen}>
-                <Close />
-              </div>
-              <Box className="guide-Accordion">
-                <div className="guide-PanelHeader">Q. How to Use?</div>
+              <OuterClick
+                onOuterClick={(event) => {
+                  //event.preventDefault();
+                  //console.log("Clicked outside");
+                  SetOpen(false);
+                }}
+              >
+                <div className='CloseSiderBtn' onClick={handleOpen}>
+                  <Close />
+                </div>
+                <Box className='guide-Accordion'>
+                  <div className='guide-PanelHeader'>Q. How to Use?</div>
 
-                <div className="guide-PanelContent ">
-                  <h4>💫 팅젤이와 함께 글 쓰는 TING!</h4>
-                  <div>
-                    <img src="/tinggle.png" alt="tingting" />
+                  <div className='guide-PanelContent '>
+                    <h4>💫 팅젤이와 함께 글 쓰는 TING!</h4>
                     <div>
-                      <p>1. 원하는 키워드나 글을 입력해주세요!</p>
-                      <p>
-                        2. write 버튼을 누르면 팅젤이가 여러분의 글 위에
-                        아이디어💡를 얹어줄거에요!
-                      </p>
-                      <p>3. 팅젤이가 얹어준 아이디어를 활용해봐요!</p>
+                      <img src='/tinggle.png' alt='tingting' />
+                      <div>
+                        <p>1. 원하는 키워드나 글을 입력해주세요!</p>
+                        <p>
+                          2. write 버튼을 누르면 팅젤이가 여러분의 글 위에
+                          아이디어💡를 얹어줄거에요!
+                        </p>
+                        <p>3. 팅젤이가 얹어준 아이디어를 활용해봐요!</p>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </Box>
+                </Box>
+              </OuterClick>
             </Box>
           )}
 
           <Box
             fill
-            gridArea="main"
-            className="mainBox"
-            justify="center"
-            align="center"
+            gridArea='main'
+            className='mainBox'
+            justify='center'
+            align='center'
             // pad={size !== 'small' ? 'medium': 'large'}
           >
-            <div className="mainOutputBox">
+            <div className='mainOutputBox'>
               <textarea
-                className="output1"
-                placeholder="결과가 나올예정이에요!"
+                className='output1'
+                placeholder='결과가 나올예정이에요!'
                 onChange={(e) => HandleStory(e)}
                 value={Output[0]}
               ></textarea>
               <textarea
-                className="output2"
-                placeholder="영어가 들어갈 예정입니다!"
+                className='output2'
+                placeholder='영어가 들어갈 예정입니다!'
                 value={Output[1]}
                 readOnly
               ></textarea>
             </div>
             <Icons>
-              <Download onClick={SaveContent}/> <Update onClick={UpdateFairytale}/> <Close onClick={ResetData}/>
+              <Download onClick={SaveContent} />{" "}
+              <Update onClick={UpdateFairytale} /> <Close onClick={ResetData} />
             </Icons>
           </Box>
         </Grid>

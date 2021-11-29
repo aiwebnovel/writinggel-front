@@ -1,10 +1,11 @@
 import { Box, Grid, ResponsiveContext } from "grommet";
-import { Copy, Close, Add, Download} from "grommet-icons";
+import { Copy, Close, Add, Download } from "grommet-icons";
 import React, { useEffect, useState, useContext } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { CopyToClipboard } from "react-copy-to-clipboard";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { OuterClick } from "react-outer-click";
 
 import axios from "axios";
 import * as configUrl from "../../../config";
@@ -121,30 +122,29 @@ const BlogIntro = () => {
           let resK = [];
           let resE = [];
 
-          if(response.data[0] === ''){
-            toast.error('적어주신 키워드가 적절하지 않은 것 같습니다.😭 재시도 해주세요!');
+          if (response.data[0] === "") {
+            toast.error(
+              "적어주신 키워드가 적절하지 않은 것 같습니다.😭 재시도 해주세요!"
+            );
             SetLoading(false);
-          }else {
+          } else {
             for (let i = 0; i < response.data.length; i++) {
               await resK.push(response.data[i][0]);
               await resE.push(response.data[i][1]);
             }
-  
+
             SetOutput({
               ...output,
               outputKorean: resK,
               outputEnglish: resE,
             });
-           
+
             SetLoading(false);
           }
 
           if (response.data[2] >= 2) {
-            toast.error(
-              `결과물에 유해한 내용이 들어가 버렸어요. 😭 `
-            );
+            toast.error(`결과물에 유해한 내용이 들어가 버렸어요. 😭 `);
           }
-          
         })
         .catch((error) => {
           //console.log(error);
@@ -185,7 +185,6 @@ const BlogIntro = () => {
     //console.log(outputKorean)
   }, [outputKorean, outputEnglish]);
 
-
   return (
     <ServiceLayout>
       {isLoading && <Loading />}
@@ -213,19 +212,27 @@ const BlogIntro = () => {
         >
           {isSider ? (
             <Box gridArea='sidebar' className='sideContainer' gap='medium'>
-              <div className='CloseSiderBtn' onClick={handleSider}>
-                <Close />
-              </div>
-              <Box align='center' gap='large'>
-                <div className='SiderBox'>
-                  <MenuItem to='/app/bloger/idea'>블로그 아이디어</MenuItem>
-                  <MenuItem to='/app/bloger/name'>블로그 개요</MenuItem>
-                  <MenuItem to='/app/bloger/title'>블로그 제목</MenuItem>
-                  <MenuItem to='/app/bloger/intro'>블로그 도입부</MenuItem>
-                  <MenuItem to='/app/bloger/keyword'>블로그 키워드</MenuItem>
-                  <MenuItem to='/app/bloger/follow'>블로그 이어쓰기</MenuItem>
+              <OuterClick
+                onOuterClick={(event) => {
+                  //event.preventDefault();
+                  //console.log("Clicked outside");
+                  SetSider(false);
+                }}
+              >
+                <div className='CloseSiderBtn' onClick={handleSider}>
+                  <Close />
                 </div>
-              </Box>
+                <Box align='center' gap='large'>
+                  <div className='SiderBox'>
+                    <MenuItem to='/app/bloger/idea'>블로그 아이디어</MenuItem>
+                    <MenuItem to='/app/bloger/name'>블로그 개요</MenuItem>
+                    <MenuItem to='/app/bloger/title'>블로그 제목</MenuItem>
+                    <MenuItem to='/app/bloger/intro'>블로그 도입부</MenuItem>
+                    <MenuItem to='/app/bloger/keyword'>블로그 키워드</MenuItem>
+                    <MenuItem to='/app/bloger/follow'>블로그 이어쓰기</MenuItem>
+                  </div>
+                </Box>
+              </OuterClick>
             </Box>
           ) : (
             <Box
@@ -249,6 +256,13 @@ const BlogIntro = () => {
               className='sideContainer'
               gap={size !== "small" && "medium"}
             >
+                            <OuterClick
+                onOuterClick={(event) => {
+                  //event.preventDefault();
+                  //console.log("Clicked outside");
+                  SetOpen(false);
+                }}
+              >
               <div className='CloseSiderBtn' onClick={handleOpen}>
                 <Close />
               </div>
@@ -261,7 +275,10 @@ const BlogIntro = () => {
                     <img src='/tinggle.png' alt='tingting' />
                     <div>
                       <p>1. 원하는 키워드나 글을 입력해주세요!</p>
-                      <p style={{color : 'gray'}}>❗️ +열기 버튼이 있는 경우는 눌러서 빈 칸을 채워주세요!(블로그 제외)</p>
+                      <p style={{ color: "gray" }}>
+                        ❗️ +열기 버튼이 있는 경우는 눌러서 빈 칸을
+                        채워주세요!(블로그 제외)
+                      </p>
                       <p>
                         2. write 버튼을 누르면 팅젤이가 여러분의 글 위에
                         아이디어💡를 얹어줄거에요!
@@ -271,6 +288,7 @@ const BlogIntro = () => {
                   </div>
                 </div>
               </Box>
+              </OuterClick>
             </Box>
           )}
 
@@ -308,7 +326,6 @@ const BlogIntro = () => {
 };
 
 export default BlogIntro;
-
 
 const MenuItem = styled(Link)`
   display: block;

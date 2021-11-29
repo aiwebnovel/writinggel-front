@@ -5,10 +5,6 @@ import Layout from "../Layout";
 import { Box } from "grommet";
 
 import * as configUrl from "../../config";
-// import { authService } from "../../firebaseConfig";
-
-// import styled from "styled-components";
-// import { toast } from "react-toastify";
 
 const PayResult = () => {
 
@@ -26,34 +22,59 @@ const PayResult = () => {
   // const { isBill, userName, plan, uid, email, create } = profile;
 
 
-  useEffect(() => {
-    const loginCheck = localStorage.getItem("token");
-    const email = localStorage.getItem("email");
-    const create = localStorage.getItem("create");
+  // useEffect(() => {
+  //   const loginCheck = localStorage.getItem("token");
+  //   const email = localStorage.getItem("email");
+  //   const create = localStorage.getItem("create");
 
-    if (loginCheck !== null) {
+  //   if (loginCheck !== null) {
+  //     axios
+  //       .get(`${configUrl.SERVER_URL}/profile`, {
+  //         headers: { authentication: loginCheck },
+  //       })
+  //       .then((response) => {
+  //         // console.log(response.data);
+  //         let data = response.data;
+  //         SetProfile({
+  //           ...profile,
+  //           isBill: data.isBill,
+  //           userName: data.name,
+  //           plan: data.plan,
+  //           uid: data.uid,
+  //           email: email,
+  //           create: create,
+  //         });
+  //         // console.log(isBill, userName,plan,uid,email)
+  //       });
+  //   } else {
+  //     History.replace("/");
+  //   }
+  // }, []);
+
+  const requestProfile = async() => {
+    let user = await localStorage.getItem("token");
+
+    if (user !== null) {
       axios
         .get(`${configUrl.SERVER_URL}/profile`, {
-          headers: { authentication: loginCheck },
+          headers: { authentication: user },
         })
         .then((response) => {
-          // console.log(response.data);
-          let data = response.data;
-          SetProfile({
-            ...profile,
-            isBill: data.isBill,
-            userName: data.name,
-            plan: data.plan,
-            uid: data.uid,
-            email: email,
-            create: create,
-          });
-          // console.log(isBill, userName,plan,uid,email)
+          console.log(response)
+          // localStorage.setItem("userUid", response.data.uid);
+          // localStorage.setItem("plan", response.data.plan);
+          
+        })
+        .catch((error) => {
+          console.log(error)
         });
-    } else {
-      History.replace("/");
     }
-  }, []);
+  }
+
+  useEffect(()=>{
+    requestProfile();
+  },[])
+
 
   return (
     <Layout>

@@ -1,8 +1,9 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import axios from 'axios';
 import Layout from "../Layout";
 import { Box, Grid, ResponsiveContext } from "grommet";
 import { Bookmark } from "grommet-icons";
+import Loading from "../Loading";
 
 import * as configUrl from '../../config';
 
@@ -10,9 +11,13 @@ import CreditCardInput from "react-credit-card-input";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import styled from "styled-components";
+import { useHistory } from "react-router";
 
 const SignMember = () => {
   const size = useContext(ResponsiveContext);
+  const history = useHistory();
+
+  const [isLoading, SetLoading] = useState(false);
   const [Selected, SetSelected] = useState({
   
     selected1: false,
@@ -67,7 +72,7 @@ const SignMember = () => {
         toast.error('멤버십을 선택해주세요!');
       }else {
         console.log('결제');
-
+   
         const now = new Date();
         let moidNum =  now.getFullYear() +
         "" +
@@ -87,15 +92,17 @@ const SignMember = () => {
           cardPwd: cardPwd, //카드 비밀번호 앞 2 자리
           idNum: idNum, //주민번호 앞 6 자리
           mid: "pgapppla1m", //상점 아이디
-          moid: moidNum, //가맹점 주문번호
+          moid: moidNum, //가맹점 주문번호,
           userId: (await localStorage.getItem("userUid")) + Math.random(),
         };
         console.log(option);
         await axios
           .post(`https://api.innopay.co.kr/api/regAutoCardBill`, option)
-          .then((response) => {
+          .then(async(response) => {
             let data = response.data;
              console.log('test',data);
+            await localStorage.setItem('moid', data.moid)
+
             if (data.resultCode === "F113") {
               toast.error(`error : ${data.resultMsg}!`);
             }
@@ -106,8 +113,9 @@ const SignMember = () => {
             }
   
             if (data.resultCode === "0000") {
-
+              SetLoading(true)
               let plans = parseInt(Plan);
+              console.log(plans);
               //let prices = parseInt(Price);
               let key = data.billKey;
               const config = {
@@ -123,12 +131,17 @@ const SignMember = () => {
 
               axios(config)
               .then(async(res)=>{
+                SetLoading(false);
                 console.log(res);
-                toast.success(`${res.data.log}`);
+
+
+                await history.push('/result')
+                setTimeout(toast.success(`${res.data.log}`),3000);
               })
               .catch((error) => {
                   console.log(error);
-            
+                  SetLoading(false)
+                  toast.error(`error! 혹시 이미 결제된 계정 아닌가요?`)
               });
 
                            
@@ -139,7 +152,7 @@ const SignMember = () => {
           })
           .catch((error) => {
             console.log(error);
-      
+            
           });
       //history.push('/payment')
   
@@ -151,22 +164,24 @@ const SignMember = () => {
   
   };
 
-  // const deltePay = () => {
+  //결제 취소
+
+  const deltePay = () => {
       
-  //   const config = {
-  //     method: "delete",
-  //     url: `${configUrl.SERVER_URL}/pay`,
-  //     headers: { authentication: localStorage.getItem("token") },
-  //   };
-  //   axios(config)
-  //     .then((response) => {
-  //       console.log(response);
-  //       toast.success(response.data.log);
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     });
-  // }
+    const config = {
+      method: "delete",
+      url: `${configUrl.SERVER_URL}/pay`,
+      headers: { authentication: localStorage.getItem("token") },
+    };
+    axios(config)
+      .then((response) => {
+        console.log(response);
+        toast.success(response.data.log);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
 
   //결제 변경
 
@@ -186,7 +201,7 @@ const SignMember = () => {
       axios(config)
         .then((response) => {
           console.log(response);
-          toast.success(response.data.log);
+          setTimeout(toast.success(response.data.log),5000);
         })
         .catch((error) => {
           console.log(error);
@@ -241,8 +256,34 @@ const SignMember = () => {
     }
   };
 
+  const requestProfile = async() => {
+    let user = await localStorage.getItem("token");
+
+    if (user !== null) {
+      axios
+        .get(`${configUrl.SERVER_URL}/profile`, {
+          headers: { authentication: user },
+        })
+        .then((response) => {
+          console.log(response)
+          // // localStorage.setItem("userUid", response.data.uid);
+          // localStorage.setItem("plan", Plan);
+          
+        })
+        .catch((error) => {
+          console.log(error)
+        });
+    }
+  }
+
+  useEffect(()=>{
+    requestProfile();
+  },[])
+
+
   return (
     <Layout>
+       {isLoading && <Loading />}
       <Box fill justify='center' align='center'>
         <Box
           fill
@@ -252,7 +293,7 @@ const SignMember = () => {
           justify='center'
           align='baseline'
         >
-          <h3>{localStorage.getItem('isBill') !== true ? '멤버십 가입하기' : '멤버십 변경하기'}</h3>
+          <h3>{localStorage.getItem('isBill') !== false ? '멤버십 변경하기': '멤버십 가입하기'}</h3>
         </Box>
 
         <p style={pStyle}>1. 원하시는 멤버십 주기를 클릭해주세요.</p>
@@ -300,7 +341,7 @@ const SignMember = () => {
                   </p>
                   <p>3개월마다 결제</p>
                 <ChoiceBtn
-                  name='3 48,000'
+                  name='3 60,000'
                   onClick={(e) => HandleSelected(e)}
                 >
                   선택
@@ -323,7 +364,7 @@ const SignMember = () => {
                   </p>
                   <p>6개월마다 결제</p>
                 <ChoiceBtn
-                  name='6 60,000'
+                  name='6 90,000'
                   onClick={(e) => HandleSelected(e)}
                 >
                   선택
@@ -428,8 +469,8 @@ const SignMember = () => {
               <p>₩{Price}</p>
             </div>
             <div style={payButton}>
-              <button className='creditCardButton' onClick={localStorage.getItem('isBill') !== true ? RequestBill : ChangeBill}>
-                {localStorage.getItem('isBill') !== true ? '결제하기' :'변경하기'}
+              <button className='creditCardButton' onClick={localStorage.getItem('isBill') !== false ? RequestBill : ChangeBill}>
+                {localStorage.getItem('isBill') !== false ? '변경하기' : '결제하기'}
               </button>
               {/* <button className='creditCardButton' onClick={deltePay}>결제 취소</button> */}
             </div>

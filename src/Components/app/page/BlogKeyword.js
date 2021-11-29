@@ -4,6 +4,7 @@ import React, { useEffect, useState, useContext } from "react";
 import { Link, useHistory } from "react-router-dom";
 import axios from "axios";
 import * as configUrl from "../../../config";
+import { OuterClick } from "react-outer-click";
 
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -20,18 +21,16 @@ const BlogKeyword = () => {
   const [isSider, SetSider] = useState(false);
   const [isLoading, SetLoading] = useState(false);
   const [isOpen, SetOpen] = useState(false);
-  const [keyword, SetKeyword] = useState('');
+  const [keyword, SetKeyword] = useState("");
 
   const [keywordOutput, SetOutput] = useState([]);
 
   const handleSider = () => {
-    console.log('click');
     SetOpen(false);
     SetSider(!isSider);
   };
 
   const handleOpen = () => {
-    console.log('click');
     SetSider(false);
     SetOpen(!isOpen);
   };
@@ -73,10 +72,12 @@ const BlogKeyword = () => {
               progressStyle: { backgroundColor: "#7D4CDB" },
             });
             localStorage.removeItem("token");
-          } 
-          
-         if(error.response.status === 500) {
-            toast.error(`적어주신 키워드가 적절하지 않은 것 같습니다.😭 재시도 해주세요!`);
+          }
+
+          if (error.response.status === 500) {
+            toast.error(
+              `적어주신 키워드가 적절하지 않은 것 같습니다.😭 재시도 해주세요!`
+            );
             SetLoading(false);
           }
         });
@@ -111,8 +112,8 @@ const BlogKeyword = () => {
         .catch(async (error) => {
           console.log(error);
 
-          if(error.response.status === 403) {
-            toast.error('보관함이 꽉 찼습니다!');
+          if (error.response.status === 403) {
+            toast.error("보관함이 꽉 찼습니다!");
           }
 
           if (error.response.status === 500) {
@@ -162,19 +163,27 @@ const BlogKeyword = () => {
         >
           {isSider ? (
             <Box gridArea='sidebar' className='sideContainer' gap='medium'>
-              <div className='CloseSiderBtn' onClick={handleSider}>
-                <Close />
-              </div>
-              <Box align='center' gap='large'>
-                <div className='SiderBox'>
-                  <MenuItem to='/app/bloger/idea'>블로그 아이디어</MenuItem>
-                  <MenuItem to='/app/bloger/name'>블로그 개요</MenuItem>
-                  <MenuItem to='/app/bloger/title'>블로그 제목</MenuItem>
-                  <MenuItem to='/app/bloger/intro'>블로그 도입부</MenuItem>
-                  <MenuItem to='/app/bloger/keyword'>블로그 키워드</MenuItem>
-                  <MenuItem to='/app/bloger/follow'>블로그 이어쓰기</MenuItem>
+              <OuterClick
+                onOuterClick={() => {
+                  //event.preventDefault();
+                  //console.log("Clicked outside");
+                  SetSider(false);
+                }}
+              >
+                <div className='CloseSiderBtn' onClick={handleSider}>
+                  <Close />
                 </div>
-              </Box>
+                <Box align='center' gap='large'>
+                  <div className='SiderBox'>
+                    <MenuItem to='/app/bloger/idea'>블로그 아이디어</MenuItem>
+                    <MenuItem to='/app/bloger/name'>블로그 개요</MenuItem>
+                    <MenuItem to='/app/bloger/title'>블로그 제목</MenuItem>
+                    <MenuItem to='/app/bloger/intro'>블로그 도입부</MenuItem>
+                    <MenuItem to='/app/bloger/keyword'>블로그 키워드</MenuItem>
+                    <MenuItem to='/app/bloger/follow'>블로그 이어쓰기</MenuItem>
+                  </div>
+                </Box>
+              </OuterClick>
             </Box>
           ) : (
             <Box
@@ -198,31 +207,39 @@ const BlogKeyword = () => {
               className='sideContainer'
               gap={size !== "small" && "medium"}
             >
-              <div className='CloseSiderBtn' onClick={handleOpen}>
-                <Close />
-              </div>
-              <Box className='guide-Accordion'>
-                <div className='guide-PanelHeader'>Q. How to Use?</div>
+              <OuterClick
+                onOuterClick={() => {
+                  //event.preventDefault();
+                  //console.log("Clicked outside");
+                  SetOpen(false);
+                }}
+              >
+                <div className='CloseSiderBtn' onClick={handleOpen}>
+                  <Close />
+                </div>
+                <Box className='guide-Accordion'>
+                  <div className='guide-PanelHeader'>Q. How to Use?</div>
 
-                <div className='guide-PanelContent '>
-                  <h4>💫 팅젤이와 함께 글 쓰는 TING!</h4>
-                  <div>
-                    <img src='/tinggle.png' alt='tingting' />
+                  <div className='guide-PanelContent '>
+                    <h4>💫 팅젤이와 함께 글 쓰는 TING!</h4>
                     <div>
-                      <p>1. 원하는 키워드나 글을 입력해주세요!</p>
-                      <p style={{ color: "gray" }}>
-                        ❗️ +열기 버튼이 있는 경우는 눌러서 빈 칸을
-                        채워주세요!(블로그 제외)
-                      </p>
-                      <p>
-                        2. write 버튼을 누르면 팅젤이가 여러분의 글 위에
-                        아이디어💡를 얹어줄거에요!
-                      </p>
-                      <p>3. 팅젤이가 얹어준 아이디어를 활용해봐요!</p>
+                      <img src='/tinggle.png' alt='tingting' />
+                      <div>
+                        <p>1. 원하는 키워드나 글을 입력해주세요!</p>
+                        <p style={{ color: "gray" }}>
+                          ❗️ +열기 버튼이 있는 경우는 눌러서 빈 칸을
+                          채워주세요!(블로그 제외)
+                        </p>
+                        <p>
+                          2. write 버튼을 누르면 팅젤이가 여러분의 글 위에
+                          아이디어💡를 얹어줄거에요!
+                        </p>
+                        <p>3. 팅젤이가 얹어준 아이디어를 활용해봐요!</p>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </Box>
+                </Box>
+              </OuterClick>
             </Box>
           )}
 
@@ -232,14 +249,10 @@ const BlogKeyword = () => {
             align='center'
             className='KeywordMainBox'
           >
-            <div  className='KeyContainer'>
+            <div className='KeyContainer'>
               <div className='keywordHeader'>
                 <Close className='close' onClick={resetData} />
-                 <LinkDown
-                   className='download'
-                   onClick={SaveContent}
-                 />
-          
+                <LinkDown className='download' onClick={SaveContent} />
               </div>
 
               <div className='keywordDiv'>
@@ -261,18 +274,16 @@ const BlogKeyword = () => {
               </div>
 
               <div className='resultBox'>
-              {keywordOutput && (
-                
-                <Grid
-                  columns={
-                    size !== "small"
-                      ? { count: 5, size: "auto" }
-                      : { count: 3, size: "auto" }
-                  }
-                  gap='small'
-                >
-                
-                {keywordOutput.map((data, i) => {
+                {keywordOutput && (
+                  <Grid
+                    columns={
+                      size !== "small"
+                        ? { count: 5, size: "auto" }
+                        : { count: 3, size: "auto" }
+                    }
+                    gap='small'
+                  >
+                    {keywordOutput.map((data, i) => {
                       return (
                         <button
                           className='keywordResult'
@@ -283,8 +294,8 @@ const BlogKeyword = () => {
                         </button>
                       );
                     })}
-                </Grid>
-            )}
+                  </Grid>
+                )}
               </div>
             </div>
           </Box>
