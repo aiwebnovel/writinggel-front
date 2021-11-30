@@ -120,7 +120,7 @@ $boxShadow : rgb(237 237 237) 2px 3px 8px;
         width: 100%;
         height: 50px;
         border: 0;
-        margin-bottom: 50px;
+        margin-bottom: 150px;
     }
 }
 
@@ -234,15 +234,18 @@ $boxShadow : rgb(237 237 237) 2px 3px 8px;
 
 .mainOutputBox {
     display: flex;
-    flex-direction: column;
+    // flex-direction: column;
     justify-content: center;
     align-items: center;
     gap: 15px;
     width: 100%;
+    padding: 0 20px;
 
-    @media screen and (max-width:768px) {
+    @media screen and (max-width:1024px) {
         flex-direction: column;
+        padding: 0;
     }
+
 }
 
 
@@ -297,6 +300,8 @@ $boxShadow : rgb(237 237 237) 2px 3px 8px;
     }
 
 }
+
+
 
 .ServiceDropMenu {
 
