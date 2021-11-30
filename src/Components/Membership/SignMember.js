@@ -12,6 +12,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import styled from "styled-components";
 import { useHistory } from "react-router";
+import Modal from "../SmallModal";
 
 const SignMember = () => {
   const size = useContext(ResponsiveContext);
@@ -21,6 +22,7 @@ const SignMember = () => {
   const element6 = useRef();
 
   const [isBill, SetBill] = useState(false);
+  const [isOpen, SetOpen] = useState(false);
 
   const [isLoading, SetLoading] = useState(false);
   const [Selected, SetSelected] = useState({
@@ -65,13 +67,18 @@ const SignMember = () => {
     }
   };
 
+  const HandleModals = () => {
+    SetOpen(!isOpen);
+  }
+
   // 결제 post
   const RequestBill = async () => {
     let user = await localStorage.getItem("token");
     console.log(Price, Plan);
     if (user !== null) {
       if (selected1 === false && selected2 === false && selected3 === false) {
-        toast.error("멤버십을 선택해주세요!");
+        //toast.error("멤버십을 선택해주세요!");
+        SetOpen(true);
       } else {
         console.log("결제");
 
@@ -103,6 +110,10 @@ const SignMember = () => {
             let data = response.data;
             console.log("test", data);
             await localStorage.setItem("moid", data.moid);
+
+            if(data.resultCode === 'F112') {
+              toast.error(`error : ${data.resultMsg}!`);
+            }
 
             if (data.resultCode === "F113") {
               toast.error(`error : ${data.resultMsg}!`);
@@ -149,10 +160,8 @@ const SignMember = () => {
           })
           .catch((error) => {
             console.log(error);
-            if (error.response.status === 403) {
               SetLoading(false);
-              toast.error("결제 실패!");
-            }
+              //toast.error("결제 실패!");
           });
         //history.push('/payment')
       }
@@ -259,6 +268,7 @@ const SignMember = () => {
   }, []);
 
   return (
+    <>
     <Layout>
       {isLoading && <Loading />}
       <Box fill justify='center' align='center'>
@@ -470,6 +480,13 @@ const SignMember = () => {
         )}
       </Box>
     </Layout>
+    <Modal open={isOpen} close={HandleModals}>
+        <ConfirmDiv>
+          <h3>원하시는 멤버십 주기를 선택해주세요!</h3>
+          <ConfirmBtn onClick={HandleModals}>확인</ConfirmBtn>
+        </ConfirmDiv>
+    </Modal>
+    </>
   );
 };
 
@@ -480,6 +497,23 @@ const BookmarkFilled = styled(Bookmark)`
     fill: #3b2477;
   }
 `;
+
+const ConfirmDiv = styled.div`
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+`
+
+const ConfirmBtn = styled.button`
+  background-color : #ffce1f;
+  border: 1px solid #ffce1f;
+  padding : 5px 15px;
+  font-size : 1rem;
+  width: 150px;
+  cursor: pointer;
+`
 
 const pStyle = {
   width: "100%",
