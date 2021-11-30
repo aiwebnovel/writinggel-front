@@ -145,7 +145,7 @@ const Modify = () => {
     const auth = getAuth();
     const user = auth.currentUser;
     console.log(user);
-    if (window.confirm("정말 탈퇴하시겠습니까?")) {
+    if (window.confirm("정말 탈퇴하시겠습니까? 탈퇴하시면, 멤버십 가입 내역도 삭제되어 서비스 이용이 불가합니다.")) {
       deleteUser(user)
         .then(async () => {
           // User deleted.

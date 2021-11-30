@@ -120,7 +120,7 @@ $boxShadow : rgb(237 237 237) 2px 3px 8px;
         width: 100%;
         height: 50px;
         border: 0;
-        margin-bottom: 100px;
+        margin-bottom: 50px;
     }
 }
 
@@ -234,6 +234,7 @@ $boxShadow : rgb(237 237 237) 2px 3px 8px;
 
 .mainOutputBox {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     gap: 15px;
@@ -462,11 +463,9 @@ select::-ms-expand {
 .blogMainBox {
     width: 100%;
     gap: 30px;
-    // padding: 0 120px;
-
 
     @media screen and (max-width: 768px) {
-        padding: 100px 30px;
+        padding: 150px 30px;
     }
 
 }
@@ -523,6 +522,9 @@ select::-ms-expand {
     background-color: $white-1;
     gap: 15px;
     border-top: 3px solid #372874;
+    border-left: 1px solid $main;
+    border-right: 1px solid $main;
+    border-bottom : 1px solid $main;
 
     >h4 {
         font-weight: 600;
@@ -557,7 +559,7 @@ select::-ms-expand {
 .blogFollowEn {
     background-color: $white-1;
     border: 1px solid #444;
-    max-width: 400px;
+    max-width: 600px;
     width: 100%;
     height: 200px;
     resize: none;
@@ -605,6 +607,9 @@ select::-ms-expand {
 }
 
 .keywordHeader {
+    display:flex;
+    align-items: center;
+    gap:5px;
     width: 100%;
     background-color: $white-2;
     padding: 8px;

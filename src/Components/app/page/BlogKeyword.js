@@ -253,6 +253,7 @@ const BlogKeyword = () => {
               <div className='keywordHeader'>
                 <Close className='close' onClick={resetData} />
                 <LinkDown className='download' onClick={SaveContent} />
+                <span style={{fontWeight:'600'}}>블로그 키워드</span>
               </div>
 
               <div className='keywordDiv'>
