@@ -371,6 +371,7 @@ const Fairytale = () => {
                       >
                         <div className='AcoInput'>
                           <input
+                            required
                             type='text'
                             name={item.title}
                             onChange={(e) => HandleInput(e)}
