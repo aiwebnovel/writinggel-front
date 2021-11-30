@@ -204,8 +204,8 @@ const Header = () => {
               <p>{userName} 님</p>
             </div>
             <p className='ServicePlan'>
-              {localStorage.getItem("plan") === "undefined"
-                ? "Guest"
+              {localStorage.getItem("plan") === "free"
+                ? "free"
                 : `${localStorage.getItem("plan")}개월 구독`}
             </p>
             <hr style={{ width: "100%", color: "#3b2477" }} />

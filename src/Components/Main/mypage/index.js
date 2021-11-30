@@ -18,7 +18,7 @@ const Mypage = () => {
   let m = moment
 
   const [profile, SetProfile] = useState({
-    isBill: false,
+    isBill: '',
     userName: "",
     plan: "",
     uid: "",
@@ -27,10 +27,11 @@ const Mypage = () => {
     billStart:"",
     payId:"",
     exp: '',
+    stopPay: ''
   });
   const [isOpen, SetOpen] = useState(false);
 
-  const { isBill, userName, plan, uid, email, create, billStart, payId, exp } = profile;
+  const { isBill, userName, plan, stopPay, email, create, billStart, payId, exp } = profile;
 
   const signOut = async () => {
     await localStorage.removeItem("token");
@@ -50,9 +51,30 @@ const Mypage = () => {
   }
 
   const HandleDelete = () => {
-    SetOpen(true);
-
+    if (window.confirm("멤버십을 해지하시겠습니까?")) {
+      const config = {
+        method: "delete",
+        url: `${configUrl.SERVER_URL}/pay`,
+        headers: { authentication: localStorage.getItem("token") },
+      };
+      axios(config)
+        .then((response) => {
+          localStorage.setItem('isBill', false)
+          console.log(response);
+          toast.success(response.data.log, {
+            style: { backgroundColor: "#fff", color: "#000" },
+            progressStyle: { backgroundColor: "#7D4CDB" },
+          });
+          SetOpen(false);
+          window.location.reload();
+        })
+        .catch((error) => {
+          console.log(error);
+          toast.error(`${error}`);
+        });
+    }
   }
+
 
   useEffect(() => {
     const loginCheck = localStorage.getItem("token");
@@ -71,7 +93,7 @@ const Mypage = () => {
           let MonthLater = moment(data.billStartDate).add(data.plan,'months').toDate();
           let formatMonth = moment(MonthLater).format('YYYY-MM-DD');
           
-          console.log(MonthLater, formatMonth);
+          //console.log(MonthLater, formatMonth);
           SetProfile({
             ...profile,
             isBill: data.isBill,
@@ -83,6 +105,7 @@ const Mypage = () => {
             billStart: data.billStartDate,
             payId: data.lastPayTid,
             exp: formatMonth,
+            stopPay: data.stopPayWish
           });
           // console.log(isBill, userName,plan,uid,email)
         });
@@ -161,33 +184,34 @@ const Mypage = () => {
                   <Link to='/signIn'>
                   <button>멤버십 변경</button>
                   </Link>
-                  <button onClick={HandleDelete}>멤버십 해지</button>
+                  <button onClick={HandleModals}>멤버십 해지</button>
                   </>)}
                 </div>
               </div>
             </div>
             <div className='dataBox'>
               <p>구독 시작일</p>
-              <p>{localStorage.getItem('isBill') !== false ? billStart : '없음'}</p>
+              <p>{isBill !== false ? billStart : '없음'}</p>
             </div>
             <div className='dataBox'>
               <p>이용 기간</p>
-              <p>{`${moment(billStart).format('YYYY-MM-DD')} ~ ${exp}`}</p>
+              <p>{isBill !== false ? `${moment(billStart).format('YYYY-MM-DD')} ~ ${exp}` : '없음'}</p>
             </div>
             <div className='dataBox'>
               <p>다음 결제 예정일</p>
-              <p>{exp}</p>
+              <p>{isBill !== false && !stopPay ? exp : '없음'}</p>
             </div>
             <div className='dataBox'>
               <p>결제 예정 금액</p>
-              {plan === '1' && <p>₩ 25,000</p>}
-              {plan === '3' && <p>₩ 60,000</p>}
-              {plan === '6' && <p>₩ 90,000</p>}
-              {plan === '' && <p>없음</p>}
+              {plan === '1' && !stopPay && <p>₩ 25,000</p>}
+              {plan === '3' && !stopPay &&  <p>₩ 60,000</p>}
+              {plan === '6' && !stopPay && <p>₩ 90,000</p>}
+              {plan === 'free' && !stopPay && <p>없음</p>}
+              {stopPay && <p>없음</p>}
             </div>
             <div className='dataBox'>
               <p>결제 수단</p>
-              <p>{localStorage.getItem('isBill') !== false ? '신용카드/체크카드' : '없음'}</p>
+              <p>{isBill !== false ? '신용카드/체크카드' : '없음'}</p>
             </div>
           </Box>
           <Box className='BtnContent'>
@@ -210,7 +234,7 @@ const Mypage = () => {
         </div>
         <div className="unSubBtn">
           <button onClick={HandleModals}>계속 이용하기</button>
-          <button>해지 하기</button>
+          <button onClick={HandleDelete}>해지 하기</button>
         </div>
       </div>
     </Modal>
