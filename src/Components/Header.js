@@ -27,11 +27,12 @@ const Header = () => {
   const [profile, SetProfile] = useState({
     userName: "Guest",
     userImage: `User`,
-    isBill:''
+    isBill:'',
+    Plan:''
   });
   const [MobileSubMenu, SetMobileSubMenu] = useState(false)
 
-  const { userName, userImage, isBill } = profile;
+  const { userName, userImage, isBill, Plan } = profile;
 
   const signIn = async (e) => {
     if (isChecked === true) {
@@ -124,13 +125,16 @@ const Header = () => {
             ...profile,
             userName: response.data.name,
             userImage: response.data.photoURL,
-            isBill: response.data.isBill
+            isBill: response.data.isBill,
+            Plan: response.data.plan
           });
 
           localStorage.setItem("userUid", response.data.uid);
           localStorage.setItem("plan", response.data.plan);
           localStorage.setItem("isBill", response.data.isBill);
-         
+          localStorage.setItem('userName', response.data.name);
+          localStorage.setItem('userImage', response.data.photoURL);
+
         })
         .catch((error) => 
         {console.log(error)});
@@ -377,7 +381,7 @@ const Header = () => {
             <p className="plan">
                 {localStorage.getItem("plan") === "free"
                   ? "free"
-                  : `${localStorage.getItem("plan")}개월 구독`}
+                  : `${Plan}개월 구독`}
               </p> 
             <hr style={{width:'100%',color:'#3b2477'}}/>
             <div className="afterLoginBottom">
