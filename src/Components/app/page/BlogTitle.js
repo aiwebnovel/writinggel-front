@@ -302,6 +302,7 @@ const BlogTitle = () => {
             align='center'
             className='blogMainBox'
           >
+            <h3 style={{fontWeight:'600'}}>블로그 제목</h3>
             <div className='BlogIdeaBox'>
               <input
                 type='text'
