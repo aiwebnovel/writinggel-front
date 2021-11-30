@@ -27,10 +27,11 @@ const Header = () => {
   const [profile, SetProfile] = useState({
     userName: "Guest",
     userImage: `User`,
+    isBill:''
   });
   const [MobileSubMenu, SetMobileSubMenu] = useState(false)
 
-  const { userName, userImage } = profile;
+  const { userName, userImage, isBill } = profile;
 
   const signIn = async (e) => {
     if (isChecked === true) {
@@ -123,6 +124,7 @@ const Header = () => {
             ...profile,
             userName: response.data.name,
             userImage: response.data.photoURL,
+            isBill: response.data.isBill
           });
 
           localStorage.setItem("userUid", response.data.uid);
@@ -211,9 +213,8 @@ const Header = () => {
         </Nav>
         {size !== "small" ? (
           <Nav direction='row' className='Menus' gap='large' align='center'>
-            <Link to={localStorage.getItem('isBill') === false ? '/explain' : '/signIn'}>
-              <MemButton>{localStorage.getItem('isBill') === false ? '멤버십 가입' : '멤버십 변경'}</MemButton>
-            </Link>
+            {isBill === false &&  <Link to={'/explain'}> <MemButton>멤버십 가입</MemButton></Link>}
+            {/* {isBill === true &&  <Link to={'/signIn'}> <MemButton>멤버십 변경</MemButton></Link>} */}
             <Link to='/brand'>브랜드 소개</Link>
             <span className='DropMenu'>
               인공지능 글쓰기 서비스 <Down size='small' />
@@ -273,11 +274,11 @@ const Header = () => {
       </HeaderLayout>
       {size === 'small' && isShow && (
         <OuterClick onOuterClick={() => {
-          //console.log("Clicked outside");
           SetShow(false);
         }}>
           <Nav direction='column' className='MobileMenus'>
-            <Link to={localStorage.getItem('isBill') === false ? '/explain' : '/signIn'}>{localStorage.getItem('isBill') === false ? '멤버십 가입' : '멤버십 변경'}</Link>
+            {isBill === false && <Link to='/explain'>멤버십 가입</Link>}
+            {/* {isBill === true && <Link to='/signIn'>멤버십 변경</Link>} */}
             <Link to='/brand'>브랜드 소개</Link>
             <span className='DropMenu' onClick={HandleMobile}>
               인공지능 글쓰기 서비스 <Down size='small' /></span>
@@ -376,8 +377,8 @@ const Header = () => {
               <p>{userName} 님</p>
             </div>
             <p className="plan">
-                {localStorage.getItem("plan") === "undefined"
-                  ? "Guest"
+                {localStorage.getItem("plan") === "free"
+                  ? "free"
                   : `${localStorage.getItem("plan")}개월 구독`}
               </p> 
             <hr style={{width:'100%',color:'#3b2477'}}/>

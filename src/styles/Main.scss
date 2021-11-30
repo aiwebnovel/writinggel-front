@@ -880,6 +880,15 @@ hr {
     }
 }
 
+.SignInChange {
+    padding: 150px 0px 100px 0;
+
+    @media screen and (max-width: 768px) {
+        padding-right: 30px;
+        padding-left: 30px;
+    }
+}
+
 .SignMemCardCon {
     background-color: #fff;
     border: 1px solid $main;
@@ -1008,19 +1017,23 @@ hr {
     cursor: pointer;
     border: 0;
     outline: 0;
-
-
 }
 
 .changeButton {
 
     background-color: #5600E8;
     border: 1px solid #5600e8;
+    font-size: 1rem;
     color: #fff;
     border-radius: 10px;
-    padding: 5px 8px;
+    padding: 10px 30px;
     text-align: center;
     cursor: pointer;
+    width: 300px;
+
+    @media screen and (max-width: 768px) {
+        width: 200px;
+    }
 }
 
 

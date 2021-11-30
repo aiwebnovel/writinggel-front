@@ -23,7 +23,7 @@ const PayResult = () => {
     create: "",
   });
 
-  const { isBill, userName, plan, uid, email, create, billStart, payId, exp } = profile;
+  const { isBill, userName, plan, stopPay, email, create, billStart, payId, exp } = profile;
 
   const DeletePay = () => {
     if (window.confirm("구독을 취소하시겠습니까?")) {
@@ -75,6 +75,7 @@ const PayResult = () => {
             billStart: data.billStartDate,
             payId: data.lastPayTid,
             exp: formatMonth,
+            stopPay: data.stopPayWish
           });
           // console.log(isBill, userName,plan,uid,email)
         });
@@ -111,6 +112,8 @@ const PayResult = () => {
                 {plan === '1' && <p>₩ 25,000</p>}
                 {plan === '3' && <p>₩ 60,000</p>}
                 {plan === '6' && <p>₩ 90,000</p>}
+                {plan === 'free' && !stopPay && <p>없음</p>}
+                {stopPay && <p>없음</p>}
               </div>
               <div className='payBox'>
                 <h4>주문일시</h4>
@@ -118,11 +121,11 @@ const PayResult = () => {
               </div>
               <div className='payBox'>
                 <h4>주문 상태</h4>
-                <p>{plan}개월 결제 중</p>
+                <p>{!stopPay ? `${plan}개월 결제 중` : `구독 취소`}</p>
               </div>
               <div className='payBox'>
                 <h4>결제 수단</h4>
-                <p>{localStorage.getItem('isBill') && '신용카드/체크카드'}</p>
+                <p>{isBill && '신용카드/체크카드'}</p>
               </div>
             </Box>
             <BtnContent>
