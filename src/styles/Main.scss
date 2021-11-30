@@ -120,6 +120,11 @@ $red: #f45752;
         max-width: 500px;
         // list-style-type: disc;
         margin-top: 20px;
+        
+        > li {
+            font-family: "NeoDunggeunmo";
+            font-size: 14px;
+        }
     }
 
     .introduce {

@@ -25,14 +25,14 @@ const Header = () => {
   const [profile, SetProfile] = useState({
     userName: "Guest",
     userImage: `User`,
+    isBill:'',
+    Plan:''
   });
 
-  const { userName, userImage } = profile;
+  const { userName, userImage, isBill, Plan } = profile;
 
   const requestProfile = useCallback(async () => {
-    // console.log('mount')
-    // let user = await localStorage.getItem("token");
-    // console.log('mount11')
+
     if (localStorage.getItem("token") !== null) {
       await axios
         .get(`${config.SERVER_URL}/profile`, {
@@ -44,13 +44,16 @@ const Header = () => {
             ...profile,
             userName: response.data.name,
             userImage: response.data.photoURL,
+            isBill: response.data.isBill,
+            Plan: response.data.plan
           });
           // console.log('profile', profile);
-          // console.log('mount7')
+     
           localStorage.setItem("userUid", response.data.uid);
           localStorage.setItem("plan", response.data.plan);
           localStorage.setItem("isBill", response.data.isBill);
-          // console.log('mount8')
+          localStorage.setItem('userName', response.data.name);
+          localStorage.setItem('userImage', response.data.photoURL);
         })
         .catch((error) => {
           console.log(error);
@@ -59,14 +62,13 @@ const Header = () => {
   }, [profile]);
 
   const refreshProfile = useCallback(async () => {
-    // console.log('mount2')
+
     authService.onAuthStateChanged(async (user) => {
       if (authService.currentUser) {
         authService.currentUser
           .getIdToken()
           .then(async (data) => {
             await localStorage.setItem("token", data);
-            // console.log('mount9')
           })
           .catch(async (error) => {
             console.log(error);
@@ -206,7 +208,7 @@ const Header = () => {
             <p className='ServicePlan'>
               {localStorage.getItem("plan") === "free"
                 ? "free"
-                : `${localStorage.getItem("plan")}개월 구독`}
+                : `${Plan}개월 구독`}
             </p>
             <hr style={{ width: "100%", color: "#3b2477" }} />
             <div className='ServiceAfterLoginBottom'>
