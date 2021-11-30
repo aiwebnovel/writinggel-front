@@ -67,16 +67,16 @@ const Modify = () => {
           toast.error("이름을 수정할 수 없습니다!");
         });
 
-      await updateEmail(auth.currentUser, userEmail)
-        .then(() => {
-          console.log("email updated!");
-          localStorage.setItem("email", userEmail);
-        })
-        .catch((error) => {
-          console.log(error);
-          toast.error("이메일을 수정할 수 없습니다!");
-          SetLoading(false);
-        });
+      // await updateEmail(auth.currentUser, userEmail)
+      //   .then(() => {
+      //     console.log("email updated!");
+      //     localStorage.setItem("email", userEmail);
+      //   })
+      //   .catch((error) => {
+      //     console.log(error);
+      //     toast.error("이메일을 수정할 수 없습니다!");
+      //     SetLoading(false);
+      //   });
          await toast.info('재인증을 위해 로그인을 다시 해주세요!');
       await ReAuthProfile();
       SetLoading(false);
@@ -233,6 +233,7 @@ const Modify = () => {
 
           <div className='UserFormInputs'>
             <input
+              disabled
               type='text'
               placeholder='이메일'
               name='userEmail'
