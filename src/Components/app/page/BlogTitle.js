@@ -126,26 +126,23 @@ const BlogTitle = () => {
           let resK = [];
           let resE = [];
 
-          if (response.data[0] === "") {
-            toast.error(
-              "적어주신 키워드가 적절하지 않은 것 같습니다.😭 재시도 해주세요!"
-            );
-            SetLoading(false);
-          } else {
-            for (let i = 0; i < response.data.length; i++) {
-              await resK.push(response.data[i][0]);
-              await resE.push(response.data[i][1]);
-            }
-            console.log(resK, resE);
-            SetOutput({
-              ...output,
-              outputKorean: resK,
-              outputEnglish: resE,
-            });
-            //console.log(output);
-            SetLoading(false);
-          }
+          for (let i = 0; i < response.data.length; i++) {
+            await resK.push(response.data[i][0]);
+            await resE.push(response.data[i][1]);
 
+            console.log(resK, resE);
+            if (response.data[0][0] === "") {
+              toast.error(
+                "적어주신 키워드가 적절하지 않은 것 같습니다.😭 재시도 해주세요!"
+              );
+            } else {
+              SetOutput({
+                ...output,
+                outputKorean: resK,
+                outputEnglish: resE,
+              });
+            }
+          }
           if (response.data[2] >= 2) {
             toast.error(`결과물에 유해한 내용이 들어가 버렸어요. 😭`);
           }
@@ -153,7 +150,6 @@ const BlogTitle = () => {
         .catch((error) => {
           //console.log(error);
           if (error.response.status === 412) {
-            SetLoading(false);
             toast.info(`🙅‍♀️ 로그인이 필요합니다!`, {
               style: { backgroundColor: "#fff", color: "#000" },
               progressStyle: { backgroundColor: "#7D4CDB" },
@@ -161,10 +157,12 @@ const BlogTitle = () => {
             localStorage.removeItem("token");
           } else {
             if (error.response.status === 403) {
-              SetLoading(false);
               toast.error(`토큰이 부족합니다!`);
             }
           }
+        })
+        .finally(() => {
+          SetLoading(false);
         });
     } else {
       toast.info(`🙅‍♀️ 로그인이 필요합니다!`, {
@@ -302,7 +300,7 @@ const BlogTitle = () => {
             align='center'
             className='blogMainBox'
           >
-            <h3 style={{fontWeight:'600'}}>블로그 제목</h3>
+            <h3 style={{ fontWeight: "600" }}>블로그 제목</h3>
             <div className='BlogIdeaBox'>
               <input
                 type='text'

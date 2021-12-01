@@ -138,15 +138,13 @@ const BlogFollow = () => {
           }
         )
         .then(async (response) => {
-          //console.log(response);
-          //console.log("response", response.data[0]);
-          // console.log("response2", response.data[1]);
+   
 
           if (response.data[0] === "") {
             toast.error(
               "적어주신 키워드가 적절하지 않은 것 같습니다.😭 재시도 해주세요!"
             );
-            SetLoading(false);
+          
           } else {
             SetOutput({
               ...output,
@@ -155,18 +153,18 @@ const BlogFollow = () => {
               outputEnglish: outputEnglish + response.data[1],
               tempLength: 0,
             });
-            SetLoading(false);
+          
           }
 
           if (response.data[2] >= 2) {
             toast.error(`결과물에 유해한 내용이 들어가 버렸어요. 😭 `);
-            SetLoading(false);
+   
           }
         })
         .catch((error) => {
           console.log(error);
           if (error.response.status === 412) {
-            SetLoading(false);
+       
             toast.info(`로그인이 필요합니다!`, {
               icon: "🙅‍♀️",
               progressStyle: { backgroundColor: "#7D4CDB" },
@@ -178,15 +176,17 @@ const BlogFollow = () => {
               error.response.data.errorCode === "001"
             ) {
               toast.error(`이야기의 길이가 너무 길어요ㅠ`);
-              SetLoading(false);
+     
             } else {
-              SetLoading(false);
+       
               SetOutput({
                 ...output,
                 result: "해당 오류는 관리자에게 문의해주세요!",
               });
             }
           }
+        }).finally(()=>{
+          SetLoading(false);
         });
     } else {
       toast.info("로그인 후 다시 시도해 주세요!", {

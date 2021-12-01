@@ -45,7 +45,6 @@ const Firstsentence = () => {
             toast.error(
               "결과물에 유해한 내용이 들어가 버렸어요.😭 재시도 해주세요!"
             );
-            SetLoading(false);
           } else {
             let splitKor = response.data[0].split("\n\n");
             let splitEng = response.data[1].split("\n\n");
@@ -57,7 +56,6 @@ const Firstsentence = () => {
                 EngOutput: splitEng[1],
               });
               SetOutput(true);
-              SetLoading(false);
             } else {
               SetOutputContent({
                 ...OutputContent,
@@ -65,13 +63,16 @@ const Firstsentence = () => {
                 EngOutput: response.data[1],
               });
               SetOutput(true);
-              SetLoading(false);
+           
             }
           }
         })
         .catch(async (error) => {
           console.log(error);
-        });
+        }).finally(()=>{
+          SetLoading(false);
+        })
+        ;
     } else {
       toast.info("결과가 나오지 않았습니다. 버튼을 한 번 더 눌러주세요!");
     }

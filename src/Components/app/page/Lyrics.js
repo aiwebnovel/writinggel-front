@@ -37,15 +37,14 @@ const Lyrics = () => {
             toast.error(
               "적어주신 키워드가 적절하지 않은 것 같습니다.😭 재시도 해주세요!"
             );
-            SetLoading(false);
           } else {
             SetOutputContent(response.data[1]);
-            SetLoading(false);
-          
           }
         })
         .catch(async (error) => {
           console.log(error);
+        }).finally(()=>{
+          SetLoading(false);
         });
     } else {
       SetLoading(false);

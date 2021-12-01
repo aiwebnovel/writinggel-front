@@ -22,11 +22,11 @@ const Fairytale = () => {
   const AccodianData = [
     {
       id: 1,
-      title: "장르",
+      title: "주요 인물",
     },
     {
       id: 2,
-      title: "주요 인물",
+      title: "시간",
     },
     {
       id: 3,
@@ -34,11 +34,11 @@ const Fairytale = () => {
     },
     {
       id: 4,
-      title: "주요 사건",
+      title: "주제",
     },
     {
       id: 5,
-      title: "주제",
+      title: "주요 사건",
     },
   ];
 
@@ -65,29 +65,28 @@ const Fairytale = () => {
   };
 
   const [category, Setcategory] = useState({
-    genre: "", // Genre
-    mainCharacter: "", //Main_Character
-    Case: "", //Period
-    location: "", //Location
-    theme: "", //Theme
+    mainCharacter: "", //Main_Character 주요 인물,
+    period: "", //Period 시간 (api 문서에서는 time)
+    location: "", //Location 장소
+    theme: "", //Theme 주제
+    mainEvent : '', //주요 사건 (api 문서에서는 Period) 
   });
 
   const HandleInput = (e) => {
     // console.log("e", e);
-    // console.log("category", e.target.name);
-    // console.log("input", e.target.value);
+    console.log("category", e.target.name);
+     console.log("input", e.target.value);
 
-    if (e.target.name === "장르") {
-      Setcategory({
-        ...category,
-        genre: e.target.value,
-      });
-    }
     if (e.target.name === "주요 인물") {
       Setcategory({
         ...category,
-
         mainCharacter: e.target.value,
+      });
+    }
+    if (e.target.name === "시간") {
+      Setcategory({
+        ...category,
+        period: e.target.value,
       });
     }
     if (e.target.name === "장소") {
@@ -96,18 +95,19 @@ const Fairytale = () => {
         location: e.target.value,
       });
     }
-    if (e.target.name === "주요 사건") {
-      Setcategory({
-        ...category,
-        Case: e.target.value,
-      });
-    }
     if (e.target.name === "주제") {
       Setcategory({
         ...category,
         theme: e.target.value,
       });
     }
+    if (e.target.name === "주요 사건") {
+      Setcategory({
+        ...category,
+        mainEvent: e.target.value,
+      });
+    }
+
   };
 
   const HandleStory = (e) => {
@@ -126,10 +126,10 @@ const Fairytale = () => {
 
   const FairytaleAxios = async () => {
     if (
-      category.genre.length > 0 &&
       category.mainCharacter.length > 0 &&
-      category.Case.length > 0 &&
+      category.period.length > 0 &&
       category.location.length > 0 &&
+      category.mainEvent.length > 0 &&
       category.theme.length > 0
     ) {
       if (!isHuman) {
@@ -141,9 +141,9 @@ const Fairytale = () => {
           headers: { authentication: localStorage.getItem("token") },
           data: {
             Story: Output[0],
-            Genre: category.genre,
+            Time:category.period,
             Main_character: category.mainCharacter,
-            Period: category.Case,
+            Period: category.mainEvent,
             Location: category.location,
             Theme: category.theme,
           },
@@ -182,9 +182,9 @@ const Fairytale = () => {
             headers: { authentication: localStorage.getItem("token") },
             data: {
               Story: Output[0],
-              Genre: category.genre,
+              Time:category.period,
               Main_character: category.mainCharacter,
-              Period: category.Case,
+              Period: category.mainEvent,
               Location: category.location,
               Theme: category.theme,
             },
@@ -228,10 +228,10 @@ const Fairytale = () => {
 
     SetIsHuman(false);
     if (
-      category.genre.length > 0 &&
       category.mainCharacter.length > 0 &&
-      category.Case.length > 0 &&
+      category.period.length > 0 &&
       category.location.length > 0 &&
+      category.mainEvent.length > 0 &&
       category.theme.length > 0
     ) {
       SetLoading(true);
@@ -242,9 +242,9 @@ const Fairytale = () => {
         headers: { authentication: localStorage.getItem("token") },
         data: {
           Story: "",
-          Genre: category.genre,
           Main_character: category.mainCharacter,
-          Period: category.Case,
+          Time : category.period,
+          Period: category.mainEvent,
           Location: category.location,
           Theme: category.theme,
         },
@@ -258,7 +258,6 @@ const Fairytale = () => {
             toast.error(
               "결과물에 유해한 내용이 들어가 버렸어요. 😭 재시도 해주세요!"
             );
-            SetLoading(false);
           } else {
             SetOutput([response.data[0], response.data[1]]);
             SetOutputTemp(response.data[0]);
@@ -269,6 +268,9 @@ const Fairytale = () => {
         })
         .catch((error) => {
           console.log(error);
+          if (error.response.status === 429) {
+            toast.error("요청이 너무 많습니다!");
+          }
         })
         .finally(() => {
           SetLoading(false);
@@ -294,6 +296,7 @@ const Fairytale = () => {
         })
         .catch(async (error) => {
           console.log(error);
+
           if (error.response.status === 403) {
             toast.error("보관함이 꽉 찼습니다!");
           }
@@ -449,7 +452,7 @@ const Fairytale = () => {
             align='center'
             // pad={size !== 'small' ? 'medium': 'large'}
           >
-            <div className='mainOutputBox'>
+            <div className='WebFairyOutputBox'>
               <textarea
                 className='output1'
                 placeholder='결과가 나올예정이에요!'
