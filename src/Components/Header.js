@@ -137,7 +137,13 @@ const Header = () => {
 
         })
         .catch((error) => 
-        {console.log(error)});
+        {
+          console.log(error)
+          if(error.response.status === 412) {
+            toast.error('다시 로그인 해주세요!')   
+          }
+        }
+        );
     }
   },[profile]);
 
@@ -260,7 +266,7 @@ const Header = () => {
             {localStorage.getItem("token") ? (
               <Anchor>
                 <Avatar
-                  src={userImage}
+                  src={userImage && userImage}
                   style={{ width: "40px", height: "40px" }}
                   onClick={showMenu}
                 />

@@ -230,11 +230,8 @@ $boxShadow : rgb(237 237 237) 2px 3px 8px;
 
 //웹노블, 동화 공통
 
-
-
-.mainOutputBox {
+.WebFairyOutputBox {
     display: flex;
-    // flex-direction: column;
     justify-content: center;
     align-items: center;
     gap: 15px;
@@ -243,6 +240,25 @@ $boxShadow : rgb(237 237 237) 2px 3px 8px;
 
     @media screen and (max-width:1024px) {
         flex-direction: column;
+        padding: 0;
+    }
+
+}
+
+//블로그 공통
+
+
+.mainOutputBox {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    width: 100%;
+    padding: 0 20px;
+
+    @media screen and (max-width:1024px) {
+        //flex-direction: column;
         padding: 0;
     }
 

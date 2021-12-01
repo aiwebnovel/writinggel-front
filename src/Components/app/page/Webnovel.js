@@ -197,25 +197,22 @@ const Webnovel = () => {
               tempWrite: outputKorean + response.data[0],
             });
 
-            await SetLoading(false);
             await SetChange(false);
             await SetStart("Need a Story");
             await SetHuman(true);
+            toast.info(
+              `이어지는 내용을 100자 이상 쓰면, 이야기를 계속 이어갈 수 있습니다.`
+            );
           }
 
           if (response.data[2] >= 2) {
             toast.error(`결과물에 유해한 내용이 들어가 버렸어요. 😭 `);
             SetHuman(false);
-          } else {
-            toast.info(
-              `이어지는 내용을 100자 이상 쓰면, 이야기를 계속 이어갈 수 있습니다.`
-            );
           }
         })
         .catch((error) => {
           console.log(error);
           if (error.response.status === 412) {
-            SetLoading(false);
             toast.info(`로그인이 필요합니다!`, {
               icon: "🙅‍♀️",
               progressStyle: { backgroundColor: "#7D4CDB" },
@@ -227,15 +224,16 @@ const Webnovel = () => {
               error.response.data.errorCode === "001"
             ) {
               toast.error(`이야기의 길이가 너무 길어요ㅠ`);
-              SetLoading(false);
             } else {
-              SetLoading(false);
               SetOutput({
                 ...output,
                 result: "해당 오류는 관리자에게 문의해주세요!",
               });
             }
           }
+        })
+        .finally(() => {
+          SetLoading(false);
         });
     } else {
       toast.info("로그인 후 다시 시도해 주세요!", {
@@ -264,7 +262,7 @@ const Webnovel = () => {
   };
 
   const SaveContent = async () => {
-    console.log(outputKorean);
+    //console.log(outputKorean);
     if (outputKorean) {
       const config = {
         method: "post",
@@ -474,7 +472,7 @@ const Webnovel = () => {
             className='outputContainer'
             // pad={size !== "small" ? "medium" : "large"}
           >
-            <div className='mainOutputBox'>
+            <div className='WebFairyOutputBox'>
               <textarea
                 className='outputKo'
                 placeholder='결과가 나올예정이에요!'

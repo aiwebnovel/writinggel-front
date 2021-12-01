@@ -64,12 +64,12 @@ const LoveLetter = () => {
 
       await axios(config)
         .then(async (response) => {
-          console.log("res", response.data);
+          //console.log("res", response.data);
           if (response.data[0] === "") {
             toast.error(
               "결과물에 유해한 내용이 들어가 버렸어요. 😭 재시도 해주세요!"
             );
-            SetLoading(false);
+         
           } else {
             SetLetter({
               ...LoveLetter,
@@ -77,11 +77,13 @@ const LoveLetter = () => {
               LoveEng: response.data[1],
             });
             SetResult(true);
-            SetLoading(false);
+            
           }
         })
         .catch(async (error) => {
           console.log(error);
+
+        }).finally(()=>{
           SetLoading(false);
         });
     } else {

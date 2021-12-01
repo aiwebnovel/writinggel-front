@@ -26,17 +26,17 @@ const Discussion = () => {
 
   const { ProsOutput, ConsOutput } = OutputContent;
 
-  const SaveContent = async () => {
-    //console.log(OutputContent)
+  const SaveContent = async (options) => {
+    console.log(options)
 
     if (OutputContent) {
-      if (option === "Pros") {
+      if (options === "Pros") {
         const config = {
           method: "post",
           url: `${configUrl.SERVER_URL}/archive`,
           headers: { authentication: localStorage.getItem("token") },
           data: {
-            story: ProsOutput,
+            story: ProsOutput[0],
             category: "찬반 논거",
           },
         };
@@ -47,6 +47,7 @@ const Discussion = () => {
           })
           .catch(async (error) => {
             console.log(error);
+            SetLoading(false);
             if (error.response.status === 403) {
               toast.error("보관함이 꽉 찼습니다!");
             }
@@ -57,13 +58,13 @@ const Discussion = () => {
           });
       }
 
-      if (option === "Cons") {
+      if (options === "Cons") {
         const config = {
           method: "post",
           url: `${configUrl.SERVER_URL}/archive`,
           headers: { authentication: localStorage.getItem("token") },
           data: {
-            story: ConsOutput,
+            story: ConsOutput[0],
             category: "찬반 논거",
           },
         };
@@ -74,6 +75,7 @@ const Discussion = () => {
           })
           .catch(async (error) => {
             console.log(error);
+            SetLoading(false);
             if (error.response.status === 403) {
               toast.error("보관함이 꽉 찼습니다!");
             }
@@ -82,21 +84,26 @@ const Discussion = () => {
               toast.error("해당 에러는 관리자에게 문의해주세요!");
             }
           });
+          
+          
       }
     } else {
       toast.info("저장할 결과가 없습니다!");
     }
   };
 
-  const ProsDiscussionAxios = async () => {
+  const ProsDiscussionAxios = async (e) => {
     if (input && input !== "") {
-      SetOutputOption("Pros");
+     // console.log(e.target.name)
+      
+      let ProsOption = e.target.name;
+      console.log(ProsOption);
       SetLoading(true);
       const config = {
         method: "post",
         url: `${configUrl.SERVER_URL}/writinggel/discussion`,
         headers: { authentication: localStorage.getItem("token") },
-        data: { option: option, story: input },
+        data: { option: ProsOption, story: input },
       };
 
       await axios(config)
@@ -114,6 +121,10 @@ const Discussion = () => {
         })
         .catch(async (error) => {
           console.log(error);
+          SetLoading(false)
+          if (error.response.status === 429) {
+            toast.error("요청이 너무 많습니다!");
+          }
         });
     } else {
       setTimeout(toast.info("내용을 채워주세요!"), 300);
@@ -124,13 +135,16 @@ const Discussion = () => {
     //console.log(e.target.name)
 
     if (input && input !== "") {
-      SetOutputOption("Cons");
+      //console.log(e.target.name)
+  
+      let ConsOption= e.target.name;
+      console.log(ConsOption);
       SetLoading(true);
       const config = {
         method: "post",
         url: `${configUrl.SERVER_URL}/writinggel/discussion`,
         headers: { authentication: localStorage.getItem("token") },
-        data: { option: option, story: input },
+        data: { option: ConsOption, story: input },
       };
 
       await axios(config)
@@ -143,12 +157,15 @@ const Discussion = () => {
             SetLoading(false);
           } else {
             SetOutputContent({ ...OutputContent, ConsOutput: response.data });
-
             SetLoading(false);
           }
         })
         .catch(async (error) => {
           console.log(error);
+          SetLoading(false);
+          if (error.response.status === 429) {
+            toast.error("요청이 너무 많습니다!");
+          }
         });
     } else {
       setTimeout(toast.info("내용을 채워주세요!"), 300);
@@ -198,15 +215,15 @@ const Discussion = () => {
           className='DiscussOutputBox'
         >
           <div className='Agree'>
-            <button name='Pros' onClick={() => ProsDiscussionAxios()}>
+            <button name='Pros' onClick={(e)=> ProsDiscussionAxios(e)}>
               찬성 논거 찾기
             </button>
             <div className='outputArea'>
               <div className="AreaBox">
                 <div>
                   {ProsOutput &&
-                    ProsOutput[0].split("\n").map((line) => (
-                      <span key={line}>
+                    ProsOutput[0].split("\n").map((line, index) => (
+                      <span key={line !== '' ? line: index}>
                         {line}
                         <br />
                       </span>
@@ -214,8 +231,8 @@ const Discussion = () => {
                 </div>
                 <div>
                   {ProsOutput &&
-                    ProsOutput[1].split("\n").map((line) => (
-                      <span key={line}>
+                    ProsOutput[1].split("\n").map((line, index) => (
+                      <span key={line !== '' ? line: index}>
                         {line}
                         <br />
                       </span>
@@ -225,23 +242,23 @@ const Discussion = () => {
               <Icon>
                 <Download
                   onClick={() => {
-                    SetOutputOption("Pros");
-                    SaveContent();
+                    let options = 'Pros'
+                    SaveContent(options);
                   }}
                 />
               </Icon>
             </div>
           </div>
           <div className='Opposite'>
-            <button name='Cons' onClick={(e) => ConsDiscussionAxios(e)}>
+            <button name='Cons' onClick={(e)=> ConsDiscussionAxios(e)}>
               반대 논거 찾기
             </button>
             <div className='outputArea'>
               <div className="AreaBox">
                 <div>
                   {ConsOutput &&
-                    ConsOutput[0].split("\n").map((line) => (
-                      <span key={line}>
+                    ConsOutput[0].split("\n").map((line, index) => (
+                      <span key={line !== '' ? line: index}>
                         {line}
                         <br />
                       </span>
@@ -249,8 +266,8 @@ const Discussion = () => {
                 </div>
                 <div>
                   {ConsOutput &&
-                    ConsOutput[1].split("\n").map((line) => (
-                      <span key={line}>
+                    ConsOutput[1].split("\n").map((line, index) => (
+                      <span key={line !== '' ? line : index}>
                         {line}
                         <br />
                       </span>
@@ -258,7 +275,9 @@ const Discussion = () => {
                 </div>
               </div>
               <Icon>
-                <Download onClick={SaveContent} />
+                <Download onClick={()=> {
+                  let options = 'Cons'
+                  SaveContent(options)}} />
               </Icon>
             </div>
           </div>

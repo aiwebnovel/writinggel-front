@@ -61,12 +61,11 @@ const BlogKeyword = () => {
         .then(async (response) => {
           console.log(response.data.list);
           SetOutput(response.data.list);
-          SetLoading(false);
+
         })
         .catch((error) => {
           //console.log(error);
           if (error.response.status === 412) {
-            SetLoading(false);
             toast.info(`🙅‍♀️ 로그인이 필요합니다!`, {
               style: { backgroundColor: "#fff", color: "#000" },
               progressStyle: { backgroundColor: "#7D4CDB" },
@@ -78,8 +77,10 @@ const BlogKeyword = () => {
             toast.error(
               `적어주신 키워드가 적절하지 않은 것 같습니다.😭 재시도 해주세요!`
             );
-            SetLoading(false);
+          
           }
+        }).finally(()=>{
+          SetLoading(false);
         });
     } else {
       toast.info(`🙅‍♀️ 로그인이 필요합니다!`, {

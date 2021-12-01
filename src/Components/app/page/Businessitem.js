@@ -45,14 +45,15 @@ const Businessitem = () => {
             toast.error(
               "적어주신 키워드가 적절하지 않은 것 같습니다.😭 재시도 해주세요!"
             );
-            SetLoading(false);
           } else {
             SetOutputContent(response.data[0]);
-            SetLoading(false);
+           
           }
         })
         .catch(async (error) => {
           console.log(error);
+        }).finally(()=>{
+          SetLoading(false);
         });
     } else {
       setTimeout(toast.info("내용을 채워주세요!"), 300);
@@ -127,7 +128,7 @@ const Businessitem = () => {
             </p>
             <input
               type='text'
-              placeholder='사업 주제를 적어주세요!'
+              placeholder='사업 주제를 적어주세요! ex) 마스크 불편 해결, 비대면 요가 등'
               onChange={(e) => {
                 SetInput(e.target.value);
               }}

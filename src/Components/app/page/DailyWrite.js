@@ -38,16 +38,20 @@ const Dailywrite = () => {
         console.log('response', response.data)
         if(response.data[0] === ''){
           toast.error('결과물에 유해한 내용이 들어가 버렸어요. 😭  `재시도 해주세요!');
-          SetLoading(false);
+      
       }else {
         SetOutputContent(response.data);
         SetOpen(true);
-        SetLoading(false);
       }
         
       })
       .catch(async (error) => {
         console.log(error);
+        if(error.response.status === 412) {
+          toast.error('로그인이 풀렸습니다. 재로그인 해주세요!')
+        }
+      }).finally(()=>{
+        SetLoading(false);
       });
   };
 
