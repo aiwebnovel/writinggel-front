@@ -60,23 +60,26 @@ const PayResult = () => {
         .then((response) => {
           // console.log(response.data);
           let data = response.data;
+
+          let billFormat = moment(data.billStartDate).format('YYYY-MM-DD');
           let MonthLater = moment(data.billStartDate).add(data.plan,'months').toDate();
           let formatMonth = moment(MonthLater).format('YYYY-MM-DD');
 
-
-          SetProfile({
-            ...profile,
-            isBill: data.isBill,
-            userName: data.name,
-            plan: data.plan,
-            uid: data.uid,
-            email: email,
-            create: create,
-            billStart: data.billStartDate,
-            payId: data.lastPayTid,
-            exp: formatMonth,
-            stopPay: data.stopPayWish
-          });
+            SetProfile({
+              ...profile,
+              isBill: data.isBill,
+              userName: data.name,
+              plan: data.plan,
+              uid: data.uid,
+              email: email,
+              create: create,
+              billStart: billFormat,
+              payId: data.lastPayTid,
+              exp: formatMonth,
+              stopPay: data.stopPayWish,
+              beforePlan: data.plan_before
+            });
+        
           // console.log(isBill, userName,plan,uid,email)
         });
     } else {
@@ -113,7 +116,7 @@ const PayResult = () => {
                 {plan === '3' && <p>₩ 60,000</p>}
                 {plan === '6' && <p>₩ 90,000</p>}
                 {plan === 'free' && !stopPay && <p>없음</p>}
-                {stopPay && <p>없음</p>}
+                {stopPay && <p>구독 취소</p>}
               </div>
               <div className='payBox'>
                 <h4>주문일시</h4>

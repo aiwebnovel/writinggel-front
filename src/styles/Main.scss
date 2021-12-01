@@ -1149,7 +1149,7 @@ hr {
     }
 
     > div {
-        > button, a > button {
+        > button {
             background-color: $sub2;
             margin-left: 10px;
             border:1px solid $sub2;
@@ -1171,7 +1171,7 @@ hr {
             gap: 10px;
             margin-left: 8px;
 
-            > button, a > button {
+            > button {
                 margin:0;
                 font-size: 13px;
             }
