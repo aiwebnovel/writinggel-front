@@ -84,7 +84,6 @@ const Storysrc = () => {
         console.log(response.data);
         if(response.data[0] === ''){
           toast.error('결과물에 유해한 내용이 들어가 버렸어요.😭 재시도 해주세요!');
-          SetLoading(false);
       }else { 
         SetOutput(true);
         SetWords([
@@ -92,13 +91,15 @@ const Storysrc = () => {
         [response.data["wordsT"][1], response.data["words"][1]],
         [response.data["wordsT"][2], response.data["words"][2]],
       ]);
-      console.log(words);
-      
-      SetLoading(false);
     }   
       })
       .catch(async (error) => {
         console.log(error);
+        if (error.response.status === 429) {
+          toast.error("요청이 너무 많습니다!");
+        }
+      }).finally(()=>{
+        SetLoading(false);
       });
   };
 
@@ -134,6 +135,12 @@ const Storysrc = () => {
           })
           .catch(async (error) => {
             console.log(error);
+            SetLoading(false)
+            if (error.response.status === 429) {
+              toast.error("요청이 너무 많습니다!");
+            }
+          }).finally(()=>{
+            SetLoading(false);
           });
       } else {
         setTimeout(toast.info("단어를 뽑아주세요!"), 300);

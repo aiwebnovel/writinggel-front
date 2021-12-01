@@ -119,7 +119,7 @@ const Header = () => {
         {size !== "small" ? (
           <Nav direction='row' gap='medium' align='center'>
             <Link to='/explain'>
-              <LinkBtn>멤버십 가입/변경</LinkBtn>
+              <LinkBtn>멤버십 가입</LinkBtn>
             </Link>
             <Avatar
               src={userImage}

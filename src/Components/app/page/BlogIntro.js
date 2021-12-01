@@ -122,34 +122,30 @@ const BlogIntro = () => {
           let resK = [];
           let resE = [];
 
-          if (response.data[0] === "") {
-            toast.error(
-              "적어주신 키워드가 적절하지 않은 것 같습니다.😭 재시도 해주세요!"
-            );
-            SetLoading(false);
-          } else {
-            for (let i = 0; i < response.data.length; i++) {
-              await resK.push(response.data[i][0]);
-              await resE.push(response.data[i][1]);
+          for (let i = 0; i < response.data.length; i++) {
+            await resK.push(response.data[i][0]);
+            await resE.push(response.data[i][1]);
+
+            if (response.data[0][0] === "") {
+              toast.error(
+                "적어주신 키워드가 적절하지 않은 것 같습니다.😭 재시도 해주세요!"
+              );
+            } else {
+              SetOutput({
+                ...output,
+                outputKorean: resK,
+                outputEnglish: resE,
+              });
             }
 
-            SetOutput({
-              ...output,
-              outputKorean: resK,
-              outputEnglish: resE,
-            });
-
-            SetLoading(false);
-          }
-
-          if (response.data[2] >= 2) {
-            toast.error(`결과물에 유해한 내용이 들어가 버렸어요. 😭 `);
+            if (response.data[2] >= 2) {
+              toast.error(`결과물에 유해한 내용이 들어가 버렸어요. 😭 `);
+            }
           }
         })
         .catch((error) => {
           //console.log(error);
           if (error.response.status === 412) {
-            SetLoading(false);
             toast.info(`🙅‍♀️ 로그인이 필요합니다!`, {
               style: { backgroundColor: "#fff", color: "#000" },
               progressStyle: { backgroundColor: "#7D4CDB" },
@@ -157,10 +153,12 @@ const BlogIntro = () => {
             localStorage.removeItem("token");
           } else {
             if (error.response.status === 403) {
-              SetLoading(false);
               toast.error(`토큰이 부족합니다!`);
             }
           }
+        })
+        .finally(() => {
+          SetLoading(false);
         });
     } else {
       toast.info(`🙅‍♀️ 로그인이 필요합니다!`, {
@@ -256,38 +254,38 @@ const BlogIntro = () => {
               className='sideContainer'
               gap={size !== "small" && "medium"}
             >
-                            <OuterClick
+              <OuterClick
                 onOuterClick={(event) => {
                   //event.preventDefault();
                   //console.log("Clicked outside");
                   SetOpen(false);
                 }}
               >
-              <div className='CloseSiderBtn' onClick={handleOpen}>
-                <Close />
-              </div>
-              <Box className='guide-Accordion'>
-                <div className='guide-PanelHeader'>Q. How to Use?</div>
+                <div className='CloseSiderBtn' onClick={handleOpen}>
+                  <Close />
+                </div>
+                <Box className='guide-Accordion'>
+                  <div className='guide-PanelHeader'>Q. How to Use?</div>
 
-                <div className='guide-PanelContent '>
-                  <h4>💫 팅젤이와 함께 글 쓰는 TING!</h4>
-                  <div>
-                    <img src='/tinggle.png' alt='tingting' />
+                  <div className='guide-PanelContent '>
+                    <h4>💫 팅젤이와 함께 글 쓰는 TING!</h4>
                     <div>
-                      <p>1. 원하는 키워드나 글을 입력해주세요!</p>
-                      <p style={{ color: "gray" }}>
-                        ❗️ +열기 버튼이 있는 경우는 눌러서 빈 칸을
-                        채워주세요!(블로그 제외)
-                      </p>
-                      <p>
-                        2. write 버튼을 누르면 팅젤이가 여러분의 글 위에
-                        아이디어💡를 얹어줄거에요!
-                      </p>
-                      <p>3. 팅젤이가 얹어준 아이디어를 활용해봐요!</p>
+                      <img src='/tinggle.png' alt='tingting' />
+                      <div>
+                        <p>1. 원하는 키워드나 글을 입력해주세요!</p>
+                        <p style={{ color: "gray" }}>
+                          ❗️ +열기 버튼이 있는 경우는 눌러서 빈 칸을
+                          채워주세요!(블로그 제외)
+                        </p>
+                        <p>
+                          2. write 버튼을 누르면 팅젤이가 여러분의 글 위에
+                          아이디어💡를 얹어줄거에요!
+                        </p>
+                        <p>3. 팅젤이가 얹어준 아이디어를 활용해봐요!</p>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </Box>
+                </Box>
               </OuterClick>
             </Box>
           )}
@@ -298,7 +296,7 @@ const BlogIntro = () => {
             align='center'
             className='blogMainBox'
           >
-            <h3 style={{fontWeight:'600'}}>블로그 도입부</h3>
+            <h3 style={{ fontWeight: "600" }}>블로그 도입부</h3>
             <div className='BlogIdeaBox'>
               <input
                 type='text'

@@ -4,6 +4,7 @@ import Layout from "../Layout";
 import { Box, Grid, ResponsiveContext } from "grommet";
 import { Bookmark } from "grommet-icons";
 import Loading from "../Loading";
+import moment from "moment";
 
 import * as configUrl from "../../config";
 
@@ -21,7 +22,6 @@ const SignMember = () => {
   const element3 = useRef();
   const element6 = useRef();
 
-  const [isBill, SetBill] = useState(false);
   const [isOpen, SetOpen] = useState(false);
 
   const [isLoading, SetLoading] = useState(false);
@@ -49,6 +49,7 @@ const SignMember = () => {
   const { cardNum, cardExpire, cardCvc } = card;
   const { cardPwd, idNum } = userNumber;
 
+
   const HandleChange = (e) => {
     console.log(cardNum);
     SetCard({ ...card, [e.target.name]: e.target.value });
@@ -69,7 +70,7 @@ const SignMember = () => {
 
   const HandleModals = () => {
     SetOpen(!isOpen);
-  }
+  };
 
   // 결제 post
   const RequestBill = async () => {
@@ -111,7 +112,7 @@ const SignMember = () => {
             console.log("test", data);
             await localStorage.setItem("moid", data.moid);
 
-            if(data.resultCode === 'F112') {
+            if (data.resultCode === "F112") {
               toast.error(`error : ${data.resultMsg}!`);
             }
 
@@ -160,8 +161,8 @@ const SignMember = () => {
           })
           .catch((error) => {
             console.log(error);
-              SetLoading(false);
-              //toast.error("결제 실패!");
+            SetLoading(false);
+            //toast.error("결제 실패!");
           });
         //history.push('/payment')
       }
@@ -172,37 +173,42 @@ const SignMember = () => {
 
   //결제 변경
 
-  const ChangeBill = () => {
-    console.log(Plan);
-    if (Plan !== localStorage.getItem("plan")) {
-      SetLoading(true);
-      let plans = parseInt(Plan);
-      const config = {
-        method: "put",
-        url: `${configUrl.SERVER_URL}/pay`,
-        headers: { authentication: localStorage.getItem("token") },
-        data: {
-          plan: plans,
-        },
-      };
-      axios(config)
-        .then((response) => {
-          console.log(response);
-          SetLoading(false);
-          window.location.reload();
-          setTimeout(toast.success(response.data.log), 5000);
-        })
-        .catch((error) => {
-          console.log(error);
-          if (error.response.status === 403) {
-            SetLoading(false);
-            toast.error("이미 결제된 내역 입니다!");
-          }
-        });
-    } else {
-      toast.warn("기존에 쓰던 멤버십을 선택하셨습니다.");
-    }
-  };
+  // const ChangeBill = () => {
+  //   console.log(Plan);
+  //   if (Plan !== localStorage.getItem("plan")) {
+
+  //     // if(window.confirm('변경하면 다음 결제 예정일 전까지 변경할 수 없습니다! 정말 변경하시겠습니까?')){
+
+  //     // }
+  //     SetLoading(true);
+  //     let plans = parseInt(Plan);
+
+  //     const config = {
+  //       method: "put",
+  //       url: `${configUrl.SERVER_URL}/pay`,
+  //       headers: { authentication: localStorage.getItem("token") },
+  //       data: {
+  //         plan: plans,
+  //       },
+  //     };
+  //     axios(config)
+  //       .then((response) => {
+  //         console.log(response);
+  //         history.replace('/mypage')
+  //         setTimeout(toast.success(response.data.log), 5000);
+  //       })
+  //       .catch((error) => {
+  //         console.log(error);
+  //         if (error.response.status === 403) {
+  //           toast.error("이미 결제된 내역 입니다!");
+  //         }
+  //       }).finally(()=>{
+  //         SetLoading(false);
+  //       });
+  //   } else {
+  //     toast.warn("기존에 쓰던 멤버십을 선택하셨습니다.");
+  //   }
+  // };
 
   const HandleSelected = (element) => {
     //console.log(e.target.name.split(" "));
@@ -244,248 +250,213 @@ const SignMember = () => {
     }
   };
 
-  const requestProfile = async () => {
-    let user = await localStorage.getItem("token");
 
-    if (user !== null) {
-      axios
-        .get(`${configUrl.SERVER_URL}/profile`, {
-          headers: { authentication: user },
-        })
-        .then((response) => {
-          //console.log(response.data)
-          let data = response.data;
-          SetBill(data.isBill);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    }
-  };
-
-  useEffect(() => {
-    requestProfile();
-  }, []);
 
   return (
     <>
-    <Layout>
-      {isLoading && <Loading />}
-      <Box fill justify='center' align='center'>
-        <Box
-          fill
-          background='#3b2477'
-          color='#fff'
-          className='SignInHeader'
-          justify='center'
-          align='baseline'
-        >
-          <h3>{isBill ? "멤버십 변경하기" : "멤버십 가입하기"}</h3>
-        </Box>
-        <Box fill={size !== "small" ? false : true} className={isBill && 'SignInChange'}>
-          <p style={pStyle}>
-            {isBill
-              ? "변경하고 싶은 멤버십 주기를 클릭해주세요."
-              : "1. 원하시는 멤버십 주기를 클릭해주세요."}
-          </p>
-          <Grid
-            fill={size !== "small" ? false : true}
-            columns={size !== "small" ? { count: 3, size: "auto" } : "100%"}
-            gap='large'
+      <Layout>
+        {isLoading && <Loading />}
+        <Box fill justify='center' align='center'>
+          <Box
+            fill
+            background='#3b2477'
+            color='#fff'
+            className='SignInHeader'
+            justify='center'
+            align='baseline'
           >
-            <div
-              className={
-                selected1 ? "SignMemCardCon selected" : "SignMemCardCon"
-              }
-              onClick={() => HandleSelected(element)}
-            >
-              <div className='SignMemCardHead'>
-                <span></span>
-                <BookmarkFilled size='medium' color='#3b2477' />
-              </div>
-              <div className='SignMemCardBody'>
-                <h3>1개월 이용권</h3>
-                <h4 style={{ marginBottom: "20px" }}>월 25,000원</h4>
-                <p>1개월마다 결제</p>
-                <br />
-                <ChoiceBtn ref={element} name='1 25,000'>
-                  선택
-                </ChoiceBtn>
-              </div>
-            </div>
-            <div
-              className={
-                selected2 ? "SignMemCardCon selected" : "SignMemCardCon"
-              }
-              onClick={() => HandleSelected(element3)}
-            >
-              <div className='SignMemCardHead'>
-                <span>20% 할인</span>
-                <BookmarkFilled size='medium' color='#3b2477' />
-              </div>
-              <div className='SignMemCardBody'>
-                <h3>3개월 이용권</h3>
-                <h4>월 20,000원</h4>
-                <p style={{ marginBottom: "20px", fontSize: "15px" }}>
-                  <span>75,000</span> 60,000원
-                </p>
-                <p>3개월마다 결제</p>
-                <ChoiceBtn ref={element3} name='3 60,000'>
-                  선택
-                </ChoiceBtn>
-              </div>
-            </div>
-            <div
-              className={
-                selected3 ? "SignMemCardCon selected" : "SignMemCardCon"
-              }
-              onClick={() => HandleSelected(element6)}
-            >
-              <div className='SignMemCardHead'>
-                <span>40% 할인</span>
-                <BookmarkFilled size='medium' color='#3b2477' />
-              </div>
-              <div className='SignMemCardBody'>
-                <h3>6개월 이용권</h3>
-                <h4>월 15,000원</h4>
-                <p style={{ marginBottom: "20px", fontSize: "15px" }}>
-                  <span>150,000</span> 90,000원
-                </p>
-                <p>6개월마다 결제</p>
-                <ChoiceBtn ref={element6} name='6 90,000'>
-                  선택
-                </ChoiceBtn>
-              </div>
-            </div>
-          </Grid>
-        </Box>
-        {isBill && (
-          <Box fill style={{padding: '70px'}} justify='center' align='center'>
-            <button className='changeButton' onClick={ChangeBill}>
-              변경
-            </button>
+            <h3>멤버십 가입하기</h3>
           </Box>
-        )}
-        {!isBill && (
-          <>
-            <Box justify='center' align='center' pad='large'>
-            <p style={pStyle}>2. 결제 정보를 입력해주세요.</p>
-              <div className='CreditBox'>
-                <div className='creditCard'>
-                  <CreditCardInput
-                    cardNumberInputProps={{
-                      value: cardNum,
-                      onChange: HandleChange,
-                      name: "cardNum",
-                    }}
-                    cardExpiryInputProps={{
-                      value: cardExpire,
-                      onChange: HandleChange,
-                      name: "cardExpire",
-                      onError: (err) => toast.error(err),
-                    }}
-                    cardCVCInputProps={{
-                      value: cardCvc,
-                      onChange: HandleChange,
-                      name: "cardCvc",
-                      onError: (err) => toast.error(err),
-                    }}
-                    fieldClassName='input'
-                    fieldStyle={{
-                      width: "100%",
-                    }}
-                    containerStyle={{
-                      borderBottom: "1px solid #ededed",
-                    }}
-                  />
+          <Box fill={size !== "small" ? false : true}>
+            <p style={pStyle}>1. 원하시는 멤버십 주기를 클릭해주세요.</p>
+            <Grid
+              fill={size !== "small" ? false : true}
+              columns={size !== "small" ? { count: 3, size: "auto" } : "100%"}
+              gap='large'
+            >
+              <div
+                className={
+                  selected1 ? "SignMemCardCon selected" : "SignMemCardCon"
+                }
+                onClick={() => HandleSelected(element)}
+              >
+                <div className='SignMemCardHead'>
+                  <span></span>
+                  <BookmarkFilled size='medium' color='#3b2477' />
                 </div>
-
-                <div className='ElementBox'>
-                  <p>이름</p>
-                  <input
-                    className='LabelElement'
-                    value={buyerName || ""}
-                    onChange={HandleChange}
-                    onBlur={(e) => {
-                      if (e.target.value === "") {
-                        toast.info("이름을 써주세요.", {
-                          icon: "😭",
-                          style: { backgroundColor: "#fff", color: "#000" },
-                          progressStyle: { backgroundColor: "#7D4CDB" },
-                        });
-                      }
-                    }}
-                    name='buyerName'
-                    maxLength='4'
-                  ></input>
-                </div>
-
-                <div className='ElementBox'>
-                  <p>비밀번호</p>
-                  <input
-                    className='PwElement'
-                    value={cardPwd}
-                    onChange={HandleNumber}
-                    onBlur={(e) => {
-                      if (e.target.value === "") {
-                        toast.info("비밀번호를 써주세요.", {
-                          icon: "😭",
-                          style: { backgroundColor: "#fff", color: "#000" },
-                          progressStyle: { backgroundColor: "#7D4CDB" },
-                        });
-                      }
-                    }}
-                    name='cardPwd'
-                    maxLength='2'
-                  ></input>
-                  <span>
-                    <b>**</b>
-                  </span>
-                </div>
-
-                <div className='ElementBox'>
-                  <p>주민번호</p>
-                  <input
-                    className='BuyerElement'
-                    value={idNum}
-                    onChange={HandleNumber}
-                    onBlur={(e) => {
-                      if (e.target.value === "") {
-                        toast.info("주민번호를 써주세요.", {
-                          icon: "😭",
-                          style: { backgroundColor: "#fff", color: "#000" },
-                          progressStyle: { backgroundColor: "#7D4CDB" },
-                        });
-                      }
-                    }}
-                    name='idNum'
-                    maxLength='6'
-                  ></input>
-                  <span>
-                    {" "}
-                    - <b>*******</b>
-                  </span>
-                </div>
-                <div className='PriceBox'>
-                  <p>₩{Price}</p>
-                </div>
-                <div style={payButton}>
-                  <button className='creditCardButton' onClick={RequestBill}>
-                    결제하기
-                  </button>
+                <div className='SignMemCardBody'>
+                  <h3>1개월 이용권</h3>
+                  <h4 style={{ marginBottom: "20px" }}>월 25,000원</h4>
+                  <p>1개월마다 결제</p>
+                  <br />
+                  <ChoiceBtn ref={element} name='1 25,000'>
+                    선택
+                  </ChoiceBtn>
                 </div>
               </div>
-            </Box>
-          </>
-        )}
-      </Box>
-    </Layout>
-    <Modal open={isOpen} close={HandleModals}>
+              <div
+                className={
+                  selected2 ? "SignMemCardCon selected" : "SignMemCardCon"
+                }
+                onClick={() => HandleSelected(element3)}
+              >
+                <div className='SignMemCardHead'>
+                  <span>20% 할인</span>
+                  <BookmarkFilled size='medium' color='#3b2477' />
+                </div>
+                <div className='SignMemCardBody'>
+                  <h3>3개월 이용권</h3>
+                  <h4>월 20,000원</h4>
+                  <p style={{ marginBottom: "20px", fontSize: "15px" }}>
+                    <span>75,000</span> 60,000원
+                  </p>
+                  <p>3개월마다 결제</p>
+                  <ChoiceBtn ref={element3} name='3 60,000'>
+                    선택
+                  </ChoiceBtn>
+                </div>
+              </div>
+              <div
+                className={
+                  selected3 ? "SignMemCardCon selected" : "SignMemCardCon"
+                }
+                onClick={() => HandleSelected(element6)}
+              >
+                <div className='SignMemCardHead'>
+                  <span>40% 할인</span>
+                  <BookmarkFilled size='medium' color='#3b2477' />
+                </div>
+                <div className='SignMemCardBody'>
+                  <h3>6개월 이용권</h3>
+                  <h4>월 15,000원</h4>
+                  <p style={{ marginBottom: "20px", fontSize: "15px" }}>
+                    <span>150,000</span> 90,000원
+                  </p>
+                  <p>6개월마다 결제</p>
+                  <ChoiceBtn ref={element6} name='6 90,000'>
+                    선택
+                  </ChoiceBtn>
+                </div>
+              </div>
+            </Grid>
+          </Box>
+
+          <Box justify='center' align='center' pad='large'>
+            <p style={pStyle}>2. 결제 정보를 입력해주세요.</p>
+            <div className='CreditBox'>
+              <div className='creditCard'>
+                <CreditCardInput
+                  cardNumberInputProps={{
+                    value: cardNum,
+                    onChange: HandleChange,
+                    name: "cardNum",
+                  }}
+                  cardExpiryInputProps={{
+                    value: cardExpire,
+                    onChange: HandleChange,
+                    name: "cardExpire",
+                    onError: (err) => toast.error(err),
+                  }}
+                  cardCVCInputProps={{
+                    value: cardCvc,
+                    onChange: HandleChange,
+                    name: "cardCvc",
+                    onError: (err) => toast.error(err),
+                  }}
+                  fieldClassName='input'
+                  fieldStyle={{
+                    width: "100%",
+                  }}
+                  containerStyle={{
+                    borderBottom: "1px solid #ededed",
+                  }}
+                />
+              </div>
+
+              <div className='ElementBox'>
+                <p>이름</p>
+                <input
+                  className='LabelElement'
+                  value={buyerName || ""}
+                  onChange={HandleChange}
+                  onBlur={(e) => {
+                    if (e.target.value === "") {
+                      toast.info("이름을 써주세요.", {
+                        icon: "😭",
+                        style: { backgroundColor: "#fff", color: "#000" },
+                        progressStyle: { backgroundColor: "#7D4CDB" },
+                      });
+                    }
+                  }}
+                  name='buyerName'
+                  maxLength='4'
+                ></input>
+              </div>
+
+              <div className='ElementBox'>
+                <p>비밀번호</p>
+                <input
+                  className='PwElement'
+                  value={cardPwd}
+                  onChange={HandleNumber}
+                  onBlur={(e) => {
+                    if (e.target.value === "") {
+                      toast.info("비밀번호를 써주세요.", {
+                        icon: "😭",
+                        style: { backgroundColor: "#fff", color: "#000" },
+                        progressStyle: { backgroundColor: "#7D4CDB" },
+                      });
+                    }
+                  }}
+                  name='cardPwd'
+                  maxLength='2'
+                ></input>
+                <span>
+                  <b>**</b>
+                </span>
+              </div>
+
+              <div className='ElementBox'>
+                <p>주민번호</p>
+                <input
+                  className='BuyerElement'
+                  value={idNum}
+                  onChange={HandleNumber}
+                  onBlur={(e) => {
+                    if (e.target.value === "") {
+                      toast.info("주민번호를 써주세요.", {
+                        icon: "😭",
+                        style: { backgroundColor: "#fff", color: "#000" },
+                        progressStyle: { backgroundColor: "#7D4CDB" },
+                      });
+                    }
+                  }}
+                  name='idNum'
+                  maxLength='6'
+                ></input>
+                <span>
+                  {" "}
+                  - <b>*******</b>
+                </span>
+              </div>
+              <div className='PriceBox'>
+                <p>₩{Price}</p>
+              </div>
+              <div style={payButton}>
+                <button className='creditCardButton' onClick={RequestBill}>
+                  결제하기
+                </button>
+              </div>
+            </div>
+          </Box>
+        </Box>
+      </Layout>
+      <Modal open={isOpen} close={HandleModals}>
         <ConfirmDiv>
           <h3>원하시는 멤버십 주기를 선택해주세요!</h3>
           <ConfirmBtn onClick={HandleModals}>확인</ConfirmBtn>
         </ConfirmDiv>
-    </Modal>
+      </Modal>
     </>
   );
 };
@@ -499,21 +470,21 @@ const BookmarkFilled = styled(Bookmark)`
 `;
 
 const ConfirmDiv = styled.div`
-  display:flex;
+  display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 15px;
-`
+`;
 
 const ConfirmBtn = styled.button`
-  background-color : #ffce1f;
+  background-color: #ffce1f;
   border: 1px solid #ffce1f;
-  padding : 5px 15px;
-  font-size : 1rem;
+  padding: 5px 15px;
+  font-size: 1rem;
   width: 150px;
   cursor: pointer;
-`
+`;
 
 const pStyle = {
   width: "100%",

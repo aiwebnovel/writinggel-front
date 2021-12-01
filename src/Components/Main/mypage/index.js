@@ -27,11 +27,12 @@ const Mypage = () => {
     billStart:"",
     payId:"",
     exp: '',
-    stopPay: ''
+    stopPay: '',
+    beforePlan:'',
   });
   const [isOpen, SetOpen] = useState(false);
 
-  const { isBill, userName, plan, stopPay, email, create, billStart, payId, exp } = profile;
+  const { isBill, userName, plan, stopPay, email, create, billStart, beforePlan, exp} = profile;
 
   const signOut = async () => {
     await localStorage.removeItem("token");
@@ -87,27 +88,30 @@ const Mypage = () => {
           headers: { authentication: loginCheck },
         })
         .then((response) => {
-          //console.log(response.data);
+          console.log(response.data);
           let data = response.data;
 
+          let billFormat = moment(data.billStartDate).format('YYYY-MM-DD');
+          let createFormat = moment(create).format('YYYY-MM-DD');
           let MonthLater = moment(data.billStartDate).add(data.plan,'months').toDate();
           let formatMonth = moment(MonthLater).format('YYYY-MM-DD');
+
+            SetProfile({
+              ...profile,
+              isBill: data.isBill,
+              userName: data.name,
+              plan: data.plan,
+              uid: data.uid,
+              email: email,
+              create: createFormat,
+              billStart: billFormat,
+              payId: data.lastPayTid,
+              exp: formatMonth,
+              stopPay: data.stopPayWish,
+              beforePlan: data.plan_before,
+            });
           
-          //console.log(MonthLater, formatMonth);
-          SetProfile({
-            ...profile,
-            isBill: data.isBill,
-            userName: data.name,
-            plan: data.plan,
-            uid: data.uid,
-            email: email,
-            create: create,
-            billStart: data.billStartDate,
-            payId: data.lastPayTid,
-            exp: formatMonth,
-            stopPay: data.stopPayWish
-          });
-          // console.log(isBill, userName,plan,uid,email)
+
         });
     } else {
       History.replace("/");
@@ -161,7 +165,7 @@ const Mypage = () => {
             </div>
             <div className='dataBox'>
               <p>회원가입 일시</p>
-              <p>{moment(create).format('YYYY-MM-DD hh:mm:ss')}</p>
+              <p>{create}</p>
             </div>
             <div className='dataBox'>
               <p>결제 내역</p>
@@ -180,12 +184,8 @@ const Mypage = () => {
                 <p>{plan === 'free' ? '결제한 구독 상품이 없습니다!' : `${plan}개월 구독 상품`}</p>
                 <div>
                   {plan !== 'free' && (
-                    <>
-                  <Link to='/signIn'>
-                  <button>멤버십 변경</button>
-                  </Link>
                   <button onClick={HandleModals}>멤버십 해지</button>
-                  </>)}
+                  )}
                 </div>
               </div>
             </div>
@@ -195,7 +195,7 @@ const Mypage = () => {
             </div>
             <div className='dataBox'>
               <p>이용 기간</p>
-              <p>{isBill !== false ? `${moment(billStart).format('YYYY-MM-DD')} ~ ${exp}` : '없음'}</p>
+              <p>{isBill !== false ? `${billStart} ~ ${exp}` : '없음'}</p>
             </div>
             <div className='dataBox'>
               <p>다음 결제 예정일</p>
