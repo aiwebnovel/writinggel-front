@@ -140,7 +140,7 @@ const Header = () => {
         {
           console.log(error)
           if(error.response.status === 412) {
-            toast.error('다시 로그인 해주세요!')   
+            toast.error('새로고침하거나 다시 로그인 해주세요!')   
           }
         }
         );
