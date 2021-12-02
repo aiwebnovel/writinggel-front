@@ -189,16 +189,16 @@ const BlogFollow = () => {
     }
   };
 
-  // useEffect(() => {
-  //   const loginCheck = localStorage.getItem("token");
+  useEffect(() => {
+    const loginCheck = localStorage.getItem("token");
 
-  //   if (loginCheck !== null) {
-  //     return;
-  //   } else {
-  //     History.push("/service/bloger");
-  //     setTimeout(toast.info("로그인을 해주세요!"), 300);
-  //   }
-  // }, []);
+    if (loginCheck !== null) {
+      return;
+    } else {
+      History.push("/service/bloger");
+      setTimeout(toast.info("로그인을 해주세요!"), 300);
+    }
+  }, []);
 
   useEffect(() => {
     //console.log(outputKorean)
