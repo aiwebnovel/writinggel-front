@@ -138,13 +138,10 @@ const BlogFollow = () => {
           }
         )
         .then(async (response) => {
-   
-
           if (response.data[0] === "") {
             toast.error(
               "적어주신 키워드가 적절하지 않은 것 같습니다.😭 재시도 해주세요!"
             );
-          
           } else {
             SetOutput({
               ...output,
@@ -153,18 +150,15 @@ const BlogFollow = () => {
               outputEnglish: outputEnglish + response.data[1],
               tempLength: 0,
             });
-          
           }
 
           if (response.data[2] >= 2) {
             toast.error(`결과물에 유해한 내용이 들어가 버렸어요. 😭 `);
-   
           }
         })
         .catch((error) => {
           console.log(error);
           if (error.response.status === 412) {
-       
             toast.info(`로그인이 필요합니다!`, {
               icon: "🙅‍♀️",
               progressStyle: { backgroundColor: "#7D4CDB" },
@@ -176,16 +170,15 @@ const BlogFollow = () => {
               error.response.data.errorCode === "001"
             ) {
               toast.error(`이야기의 길이가 너무 길어요ㅠ`);
-     
             } else {
-       
               SetOutput({
                 ...output,
                 result: "해당 오류는 관리자에게 문의해주세요!",
               });
             }
           }
-        }).finally(()=>{
+        })
+        .finally(() => {
           SetLoading(false);
         });
     } else {
@@ -196,16 +189,16 @@ const BlogFollow = () => {
     }
   };
 
-  useEffect(() => {
-    const loginCheck = localStorage.getItem("token");
+  // useEffect(() => {
+  //   const loginCheck = localStorage.getItem("token");
 
-    if (loginCheck !== null) {
-      return;
-    } else {
-      History.push("/service/bloger");
-      setTimeout(toast.info("로그인을 해주세요!"), 300);
-    }
-  }, []);
+  //   if (loginCheck !== null) {
+  //     return;
+  //   } else {
+  //     History.push("/service/bloger");
+  //     setTimeout(toast.info("로그인을 해주세요!"), 300);
+  //   }
+  // }, []);
 
   useEffect(() => {
     //console.log(outputKorean)
@@ -324,42 +317,44 @@ const BlogFollow = () => {
             align='center'
             className='blogMainBox'
           >
-            <div className='BlogProgressBox'>
-              <h4>블로그 이어쓰기</h4>
-              <div>
-                <ProgressBar
-                  completed={tempLength}
-                  bgColor='#372874'
-                  width='250px'
-                  height='8px'
-                  isLabelVisible={false}
-                />
-                <button onClick={requestcontents}>Write</button>
+            <Box fill justify={size !== "small" && "center"} align='center' className='BlogWrap'>
+              <div className='BlogProgressBox'>
+                <h4>블로그 이어쓰기</h4>
+                <div>
+                  <ProgressBar
+                    completed={tempLength}
+                    bgColor='#372874'
+                    width='250px'
+                    height='8px'
+                    isLabelVisible={false}
+                  />
+                  <button onClick={requestcontents}>Write</button>
+                </div>
               </div>
-            </div>
-            <div className='mainOutputBox'>
-              <textarea
-                className='blogFollowKo'
-                placeholder='먼저 블로그에 올릴 글을 채워주세요!'
-                value={outputKorean}
-                onChange={handleChange}
-              />
-              <textarea
-                className='blogFollowEn'
-                placeholder='영어가 들어갈 예정입니다!'
-                value={outputEnglish}
-                readOnly
-              >
-                {outputEnglish}
-              </textarea>
-            </div>
+              <div className='mainOutputBox'>
+                <textarea
+                  className='blogFollowKo'
+                  placeholder='먼저 블로그에 올릴 글을 채워주세요!'
+                  value={outputKorean}
+                  onChange={handleChange}
+                />
+                <textarea
+                  className='blogFollowEn'
+                  placeholder='영어가 들어갈 예정입니다!'
+                  value={outputEnglish}
+                  readOnly
+                >
+                  {outputEnglish}
+                </textarea>
+              </div>
 
-            <Icons>
-              <CopyToClipboard text={outputKorean} onCopy={onCopied}>
-                <Copy style={{ cursor: "pointer" }} />
-              </CopyToClipboard>
-              <Download onClick={SaveContent} />
-            </Icons>
+              <Icons>
+                <CopyToClipboard text={outputKorean} onCopy={onCopied}>
+                  <Copy style={{ cursor: "pointer" }} />
+                </CopyToClipboard>
+                <Download onClick={SaveContent} />
+              </Icons>
+            </Box>
           </Box>
         </Grid>
       </Box>
