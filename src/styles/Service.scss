@@ -459,7 +459,7 @@ select::-ms-expand {
     transition: all 300ms ease-in-out;
 
     @media screen and (max-width: 768px) {
-        width: 100%
+        width: 250px;
     }
 }
 
@@ -1193,7 +1193,7 @@ select::-ms-expand {
     gap: 10px;
 }
 
-.KeepFairtBtn{
+.KeepFairyBtn{
     font-size: 1rem;
     background-color : $sub2;
     border: 1px solid $sub2;
