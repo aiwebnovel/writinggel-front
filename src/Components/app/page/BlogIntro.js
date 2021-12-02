@@ -168,16 +168,16 @@ const BlogIntro = () => {
     }
   };
 
-  useEffect(() => {
-    const loginCheck = localStorage.getItem("token");
+  // useEffect(() => {
+  //   const loginCheck = localStorage.getItem("token");
 
-    if (loginCheck !== null) {
-      return;
-    } else {
-      History.push("/service/bloger");
-      setTimeout(toast.info("로그인을 해주세요!"), 300);
-    }
-  }, []);
+  //   if (loginCheck !== null) {
+  //     return;
+  //   } else {
+  //     History.push("/service/bloger");
+  //     setTimeout(toast.info("로그인을 해주세요!"), 300);
+  //   }
+  // }, []);
 
   useEffect(() => {
     //console.log(outputKorean)
@@ -296,6 +296,7 @@ const BlogIntro = () => {
             align='center'
             className='blogMainBox'
           >
+            <Box fill align='center' className='BlogWrap'>
             <h3 style={{ fontWeight: "600" }}>블로그 도입부</h3>
             <div className='BlogIdeaBox'>
               <input
@@ -317,6 +318,7 @@ const BlogIntro = () => {
               </CopyToClipboard>
               <Download onClick={SaveContent} />
             </Icons>
+          </Box>
           </Box>
         </Grid>
       </Box>

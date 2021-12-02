@@ -172,16 +172,16 @@ const BlogTitle = () => {
     }
   };
 
-  useEffect(() => {
-    const loginCheck = localStorage.getItem("token");
+  // useEffect(() => {
+  //   const loginCheck = localStorage.getItem("token");
 
-    if (loginCheck !== null) {
-      return;
-    } else {
-      History.push("/service/bloger");
-      setTimeout(toast.info("로그인을 해주세요!"), 300);
-    }
-  }, []);
+  //   if (loginCheck !== null) {
+  //     return;
+  //   } else {
+  //     History.push("/service/bloger");
+  //     setTimeout(toast.info("로그인을 해주세요!"), 300);
+  //   }
+  // }, []);
 
   useEffect(() => {
     //console.log(outputKorean)
@@ -300,27 +300,29 @@ const BlogTitle = () => {
             align='center'
             className='blogMainBox'
           >
-            <h3 style={{ fontWeight: "600" }}>블로그 제목</h3>
-            <div className='BlogIdeaBox'>
-              <input
-                type='text'
-                placeholder='블로그 키워드를 하나 입력해주세요! ex) 글쓰기 방법'
-                value={input}
-                onChange={(e) => handleChange(e)}
-              />
-              <button onClick={requestcontents}>Write</button>
-            </div>
-            <div className='mainOutputBox'>
-              <div className='blogOutputKo'>{outputKorean}</div>
-              <div className='blogOutputEn'>{outputEnglish}</div>
-            </div>
+            <Box fill align='center' className='BlogWrap'>
+              <h3 style={{ fontWeight: "600" }}>블로그 제목</h3>
+              <div className='BlogIdeaBox'>
+                <input
+                  type='text'
+                  placeholder='블로그 키워드를 하나 입력해주세요! ex) 글쓰기 방법'
+                  value={input}
+                  onChange={(e) => handleChange(e)}
+                />
+                <button onClick={requestcontents}>Write</button>
+              </div>
+              <div className='mainOutputBox'>
+                <div className='blogOutputKo'>{outputKorean}</div>
+                <div className='blogOutputEn'>{outputEnglish}</div>
+              </div>
 
-            <Icons>
-              <CopyToClipboard text={outputKorean} onCopy={onCopied}>
-                <Copy style={{ cursor: "pointer" }} />
-              </CopyToClipboard>
-              <Download onClick={SaveContent} />
-            </Icons>
+              <Icons>
+                <CopyToClipboard text={outputKorean} onCopy={onCopied}>
+                  <Copy style={{ cursor: "pointer" }} />
+                </CopyToClipboard>
+                <Download onClick={SaveContent} />
+              </Icons>
+            </Box>
           </Box>
         </Grid>
       </Box>

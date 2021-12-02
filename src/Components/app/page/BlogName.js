@@ -134,7 +134,6 @@ const BlogName = () => {
               toast.error(
                 "적어주신 키워드가 적절하지 않은 것 같습니다.😭 재시도 해주세요!"
               );
-            
             } else {
               SetOutput({
                 ...output,
@@ -142,7 +141,6 @@ const BlogName = () => {
                 outputEnglish: resE,
               });
               console.log(outputKorean);
-          
             }
 
             if (response.data[2] >= 2) {
@@ -163,8 +161,9 @@ const BlogName = () => {
               toast.error(`토큰이 부족합니다!`);
             }
           }
-        }).finally(()=>{
-          SetLoading(false)
+        })
+        .finally(() => {
+          SetLoading(false);
         });
     } else {
       toast.info(`🙅‍♀️ 로그인이 필요합니다!`, {
@@ -174,16 +173,16 @@ const BlogName = () => {
     }
   };
 
-  useEffect(() => {
-    const loginCheck = localStorage.getItem("token");
+  // useEffect(() => {
+  //   const loginCheck = localStorage.getItem("token");
 
-    if (loginCheck !== null) {
-      return;
-    } else {
-      History.push("/service/bloger");
-      setTimeout(toast.info("로그인을 해주세요!"), 300);
-    }
-  }, []);
+  //   if (loginCheck !== null) {
+  //     return;
+  //   } else {
+  //     History.push("/service/bloger");
+  //     setTimeout(toast.info("로그인을 해주세요!"), 300);
+  //   }
+  // }, []);
 
   useEffect(() => {
     //console.log(outputKorean)
@@ -302,43 +301,43 @@ const BlogName = () => {
             align='center'
             className='blogMainBox'
           >
-            <h3 style={{ fontWeight: "600" }}>블로그 개요</h3>
-            <div className='BlogIdeaBox'>
-              <input
-                type='text'
-                placeholder='블로그 키워드를 하나 입력해주세요! ex) 글쓰기 방법'
-                value={input}
-                onChange={(e) => handleChange(e)}
-              />
-              <button onClick={requestcontents}>Write</button>
-            </div>
-            <div className='mainOutputBox'>
-              <div className='blogOutputKo'>
-                📌{" "}
-                {/* {outputKorean &&
+            <Box fill align='center' className='BlogWrap'>
+              <h3 style={{ fontWeight: "600" }}>블로그 개요</h3>
+              <div className='BlogIdeaBox'>
+                <input
+                  type='text'
+                  placeholder='블로그 키워드를 하나 입력해주세요! ex) 글쓰기 방법'
+                  value={input}
+                  onChange={(e) => handleChange(e)}
+                />
+                <button onClick={requestcontents}>Write</button>
+              </div>
+              <div className='mainOutputBox'>
+                <div className='blogOutputKo'>
+                  📌{" "}
+                  {/* {outputKorean &&
                   outputKorean[0].split("\n").map((line) => {
                     return <p key={`kor${line}`}>{line}</p>;
                   })} */}
-                  {outputKorean &&
-                  outputKorean[0]}
-              </div>
-              <div className='blogOutputEn'>
-                📌{" "}
-                {/* {outputEnglish &&
+                  {outputKorean && outputKorean[0]}
+                </div>
+                <div className='blogOutputEn'>
+                  📌{" "}
+                  {/* {outputEnglish &&
                   outputEnglish[0].split("\n").map((lines) => {
                     return <p key={`eng${lines}`}>{lines}</p>;
                   })} */}
-                  {outputEnglish &&
-                  outputEnglish[0]}
+                  {outputEnglish && outputEnglish[0]}
+                </div>
               </div>
-            </div>
 
-            <Icons>
-              <CopyToClipboard text={outputKorean[0]} onCopy={onCopied}>
-                <Copy style={{ cursor: "pointer" }} />
-              </CopyToClipboard>
-              <Download onClick={SaveContent} />
-            </Icons>
+              <Icons>
+                <CopyToClipboard text={outputKorean[0]} onCopy={onCopied}>
+                  <Copy style={{ cursor: "pointer" }} />
+                </CopyToClipboard>
+                <Download onClick={SaveContent} />
+              </Icons>
+            </Box>
           </Box>
         </Grid>
       </Box>
