@@ -74,7 +74,6 @@ const Fairytale = () => {
 
   const NewStory = async () => {
     console.log(category);
-
     if (
       category.mainCharacter.length > 0 &&
       category.period.length > 0 &&
@@ -185,7 +184,10 @@ const Fairytale = () => {
     } else {
       toast.info(`${100 - newLength}자를 더 채워주세요!`);
     }
-  };
+  // }else {
+  //   toast.info('이어쓰기를 먼저 해주세요!');
+  // };
+  // };
 
 
   // const UpdateFairytale = async () => {
@@ -245,7 +247,7 @@ const Fairytale = () => {
   // }else {
   //   toast.info('이어쓰기를 먼저 해주세요!');
   // };
-  // };
+  };
 
   const SaveContent = async () => {
     if (Output) {
