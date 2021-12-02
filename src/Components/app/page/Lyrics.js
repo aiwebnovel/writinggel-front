@@ -39,7 +39,7 @@ const Lyrics = () => {
             );
 
           } else {
-            SetOutputContent(response.data[1]);
+            SetOutputContent(response.data);
           }
         })
         .catch(async (error) => {
@@ -54,14 +54,15 @@ const Lyrics = () => {
   };
 
   const SaveContent = async () => {
-    console.log(content);
+    console.log(content[1],content[0]);
+    let contents = content[1] + content[0]
     if (content) {
       const config = {
         method: "post",
         url: `${configUrl.SERVER_URL}/archive`,
         headers: { authentication: localStorage.getItem("token") },
         data: {
-          story: content,
+          story: contents,
           category: "영어 가사",
         },
       };
@@ -173,7 +174,11 @@ const Lyrics = () => {
             {/* <div className='LyricContent'>{content.split('\n').map((line, index)=>(
               <span key={line !== '' ? line : index}>{line}<br/></span>
             ))}</div> */}
-            <div className='LyricContent'>{content}</div>
+            <div className='LyricContent'>
+              <div>{content[1]}</div>
+              <br/>
+              <div>{content[0]}</div>
+              </div>
             <div className='icons'>
               <Close onClick={ResetData} /> <Update onClick={LyricsAxios} />
               <Download onClick={SaveContent} />
