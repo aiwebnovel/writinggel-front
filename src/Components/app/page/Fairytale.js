@@ -475,12 +475,11 @@ const Fairytale = () => {
           <Box
             fill
             gridArea='main'
-            className='mainBox'
-            justify='center'
+            className='FairymainBox'
+            justify={size !== "small" && "center"}
             align='center'
-            // pad={size !== 'small' ? 'medium': 'large'}
           >
-            <div className='WebFairyOutputBox'>
+            <div className='FairyOutputBox'>
               <textarea
                 className='output1'
                 placeholder='결과가 나올예정이에요!'

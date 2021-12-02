@@ -97,9 +97,9 @@ const Webnovel = () => {
     SetOutput({ ...output, outputKorean: e.target.value });
     SetChange(true);
 
-    console.log('output', outputKorean.length);
-    console.log('temp',tempLength);
-    console.log('result', outputKorean.length - tempLength)
+    console.log("output", outputKorean.length);
+    console.log("temp", tempLength);
+    console.log("result", outputKorean.length - tempLength);
     if (isHuman === false) {
       if (outputKorean > 0) {
         SetStart("이어쓰기");
@@ -123,7 +123,7 @@ const Webnovel = () => {
     }
   };
 
-  const NewWebNovel = async() => {
+  const NewWebNovel = async () => {
     if (localStorage.getItem("token") !== null) {
       if (selectOptions === "") {
         toast.error(`장르를 선택해 주세요!`);
@@ -152,7 +152,7 @@ const Webnovel = () => {
         result: "",
         tempLength: 0,
         tempWrite: "",
-      })
+      });
       await axios
         .post(
           `${configUrl.SERVER_URL}/complation`,
@@ -172,9 +172,8 @@ const Webnovel = () => {
         )
         .then(async (response) => {
           console.log(response.data);
-          console.log('response', response.data[0]);
-          console.log('response2', response.data[1]);
-
+          console.log("response", response.data[0]);
+          console.log("response2", response.data[1]);
 
           if (response.data[2] >= 2) {
             toast.error(`결과물에 유해한 내용이 들어가 버렸어요. 😭 `);
@@ -202,7 +201,6 @@ const Webnovel = () => {
               `이어지는 내용을 100자 이상 쓰면, 이야기를 계속 이어갈 수 있습니다.`
             );
           }
-
         })
         .catch((error) => {
           console.log(error);
@@ -229,15 +227,13 @@ const Webnovel = () => {
         .finally(() => {
           SetLoading(false);
         });
-      
-
-    }else {
+    } else {
       toast.info("로그인 후 다시 시도해 주세요!", {
         icon: "🙅‍♀️",
         progressStyle: { backgroundColor: "#7D4CDB" },
       });
     }
-  }
+  };
 
   const requestcontents = async () => {
     //console.log(progress, isHuman);
@@ -373,7 +369,7 @@ const Webnovel = () => {
       Main_Events: "",
       Material: "",
     });
-    SetStart('이어쓰기');
+    SetStart("이어쓰기");
     SetProgress(0);
   };
 
@@ -437,8 +433,8 @@ const Webnovel = () => {
                   { name: "main", start: [1, 0], end: [1, 1] },
                 ]
               : [
-                  { name: "sidebar", start: [0, 0], end: [0, 0] },
-                  { name: "main", start: [0, 1], end: [0, 1] },
+                  { name: "sidebar", start: [0, 0], end: [1, 0] },
+                  { name: "main", start: [0, 1], end: [1, 1] },
                 ]
           }
         >
@@ -572,46 +568,57 @@ const Webnovel = () => {
           )}
 
           <Box
+            fill
             gridArea='main'
             justify='center'
             align='center'
-            className='outputContainer'
-            // pad={size !== "small" ? "medium" : "large"}
+            className='WebOutputContainer'
           >
-            <div className='WebFairyOutputBox'>
-              <textarea
-                className='outputKo'
-                placeholder='결과가 나올예정이에요!'
-                value={outputKorean}
-                onClick={NoticeWriteIcon}
-                onChange={(e) => HandleStory(e)}
-              ></textarea>
-              <textarea
-                className='outputEn'
-                placeholder='영어가 들어갈 예정입니다!'
-                value={outputEnglish}
-                readOnly
-              ></textarea>
-            </div>
-            <div className="ContinueWeb">
-              <button className={isHuman ? "KeepWebBtn" : "NotYetBtn"} onClick={requestcontents}>
-                {Start}
-              </button>
-              {/* <div className='progress'> */}
-              <ProgressBar
-                completed={progress}
-                bgColor='#3D138D'
-                width={size !== "small" ? "300px" : "250px"}
-                height='15px'
-                margin='0 auto'
-                isLabelVisible={false}
-              />
-              {/* </div> */}
-            </div>
-            <Icons>
-              <Download onClick={SaveContent} />
-              <Update onClick={NewWebNovel} /> <Close onClick={resetData} />
-            </Icons>
+            <Box
+              fill
+              justify={size !== "small" && "center"}
+              align='center'
+              gap='large'
+              className='WebTextarea'
+            >
+        
+              <div>
+                <textarea
+                  className='outputKo'
+                  placeholder='결과가 나올예정이에요!'
+                  value={outputKorean}
+                  onClick={NoticeWriteIcon}
+                  onChange={(e) => HandleStory(e)}
+                ></textarea>
+                <textarea
+                  className='outputEn'
+                  placeholder='영어가 들어갈 예정입니다!'
+                  value={outputEnglish}
+                  readOnly
+                ></textarea>
+              </div>
+              <div className='ContinueWeb'>
+                <button
+                  className={isHuman ? "KeepWebBtn" : "NotYetBtn"}
+                  onClick={requestcontents}
+                >
+                  {Start}
+                </button>
+                <ProgressBar
+                  completed={progress}
+                  bgColor='#3D138D'
+                  width={size !== "small" ? "300px" : "250px"}
+                  height='15px'
+                  margin='0 auto'
+                  isLabelVisible={false}
+                />
+              </div>
+
+              <Icons>
+                <Download onClick={SaveContent} />
+                <Update onClick={NewWebNovel} /> <Close onClick={resetData} />
+              </Icons>
+            </Box>
           </Box>
         </Grid>
       </Box>

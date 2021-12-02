@@ -114,11 +114,11 @@ $boxShadow : rgb(237 237 237) 2px 3px 8px;
 
 .isSiderFalse {
     width: 80px;
+    
     transition: width 0.4s ease;
 
     @media screen and (max-width: 768px) {
         width: 100%;
-        //height: 50px;
         border: 0;
         //margin-bottom: 150px;
     }
@@ -228,8 +228,8 @@ $boxShadow : rgb(237 237 237) 2px 3px 8px;
 }
 
 
-//웹노블공
-.WebFairyOutputBox {
+//웹노블
+.WebOutputBox {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -244,7 +244,7 @@ $boxShadow : rgb(237 237 237) 2px 3px 8px;
 
 }
 
-//블로그 공통
+//블로그
 
 
 .mainOutputBox {
@@ -404,6 +404,7 @@ $boxShadow : rgb(237 237 237) 2px 3px 8px;
     width: 200px;
     height: 30px;
     margin: 20px 0;
+    padding-left: 5px;
     color: #fff;
     background-color: $main;
     text-align: center;
@@ -483,6 +484,34 @@ select::-ms-expand {
 
 }
 
+
+
+.WebOutputContainer {
+    padding: 60px 20px;
+
+    @media screen and (max-width: 768px) {
+        flex-direction: column;
+        padding: 120px 0px;
+    
+    }
+}
+
+.WebTextarea {
+
+    > div:first-child {
+        width: 100%;
+        display:flex;
+        justify-content: center;
+        align-items: center;
+        gap: 15px;
+
+        @media screen and (max-width: 768px) {
+            flex-direction: column;
+        }
+    }
+   
+}
+
 .outputKo,
 .outputEn {
     background-color: $white-1;
@@ -499,21 +528,17 @@ select::-ms-expand {
     }
 }
 
-.outputContainer {
-    padding: 120px 0;
-    gap:25px;
-}
-
 //bloger
 
 .blogMainBox {
-    width: 100%;
-    
-    gap: 30px;
-
+    padding: 120px 30px;
     @media screen and (max-width: 768px) {
         padding: 150px 30px;
     }
+}
+
+.BlogWrap {
+    gap: 20px;
 
 }
 
@@ -1056,18 +1081,29 @@ select::-ms-expand {
 //fairyTale
 
 
-.mainBox {
-
-    width: 100%;
+.FairymainBox{
+    
     gap: 20px;
-    padding: 120px;
+    padding: 120px 30px;
 
 
     @media screen and (max-width: 768px) {
-        padding-right: 30px;
-        padding-left: 30px;
+        padding-right: 20px;
+        padding-left: 20px;
     }
 
+}
+
+.FairyOutputBox {
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+
+    @media screen and (max-width: 768px) {
+        flex-direction: column;
+    }
 }
 
 
@@ -1132,6 +1168,7 @@ select::-ms-expand {
         cursor: pointer;
         background-color: $white-2;
         border: 1px solid $white-2;
+        color:$dark-1;
         font-weight: 600;
         padding: 5px 15px;
     }
