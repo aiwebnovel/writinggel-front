@@ -1,5 +1,5 @@
 import { Box, ResponsiveContext } from "grommet";
-import { Update, Download, Close } from "grommet-icons";
+import { Update, Download, Close, Sort } from "grommet-icons";
 import React, { useContext, useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -21,7 +21,7 @@ const Lyrics = () => {
   const LyricsAxios = async () => {
     SetOutputContent("");
     SetLoading(true);
-    if (title !== "" && story) {
+    if (title !== "" && story[0] !=="" && story[1] !== "" && story[2] !=="") {
       const config = {
         method: "post",
         url: `${configUrl.SERVER_URL}/writinggel/lyrics`,
@@ -31,12 +31,13 @@ const Lyrics = () => {
 
       await axios(config)
         .then(async (response) => {
-          //console.log(response.data);
+          console.log(response.data);
 
           if (response.data[0] === "") {
             toast.error(
               "적어주신 키워드가 적절하지 않은 것 같습니다.😭 재시도 해주세요!"
             );
+
           } else {
             SetOutputContent(response.data[1]);
           }
@@ -169,9 +170,10 @@ const Lyrics = () => {
           </button>
         </Box>
         <Box className='LyricOutputBox'>
-            <div className='LyricContent'>{content.split('\n').map((line, index)=>(
+            {/* <div className='LyricContent'>{content.split('\n').map((line, index)=>(
               <span key={line !== '' ? line : index}>{line}<br/></span>
-            ))}</div>
+            ))}</div> */}
+            <div className='LyricContent'>{content}</div>
             <div className='icons'>
               <Close onClick={ResetData} /> <Update onClick={LyricsAxios} />
               <Download onClick={SaveContent} />
