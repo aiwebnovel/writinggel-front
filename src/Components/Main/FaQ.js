@@ -82,6 +82,20 @@ const FaQ = () => {
               </h2>
             </div>
             <Accordion className='Faq-Accordion' multiple>
+            <AccordionPanel
+                label='Q. 멤버십 결제주기를 변경할 수 있나요? (예: 1개월 → 6개월)'
+                className='Faq-AccoPanel'
+              >
+                <div className='Faq-PanelContent'>
+                  <p>
+                  멤버십 결제주기 변경을 원할 경우, support@applatform.co.kr로 문의 주세요.
+                  </p>
+                  <p>멤버십 결제주기 변경이란, 다음 결제 예정일에 결제하는 금액에 변동이 생기는 것을 의미합니다. </p>
+                  <p>
+                  이미 결제하신 부분에 대해서는 변경이 불가합니다.
+                  </p>
+                </div>
+              </AccordionPanel>
               <AccordionPanel
                 label='Q. 멤버십 구독 이용료는 언제 결제 되나요?'
                 className='Faq-AccoPanel'
@@ -208,7 +222,11 @@ const FaQ = () => {
                 className='Faq-AccoPanel'
               >
                 <div className='Faq-PanelContent'>
-                  <p>추후 업데이트 예정</p>
+                  <p>            <p>
+                    라이팅젤 웹사이트 우측 상단 마이페이지 [아이콘]
+                    &gt; [마이페이지]에서 구독 상품 항목에 있는 [결제 내역]을
+                    클릭하시면, 결제 관련 내용들을 보실 수 있습니다.
+                  </p></p>
                 </div>
               </AccordionPanel>
               <AccordionPanel
@@ -228,7 +246,7 @@ const FaQ = () => {
                 className='Faq-AccoPanel'
               >
                 <div className='Faq-PanelContent'>
-                  <p>추후 업데이트 예정</p>
+                  <p>현재는 국내(한국)에서 발급된 개인 신용/체크카드로만 결제하실 수 있습니다. 추후 업데이트 예정입니다.</p>
                 </div>
               </AccordionPanel>
             </Accordion>
