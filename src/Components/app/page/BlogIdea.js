@@ -124,16 +124,15 @@ const BlogIdea = () => {
         .then(async (response) => {
           let resK = [];
           let resE = [];
-      
+
           for (let i = 0; i < response.data.length; i++) {
             await resK.push(response.data[i][0]);
             await resE.push(response.data[i][1]);
 
-         
             if (response.data[0][0] === "") {
-                toast.error(
-                  "적어주신 키워드가 적절하지 않은 것 같습니다.😭 재시도 해주세요!"
-                )
+              toast.error(
+                "적어주신 키워드가 적절하지 않은 것 같습니다.😭 재시도 해주세요!"
+              );
             } else {
               SetOutput({
                 ...output,
@@ -150,7 +149,6 @@ const BlogIdea = () => {
         .catch((error) => {
           //console.log(error);
           if (error.response.status === 412) {
-      
             toast.info(`🙅‍♀️ 로그인이 필요합니다!`, {
               style: { backgroundColor: "#fff", color: "#000" },
               progressStyle: { backgroundColor: "#7D4CDB" },
@@ -158,7 +156,6 @@ const BlogIdea = () => {
             localStorage.removeItem("token");
           } else {
             if (error.response.status === 403) {
-           
               toast.error(`허용되지 않은 접근입니다!`);
             }
           }
@@ -189,7 +186,7 @@ const BlogIdea = () => {
     <ServiceLayout>
       {isLoading && <Loading />}
       <Box
-        className='ServiceContainerVh'
+        className='ServiceContainer'
         justify='center'
         align='center'
         background='#f9f9f9'
@@ -293,33 +290,36 @@ const BlogIdea = () => {
           )}
 
           <Box
+            fill
             gridArea='main'
             justify='center'
             align='center'
             className='blogMainBox'
           >
-            <h3 style={{ fontWeight: "600" }}>블로그 아이디어</h3>
-            <div className='BlogIdeaBox'>
-              <input
-                type='text'
-                name='idea'
-                placeholder='블로그 키워드를 하나 입력해주세요! ex) 글쓰기 방법'
-                value={input}
-                onChange={(e) => handleChange(e)}
-              />
-              <button onClick={requestcontents}>Write</button>
-            </div>
-            <div className='mainOutputBox'>
-              <div className='blogOutputKo'>{outputKorean[0]}</div>
-              <div className='blogOutputEn'>{outputEnglish[0]}</div>
-            </div>
+            <Box fill align='center' className='BlogWrap'>
+              <h3 style={{ fontWeight: "600" }}>블로그 아이디어</h3>
+              <div className='BlogIdeaBox'>
+                <input
+                  type='text'
+                  name='idea'
+                  placeholder='블로그 키워드를 하나 입력해주세요! ex) 글쓰기 방법'
+                  value={input}
+                  onChange={(e) => handleChange(e)}
+                />
+                <button onClick={requestcontents}>Write</button>
+              </div>
+              <div className='mainOutputBox'>
+                <div className='blogOutputKo'>{outputKorean[0]}</div>
+                <div className='blogOutputEn'>{outputEnglish[0]}</div>
+              </div>
 
-            <Icons>
-              <CopyToClipboard text={outputKorean[0]} onCopy={onCopied}>
-                <Copy style={{ cursor: "pointer" }} />
-              </CopyToClipboard>
-              <Download onClick={SaveContent} />
-            </Icons>
+              <Icons>
+                <CopyToClipboard text={outputKorean[0]} onCopy={onCopied}>
+                  <Copy style={{ cursor: "pointer" }} />
+                </CopyToClipboard>
+                <Download onClick={SaveContent} />
+              </Icons>
+            </Box>
           </Box>
         </Grid>
       </Box>

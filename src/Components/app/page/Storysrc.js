@@ -176,7 +176,7 @@ const Storysrc = () => {
           className='SrcPrintBtn'
           direction={size !== "small" ? "row" : "column"}
           align={size !=='small' ? 'start': 'center'}
-          justify='center'
+          justify={size !=='small' ? 'center': 'start'}
           gap='large'
         >
           <button
