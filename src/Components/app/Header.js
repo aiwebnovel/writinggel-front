@@ -57,6 +57,7 @@ const Header = () => {
         })
         .catch((error) => {
           console.log(error);
+          toast.error('새로고침하거나 다시 로그인해주세요!');
         });
     }
   }, [profile]);

@@ -189,11 +189,11 @@ const Webnovel = () => {
           } else {
             await SetOutput({
               ...output,
-              outputKorean: outputKorean + response.data[0],
-              outputEnglish: outputEnglish + response.data[1],
+              outputKorean: response.data[0],
+              outputEnglish: response.data[1],
               result: outputKorean + "\n\n원본\n" + outputEnglish,
-              tempLength: (outputKorean + response.data[0]).length,
-              tempWrite: outputKorean + response.data[0],
+              tempLength: response.data[0].length,
+              tempWrite: response.data[0],
             });
 
             await SetChange(false);
