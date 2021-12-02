@@ -250,6 +250,7 @@ const BlogKeyword = () => {
             align='center'
             className='KeywordMainBox'
           >
+            <Box fill justify={size !== "small" && "center"} align='center' className='BlogWrap'>
             <div className='KeyContainer'>
               <div className='keywordHeader'>
                 <Close className='close' onClick={resetData} />
@@ -261,7 +262,7 @@ const BlogKeyword = () => {
                 <input
                   type='text'
                   name='keyword'
-                  placeholder='블로그 아이디어에 필요한 키워드를 입력해주세요!'
+                  placeholder='블로그에 필요한 키워드를 입력해주세요!'
                   value={keyword}
                   onChange={(e) => handleState(e)}
                   className='keywordInput'
@@ -300,6 +301,7 @@ const BlogKeyword = () => {
                 )}
               </div>
             </div>
+          </Box>
           </Box>
         </Grid>
       </Box>
