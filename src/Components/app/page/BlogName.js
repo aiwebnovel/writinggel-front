@@ -315,17 +315,21 @@ const BlogName = () => {
             <div className='mainOutputBox'>
               <div className='blogOutputKo'>
                 📌{" "}
-                {outputKorean &&
+                {/* {outputKorean &&
                   outputKorean[0].split("\n").map((line) => {
                     return <p key={`kor${line}`}>{line}</p>;
-                  })}
+                  })} */}
+                  {outputKorean &&
+                  outputKorean[0]}
               </div>
               <div className='blogOutputEn'>
                 📌{" "}
-                {outputEnglish &&
+                {/* {outputEnglish &&
                   outputEnglish[0].split("\n").map((lines) => {
                     return <p key={`eng${lines}`}>{lines}</p>;
-                  })}
+                  })} */}
+                  {outputEnglish &&
+                  outputEnglish[0]}
               </div>
             </div>
 

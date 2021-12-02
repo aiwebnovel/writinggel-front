@@ -17,31 +17,11 @@ import ServiceLayout from "../Layout";
 import styled from "styled-components";
 import Loading from "../../Loading";
 import * as configUrl from "../../../config";
+import ProgressBar from "@ramonak/react-progress-bar";
+
+const LanguageDetect = require("languagedetect");
 
 const Fairytale = () => {
-  const AccodianData = [
-    {
-      id: 1,
-      title: "주요 인물",
-    },
-    {
-      id: 2,
-      title: "시간",
-    },
-    {
-      id: 3,
-      title: "장소",
-    },
-    {
-      id: 4,
-      title: "주제",
-    },
-    {
-      id: 5,
-      title: "주요 사건",
-    },
-  ];
-
   const size = useContext(ResponsiveContext);
   const History = useHistory();
 
@@ -49,11 +29,13 @@ const Fairytale = () => {
   const [isOpen, SetOpen] = useState(false);
   const [isLoading, SetLoading] = useState(false);
   const [isHuman, SetIsHuman] = useState(false);
+  const [progress, SetProgress] = useState(0);
   const [Output, SetOutput] = useState(["", ""]);
   const [OutputTemp, SetOutputTemp] = useState("");
   const [tempLength, SetLength] = useState(0);
   const [newLength, SetNewLength] = useState(0);
-  const [start, SetStart] = useState("write");
+
+  const [ContinueStory, SetContinue] = useState("이어쓰기");
 
   const handleSider = () => {
     SetSider(!isSider);
@@ -69,62 +51,30 @@ const Fairytale = () => {
     period: "", //Period 시간 (api 문서에서는 time)
     location: "", //Location 장소
     theme: "", //Theme 주제
-    mainEvent : '', //주요 사건 (api 문서에서는 Period) 
+    mainEvent: "", //주요 사건 (api 문서에서는 Period)
   });
 
   const HandleInput = (e) => {
-    // console.log("e", e);
-    console.log("category", e.target.name);
-     console.log("input", e.target.value);
-
-    if (e.target.name === "주요 인물") {
-      Setcategory({
-        ...category,
-        mainCharacter: e.target.value,
-      });
-    }
-    if (e.target.name === "시간") {
-      Setcategory({
-        ...category,
-        period: e.target.value,
-      });
-    }
-    if (e.target.name === "장소") {
-      Setcategory({
-        ...category,
-        location: e.target.value,
-      });
-    }
-    if (e.target.name === "주제") {
-      Setcategory({
-        ...category,
-        theme: e.target.value,
-      });
-    }
-    if (e.target.name === "주요 사건") {
-      Setcategory({
-        ...category,
-        mainEvent: e.target.value,
-      });
-    }
-
+    Setcategory({ ...category, [e.target.name]: e.target.value });
   };
 
   const HandleStory = (e) => {
-    SetStart("Need a Story");
     SetOutput([e.target.value, Output[1]]);
-    let OutputLength = Output[0].length;
-    let Length = OutputLength - tempLength;
+    SetContinue("이어쓰기");
+    let OutputLength = e.target.value.length; //결과물+사람이 새로 쓴 문장 총 길이
+    let Length = OutputLength - tempLength; // 사람이 쓴 것까지 합한 문장 길이 - 결과물 길이
     SetNewLength(Length);
-    // console.log(Length);
-    //console.log(newLength);
+    console.log(Output[0], OutputLength, tempLength, Length);
+    console.log(newLength);
 
     if (newLength > 100) {
-      SetStart("Continue");
+      SetContinue("Continue");
     }
   };
 
-  const FairytaleAxios = async () => {
+  const NewStory = async () => {
+    console.log(category);
+
     if (
       category.mainCharacter.length > 0 &&
       category.period.length > 0 &&
@@ -132,109 +82,12 @@ const Fairytale = () => {
       category.mainEvent.length > 0 &&
       category.theme.length > 0
     ) {
-      if (!isHuman) {
-        SetLoading(true);
-
-        const config = {
-          method: "post",
-          url: `${configUrl.SERVER_URL}/writinggel/fairytale`,
-          headers: { authentication: localStorage.getItem("token") },
-          data: {
-            Story: Output[0],
-            Time:category.period,
-            Main_character: category.mainCharacter,
-            Period: category.mainEvent,
-            Location: category.location,
-            Theme: category.theme,
-          },
-        };
-
-        await axios(config)
-          .then((response) => {
-            // console.log(response.data);
-
-            if (response.data[0] === "") {
-              toast.error(
-                "적어주신 키워드가 적절하지 않은 것 같습니다.😭 재시도 해주세요!"
-              );
-              SetLoading(false);
-            } else {
-              SetOutput([response.data[0], response.data[1]]);
-              SetOutputTemp(Output[0] + response.data[0]);
-              SetLength((Output[0] + response.data[0]).length);
-              SetStart("Need a Story");
-              SetIsHuman(true);
-            }
-          })
-          .catch((error) => {
-            console.log(error);
-          })
-          .finally(() => {
-            SetLoading(false);
-          });
-      } else {
-        if (newLength > 100) {
-          SetLoading(true);
-
-          const config = {
-            method: "post",
-            url: `${configUrl.SERVER_URL}/writinggel/fairytale`,
-            headers: { authentication: localStorage.getItem("token") },
-            data: {
-              Story: Output[0],
-              Time:category.period,
-              Main_character: category.mainCharacter,
-              Period: category.mainEvent,
-              Location: category.location,
-              Theme: category.theme,
-            },
-          };
-
-          await axios(config)
-            .then((response) => {
-              //console.log(response.data);
-              if (response.data[0] === "") {
-                toast.error(
-                  "결과물에 유해한 내용이 들어가 버렸어요. 😭 재시도 해주세요!"
-                );
-                SetLoading(false);
-              } else {
-                SetOutput([
-                  Output[0] + response.data[0],
-                  Output[1] + response.data[1],
-                ]);
-                SetOutputTemp(Output[0] + response.data[0]);
-                SetLength((Output[0] + response.data[0]).length);
-                SetStart("Need a Story");
-              }
-            })
-            .catch((error) => {
-              console.log(error);
-            })
-            .finally(() => {
-              SetLoading(false);
-            });
-        } else {
-          toast.info(`${100 - newLength}자를 더 채워주세요!`);
-        }
-      }
-    } else {
-      toast.info("옆 메뉴에서 내용을 채워주세요!");
-    }
-  };
-
-  const UpdateFairytale = async () => {
-    //console.log('log',  Output, OutputTemp, tempLength,)
-
-    SetIsHuman(false);
-    if (
-      category.mainCharacter.length > 0 &&
-      category.period.length > 0 &&
-      category.location.length > 0 &&
-      category.mainEvent.length > 0 &&
-      category.theme.length > 0
-    ) {
+      //  if (Output[0] !=='') {
       SetLoading(true);
+      SetOutput(["", ""]);
+      SetOutputTemp("");
+      SetLength(0);
+      SetNewLength(0);
 
       const config = {
         method: "post",
@@ -242,8 +95,8 @@ const Fairytale = () => {
         headers: { authentication: localStorage.getItem("token") },
         data: {
           Story: "",
+          Time: category.period,
           Main_character: category.mainCharacter,
-          Time : category.period,
           Period: category.mainEvent,
           Location: category.location,
           Theme: category.theme,
@@ -252,31 +105,147 @@ const Fairytale = () => {
 
       await axios(config)
         .then((response) => {
-          // console.log(response.data);
+          console.log(response.data);
 
           if (response.data[0] === "") {
             toast.error(
-              "결과물에 유해한 내용이 들어가 버렸어요. 😭 재시도 해주세요!"
+              "적어주신 키워드가 적절하지 않거나 결과가 잘 나오지 않은 것 같습니다.😭 재시도 해주세요!"
             );
+            SetLoading(false);
           } else {
+            console.log(Output[0], Output[0].length);
+            //인공지능이 새로 만들어주는 결과물 -> 아예 새로운 도입부만 필요한 거니까 response만 넣어줌
             SetOutput([response.data[0], response.data[1]]);
+            //인공지능 결과물 담기(사람이 추가로 쓴 것과 길이 비교 위함.)
             SetOutputTemp(response.data[0]);
+
             SetLength(response.data[0].length);
-            SetStart("Need a Story");
+            SetContinue("이어쓰기");
             SetIsHuman(true);
           }
         })
         .catch((error) => {
           console.log(error);
-          if (error.response.status === 429) {
-            toast.error("요청이 너무 많습니다!");
+        })
+        .finally(() => {
+          SetLoading(false);
+        });
+    } else {
+      toast.error("빈 칸을 모두 채워주세요!");
+      SetLoading(false);
+    }
+  };
+
+  const ContinueFairy = async () => {
+    if (newLength > 100) {
+      SetLoading(true);
+
+      const config = {
+        method: "post",
+        url: `${configUrl.SERVER_URL}/writinggel/fairytale`,
+        headers: { authentication: localStorage.getItem("token") },
+        data: {
+          Story: Output[0],
+          Time: category.period,
+          Main_character: category.mainCharacter,
+          Period: category.mainEvent,
+          Location: category.location,
+          Theme: category.theme,
+        },
+      };
+
+      await axios(config)
+        .then((response) => {
+          //console.log(response.data);
+          if (response.data[0] === "") {
+            toast.error(
+              "결과물에 유해한 내용이 들어가 버렸어요. 😭 재시도 해주세요!"
+            );
+            SetLoading(false);
+          } else {
+            SetOutput([
+              Output[0] + response.data[0],
+              Output[1] + response.data[1],
+            ]);
+            SetOutputTemp(Output[0] + response.data[0]);
+            SetLength((Output[0] + response.data[0]).length);
+            SetNewLength(0);
+            SetContinue("이어쓰기");
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+          if (error.response.status === 412) {
+            toast.error("새로고침 혹은 재로그인 해주세요!");
           }
         })
         .finally(() => {
           SetLoading(false);
         });
+    } else {
+      toast.info(`${100 - newLength}자를 더 채워주세요!`);
     }
   };
+
+
+  // const UpdateFairytale = async () => {
+  //   if(newLength > 100){
+  //   if (
+  //     category.mainCharacter.length > 0 &&
+  //     category.period.length > 0 &&
+  //     category.location.length > 0 &&
+  //     category.mainEvent.length > 0 &&
+  //     category.theme.length > 0
+  //   ) {
+  //     SetLoading(true);
+  //     const config = {
+  //       method: "post",
+  //       url: `${configUrl.SERVER_URL}/writinggel/fairytale`,
+  //       headers: { authentication: localStorage.getItem("token") },
+  //       data: {
+  //         Story: Output[0],
+  //         Main_character: category.mainCharacter,
+  //         Time: category.period,
+  //         Period: category.mainEvent,
+  //         Location: category.location,
+  //         Theme: category.theme,
+  //       },
+  //     };
+
+  //     await axios(config)
+  //       .then((response) => {
+  //         // console.log(response.data);
+
+  //         if (response.data[0] === "") {
+  //           toast.error(
+  //             "결과물에 유해한 내용이 들어가 버렸어요. 😭 재시도 해주세요!"
+  //           );
+  //         } else {
+           
+  //           SetOutput([
+  //             Output[0] + response.data[0],
+  //             Output[1] + response.data[1],
+  //           ]);
+  //           SetOutputTemp(Output[0]+response.data[0]);
+  //           SetLength((Output[0]+response.data[0]).length);
+  //           SetContinue("이어쓰기");
+  //           SetIsHuman(true);
+  //         }
+  //       })
+  //       .catch((error) => {
+  //         console.log(error);
+  //         if (error.response.status === 429) {
+  //           toast.error("요청이 너무 많습니다!");
+  //         }
+  //       })
+  //       .finally(() => {
+  //         SetLoading(false);
+  //       });
+  //   }
+  // }else {
+  //   toast.info('이어쓰기를 먼저 해주세요!');
+  // };
+  // };
 
   const SaveContent = async () => {
     if (Output) {
@@ -311,11 +280,18 @@ const Fairytale = () => {
   };
 
   const ResetData = () => {
+    Setcategory({
+      mainCharacter: "", //Main_Character 주요 인물,
+      period: "", //Period 시간 (api 문서에 time에 넣을 것)
+      location: "", //Location 장소
+      theme: "", //Theme 주제
+      mainEvent: "", //주요 사건 (api 문서에서는 Period)
+    });
     SetOutput(["", ""]);
     SetOutputTemp("");
     SetLength(0);
     SetNewLength(0);
-    SetStart("write");
+    SetContinue("이어쓰기");
     SetIsHuman(false);
     handleSider(false);
   };
@@ -365,28 +341,78 @@ const Fairytale = () => {
                   <Close />
                 </SiderBtn>
                 <Box align='center' gap='large'>
-                  <Accordion className='AcoStyle' multiple>
-                    {AccodianData.map((item) => (
-                      <AccordionPanel
-                        key={item.id}
-                        label={item.title}
-                        className='AcoPanelStyle'
-                      >
-                        <div className='AcoInput'>
-                          <input
-                            required
-                            type='text'
-                            name={item.title}
-                            onChange={(e) => HandleInput(e)}
-                          />
-                          {/* <button>추가</button> */}
-                        </div>
-                      </AccordionPanel>
-                    ))}
-                    <div className='writeBtn'>
-                      <button onClick={() => FairytaleAxios()}>{start}</button>
+                  <div className='AcoStyle'>
+                    <div className='AcoPanelStyle'>
+                      <h4>주요 인물</h4>
+                      <div className='AcoInput'>
+                        <input
+                          required
+                          type='text'
+                          name='mainCharacter'
+                          value={category.mainCharacter}
+                          onChange={(e) => HandleInput(e)}
+                        />
+                      </div>
                     </div>
-                  </Accordion>
+                    <div className='AcoPanelStyle'>
+                      <h4>시간</h4>
+                      <div className='AcoInput'>
+                        <input
+                          required
+                          type='text'
+                          name='period'
+                          value={category.period}
+                          onChange={(e) => HandleInput(e)}
+                        />
+                      </div>
+                    </div>
+                    <div className='AcoPanelStyle'>
+                      <h4>장소</h4>
+                      <div className='AcoInput'>
+                        <input
+                          required
+                          type='text'
+                          name='location'
+                          value={category.location}
+                          onChange={(e) => HandleInput(e)}
+                        />
+                      </div>
+                    </div>
+                    <div className='AcoPanelStyle'>
+                      <h4>주제</h4>
+                      <div className='AcoInput'>
+                        <input
+                          required
+                          type='text'
+                          name='theme'
+                          value={category.theme}
+                          onChange={(e) => HandleInput(e)}
+                        />
+                      </div>
+                    </div>
+                    <div className='AcoPanelStyle'>
+                      <h4>주요 사건</h4>
+                      <div className='AcoInput'>
+                        <input
+                          required
+                          type='text'
+                          name='mainEvent'
+                          value={category.mainEvent}
+                          onChange={(e) => HandleInput(e)}
+                        />
+                      </div>
+                    </div>
+                    <div className='writeBtn'>
+                      <button
+                        onClick={() => {
+                          NewStory();
+                          //FairytaleAxios();
+                        }}
+                      >
+                        write
+                      </button>
+                    </div>
+                  </div>
                 </Box>
               </OuterClick>
             </Box>
@@ -466,9 +492,27 @@ const Fairytale = () => {
                 readOnly
               ></textarea>
             </div>
+            <div className='goingContainer'>
+              <button
+                disabled={!isHuman}
+                className={isHuman ? "KeepFairyBtn" : "NotYetBtn"}
+                onClick={ContinueFairy}
+              >
+                {ContinueStory}
+              </button>
+              {/* <div className='progress'> */}
+              <ProgressBar
+                completed={newLength}
+                bgColor='#3D138D'
+                width={size !== "small" ? "300px" : "250px"}
+                height='15px'
+                margin='0 auto'
+                isLabelVisible={false}
+              />
+            </div>
             <Icons>
-              <Download onClick={SaveContent} />{" "}
-              <Update onClick={UpdateFairytale} /> <Close onClick={ResetData} />
+              <Download onClick={SaveContent} />
+              <Update onClick={NewStory} /> <Close onClick={ResetData} />
             </Icons>
           </Box>
         </Grid>
