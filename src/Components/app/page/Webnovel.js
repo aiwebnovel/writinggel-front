@@ -46,7 +46,7 @@ const Webnovel = () => {
 
   const [isHuman, SetHuman] = useState(false);
   const [isChange, SetChange] = useState(false);
-  const [Start, SetStart] = useState("Create a story");
+  const [Start, SetStart] = useState("이어쓰기");
   const [progress, SetProgress] = useState(0);
 
   const [isLoading, SetLoading] = useState(false);
@@ -97,17 +97,16 @@ const Webnovel = () => {
     SetOutput({ ...output, outputKorean: e.target.value });
     SetChange(true);
 
+    console.log('output', outputKorean.length);
+    console.log('temp',tempLength);
+    console.log('result', outputKorean.length - tempLength)
     if (isHuman === false) {
       if (outputKorean > 0) {
-        SetStart("Need a story");
+        SetStart("이어쓰기");
       }
     } else {
       const lngDetector = new LanguageDetect();
       const language = await lngDetector.detect(outputKorean, 1);
-
-      //console.log(progress);
-
-      //console.log(((outputKorean.length - tempLength) * 100) / 150 );
 
       if (progress >= 100) {
         SetStart("Continue");
@@ -123,6 +122,122 @@ const Webnovel = () => {
       }
     }
   };
+
+  const NewWebNovel = async() => {
+    if (localStorage.getItem("token") !== null) {
+      if (selectOptions === "") {
+        toast.error(`장르를 선택해 주세요!`);
+        return;
+      } else if (Main_character === "") {
+        toast.error(`주인공을 입력해 주세요!`);
+        return;
+      } else if (Place === "") {
+        toast.error(`장소를 입력해 주세요!`);
+        return;
+      } else if (Time === "") {
+        toast.error(`시간대를 입력해 주세요!`);
+        return;
+      } else if (Main_Events === "") {
+        toast.error(`주요 사건을 입력해 주세요!`);
+        return;
+      } else if (Material === "") {
+        toast.error(`소재를 입력해 주세요!`);
+        return;
+      }
+      SetLoading(true);
+      SetProgress(0);
+      SetOutput({
+        outputKorean: "",
+        outputEnglish: "",
+        result: "",
+        tempLength: 0,
+        tempWrite: "",
+      })
+      await axios
+        .post(
+          `${configUrl.SERVER_URL}/complation`,
+          {
+            Story: "",
+            selectOptions: selectOptions,
+            Main_character: Main_character,
+            Place: Place,
+            Time: Time,
+            Main_Events: Main_Events,
+            Material: Material,
+          },
+          {
+            headers: { authentication: localStorage.getItem("token") },
+            timeout: 100000,
+          }
+        )
+        .then(async (response) => {
+          console.log(response.data);
+          console.log('response', response.data[0]);
+          console.log('response2', response.data[1]);
+
+
+          if (response.data[2] >= 2) {
+            toast.error(`결과물에 유해한 내용이 들어가 버렸어요. 😭 `);
+            SetHuman(false);
+          }
+
+          if (response.data[0] === "") {
+            toast.error(
+              "적어주신 키워드가 적절하지 않은 것 같습니다.😭 재시도 해주세요!"
+            );
+            SetLoading(false);
+          } else {
+            await SetOutput({
+              ...output,
+              outputKorean: outputKorean + response.data[0],
+              outputEnglish: outputEnglish + response.data[1],
+              result: outputKorean + "\n\n원본\n" + outputEnglish,
+              tempLength: (outputKorean + response.data[0]).length,
+              tempWrite: outputKorean + response.data[0],
+            });
+
+            await SetChange(false);
+            await SetHuman(true);
+            toast.info(
+              `이어지는 내용을 100자 이상 쓰면, 이야기를 계속 이어갈 수 있습니다.`
+            );
+          }
+
+        })
+        .catch((error) => {
+          console.log(error);
+          if (error.response.status === 412) {
+            toast.info(`로그인이 필요합니다!`, {
+              icon: "🙅‍♀️",
+              progressStyle: { backgroundColor: "#7D4CDB" },
+            });
+            localStorage.removeItem("token");
+          } else {
+            if (
+              error.response.status === 403 &&
+              error.response.data.errorCode === "001"
+            ) {
+              toast.error(`이야기의 길이가 너무 길어요ㅠ`);
+            } else {
+              SetOutput({
+                ...output,
+                result: "해당 오류는 관리자에게 문의해주세요!",
+              });
+            }
+          }
+        })
+        .finally(() => {
+          SetLoading(false);
+        });
+      
+
+    }else {
+      toast.info("로그인 후 다시 시도해 주세요!", {
+        icon: "🙅‍♀️",
+        progressStyle: { backgroundColor: "#7D4CDB" },
+      });
+    }
+  }
 
   const requestcontents = async () => {
     //console.log(progress, isHuman);
@@ -198,7 +313,7 @@ const Webnovel = () => {
             });
 
             await SetChange(false);
-            await SetStart("Need a Story");
+            await SetStart("이어쓰기");
             await SetHuman(true);
             toast.info(
               `이어지는 내용을 100자 이상 쓰면, 이야기를 계속 이어갈 수 있습니다.`
@@ -258,6 +373,7 @@ const Webnovel = () => {
       Main_Events: "",
       Material: "",
     });
+    SetStart('이어쓰기');
     SetProgress(0);
   };
 
@@ -390,19 +506,9 @@ const Webnovel = () => {
                       name='Main_Events'
                       placeholder='주요 사건'
                     />
-                    <button className='create' onClick={requestcontents}>
-                      {Start}
+                    <button className='create' onClick={NewWebNovel}>
+                      write
                     </button>
-                    {/* <div className='progress'> */}
-                    <ProgressBar
-                      completed={progress}
-                      bgColor='#3D138D'
-                      width='220px'
-                      height='15px'
-                      margin='0 auto'
-                      isLabelVisible={false}
-                    />
-                    {/* </div> */}
                   </div>
                 </Box>
               </OuterClick>
@@ -487,9 +593,24 @@ const Webnovel = () => {
                 readOnly
               ></textarea>
             </div>
+            <div className="ContinueWeb">
+              <button className={isHuman ? "KeepWebBtn" : "NotYetBtn"} onClick={requestcontents}>
+                {Start}
+              </button>
+              {/* <div className='progress'> */}
+              <ProgressBar
+                completed={progress}
+                bgColor='#3D138D'
+                width={size !== "small" ? "300px" : "250px"}
+                height='15px'
+                margin='0 auto'
+                isLabelVisible={false}
+              />
+              {/* </div> */}
+            </div>
             <Icons>
               <Download onClick={SaveContent} />
-              <Update onClick={requestcontents} /> <Close onClick={resetData} />
+              <Update onClick={NewWebNovel} /> <Close onClick={resetData} />
             </Icons>
           </Box>
         </Grid>
@@ -501,8 +622,6 @@ const Webnovel = () => {
 export default Webnovel;
 
 const Icons = styled.div`
-  margin-top: 30px;
-
   display: flex;
   justify-content: center;
   align-items: center;

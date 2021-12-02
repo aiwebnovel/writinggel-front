@@ -221,22 +221,28 @@ const Discussion = () => {
             <div className='outputArea'>
               <div className="AreaBox">
                 <div>
-                  {ProsOutput &&
+                  {/* {ProsOutput &&
                     ProsOutput[0].split("\n").map((line, index) => (
                       <span key={line !== '' ? line: index}>
                         {line}
                         <br />
                       </span>
-                    ))}
+                    ))} */}
+                  
+                  {ProsOutput &&
+                    ProsOutput[0]}
                 </div>
                 <div>
-                  {ProsOutput &&
+                  {/* {ProsOutput &&
                     ProsOutput[1].split("\n").map((line, index) => (
                       <span key={line !== '' ? line: index}>
                         {line}
                         <br />
                       </span>
-                    ))}
+                    ))} */}
+                      
+                  {ProsOutput &&
+                    ProsOutput[1]}
                 </div>
               </div>
               <Icon>
@@ -256,22 +262,27 @@ const Discussion = () => {
             <div className='outputArea'>
               <div className="AreaBox">
                 <div>
-                  {ConsOutput &&
+                  {/* {ConsOutput &&
                     ConsOutput[0].split("\n").map((line, index) => (
                       <span key={line !== '' ? line: index}>
                         {line}
                         <br />
                       </span>
-                    ))}
+                    ))} */}
+                      
+                  {ConsOutput &&
+                    ConsOutput[0]}
                 </div>
                 <div>
-                  {ConsOutput &&
+                  {/* {ConsOutput &&
                     ConsOutput[1].split("\n").map((line, index) => (
                       <span key={line !== '' ? line : index}>
                         {line}
                         <br />
                       </span>
-                    ))}
+                    ))} */}
+                      {ConsOutput &&
+                    ConsOutput[1]}
                 </div>
               </div>
               <Icon>

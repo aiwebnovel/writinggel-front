@@ -28,8 +28,9 @@ const Businessitem = () => {
   const [OutputContent, SetOutputContent] = useState(["", "", ""]);
 
   const BusinessitemAxios = async () => {
-    SetLoading(true);
+ 
     if (input && input !== "") {
+      SetLoading(true);
       const config = {
         method: "post",
         url: `${configUrl.SERVER_URL}/writinggel/businessitem`,
@@ -56,6 +57,7 @@ const Businessitem = () => {
           SetLoading(false);
         });
     } else {
+
       setTimeout(toast.info("내용을 채워주세요!"), 300);
     }
   };
