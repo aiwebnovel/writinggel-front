@@ -12,6 +12,8 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import { OuterClick } from "react-outer-click";
+import ScrollToTop from '../../../routes/ScrollToTop';
+
 
 import ServiceLayout from "../Layout";
 import styled from "styled-components";
@@ -125,6 +127,12 @@ const Fairytale = () => {
         })
         .catch((error) => {
           console.log(error);
+          if (error.response.status === 403) {
+            toast.info("무료 사용이 끝났습니다. 멤버십 가입을 통해 서비스를 이용하실 수 있어요!", {
+              icon: "⚠️",
+              progressStyle: { backgroundColor: "#7D4CDB" },
+            });
+          }
         })
         .finally(() => {
           SetLoading(false);
@@ -174,6 +182,12 @@ const Fairytale = () => {
         })
         .catch((error) => {
           console.log(error);
+          if (error.response.status === 403) {
+            toast.info("무료 사용이 끝났습니다. 멤버십 가입을 통해 서비스를 이용하실 수 있어요!", {
+              icon: "⚠️",
+              progressStyle: { backgroundColor: "#7D4CDB" },
+            });
+          }
           if (error.response.status === 412) {
             toast.error("새로고침 혹은 재로그인 해주세요!");
           }
@@ -184,69 +198,6 @@ const Fairytale = () => {
     } else {
       toast.info(`${100 - newLength}자를 더 채워주세요!`);
     }
-  // }else {
-  //   toast.info('이어쓰기를 먼저 해주세요!');
-  // };
-  // };
-
-
-  // const UpdateFairytale = async () => {
-  //   if(newLength > 100){
-  //   if (
-  //     category.mainCharacter.length > 0 &&
-  //     category.period.length > 0 &&
-  //     category.location.length > 0 &&
-  //     category.mainEvent.length > 0 &&
-  //     category.theme.length > 0
-  //   ) {
-  //     SetLoading(true);
-  //     const config = {
-  //       method: "post",
-  //       url: `${configUrl.SERVER_URL}/writinggel/fairytale`,
-  //       headers: { authentication: localStorage.getItem("token") },
-  //       data: {
-  //         Story: Output[0],
-  //         Main_character: category.mainCharacter,
-  //         Time: category.period,
-  //         Period: category.mainEvent,
-  //         Location: category.location,
-  //         Theme: category.theme,
-  //       },
-  //     };
-
-  //     await axios(config)
-  //       .then((response) => {
-  //         // console.log(response.data);
-
-  //         if (response.data[0] === "") {
-  //           toast.error(
-  //             "결과물에 유해한 내용이 들어가 버렸어요. 😭 재시도 해주세요!"
-  //           );
-  //         } else {
-           
-  //           SetOutput([
-  //             Output[0] + response.data[0],
-  //             Output[1] + response.data[1],
-  //           ]);
-  //           SetOutputTemp(Output[0]+response.data[0]);
-  //           SetLength((Output[0]+response.data[0]).length);
-  //           SetContinue("이어쓰기");
-  //           SetIsHuman(true);
-  //         }
-  //       })
-  //       .catch((error) => {
-  //         console.log(error);
-  //         if (error.response.status === 429) {
-  //           toast.error("요청이 너무 많습니다!");
-  //         }
-  //       })
-  //       .finally(() => {
-  //         SetLoading(false);
-  //       });
-  //   }
-  // }else {
-  //   toast.info('이어쓰기를 먼저 해주세요!');
-  // };
   };
 
   const SaveContent = async () => {
@@ -312,6 +263,7 @@ const Fairytale = () => {
 
   return (
     <ServiceLayout>
+       <ScrollToTop/>
       {isLoading && <Loading />}
       <Box className='ServiceContainerVh' background='#f9f9f9'>
         <Grid

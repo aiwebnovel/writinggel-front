@@ -6,6 +6,7 @@ import { CopyToClipboard } from "react-copy-to-clipboard";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { OuterClick } from "react-outer-click";
+import ScrollToTop from '../../../routes/ScrollToTop';
 
 import axios from "axios";
 import * as configUrl from "../../../config";
@@ -145,18 +146,20 @@ const BlogIntro = () => {
         })
         .catch((error) => {
           //console.log(error);
+          if (error.response.status === 403) {
+            toast.info("무료 사용이 끝났습니다. 멤버십 가입을 통해 서비스를 이용하실 수 있어요!", {
+              icon: "⚠️",
+              progressStyle: { backgroundColor: "#7D4CDB" },
+            });
+          }
           if (error.response.status === 412) {
             toast.info(`🙅‍♀️ 로그인이 필요합니다!`, {
               style: { backgroundColor: "#fff", color: "#000" },
               progressStyle: { backgroundColor: "#7D4CDB" },
             });
             localStorage.removeItem("token");
-          } else {
-            if (error.response.status === 403) {
-              toast.error(`토큰이 부족합니다!`);
-            }
-          }
-        })
+          }          }
+        )
         .finally(() => {
           SetLoading(false);
         });
@@ -185,6 +188,7 @@ const BlogIntro = () => {
 
   return (
     <ServiceLayout>
+      <ScrollToTop/>
       {isLoading && <Loading />}
       <Box
         className='ServiceContainerVh'

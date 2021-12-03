@@ -6,6 +6,8 @@ import { useHistory, Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import MBTI from "./MBTI";
+import ScrollToTop from '../../../routes/ScrollToTop';
+
 
 import Modal from "../../Modal";
 
@@ -82,6 +84,12 @@ const LoveLetter = () => {
         })
         .catch(async (error) => {
           console.log(error);
+          if (error.response.status === 403) {
+            toast.info("무료 사용이 끝났습니다. 멤버십 가입을 통해 서비스를 이용하실 수 있어요!", {
+              icon: "⚠️",
+              progressStyle: { backgroundColor: "#7D4CDB" },
+            });
+          }
 
         }).finally(()=>{
           SetLoading(false);
@@ -145,6 +153,7 @@ const LoveLetter = () => {
   return (
     <>
       <ServiceLayout>
+      <ScrollToTop/>
         {isLoading && <Loading />}
 
         <Box

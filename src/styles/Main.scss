@@ -1398,8 +1398,18 @@ hr {
 .ListTitle {
     padding: 18px 15px;
     background-color: $sub2;
-    font-weight: 600;
     border-bottom: 1px solid $dark-1;
+    display:flex;
+    align-items: center;
+    gap: 10px;
+    // justify-content: space-between;
+    > h3 {
+        font-weight: 600;
+    }
+
+    > p {
+        font-size: 15px;
+    }
 
     @media screen and (max-width:768px) {
         border-bottom: 0;

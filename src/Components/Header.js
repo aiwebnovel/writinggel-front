@@ -266,6 +266,7 @@ const Header = () => {
             {localStorage.getItem("token") ? (
               <Anchor>
                 <Avatar
+                  referrerpolicy='no-referer'
                   src={userImage && userImage}
                   style={{ width: "40px", height: "40px" }}
                   onClick={showMenu}

@@ -4,6 +4,8 @@ import React, { useContext, useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import ScrollToTop from '../../../routes/ScrollToTop';
+
 
 import axios from "axios";
 import ServiceLayout from "../Layout";
@@ -18,27 +20,36 @@ const Storysrc = () => {
   const [isLoading, SetLoading] = useState(false);
   const [isOutput, SetOutput] = useState(false);
   const [isResult, SetResult] = useState(false);
-  const [words, SetWords] = useState([
-    ["", ""],
-    ["", ""],
-    ["", ""],
-  ]);
-  const [story, SetStory] = useState({
-    storyKor:'',
-    storyEng:''
-  });
 
-  const { storyKor, storyEng} = story;
+  
+  const [contentsKor, SetContentsKor] = useState({
+    storyKor:'',
+    firstKor: '',
+    secondKor: '',
+    thirdKor : '',
+    contentKor: ''
+  })
+
+  const [contentsEng, SetContentsEng] = useState({
+    storyEng:'',
+    firstEng: '',
+    secondEng: '',
+    thirdEng : '',
+    contentEng: ''
+  })
+
+  const { storyKor, firstKor, secondKor, thirdKor, contentKor} = contentsKor; 
+  const { storyEng, firstEng, secondEng, thirdEng, contentEng} = contentsEng; 
 
   const SaveContent = async () => {
-    console.log(story, storyKor, storyEng);
+  
     if (storyKor) {
       const config = {
         method: "post",
         url: `${configUrl.SERVER_URL}/archive`,
         headers: { authentication: localStorage.getItem("token") },
         data: {
-          story: storyKor,
+          story: contentKor,
           category: "이야기 재료",
         },
       };
@@ -64,89 +75,103 @@ const Storysrc = () => {
     }
   };
 
-
-  const StorysrcAxios = async () => {
-    SetWords([
-      ["", ""],
-      ["", ""],
-      ["", ""],
-    ]);
-    SetLoading(true);
-    
-    const config = {
-      method: "post",
-      url: `${configUrl.SERVER_URL}/writinggel/pickwords`,
-      headers: { authentication: localStorage.getItem("token") },
-    };
-
-    await axios(config)
-      .then(async (response) => {
-        console.log(response.data);
-        if(response.data[0] === ''){
-          toast.error('결과물에 유해한 내용이 들어가 버렸어요.😭 재시도 해주세요!');
-      }else { 
-        SetOutput(true);
-        SetWords([
-        [response.data["wordsT"][0], response.data["words"][0]],
-        [response.data["wordsT"][1], response.data["words"][1]],
-        [response.data["wordsT"][2], response.data["words"][2]],
-      ]);
-    }   
-      })
-      .catch(async (error) => {
-        console.log(error);
-        if (error.response.status === 429) {
-          toast.error("요청이 너무 많습니다!");
-        }
-      }).finally(()=>{
-        SetLoading(false);
-      });
-  };
-
   const StoryAxios = async () => {
 
-
-    // if (!isResult) {
- 
-      if (words[0][1] !== "" && words[1][1] !== "" && words[2][1] !== "") {
-        SetLoading(true);
-        const config = {
+    SetLoading(true)
+    const config = {
           method: "post",
-          url: `${configUrl.SERVER_URL}/writinggel/sentence`,
+          url: `${configUrl.SERVER_URL}/writinggel/storysrc`,
           headers: { authentication: localStorage.getItem("token") },
-          data: { words: [words[0][1], words[1][1], words[2][1]] },
+         
         };
 
-        await axios(config)
-          .then(async (response) => {
-            console.log(response.data);
-            if(response.data[0] === ''){
-              toast.error('결과물에 유해한 내용이 들어가 버렸어요.😭 재시도 해주세요!');
-              SetLoading(false);
-          }else {
-            SetResult(true);
-            SetStory({...story, 
-              storyKor: response.data[0],
-              storyEng: response.data[1]
-            });
-            SetLoading(false);
-          }
-           
-          })
-          .catch(async (error) => {
-            console.log(error);
-            SetLoading(false)
-            if (error.response.status === 429) {
-              toast.error("요청이 너무 많습니다!");
-            }
-          }).finally(()=>{
-            SetLoading(false);
-          });
+    await axios(config)
+    .then(async(res)=>{
+      console.log(res.data);
+
+      let Kor = res.data.kr
+      let Eng = res.data.en
+      let checkContent = Kor.content;
+
+      console.log(Kor);
+      console.log(Eng);
+      console.log(checkContent)
+
+      if(Kor.first === '' || Kor.second === '' || Kor.third === ''){
+        toast.error('결과물에 유해한 내용이 들어가 버렸어요.😭 재시도 해주세요!');
+      }else{
+      //content가 없으면..^^(third에 붙어나오는 거 감지 후 처리)
+      if(checkContent === undefined) {
+        let splitKor = Kor.third.split('\n');
+        let splitEng = Eng.third.split('\n');
+
+        // for(let i=1; i<splitKor.length-1;i++){
+        //   console.log(splitKor[i]);
+          //let sumAll = splitKor[i+1];
+          //console.log(sumAll);
+        
+        
+        console.log(splitKor, splitEng);
+        await SetContentsKor({
+          ...contentsKor,
+          storyKor:Kor,
+          firstKor: Kor.first,
+          secondKor: Kor.second,
+          thirdKor: splitKor[0],
+          contentKor: splitKor[1],
+        });
+        await SetContentsEng({
+          ...contentEng,
+          storyEng: Eng,
+          firstEng: Eng.first,
+          secondEng:Eng.second,
+          thirdEng:splitEng[0],
+          contentEng:splitEng[1],
+        });
+        SetOutput(true);
+      // }
+
       } else {
-        setTimeout(toast.info("단어를 뽑아주세요!"), 300);
-        SetLoading(false);
+
+        await SetContentsKor({
+          ...contentsKor,
+          storyKor:Kor,
+          firstKor: Kor.first,
+          secondKor: Kor.second,
+          thirdKor: Kor.third,
+          contentKor: Kor.content,
+        });
+        await SetContentsEng({
+          ...contentEng,
+          storyEng: Eng,
+          firstEng: Eng.first,
+          secondEng:Eng.second,
+          thirdEng:Eng.third,
+          contentEng:Eng.content,
+        });
+        SetOutput(true);
       }
-    //}
+    }
+    })
+    .catch((err)=>{
+      console.log(err)
+      if (err.response.status === 403) {
+        toast.info("무료 사용이 끝났습니다. 멤버십 가입을 통해 서비스를 이용하실 수 있어요!", {
+          icon: "⚠️",
+          progressStyle: { backgroundColor: "#7D4CDB" },
+        });
+      }
+      if (err.response.status === 429) {
+        toast.error("요청이 너무 많습니다!");
+      }
+      if (err.response.status === 412) {
+        toast.error("새로고침 혹은 다시 로그인 해주세요!");
+      }
+    })
+    .finally(()=>{
+      SetLoading(false);
+    })
+     
   };
 
 
@@ -163,6 +188,7 @@ const Storysrc = () => {
 
   return (
     <ServiceLayout>
+      <ScrollToTop/>
       {isLoading && <Loading />}
       <Box
         className='StoryContainerVh'
@@ -180,8 +206,7 @@ const Storysrc = () => {
           gap='large'
         >
           <button
-            onClick={
-             StorysrcAxios}
+          onClick={StoryAxios}
           >
             이야기 재료로 쓸 단어 뽑기
           </button>
@@ -192,9 +217,9 @@ const Storysrc = () => {
                   className='SrcSentence'
                   animation={{ type: "fadeIn", duration: 400, size: "large" }}
                 >
-                  <p>{words[0][0]}</p>
+                  <p>{firstKor}</p>
                   <hr />
-                  <p>{words[0][1]}</p>
+                  <p>{firstEng}</p>
                   
                 </Box>
               )}
@@ -205,9 +230,9 @@ const Storysrc = () => {
                   className='SrcSentence'
                   animation={{ type: "fadeIn", duration: 400, size: "large" }}
                 >
-                  <p>{words[1][0]}</p>
+                  <p>{secondKor}</p>
                   <hr />
-                  <p>{words[1][1]}</p>
+                  <p>{secondEng}</p>
           
                 </Box>
               )}
@@ -218,9 +243,9 @@ const Storysrc = () => {
                   className='SrcSentence'
                   animation={{ type: "fadeIn", duration: 400, size: "large" }}
                 >
-                  <p>{words[2][0]}</p>
+                  <p>{thirdKor}</p>
                   <hr />
-                  <p>{words[2][1]}</p>
+                  <p>{thirdEng}</p>
         
                 </Box>
               )}
@@ -231,23 +256,18 @@ const Storysrc = () => {
         <div className='SrcResult'>
           <Box direction='row'>
             <p>이 단어들을 활용해 어떤 이야기를 쓸 수 있을까요?</p>
-            <button
-              onClick={StoryAxios}
-            >
-              {isResult ? '다시 쓰기' : '예시보기'}
-            </button>
             <button onClick={SaveContent}>저장하기</button>
           </Box>
-          {isResult && (
+          {isOutput && (
             <Box
               className='StoryResults'
               animation={{ type: "fadeIn", duration: 400, size: "large" }}
             >
               &gt; 
               <br/>
-              {storyKor}
-              <hr/>
-              {storyEng}
+              {contentKor}
+              <hr style={{ width: '100%',borderColor: '#ededed'}}/>
+              {contentEng}
             </Box>
           )}
         </div>

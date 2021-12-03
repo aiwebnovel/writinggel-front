@@ -4,6 +4,8 @@ import React, { useEffect, useContext, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import ScrollToTop from '../../../routes/ScrollToTop';
+
 
 import ServiceLayout from "../Layout";
 import styled from "styled-components";
@@ -122,6 +124,12 @@ const Discussion = () => {
         .catch(async (error) => {
           console.log(error);
           SetLoading(false)
+          if (error.response.status === 403) {
+            toast.info("무료 사용이 끝났습니다. 멤버십 가입을 통해 서비스를 이용하실 수 있어요!", {
+              icon: "⚠️",
+              progressStyle: { backgroundColor: "#7D4CDB" },
+            });
+          }
           if (error.response.status === 429) {
             toast.error("요청이 너무 많습니다!");
           }
@@ -163,6 +171,12 @@ const Discussion = () => {
         .catch(async (error) => {
           console.log(error);
           SetLoading(false);
+          if (error.response.status === 403) {
+            toast.info("무료 사용이 끝났습니다. 멤버십 가입을 통해 서비스를 이용하실 수 있어요!", {
+              icon: "⚠️",
+              progressStyle: { backgroundColor: "#7D4CDB" },
+            });
+          }
           if (error.response.status === 429) {
             toast.error("요청이 너무 많습니다!");
           }
@@ -185,6 +199,7 @@ const Discussion = () => {
 
   return (
     <ServiceLayout>
+       <ScrollToTop/>
       {isLoading && <Loading />}
       <Box
         className='DisContainerVh'
