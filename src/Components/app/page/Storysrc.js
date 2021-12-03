@@ -150,30 +150,21 @@ const Storysrc = () => {
               SetOutput(true);
             }
           } else {
-            console.log(Kor.third);
-            console.log(Kor.third.indexOf("\n"));
+            //console.log(Kor.third);
+            //console.log(Kor.third.indexOf("\n"));
             let indexCheck = Kor.third.indexOf("\n");
 
             if (indexCheck !== -1) {
               let SplitThird = Kor.third.split("\n");
               let SplitThirdEng = Eng.third.split("\n");
 
-              console.log(SplitThird, SplitThirdEng);
-              console.log(SplitThird[0], SplitThird[1], SplitThirdEng[0], SplitThirdEng[1]);
+              //console.log(SplitThird, SplitThirdEng);
+              //console.log(SplitThird[0], SplitThird[1], SplitThirdEng[0], SplitThirdEng[1]);
 
               let AfterAdd = SplitThird[1] + Kor.content;
               let AfterAddEng = SplitThirdEng[1] + Eng.content;
 
-              // let ThirdKor = SplitThird.shift();
-              // let ThirdEng = SplitThirdEng.shift();
-
-              // console.log(SplitThird, ThirdKor);
-              // console.log(SplitThirdEng, ThirdEng);
-
-              // let AfterAdd = SplitThird[0] + Kor.content;
-              // let AfterAddEng = SplitThirdEng[0] + Eng.content;
-
-              console.log(AfterAdd, AfterAddEng);
+              //console.log(AfterAdd, AfterAddEng);
 
               SetContentsKor({
                 ...contentsKor,
