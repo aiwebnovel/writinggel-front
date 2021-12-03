@@ -57,11 +57,15 @@ const TingBox = () => {
       await axios(config)
         .then(async (response) => {
           console.log(response.data);
-          SetLoading(false);
+   
           await window.location.reload();
         })
         .catch(async (error) => {
           console.log(error);
+          toast.error('error!');
+        })
+        .finally(()=>{
+          SetLoading(false);
         });
     } else {
       toast.info("삭제 되지 않았습니다!");
@@ -79,7 +83,7 @@ const TingBox = () => {
 
     await axios(config)
       .then(async (response) => {
-        //console.log("성공?", response.data);
+        console.log("성공?", response.data);
 
         await SetData({
           ...SaveData,
@@ -95,11 +99,21 @@ const TingBox = () => {
           9: response.data[9],
         });
         //await console.log("성공", SaveData);
-        SetLoading(false)
+       
       })
       .catch(async (error) => {
         console.log(error);
-      });
+        if (error.response.status === 403) {
+          toast.info("무료 사용이 끝났습니다. 멤버십 가입을 통해 서비스를 이용하실 수 있어요!", {
+            icon: "⚠️",
+            progressStyle: { backgroundColor: "#7D4CDB" },
+          });
+        }
+      })
+      .finally(()=>{
+        SetLoading(false)
+      })
+      ;
   }, []);
 
   useEffect(() => {
@@ -129,6 +143,7 @@ const TingBox = () => {
             <Box fill className='tingContent'>
               <div className='ListTitle'>
                 <h3>최근 저장된 콘텐츠</h3>
+                <p>_최대 10개까지 저장됩니다.</p>
               </div>
               {/* 저장 리스트 */}
               {SaveData[0] !== undefined && (

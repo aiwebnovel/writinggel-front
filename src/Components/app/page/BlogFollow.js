@@ -6,6 +6,7 @@ import { CopyToClipboard } from "react-copy-to-clipboard";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { OuterClick } from "react-outer-click";
+import ScrollToTop from '../../../routes/ScrollToTop';
 
 import ProgressBar from "@ramonak/react-progress-bar";
 
@@ -158,6 +159,12 @@ const BlogFollow = () => {
         })
         .catch((error) => {
           console.log(error);
+          if (error.response.status === 403) {
+            toast.info("무료 사용이 끝났습니다. 멤버십 가입을 통해 서비스를 이용하실 수 있어요!", {
+              icon: "⚠️",
+              progressStyle: { backgroundColor: "#7D4CDB" },
+            });
+          }
           if (error.response.status === 412) {
             toast.info(`로그인이 필요합니다!`, {
               icon: "🙅‍♀️",
@@ -166,7 +173,7 @@ const BlogFollow = () => {
             localStorage.removeItem("token");
           } else {
             if (
-              error.response.status === 403 &&
+              //error.response.status === 403 &&
               error.response.data.errorCode === "001"
             ) {
               toast.error(`이야기의 길이가 너무 길어요ㅠ`);
@@ -206,6 +213,7 @@ const BlogFollow = () => {
 
   return (
     <ServiceLayout>
+      <ScrollToTop/>
       {isLoading && <Loading />}
       <Box
         className='ServiceContainerVh'

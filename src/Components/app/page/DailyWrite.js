@@ -4,6 +4,8 @@ import React, { useEffect, useContext, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import ScrollToTop from '../../../routes/ScrollToTop';
+
 
 import ServiceLayout from "../Layout";
 import styled from "styled-components";
@@ -47,10 +49,18 @@ const Dailywrite = () => {
       })
       .catch(async (error) => {
         console.log(error);
+        if (error.response.status === 403) {
+          toast.info("무료 사용이 끝났습니다. 멤버십 가입을 통해 서비스를 이용하실 수 있어요!", {
+            icon: "⚠️",
+            progressStyle: { backgroundColor: "#7D4CDB" },
+          });
+          
+        }
         if(error.response.status === 412) {
           toast.error('로그인이 풀렸습니다. 재로그인 해주세요!')
         }
       }).finally(()=>{
+        SetOpen(false);
         SetLoading(false);
       });
   };
@@ -104,6 +114,7 @@ const Dailywrite = () => {
   return (
     <>
       <ServiceLayout>
+      <ScrollToTop/>
         <Box
           className='DailyContainerVh'
           background='#f9f9f9'
