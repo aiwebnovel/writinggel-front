@@ -120,14 +120,11 @@ const Businessitem = () => {
        <ScrollToTop/>
       {isLoading && <Loading />}
       <Box
-        className='ServiceContainerVh'
+        className='BuisContainerVh'
         justify='center'
         align='center'
         background='#f9f9f9'
         gap='large'
-        style={
-          size !== "small" ? { padding: "48px" } : { padding: "100px 24px" }
-        }
       >
         <Box
           direction={size !== "small" ? "row" : "column"}
@@ -209,7 +206,8 @@ export default Businessitem;
 const Cards = styled(Card)`
   background-color: "#fff";
   border-radius: 0;
-  width: 250px;
+  width: 230px;
+  min-height: 180px;
 
   @media screen and (max-width: 768px) {
     width: 100%;
