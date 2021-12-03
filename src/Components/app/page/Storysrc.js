@@ -4,8 +4,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import ScrollToTop from '../../../routes/ScrollToTop';
-
+import ScrollToTop from "../../../routes/ScrollToTop";
 
 import axios from "axios";
 import ServiceLayout from "../Layout";
@@ -21,28 +20,26 @@ const Storysrc = () => {
   const [isOutput, SetOutput] = useState(false);
   const [isResult, SetResult] = useState(false);
 
-  
   const [contentsKor, SetContentsKor] = useState({
-    storyKor:'',
-    firstKor: '',
-    secondKor: '',
-    thirdKor : '',
-    contentKor: ''
-  })
+    storyKor: "",
+    firstKor: "",
+    secondKor: "",
+    thirdKor: "",
+    contentKor: "",
+  });
 
   const [contentsEng, SetContentsEng] = useState({
-    storyEng:'',
-    firstEng: '',
-    secondEng: '',
-    thirdEng : '',
-    contentEng: ''
-  })
+    storyEng: "",
+    firstEng: "",
+    secondEng: "",
+    thirdEng: "",
+    contentEng: "",
+  });
 
-  const { storyKor, firstKor, secondKor, thirdKor, contentKor} = contentsKor; 
-  const { storyEng, firstEng, secondEng, thirdEng, contentEng} = contentsEng; 
+  const { storyKor, firstKor, secondKor, thirdKor, contentKor } = contentsKor;
+  const { storyEng, firstEng, secondEng, thirdEng, contentEng } = contentsEng;
 
   const SaveContent = async () => {
-  
     if (storyKor) {
       const config = {
         method: "post",
@@ -62,8 +59,8 @@ const Storysrc = () => {
         .catch(async (error) => {
           console.log(error);
 
-          if(error.response.status === 403) {
-            toast.error('보관함이 꽉 찼습니다!');
+          if (error.response.status === 403) {
+            toast.error("보관함이 꽉 찼습니다!");
           }
 
           if (error.response.status === 500) {
@@ -76,104 +73,169 @@ const Storysrc = () => {
   };
 
   const StoryAxios = async () => {
-
-    SetLoading(true)
+    SetLoading(true);
     const config = {
-          method: "post",
-          url: `${configUrl.SERVER_URL}/writinggel/storysrc`,
-          headers: { authentication: localStorage.getItem("token") },
-         
-        };
+      method: "post",
+      url: `${configUrl.SERVER_URL}/writinggel/storysrc`,
+      headers: { authentication: localStorage.getItem("token") },
+    };
 
     await axios(config)
-    .then(async(res)=>{
-      console.log(res.data);
+      .then(async (res) => {
+        //console.log(res.data);
 
-      let Kor = res.data.kr
-      let Eng = res.data.en
-      let checkContent = Kor.content;
+        let Kor = res.data.kr;
+        let Eng = res.data.en;
+        let checkContent = Kor.hasOwnProperty("content");
 
-      console.log(Kor);
-      console.log(Eng);
-      console.log(checkContent)
+        //console.log(Kor);
+        //console.log(Eng);
+        // console.log(checkContent);
 
-      if(Kor.first === '' || Kor.second === '' || Kor.third === ''){
-        toast.error('결과물에 유해한 내용이 들어가 버렸어요.😭 재시도 해주세요!');
-      }else{
-      //content가 없으면..^^(third에 붙어나오는 거 감지 후 처리)
-      if(checkContent === undefined) {
-        let splitKor = Kor.third.split('\n');
-        let splitEng = Eng.third.split('\n');
+        if (Kor.first === "" || Kor.second === "" || Kor.third === "") {
+          toast.error(
+            "결과물에 유해한 내용이 들어가 버렸어요.😭 재시도 해주세요!"
+          );
+        } else {
+          //content가 없으면, third에 붙어나오는 거 감지 후 처리
+          if (checkContent === false) {
+            let splitKor = Kor.third.split("\n");
+            let splitEng = Eng.third.split("\n");
+            //console.log(splitKor, splitEng);
 
-        // for(let i=1; i<splitKor.length-1;i++){
-        //   console.log(splitKor[i]);
-          //let sumAll = splitKor[i+1];
-          //console.log(sumAll);
-        
-        
-        console.log(splitKor, splitEng);
-        await SetContentsKor({
-          ...contentsKor,
-          storyKor:Kor,
-          firstKor: Kor.first,
-          secondKor: Kor.second,
-          thirdKor: splitKor[0],
-          contentKor: splitKor[1],
-        });
-        await SetContentsEng({
-          ...contentEng,
-          storyEng: Eng,
-          firstEng: Eng.first,
-          secondEng:Eng.second,
-          thirdEng:splitEng[0],
-          contentEng:splitEng[1],
-        });
-        SetOutput(true);
-      // }
+            if (splitKor.length > 2) {
+              let ShiftKor = splitKor.shift();
+              let ShiftEng = splitEng.shift();
+              let AfterShiftJoin = splitKor.join(" ");
+              let AfterShiftJoinEng = splitEng.join(" ");
 
-      } else {
+              //console.log(ShiftKor, AfterShiftJoin);
+              //console.log(ShiftEng, AfterShiftJoinEng);
 
-        await SetContentsKor({
-          ...contentsKor,
-          storyKor:Kor,
-          firstKor: Kor.first,
-          secondKor: Kor.second,
-          thirdKor: Kor.third,
-          contentKor: Kor.content,
-        });
-        await SetContentsEng({
-          ...contentEng,
-          storyEng: Eng,
-          firstEng: Eng.first,
-          secondEng:Eng.second,
-          thirdEng:Eng.third,
-          contentEng:Eng.content,
-        });
-        SetOutput(true);
-      }
-    }
-    })
-    .catch((err)=>{
-      console.log(err)
-      if (err.response.status === 403) {
-        toast.info("무료 사용이 끝났습니다. 멤버십 가입을 통해 서비스를 이용하실 수 있어요!", {
-          icon: "⚠️",
-          progressStyle: { backgroundColor: "#7D4CDB" },
-        });
-      }
-      if (err.response.status === 429) {
-        toast.error("요청이 너무 많습니다!");
-      }
-      if (err.response.status === 412) {
-        toast.error("새로고침 혹은 다시 로그인 해주세요!");
-      }
-    })
-    .finally(()=>{
-      SetLoading(false);
-    })
-     
+              await SetContentsKor({
+                ...contentsKor,
+                storyKor: Kor,
+                firstKor: Kor.first,
+                secondKor: Kor.second,
+                thirdKor: ShiftKor,
+                contentKor: AfterShiftJoin,
+              });
+              await SetContentsEng({
+                ...contentEng,
+                storyEng: Eng,
+                firstEng: Eng.first,
+                secondEng: Eng.second,
+                thirdEng: ShiftEng,
+                contentEng: AfterShiftJoinEng,
+              });
+              SetOutput(true);
+            } else {
+              //console.log("length <=2");
+              await SetContentsKor({
+                ...contentsKor,
+                storyKor: Kor,
+                firstKor: Kor.first,
+                secondKor: Kor.second,
+                thirdKor: splitKor[0],
+                contentKor: splitKor[1],
+              });
+              await SetContentsEng({
+                ...contentEng,
+                storyEng: Eng,
+                firstEng: Eng.first,
+                secondEng: Eng.second,
+                thirdEng: splitEng[0],
+                contentEng: splitEng[1],
+              });
+              SetOutput(true);
+            }
+          } else {
+            console.log(Kor.third);
+            console.log(Kor.third.indexOf("\n"));
+            let indexCheck = Kor.third.indexOf("\n");
+
+            if (indexCheck !== -1) {
+              let SplitThird = Kor.third.split("\n");
+              let SplitThirdEng = Eng.third.split("\n");
+
+              console.log(SplitThird, SplitThirdEng);
+              console.log(SplitThird[0], SplitThird[1], SplitThirdEng[0], SplitThirdEng[1]);
+
+              let AfterAdd = SplitThird[1] + Kor.content;
+              let AfterAddEng = SplitThirdEng[1] + Eng.content;
+
+              // let ThirdKor = SplitThird.shift();
+              // let ThirdEng = SplitThirdEng.shift();
+
+              // console.log(SplitThird, ThirdKor);
+              // console.log(SplitThirdEng, ThirdEng);
+
+              // let AfterAdd = SplitThird[0] + Kor.content;
+              // let AfterAddEng = SplitThirdEng[0] + Eng.content;
+
+              console.log(AfterAdd, AfterAddEng);
+
+              SetContentsKor({
+                ...contentsKor,
+                storyKor: Kor,
+                firstKor: Kor.first,
+                secondKor: Kor.second,
+                thirdKor: SplitThird[0],
+                contentKor: AfterAdd,
+              });
+              SetContentsEng({
+                ...contentEng,
+                storyEng: Eng,
+                firstEng: Eng.first,
+                secondEng: Eng.second,
+                thirdEng: SplitThirdEng[0],
+                contentEng: AfterAddEng,
+              });
+              SetOutput(true);
+            } else {
+              await SetContentsKor({
+                ...contentsKor,
+                storyKor: Kor,
+                firstKor: Kor.first,
+                secondKor: Kor.second,
+                thirdKor: Kor.third,
+                contentKor: Kor.content,
+              });
+              await SetContentsEng({
+                ...contentEng,
+                storyEng: Eng,
+                firstEng: Eng.first,
+                secondEng: Eng.second,
+                thirdEng: Eng.third,
+                contentEng: Eng.content,
+              });
+              SetOutput(true);
+            }
+          }
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        if (err.response.status === 403) {
+          toast.info(
+            "무료 사용이 끝났습니다. 멤버십 가입을 통해 서비스를 이용하실 수 있어요!",
+            {
+              icon: "⚠️",
+              progressStyle: { backgroundColor: "#7D4CDB" },
+            }
+          );
+        }
+        if (err.response.status === 429) {
+          toast.error("요청이 너무 많습니다!");
+        }
+        if (err.response.status === 412) {
+          toast.error("새로고침 혹은 다시 로그인 해주세요!");
+        }
+      })
+      .finally(() => {
+        SetLoading(false);
+      });
   };
-
 
   useEffect(() => {
     const loginCheck = localStorage.getItem("token");
@@ -188,7 +250,7 @@ const Storysrc = () => {
 
   return (
     <ServiceLayout>
-      <ScrollToTop/>
+      <ScrollToTop />
       {isLoading && <Loading />}
       <Box
         className='StoryContainerVh'
@@ -201,16 +263,15 @@ const Storysrc = () => {
         <Box
           className='SrcPrintBtn'
           direction={size !== "small" ? "row" : "column"}
-          align={size !=='small' ? 'start': 'center'}
-          justify={size !=='small' ? 'center': 'start'}
+          align={size !== "small" ? "start" : "center"}
+          justify={size !== "small" ? "center" : "start"}
           gap='large'
         >
-          <button
-          onClick={StoryAxios}
+          <button onClick={StoryAxios}>이야기 재료로 쓸 단어 뽑기</button>
+          <Box
+            direction={size !== "small" ? "row" : "column"}
+            className='PrintContainer'
           >
-            이야기 재료로 쓸 단어 뽑기
-          </button>
-          <Box direction={size !== "small" ? "row" : "column"} className='PrintContainer'>
             <Box className='SrcPrintBox'>
               {isOutput && (
                 <Box
@@ -220,7 +281,6 @@ const Storysrc = () => {
                   <p>{firstKor}</p>
                   <hr />
                   <p>{firstEng}</p>
-                  
                 </Box>
               )}
             </Box>
@@ -233,7 +293,6 @@ const Storysrc = () => {
                   <p>{secondKor}</p>
                   <hr />
                   <p>{secondEng}</p>
-          
                 </Box>
               )}
             </Box>
@@ -246,7 +305,6 @@ const Storysrc = () => {
                   <p>{thirdKor}</p>
                   <hr />
                   <p>{thirdEng}</p>
-        
                 </Box>
               )}
             </Box>
@@ -263,10 +321,10 @@ const Storysrc = () => {
               className='StoryResults'
               animation={{ type: "fadeIn", duration: 400, size: "large" }}
             >
-              &gt; 
-              <br/>
+              &gt;
+              <br />
               {contentKor}
-              <hr style={{ width: '100%',borderColor: '#ededed'}}/>
+              <hr style={{ width: "100%", borderColor: "#ededed" }} />
               {contentEng}
             </Box>
           )}
@@ -277,4 +335,3 @@ const Storysrc = () => {
 };
 
 export default Storysrc;
-

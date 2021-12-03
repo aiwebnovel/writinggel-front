@@ -3,13 +3,15 @@ import { Link } from "react-router-dom";
 import Layout from "../../Layout";
 import { Box, Grid, ResponsiveContext } from "grommet";
 import { StatusGood } from "grommet-icons";
+import ScrollToTop from '../../../routes/ScrollToTop';
 
-// import styled from "styled-components";
+
 const BusinessItemDetail = () => {
   const size = useContext(ResponsiveContext);
 
   return (
     <Layout>
+      <ScrollToTop/>
       <Box justify='center' align='center' className='BoxContainer'>
         <Box className='DetailHeader' pad='medium'>
           <h1>비지니스 아이디어</h1>

@@ -3,12 +3,14 @@ import { Link } from "react-router-dom";
 import Layout from "../../Layout";
 import { Box, Grid, ResponsiveContext } from "grommet";
 import { StatusGood } from "grommet-icons";
+import ScrollToTop from '../../../routes/ScrollToTop';
 
 const FairyTaleDetail = () => {
   const size = useContext(ResponsiveContext);
 
   return (
     <Layout>
+      <ScrollToTop/>
       <Box justify='center' align='center' className='BoxContainer'>
         <Box className='DetailHeader' pad='medium'>
           <h1>릴레이 동화 창작</h1>

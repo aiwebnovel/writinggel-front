@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import Layout from "../../Layout";
 import { Box, Grid, ResponsiveContext } from "grommet";
 import { StatusGood } from "grommet-icons";
+import ScrollToTop from '../../../routes/ScrollToTop';
 
 // import styled from "styled-components";
 
@@ -11,6 +12,7 @@ const LoveLetterDetail = () => {
 
   return (
     <Layout>
+       <ScrollToTop/>
       <Box justify="center" align="center" className="BoxContainer">
         <Box className="DetailHeader" pad="medium">
           <h1>MBTI 연애편지</h1>

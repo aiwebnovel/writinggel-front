@@ -3,12 +3,14 @@ import { Link } from "react-router-dom";
 import Layout from "../../Layout";
 import { Box, Grid, ResponsiveContext } from "grommet";
 import { StatusGood } from "grommet-icons";
+import ScrollToTop from '../../../routes/ScrollToTop';
 
 const WebnovelDetail = () => {
   const size = useContext(ResponsiveContext);
 
   return (
     <Layout>
+       <ScrollToTop/>
       <Box justify='center' align='center' className='BoxContainer'>
         <Box className='DetailHeader' pad='medium'>
           <h1>릴레이 웹소설 창작</h1>
