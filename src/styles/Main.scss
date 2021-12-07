@@ -109,6 +109,16 @@ $red: #f45752;
     }
 }
 
+.IntroduceContainer {
+    padding: 150px 64px;
+
+    @media screen and (max-width: 768px) {
+        padding-right: 32px;
+        padding-left: 32px;
+    }
+
+}
+
 .IntroTinggle {
 
     >h4 {
