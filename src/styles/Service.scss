@@ -1463,6 +1463,7 @@ select::-ms-expand {
         width: 200px;
         font-size: 1rem;
         cursor: pointer;
+        word-break: keep-all;
     }
 
     @media screen and (max-width: 768px) {

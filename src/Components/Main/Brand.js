@@ -52,13 +52,14 @@ const Brand = () => {
             </Paragraph>
           </Box>
         </BrandTop>
+        <hr/>
         <Box
           fill
           justify='center'
           align='baseline'
-          pad='large'
           gap='large'
-          background='#f9f9f9'
+          //background='#f9f9f9'
+          className="IntroduceContainer"
         >
           <TinggelTitle>팅젤 소개</TinggelTitle>
           <Box
@@ -108,43 +109,7 @@ const Brand = () => {
             </div>
           </Box>
         </Box>
-        <Box fill pad='large' gap='large'>
-          <TinggelTitle>팀원 소개</TinggelTitle>
-          <Box fill direction='row' justify='center' align='center' style={{padding: '100px 0'}}>
-            <Grid 
-            gap='medium'
-            fill={size !== 'small' ? false : true} 
-            columns={ size !== "small" ? { count: 3, size: "auto" } : '100%'}
-            >
-            <Team>
-              <h4>유진_기획</h4>
-              <div>
-                <p style={{marginBottom: '5px'}}>
-                아이를 낳고 경력이 단절되었을 때, 콘텐츠를 직접 기획하고 제작하는 사이드프로젝트로 활력을 되찾은 경험이 있습니다. 
-                </p>
-                <p>
-                창작활동이 얼마나 어려운지도 알고, 삶에 미치는 영향이 얼마나 큰지도 압니다. 창작자들의 어려움이 극복하고, 동시에 에너지를 더 할 수 있는 방법을 고민하고 기획합니다.
-                </p>
-              </div>
-            </Team>
-            <Team>
-              <h4>윤정민_FrontEnd🐣 </h4>
-              <div>
-                <p style={{marginBottom: '5px'}}>
-                콘텐츠 만드는 걸 좋아해서 글을 쓰고 책을 만들다 코딩까지 하게 된 주니어 개발자. 어쩌다 접한 코딩으로 아이디어를 실현해 나가는 중입니다.
-                </p>
-                <p>누군가에게 도움이 되는 서비스, 모두가 즐기고 활용할 수 있는 서비스를 만들고자 합니다.</p>
-              </div>
-            </Team>
-            <Team>
-              <h4>김호준_BackEnd</h4>
-              <div>
-              <p>소개글이 들어갈 예정이에요.</p>
-              </div>
-            </Team>
-            </Grid>
-          </Box>
-        </Box>
+        
       </Box>
     </Layout>
   );
@@ -153,11 +118,11 @@ const Brand = () => {
 export default Brand;
 
 const BrandTop = styled(Box)`
-  padding: 100px 0;
+  padding: 100px 48px;
 
   @media screen and (max-width:768px){
-    padding-right: 15px;
-    padding-left: 15px;
+    padding-right: 32px;
+    padding-left: 32px;
   }
 `;
 
@@ -188,31 +153,6 @@ const TinggelTitle = styled.div`
 const ParaText = styled.div`
   max-width: 500px;
   margin-top: 20px;
+  font-size: 1rem;
 
-  @media screen and (max-width: 768px) {
-    font-size: 1.1rem;
-}
-`
-
-const Team = styled.div`
-  width: 300px;
-  border: 1px solid #b1b5e6;
-  background-color: #fff;
-  border-radius: 10px;
-  min-height: 150px;
-
-  > h4 {
-    background-color : #b1b5e6;
-    padding: 10px;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-  }
-
-  > div {
-    padding: 15px;
-
-    > p {
-      font-size: 15px;
-    }
-  }
 `
