@@ -25,7 +25,7 @@ const BlogFollow = () => {
   const [isLoading, SetLoading] = useState(false);
   const [isOpen, SetOpen] = useState(false);
   const [Copied, SetCopy] = useState(false);
-  const [input, SetInput] = useState("");
+  //const [input, SetInput] = useState("");
 
   const [output, SetOutput] = useState({
     outputKorean: "",
@@ -132,7 +132,7 @@ const BlogFollow = () => {
         .post(
           `${configUrl.SERVER_URL}/blog/follow`,
           {
-            Story: story,
+            story: story,
           },
           {
             headers: { authentication: localStorage.getItem("token") },
@@ -265,7 +265,6 @@ const BlogFollow = () => {
             <Box
               gridArea='sidebar'
               className='isSiderFalse'
-              gap={size !== "small" && "medium"}
             >
               <div className='SiderBtn' onClick={handleSider}>
                 <Add size='small' />
@@ -332,7 +331,7 @@ const BlogFollow = () => {
                   <ProgressBar
                     completed={tempLength}
                     bgColor='#372874'
-                    width='250px'
+                    width={size !== 'small' ? '250px' :'200px'}
                     height='8px'
                     isLabelVisible={false}
                   />

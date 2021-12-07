@@ -198,7 +198,7 @@ const BlogKeyword = () => {
             <Box
               gridArea='sidebar'
               className='isSiderFalse'
-              gap={size !== "small" && "medium"}
+
             >
               <div className='SiderBtn' onClick={handleSider}>
                 <Add size='small' />
@@ -258,7 +258,7 @@ const BlogKeyword = () => {
             align='center'
             className='KeywordMainBox'
           >
-            <Box fill justify={size !== "small" && "center"} align='center' className='BlogWrap'>
+            <BoxKeyword fill  align='center' className='BlogWrap'>
             <div className='KeyContainer'>
               <div className='keywordHeader'>
                 <Close className='close' onClick={resetData} />
@@ -309,7 +309,7 @@ const BlogKeyword = () => {
                 )}
               </div>
             </div>
-          </Box>
+          </BoxKeyword>
           </Box>
         </Grid>
       </Box>
@@ -336,3 +336,12 @@ const MenuItem = styled(Link)`
     width: 100%;
   }
 `;
+
+const BoxKeyword = styled(Box)`
+justify-content : center;
+
+@media screen and (max-width: 768px) {
+  justify-content : flex-start;
+}
+
+`

@@ -1,5 +1,5 @@
 import { Box, ResponsiveContext } from "grommet";
-import { Update, Download, Close, Sort } from "grommet-icons";
+import { Update, Download, Close } from "grommet-icons";
 import React, { useContext, useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";

@@ -2,8 +2,6 @@ import {
   Box,
   Grid,
   ResponsiveContext,
-  Accordion,
-  AccordionPanel,
 } from "grommet";
 import { Update, Close, Add, Download } from "grommet-icons";
 import React, { useEffect, useContext, useState } from "react";
@@ -21,7 +19,7 @@ import Loading from "../../Loading";
 import * as configUrl from "../../../config";
 import ProgressBar from "@ramonak/react-progress-bar";
 
-const LanguageDetect = require("languagedetect");
+//const LanguageDetect = require("languagedetect");
 
 const Fairytale = () => {
   const size = useContext(ResponsiveContext);
@@ -31,7 +29,6 @@ const Fairytale = () => {
   const [isOpen, SetOpen] = useState(false);
   const [isLoading, SetLoading] = useState(false);
   const [isHuman, SetIsHuman] = useState(false);
-  const [progress, SetProgress] = useState(0);
   const [Output, SetOutput] = useState(["", ""]);
   const [OutputTemp, SetOutputTemp] = useState("");
   const [tempLength, SetLength] = useState(0);
@@ -374,7 +371,7 @@ const Fairytale = () => {
             <Box
               gridArea='sidebar'
               className='isSiderFalse'
-              gap={size !== "small" && "medium"}
+          
             >
               <div className='SiderBtn' onClick={handleSider}>
                 <Add size='small' />
@@ -428,7 +425,6 @@ const Fairytale = () => {
             fill
             gridArea='main'
             className='FairymainBox'
-            justify={size !== "small" && "center"}
             align='center'
           >
             <div className='FairyOutputBox'>

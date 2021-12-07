@@ -1,10 +1,9 @@
-import React, { useContext, useEffect, useState, useRef } from "react";
+import React, { useContext, useState, useRef } from "react";
 import axios from "axios";
 import Layout from "../Layout";
 import { Box, Grid, ResponsiveContext } from "grommet";
 import { Bookmark } from "grommet-icons";
 import Loading from "../Loading";
-import moment from "moment";
 
 import * as configUrl from "../../config";
 

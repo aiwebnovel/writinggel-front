@@ -1,6 +1,6 @@
 import React, { useEffect, useContext, useState } from "react";
 import axios from "axios";
-import { useHistory, useLocation } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { OuterClick } from "react-outer-click";
@@ -20,7 +20,7 @@ const LanguageDetect = require("languagedetect");
 const Webnovel = () => {
   const History = useHistory();
   const size = useContext(ResponsiveContext);
-  const { pathname } = useLocation();
+  //const { pathname } = useLocation();
 
 
   const [options, SetOptions] = useState([
@@ -524,7 +524,6 @@ const Webnovel = () => {
             <Box
               gridArea='sidebar'
               className='isSiderFalse'
-              gap={size !== "small" && "medium"}
             >
               <div className='SiderBtn' onClick={handleSider}>
                 <Add size='small' />
@@ -587,12 +586,10 @@ const Webnovel = () => {
           >
             <Box
               fill
-              justify={size !== "small" && "center"}
               align='center'
               gap='large'
               className='WebTextarea'
             >
-        
               <div>
                 <textarea
                   className='outputKo'

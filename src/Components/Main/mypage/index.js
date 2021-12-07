@@ -9,13 +9,12 @@ import * as configUrl from "../../../config";
 import { authService } from "../../../firebaseConfig";
 import { toast } from "react-toastify";
 
-import styled from "styled-components";
+//import styled from "styled-components";
 import Modal from "../../SmallModal";
 
 const Mypage = () => {
   const size = useContext(ResponsiveContext);
   const History = useHistory();
-  let m = moment
 
   const [profile, SetProfile] = useState({
     isBill: '',
@@ -32,7 +31,7 @@ const Mypage = () => {
   });
   const [isOpen, SetOpen] = useState(false);
 
-  const { isBill, userName, plan, stopPay, email, create, billStart, beforePlan, exp} = profile;
+  const { isBill, userName, plan, stopPay, email, create, billStart,  exp} = profile;
 
   const signOut = async () => {
     await localStorage.removeItem("token");

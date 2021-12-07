@@ -5,7 +5,7 @@ import { Box, Header as HeaderLayout, Nav, Avatar } from "grommet";
 import { Menu } from "grommet-icons";
 import { ResponsiveContext } from "grommet";
 
-import { authService, firebaseInstance } from "../../firebaseConfig";
+import { authService } from "../../firebaseConfig";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { OuterClick } from "react-outer-click";
@@ -17,9 +17,9 @@ import styled from "styled-components";
 const Header = () => {
   const size = useContext(ResponsiveContext);
 
-  const [isOpen, SetOpen] = useState(false);
+  //const [isOpen, SetOpen] = useState(false);
   const [isShow, SetShow] = useState(false);
-  const [isChecked, SetChecked] = useState(false);
+  //const [isChecked, SetChecked] = useState(false);
   const [isUser, SetUser] = useState(false);
   const [isShowMenu, SetShowMenu] = useState(false);
   const [profile, SetProfile] = useState({
@@ -122,23 +122,24 @@ const Header = () => {
             <Link to='/explain' className={isBill && 'displayNone'}>
               <LinkBtn>멤버십 가입</LinkBtn>
             </Link>
+            < HowToLink href="https://appplatform.notion.site/99f9b5fb95d84477b9e2aa343fb97055" target='_blank' rel="noreferrer">사용 방법</ HowToLink>
             <Avatar
               src={userImage}
-              style={{ width: "40px", height: "40px" }}
+              style={{ width: "40px", height: "40px"}}
               onClick={showMenu}
+              
             />
             <Menu color='brand' size='medium' onClick={HandleShow} />
           </Nav>
         ) : (
-          <Nav>
+          <Nav direction='row' gap={size !== 'small' ? 'large':'medium'} align='center'>
+            < HowToLink href="https://appplatform.notion.site/99f9b5fb95d84477b9e2aa343fb97055" target='_blank' rel="noreferrer">사용 방법</ HowToLink>
             <Menu color='brand' size='medium' onClick={HandleShow} />
           </Nav>
         )}
       </HeaderLayout>
       {isShow && (
         <OuterClick onOuterClick={(event) => {
-          // event.preventDefault();
-          //console.log("Clicked outside");
           SetShow(false);}}>
         <Box
           style={size === "small" ? {width: '100%'} : {height:'100%'}}
@@ -240,3 +241,17 @@ const LinkBtn = styled.button`
   border-radius: 8px;
   cursor: pointer;
 `;
+
+
+const HowToLink = styled.a`
+background-color: #b1b5e6;
+outline: 0;
+padding: 2px 8px;
+border-radius: 5px;
+font-size : 15px;
+
+@media screen and (max-width:768px) {
+  font-size : 13px;
+}
+
+`
