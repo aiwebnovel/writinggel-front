@@ -12,6 +12,7 @@ const DiscussionDetail = () => {
 
   return (
     <Layout>
+      <ScrollToTop/>
       <Box justify='center' align='center' className='BoxContainer'>
         <Box className='DetailHeader' pad='medium'>
           <h1>찬반 논거 찾기</h1>

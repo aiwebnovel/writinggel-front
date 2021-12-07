@@ -23,7 +23,7 @@ const PayResult = () => {
     create: "",
   });
 
-  const { isBill, userName, plan, stopPay, email, create, billStart, payId, exp } = profile;
+  const { isBill, plan, stopPay, billStart, payId, exp } = profile;
 
   const DeletePay = () => {
     if (window.confirm("구독을 취소하시겠습니까?")) {

@@ -16,7 +16,7 @@ import styled from "styled-components";
 import axios from "axios";
 
 const Firstsentence = () => {
-  const size = useContext(ResponsiveContext);
+  //const size = useContext(ResponsiveContext);
   const History = useHistory();
   const [isOutput, SetOutput] = useState(false);
   const [OutputContent, SetOutputContent] = useState({

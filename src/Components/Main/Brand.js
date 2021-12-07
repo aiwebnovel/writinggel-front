@@ -210,5 +210,9 @@ const Team = styled.div`
 
   > div {
     padding: 15px;
+
+    > p {
+      font-size: 15px;
+    }
   }
 `

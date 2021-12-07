@@ -239,7 +239,6 @@ const BlogIdea = () => {
             <Box
               gridArea='sidebar'
               className='isSiderFalse'
-              gap={size !== "small" && "medium"}
             >
               <div className='SiderBtn' onClick={handleSider}>
                 <Add size='small' />

@@ -114,12 +114,13 @@ $boxShadow : rgb(237 237 237) 2px 3px 8px;
 
 .isSiderFalse {
     width: 80px;
-    
+    gap: 10px;
     transition: width 0.4s ease;
 
     @media screen and (max-width: 768px) {
         width: 100%;
         border: 0;
+        gap: 0;
         //margin-bottom: 150px;
     }
 }
@@ -269,6 +270,15 @@ $boxShadow : rgb(237 237 237) 2px 3px 8px;
 .ServiceHeader {
     padding: 15px 30px;
     background-color: $white-1;
+
+    @media screen and (max-width:768px) {
+       padding: 15px 20px;
+    }
+
+    @media screen and (max-width:360px) {
+        padding: 15px;
+     }
+    
 }
 
 .MainLogo2 {
@@ -498,6 +508,8 @@ select::-ms-expand {
 
 .WebTextarea {
 
+    justify-content: center;
+
     > div:first-child {
         width: 100%;
         display:flex;
@@ -505,11 +517,17 @@ select::-ms-expand {
         align-items: center;
         gap: 15px;
 
-        @media screen and (max-width: 768px) {
+    }
+
+    @media screen and (max-width: 768px) {
+      
+        justify-content: flex-start;
+
+        > div:first-child {
             flex-direction: column;
         }
     }
-   
+    
 }
 
 .outputKo,
@@ -539,7 +557,6 @@ select::-ms-expand {
 
 .BlogWrap {
     gap: 20px;
-
 }
 
 .BlogIdeaBox {
@@ -1112,6 +1129,7 @@ select::-ms-expand {
 
 .FairymainBox{
     
+    justify-content: center;
     gap: 20px;
     padding: 120px 30px;
 
@@ -1119,6 +1137,7 @@ select::-ms-expand {
     @media screen and (max-width: 768px) {
         padding-right: 20px;
         padding-left: 20px;
+        justify-content: flex-start;
     }
 
 }

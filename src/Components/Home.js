@@ -1,19 +1,16 @@
-import React, {useContext, useEffect} from "react";
-import { Link, useHistory} from 'react-router-dom'
+import React, {useContext } from "react";
+import { Link } from 'react-router-dom'
 import Layout from "./Layout";
 import { Box, Grid, Card, CardBody, CardHeader, ResponsiveContext} from "grommet";
 import { Magic} from "grommet-icons";
 import "../styles/Main.scss";
-
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 
 import LinkObject from "./app/LinkObject";
 
 const Home = () => {
     
   const size = useContext(ResponsiveContext)
-  const History = useHistory();
+  //const History = useHistory();
   
     // useEffect(() => {
     //   const loginCheck = localStorage.getItem("token");

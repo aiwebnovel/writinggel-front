@@ -36,7 +36,7 @@ const Header = () => {
 
   const signIn = async (e) => {
     if (isChecked === true) {
-      // console.log('mount3')
+
      let name = e.target.name;
       // let provider = new firebaseInstance.auth.GoogleAuthProvider();
       if (name === "Facebook") {
@@ -45,11 +45,11 @@ const Header = () => {
         await authService.signInWithPopup(provider)
         .then(async(dataFacebook)=> {
           console.log(dataFacebook);
-          const credential = FacebookAuthProvider.credentialFromResult(dataFacebook);
-          console.log('cre', credential);
+          //const credential = FacebookAuthProvider.credentialFromResult(dataFacebook);
+          //console.log('cre', credential);
 
           let credentials = dataFacebook.credential;
-          let id = dataFacebook.credential.providerId //facebook.com
+          //let id = dataFacebook.credential.providerId //facebook.com
           let email = dataFacebook.user.email;
           let create = dataFacebook.user.metadata.creationTime;
           let token = credentials.accessToken;

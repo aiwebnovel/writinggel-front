@@ -2,7 +2,7 @@ import { Box, Grid, ResponsiveContext } from "grommet";
 import { Download, Update } from "grommet-icons";
 import axios from "axios";
 import React, { useEffect, useContext, useState } from "react";
-import { useHistory, Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import MBTI from "./MBTI";

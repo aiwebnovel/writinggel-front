@@ -18,7 +18,7 @@ const Storysrc = () => {
 
   const [isLoading, SetLoading] = useState(false);
   const [isOutput, SetOutput] = useState(false);
-  const [isResult, SetResult] = useState(false);
+  //const [isResult, SetResult] = useState(false);
 
   const [contentsKor, SetContentsKor] = useState({
     storyKor: "",
@@ -37,7 +37,7 @@ const Storysrc = () => {
   });
 
   const { storyKor, firstKor, secondKor, thirdKor, contentKor } = contentsKor;
-  const { storyEng, firstEng, secondEng, thirdEng, contentEng } = contentsEng;
+  const { firstEng, secondEng, thirdEng, contentEng } = contentsEng;
 
   const SaveContent = async () => {
     if (storyKor) {
@@ -87,10 +87,6 @@ const Storysrc = () => {
         let Kor = res.data.kr;
         let Eng = res.data.en;
         let checkContent = Kor.hasOwnProperty("content");
-
-        //console.log(Kor);
-        //console.log(Eng);
-        // console.log(checkContent);
 
         if (Kor.first === "" || Kor.second === "" || Kor.third === "") {
           toast.error(

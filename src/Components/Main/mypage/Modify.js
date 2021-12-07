@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from "react";
+import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import axios from "axios";
 import Layout from "../../Layout";
@@ -14,7 +14,7 @@ import { authService } from "../../../firebaseConfig";
 import {
   getAuth,
   updateProfile,
-  updateEmail,
+  // updateEmail,
   deleteUser,
 } from "@firebase/auth";
 import firebase from "@firebase/app-compat";
@@ -48,7 +48,7 @@ const Modify = () => {
       // The user's ID, unique to the Firebase project. Do NOT use
       // this value to authenticate with your backend server, if
       // you have one. Use User.getToken() instead.
-      const uid = user.uid;
+      //const uid = user.uid;
 
       console.log(displayName, email);
       SetLoading(true);
