@@ -329,7 +329,10 @@ const Header = () => {
             {/* <Link to='/ask'>문의</Link> */}
             <Link to='/faq'>FAQ</Link>
             {localStorage.getItem("token") ? (
-              <Link to='/mypage'>My page</Link>
+              <>
+              <Link to='/tingbox'>팅글 보관함</Link>
+              <Link to='/mypage'>마이 페이지</Link>
+              </>
             ) : (
               <span onClick={HandleModals} style={{cursor:'pointer', fontWeight:600}}>Login</span>
             )}

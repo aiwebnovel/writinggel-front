@@ -761,13 +761,14 @@ color : red;
 
 .Faq-PanelContent {
     // padding: 10px 5px;
-    padding: 10px 0px 10px 25px;
+    padding: 10px 0px 10px 15px;
     max-width: 1100px;
 
     >p {
         font-size: 17px;
         line-height: 25px;
     }
+
 }
 
 
@@ -1374,7 +1375,7 @@ hr {
         gap: 5px;
         
     > button {
-        width: 50px; 
+        padding: 2px 8px;
         cursor: pointer;
         font-size: 14px;
         background-color: $point;

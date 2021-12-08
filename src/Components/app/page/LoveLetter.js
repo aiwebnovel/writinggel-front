@@ -133,6 +133,7 @@ const LoveLetter = () => {
 
   const resetData = () => {
     SetResult(false);
+    HandleModals(false);
     SetUser("");
     SetLover("");
   };
@@ -349,6 +350,7 @@ const ReChoice = styled.button`
   background: transparent;
   outline: 0;
   border: 0;
+  word-break: keep-all;
 `;
 
 const MainTitle = styled.div`

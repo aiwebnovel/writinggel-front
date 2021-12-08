@@ -60,18 +60,6 @@ const FaQ = () => {
                   </p>
                 </div>
               </AccordionPanel>
-              <AccordionPanel
-                label='Q. 이메일 주소를 변경하려면 어떻게 해야 하나요?'
-                className='Faq-AccoPanel'
-              >
-                <div className='Faq-PanelContent'>
-                  <p>
-                    라이팅젤 웹사이트 우측 상단 마이페이지 [사람모양 아이콘]
-                    &gt; [마이페이지]에서 [회원 정보 수정]을 클릭하시면, 이메일
-                    주소 변경이 가능합니다.
-                  </p>
-                </div>
-              </AccordionPanel>
             </Accordion>
           </Box>
 
