@@ -362,7 +362,7 @@ const MainTitle = styled.div`
 const Card = styled.div`
   background-color: #fff;
   border: 1px solid #444;
-  width: 200px;
+  //width: 200px;
   padding: 48px;
   text-align: center;
   font-weight: 600;
