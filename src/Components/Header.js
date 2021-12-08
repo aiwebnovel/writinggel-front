@@ -330,7 +330,7 @@ const Header = () => {
             <Link to='/faq'>FAQ</Link>
             {localStorage.getItem("token") ? (
               <>
-              <Link to='/tingbox'>팅글 보관함</Link>
+              <Link to='/tingbox'>팅젤 보관함</Link>
               <Link to='/mypage'>마이 페이지</Link>
               </>
             ) : (
