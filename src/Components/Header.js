@@ -191,7 +191,6 @@ const Header = () => {
   };
 
   const HandleChecked = (e) => {
-    console.log(e.target.checked);
     SetChecked(e.target.checked);
   };
 

@@ -146,7 +146,7 @@ const Header = () => {
           animation={
             size !== "small"
               ? { type: "slideLeft", duration: 300 }
-              : { type: "slideDown", duration: 300 }
+              : { type: "slideDown", duration: 500 }
           }
           className='ServiceMenus'
           align='center'

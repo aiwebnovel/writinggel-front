@@ -37,16 +37,17 @@ const LinkObject = [
   },
   {
     id:7,
-    title: "찬반 논거",
-    link: "/app/discussion",
-    detail: '/service/discussion',
-  },
-  {
-    id:8,
     title: "MBTI 연애편지",
     link: "/app/loveletter",
     detail: '/service/loveletter',
   },
+  {
+    id:8,
+    title: "찬반 논거",
+    link: "/app/discussion",
+    detail: '/service/discussion',
+  },
+
   {
     id:9,
     title: "일상기록 질문 카드뽑기",
@@ -64,11 +65,11 @@ const LinkObject = [
     title: "Coming Soon!",
     link: "/",
   },
-  {
-    id:12,
-    title: "Coming Soon!",
-    link: "/",
-  },
+  // {
+  //   id:12,
+  //   title: "Coming Soon!",
+  //   link: "/",
+  // },
 ];
 
 export default LinkObject;
