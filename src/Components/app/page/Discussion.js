@@ -1,11 +1,11 @@
 import { Box, ResponsiveContext } from "grommet";
 import { Download } from "grommet-icons";
 import React, { useEffect, useContext, useState } from "react";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ScrollToTop from '../../../routes/ScrollToTop';
-
+import Modal from "../../SmallModal";
 
 import ServiceLayout from "../Layout";
 import styled from "styled-components";
@@ -18,18 +18,25 @@ const Discussion = () => {
   const size = useContext(ResponsiveContext);
   const History = useHistory();
 
+  const [count, SetCount] = useState("");
+  const [isBill, SetBill] = useState("");
   const [isLoading, SetLoading] = useState(false);
   const [input, SetInput] = useState("");
   const [OutputContent, SetOutputContent] = useState({
     ProsOutput: "",
     ConsOutput: "",
   });
-  const [option, SetOutputOption] = useState("");
+
+  const [isOpen, SetOpen] = useState(false);
+
+  const HandleModals = () => {
+    SetOpen(!isOpen);
+  };
 
   const { ProsOutput, ConsOutput } = OutputContent;
 
   const SaveContent = async (options) => {
-    console.log(options)
+    //console.log(options)
 
     if (OutputContent) {
       if (options === "Pros") {
@@ -95,6 +102,9 @@ const Discussion = () => {
   };
 
   const ProsDiscussionAxios = async (e) => {
+    if (count === 0 && isBill === false) {
+      SetOpen(true);
+    } else {
     if (input && input !== "") {
      // console.log(e.target.name)
       
@@ -137,11 +147,14 @@ const Discussion = () => {
     } else {
       setTimeout(toast.info("내용을 채워주세요!"), 300);
     }
+  }
   };
 
   const ConsDiscussionAxios = async (e) => {
     //console.log(e.target.name)
-
+    if (count === 0 && isBill === false) {
+      SetOpen(true);
+    } else {
     if (input && input !== "") {
       //console.log(e.target.name)
   
@@ -184,13 +197,22 @@ const Discussion = () => {
     } else {
       setTimeout(toast.info("내용을 채워주세요!"), 300);
     }
+  }
   };
 
   useEffect(() => {
     const loginCheck = localStorage.getItem("token");
 
     if (loginCheck !== null) {
-      return;
+      axios
+      .get(`${configUrl.SERVER_URL}/profile`, {
+        headers: { authentication: localStorage.getItem("token") },
+      })
+      .then((res) => {
+        let count = res.data.membership_count;
+        SetCount(count);
+        SetBill(res.data.isBill);
+      });
     } else {
       History.push("/service/discussion");
       setTimeout(toast.info("로그인을 해주세요!"), 300);
@@ -198,6 +220,7 @@ const Discussion = () => {
   }, []);
 
   return (
+    <>
     <ServiceLayout>
        <ScrollToTop/>
       {isLoading && <Loading />}
@@ -310,6 +333,18 @@ const Discussion = () => {
         </Box>
       </Box>
     </ServiceLayout>
+    <Modal onClick={HandleModals} open={isOpen} close={HandleModals}>
+        <div className='MembershipCountText'>
+          <p>무료 사용이 끝났습니다.</p>
+          <p>멤버십 가입을 통해 이용하실 수 있습니다.</p>
+        </div>
+        <div className='MembershipCountBtns'>
+          <button onClick={HandleModals}>취소</button>
+          <Link to='/signIn'><button>멤버십 가입하기</button></Link>
+        </div>
+        
+      </Modal>
+    </>
   );
 };
 

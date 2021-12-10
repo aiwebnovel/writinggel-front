@@ -8,11 +8,11 @@ import {
 } from "grommet";
 import { Download } from "grommet-icons";
 import React, { useEffect, useContext, useState } from "react";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ScrollToTop from '../../../routes/ScrollToTop';
-
+import Modal from '../../SmallModal'
 
 import ServiceLayout from "../Layout";
 import * as configUrl from "../../../config";
@@ -25,12 +25,21 @@ const Businessitem = () => {
   const size = useContext(ResponsiveContext);
   const History = useHistory();
 
+  const [count, SetCount] = useState("");
+  const [isBill, SetBill] = useState("");
   const [isLoading, SetLoading] = useState(false);
   const [input, SetInput] = useState("");
   const [OutputContent, SetOutputContent] = useState(["", "", ""]);
+  const [isOpen, SetOpen] = useState(false);
+
+  const HandleModals = () => {
+    SetOpen(!isOpen);
+  };
 
   const BusinessitemAxios = async () => {
- 
+    if (count === 0 && isBill === false) {
+      SetOpen(true);
+    } else {
     if (input && input !== "") {
       SetLoading(true);
       const config = {
@@ -42,7 +51,6 @@ const Businessitem = () => {
 
       await axios(config)
         .then(async (response) => {
-          console.log(response.data);
 
           if (response.data[0] === "") {
             toast.error(
@@ -60,17 +68,14 @@ const Businessitem = () => {
               icon: "⚠️",
               progressStyle: { backgroundColor: "#7D4CDB" },
             });
-          }
-
-          
-          
+          }   
         }).finally(()=>{
           SetLoading(false);
         });
     } else {
-
       setTimeout(toast.info("내용을 채워주세요!"), 300);
     }
+  }
   };
 
   const SaveContent = async (output) => {
@@ -108,7 +113,15 @@ const Businessitem = () => {
     const loginCheck = localStorage.getItem("token");
 
     if (loginCheck !== null) {
-      return;
+      axios
+        .get(`${configUrl.SERVER_URL}/profile`, {
+          headers: { authentication: localStorage.getItem("token") },
+        })
+        .then((res) => {
+          let count = res.data.membership_count;
+          SetCount(count);
+          SetBill(res.data.isBill);
+        });
     } else {
       History.push("/service/businessitem");
       setTimeout(toast.info("로그인을 해주세요!"), 300);
@@ -116,6 +129,7 @@ const Businessitem = () => {
   }, []);
 
   return (
+    <>
     <ServiceLayout>
        <ScrollToTop/>
       {isLoading && <Loading />}
@@ -138,6 +152,7 @@ const Businessitem = () => {
               사업 주제<span style={{ color: "red" }}>*</span>
             </p>
             <input
+              required
               type='text'
               placeholder='사업 주제를 적어주세요! ex) 마스크 불편 해결, 비대면 요가 등'
               onChange={(e) => {
@@ -198,6 +213,18 @@ const Businessitem = () => {
         </Box>
       </Box>
     </ServiceLayout>
+    <Modal onClick={HandleModals} open={isOpen} close={HandleModals}>
+        <div className='MembershipCountText'>
+          <p>무료 사용이 끝났습니다.</p>
+          <p>멤버십 가입을 통해 이용하실 수 있습니다.</p>
+        </div>
+        <div className='MembershipCountBtns'>
+          <button onClick={HandleModals}>취소</button>
+          <Link to='/signIn'><button>멤버십 가입하기</button></Link>
+        </div>
+        
+      </Modal>
+    </>
   );
 };
 

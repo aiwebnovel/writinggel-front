@@ -103,12 +103,12 @@ const SignMember = () => {
           moid: moidNum, //가맹점 주문번호,
           userId: (await localStorage.getItem("userUid")) + Math.random(),
         };
-        console.log(option);
+       // console.log(option);
         await axios
           .post(`https://api.innopay.co.kr/api/regAutoCardBill`, option)
           .then(async (response) => {
             let data = response.data;
-            console.log("test", data);
+           // console.log("test", data);
             await localStorage.setItem("moid", data.moid);
 
             if (data.resultCode === "F112") {
@@ -144,7 +144,7 @@ const SignMember = () => {
               axios(config)
                 .then(async (res) => {
                   SetLoading(false);
-                  console.log(res);
+                 // console.log(res);
 
                   await history.push("/result");
                   setTimeout(toast.success(`${res.data.log}`), 3000);

@@ -44,7 +44,7 @@ const Header = () => {
         //await authService.signInWithRedirect(provider)
         await authService.signInWithPopup(provider)
         .then(async(dataFacebook)=> {
-          console.log(dataFacebook);
+          //console.log(dataFacebook);
           //const credential = FacebookAuthProvider.credentialFromResult(dataFacebook);
           //console.log('cre', credential);
 
@@ -79,13 +79,13 @@ const Header = () => {
         //await authService.signInWithRedirect(provider)
         await authService.signInWithPopup(provider)
         .then(async(dataGoogle)=>{
-          console.log(dataGoogle)
+          //console.log(dataGoogle)
           
           let credential = dataGoogle.credential;
           let email = dataGoogle.user.email;
           let create = dataGoogle.user.metadata.creationTime;
           let token = credential.idToken;
-          console.log('result',credential, email,create,token);
+          //console.log('result',credential, email,create,token);
 
           await localStorage.setItem("token", token);
           await localStorage.setItem("email", email);
