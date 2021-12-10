@@ -49,7 +49,7 @@ const LoveLetter = () => {
     } else {
     if (user) {
       SetUser(user);
-      console.log("user", user);
+      //console.log("user", user);
     } else {
       console.log("MBTI를 선택해주세요!");
     }
@@ -59,7 +59,7 @@ const LoveLetter = () => {
   const HandleLoverMbti = (lover) => {
     if (lover) {
       SetLover(lover);
-      console.log("lover", lover);
+      //console.log("lover", lover);
       SetOpen(true);
     } else {
       console.log("유저를 선택해주세요!");
@@ -160,7 +160,7 @@ const LoveLetter = () => {
           headers: { authentication: localStorage.getItem("token") },
         })
         .then((res) => {
-          console.log(res.data);
+      
           let count = res.data.membership_count;
           SetCount(count);
           SetBill(res.data.isBill);

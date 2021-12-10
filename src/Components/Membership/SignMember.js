@@ -49,7 +49,7 @@ const SignMember = () => {
   const { cardPwd, idNum } = userNumber;
 
   const HandleChange = (e) => {
-    console.log(cardNum);
+    //console.log(cardNum);
     SetCard({ ...card, [e.target.name]: e.target.value });
 
     if (e.target.name === "buyerName") {
@@ -73,13 +73,13 @@ const SignMember = () => {
   // 결제 post
   const RequestBill = async () => {
     let user = await localStorage.getItem("token");
-    console.log(Price, Plan);
+    //console.log(Price, Plan);
     if (user !== null) {
       if (selected1 === false && selected2 === false && selected3 === false) {
         //toast.error("멤버십을 선택해주세요!");
         SetOpen(true);
       } else {
-        console.log("결제");
+        //console.log("결제");
 
         const now = new Date();
         let moidNum =
@@ -126,7 +126,7 @@ const SignMember = () => {
             if (data.resultCode === "0000") {
               SetLoading(true);
               let plans = parseInt(Plan);
-              console.log(plans);
+              //console.log(plans);
               //let prices = parseInt(Price);
               let key = data.billKey;
               const config = {
@@ -171,7 +171,7 @@ const SignMember = () => {
 
   const HandleSelected = (element) => {
     //console.log(e.target.name.split(" "));
-    console.log(element.current.name.split(" "));
+    //console.log(element.current.name.split(" "));
     let month = element.current.name.split(" ")[0];
     let price = element.current.name.split(" ")[1];
 

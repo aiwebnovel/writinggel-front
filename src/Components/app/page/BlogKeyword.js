@@ -70,7 +70,7 @@ const BlogKeyword = () => {
             headers: { authentication: localStorage.getItem("token") },
           })
           .then(async (response) => {
-            console.log(response.data.list);
+            //console.log(response.data.list);
             SetOutput(response.data.list);
           })
           .catch((error) => {
@@ -155,7 +155,7 @@ const BlogKeyword = () => {
           headers: { authentication: localStorage.getItem("token") },
         })
         .then((res) => {
-          console.log(res.data);
+         
           let count = res.data.membership_count;
           SetCount(count);
           SetBill(res.data.isBill);

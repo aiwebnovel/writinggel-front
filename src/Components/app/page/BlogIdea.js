@@ -62,7 +62,7 @@ const BlogIdea = () => {
   };
 
   const SaveContent = async () => {
-    console.log(outputKorean);
+    //console.log(outputKorean);
     if (outputKorean) {
       const config = {
         method: "post",
@@ -199,7 +199,7 @@ const BlogIdea = () => {
           headers: { authentication: localStorage.getItem("token") },
         })
         .then((res) => {
-          console.log(res.data);
+        
           let count = res.data.membership_count;
           SetCount(count);
           SetBill(res.data.isBill);

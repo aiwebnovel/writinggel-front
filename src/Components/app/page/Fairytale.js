@@ -71,10 +71,10 @@ const Fairytale = () => {
     let OutputLength = e.target.value.length; //결과물+사람이 새로 쓴 문장 총 길이
     let Length = OutputLength - tempLength; // 사람이 쓴 것까지 합한 문장 길이 - 결과물 길이
     SetNewLength(Length);
-    console.log(Output[0], OutputLength, tempLength, Length);
-    console.log(newLength);
+    //console.log(Output[0], OutputLength, tempLength, Length);
+    //console.log(newLength);
 
-    if (newLength > 100) {
+    if (newLength >= 30) {
       SetContinue("Continue");
     }
   };
@@ -113,7 +113,7 @@ const Fairytale = () => {
 
       await axios(config)
         .then((response) => {
-          console.log(response.data);
+          //response.data);
 
           if (response.data[0] === "") {
             toast.error(
@@ -121,7 +121,7 @@ const Fairytale = () => {
             );
             SetLoading(false);
           } else {
-            console.log(Output[0], Output[0].length);
+            //console.log(Output[0], Output[0].length);
             //인공지능이 새로 만들어주는 결과물 -> 아예 새로운 도입부만 필요한 거니까 response만 넣어줌
             SetOutput([response.data[0], response.data[1]]);
             //인공지능 결과물 담기(사람이 추가로 쓴 것과 길이 비교 위함.)
@@ -152,7 +152,7 @@ const Fairytale = () => {
   };
 
   const ContinueFairy = async () => {
-    if (newLength > 100) {
+    if (newLength >= 30) {
       SetLoading(true);
 
       const config = {
@@ -204,7 +204,7 @@ const Fairytale = () => {
           SetLoading(false);
         });
     } else {
-      toast.info(`${100 - newLength}자를 더 채워주세요!`);
+      toast.info(`${30 - newLength}자를 더 채워주세요!`);
     }
   };
 
@@ -266,7 +266,6 @@ const Fairytale = () => {
           headers: { authentication: localStorage.getItem("token") },
         })
         .then((res) => {
-          console.log(res.data);
           let count = res.data.membership_count;
           SetCount(count);
           SetBill(res.data.isBill);
@@ -478,6 +477,7 @@ const Fairytale = () => {
                 height='15px'
                 margin='0 auto'
                 isLabelVisible={false}
+                maxCompleted={30}
               />
             </div>
             <Icons>

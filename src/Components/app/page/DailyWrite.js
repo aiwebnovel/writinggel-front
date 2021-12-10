@@ -122,7 +122,7 @@ const Dailywrite = () => {
           headers: { authentication: localStorage.getItem("token") },
         })
         .then((res) => {
-          console.log(res.data);
+      
           let count = res.data.membership_count;
           SetCount(count);
           SetBill(res.data.isBill);

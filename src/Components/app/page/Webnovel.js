@@ -109,9 +109,9 @@ const Webnovel = () => {
     SetOutput({ ...output, outputKorean: e.target.value });
     SetChange(true);
 
-    console.log("output", outputKorean.length);
-    console.log("temp", tempLength);
-    console.log("result", outputKorean.length - tempLength);
+    // console.log("output", outputKorean.length);
+    // console.log("temp", tempLength);
+    // console.log("result", outputKorean.length - tempLength);
     if (isHuman === false) {
       if (outputKorean > 0) {
         SetStart("이어쓰기");
@@ -120,16 +120,17 @@ const Webnovel = () => {
       const lngDetector = new LanguageDetect();
       const language = await lngDetector.detect(outputKorean, 1);
 
-      if (progress >= 100) {
+      if (progress >= 30) {
         SetStart("Continue");
       }
 
       if (language[0] === "english") {
         let length = ((outputKorean.length - tempLength) * 100) / 150;
-
+        
         SetProgress(length);
       } else {
         let elseLeng = ((outputKorean.length - tempLength) * 100) / 100;
+        //console.log(outputKorean.length, tempLength, elseLeng);
         SetProgress(elseLeng);
       }
     }
@@ -186,13 +187,10 @@ const Webnovel = () => {
           }
         )
         .then(async (response) => {
-          console.log(response.data);
-          console.log("response", response.data[0]);
-          console.log("response2", response.data[1]);
 
           if (response.data[2] >= 2) {
             toast.error(`결과물에 유해한 내용이 들어가 버렸어요. 😭 `);
-            SetHuman(false);
+         
           }
 
           if (response.data[0] === "") {
@@ -213,14 +211,14 @@ const Webnovel = () => {
             await SetChange(false);
             await SetHuman(true);
             toast.info(
-              `이어지는 내용을 100자 이상 쓰면, 이야기를 계속 이어갈 수 있습니다.`
+              `이어지는 내용을 30자 이상 쓰면, 이야기를 계속 이어갈 수 있습니다.`
             );
           }
         })
         .catch((error) => {
           console.log(error);
           if (error.response.status === 403) {
-            console.log('403')
+            //console.log('403')
             toast.info("무료 사용이 끝났습니다. 멤버십 가입을 통해 서비스를 이용하실 수 있어요!", {
               icon: "⚠️",
               progressStyle: { backgroundColor: "#7D4CDB" },
@@ -263,8 +261,8 @@ const Webnovel = () => {
     if (localStorage.getItem("token") !== null) {
       let story = outputEnglish;
 
-      if (isHuman === true && progress < 100) {
-        toast.error(`추가 이야기의 길이(${100 - progress}자)가 부족해요😭`);
+      if (isHuman === true && progress < 30) {
+        toast.error(`추가 이야기의 길이(${30 - progress}자)가 부족해요😭`);
         return;
       } else {
         SetHuman(false);
@@ -313,7 +311,7 @@ const Webnovel = () => {
           }
         )
         .then(async (response) => {
-          console.log(response.data);
+          //console.log(response.data);
           //console.log('response', response.data[0]);
           //console.log('response2', response.data[1]);
           if (response.data[0] === "") {
@@ -335,13 +333,13 @@ const Webnovel = () => {
             await SetStart("이어쓰기");
             await SetHuman(true);
             toast.info(
-              `이어지는 내용을 100자 이상 쓰면, 이야기를 계속 이어갈 수 있습니다.`
+              `이어지는 내용을 30자 이상 쓰면, 이야기를 계속 이어갈 수 있습니다.`
             );
           }
 
           if (response.data[2] >= 2) {
             toast.error(`결과물에 유해한 내용이 들어가 버렸어요. 😭 `);
-            SetHuman(false);
+           
           }
         })
         .catch((error) => {
@@ -435,7 +433,6 @@ const Webnovel = () => {
           headers: { authentication: localStorage.getItem("token") },
         })
         .then((res) => {
-          console.log(res.data);
           let count = res.data.membership_count;
           SetCount(count);
           SetBill(res.data.isBill);
@@ -642,6 +639,7 @@ const Webnovel = () => {
                   height='15px'
                   margin='0 auto'
                   isLabelVisible={false}
+                  maxCompleted={30}
                 />
               </div>
 

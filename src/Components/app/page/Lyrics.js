@@ -45,7 +45,7 @@ const Lyrics = () => {
 
       await axios(config)
         .then(async (response) => {
-          console.log(response.data);
+         //console.log(response.data);
 
           if (response.data[0] === "") {
             toast.error(
@@ -78,7 +78,7 @@ const Lyrics = () => {
   };
 
   const SaveContent = async () => {
-    console.log(content[1], content[0]);
+    //console.log(content[1], content[0]);
     let contents = content[1] + content[0];
     if (content) {
       const config = {

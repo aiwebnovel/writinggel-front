@@ -64,7 +64,7 @@ const BlogFollow = () => {
   };
 
   const SaveContent = async () => {
-    console.log(outputKorean);
+    //console.log(outputKorean);
     if (outputKorean) {
       const config = {
         method: "post",
@@ -118,8 +118,8 @@ const BlogFollow = () => {
           tempLength: ((outputKorean.length - outputLength) * 100) / 100,
         });
 
-        if (tempLength < 100) {
-          toast.error(`${100 - tempLength}자를 더 입력해주세요!😭`);
+        if (tempLength < 30) {
+          toast.error(`${30 - tempLength}자를 더 입력해주세요!😭`);
           return;
         } else if (story === " " || story === "" || story === "undefined") {
           toast.error(`내용을 입력해 주세요!`);
@@ -221,7 +221,6 @@ const BlogFollow = () => {
           headers: { authentication: localStorage.getItem("token") },
         })
         .then((res) => {
-          console.log(res.data);
           let count = res.data.membership_count;
           SetCount(count);
           SetBill(res.data.isBill);
@@ -366,6 +365,7 @@ const BlogFollow = () => {
                       width={size !== "small" ? "250px" : "200px"}
                       height='8px'
                       isLabelVisible={false}
+                      maxCompleted={30}
                     />
                     <button onClick={requestcontents}>Write</button>
                   </div>

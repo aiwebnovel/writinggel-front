@@ -92,7 +92,7 @@ const Storysrc = () => {
 
       await axios(config)
         .then(async (res) => {
-          //console.log(res.data);
+
 
           let Kor = res.data.kr;
           let Eng = res.data.en;

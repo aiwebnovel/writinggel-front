@@ -109,7 +109,7 @@ const Discussion = () => {
      // console.log(e.target.name)
       
       let ProsOption = e.target.name;
-      console.log(ProsOption);
+      //console.log(ProsOption);
       SetLoading(true);
       const config = {
         method: "post",
@@ -159,7 +159,7 @@ const Discussion = () => {
       //console.log(e.target.name)
   
       let ConsOption= e.target.name;
-      console.log(ConsOption);
+      //console.log(ConsOption);
       SetLoading(true);
       const config = {
         method: "post",

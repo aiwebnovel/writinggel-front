@@ -60,7 +60,7 @@ const PayResult = () => {
           headers: { authentication: user },
         })
         .then((response) => {
-          console.log(response)
+          //console.log(response)
           // localStorage.setItem("userUid", response.data.uid);
           // localStorage.setItem("plan", response.data.plan);
           

@@ -57,7 +57,7 @@ const Firstsentence = () => {
             } else {
               let splitKor = response.data[0].split("\n\n");
               let splitEng = response.data[1].split("\n\n");
-              console.log(splitKor, splitEng);
+              //console.log(splitKor, splitEng);
               if (splitKor[0] === splitKor[1]) {
                 await SetOutputContent({
                   ...OutputContent,

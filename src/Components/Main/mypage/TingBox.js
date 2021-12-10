@@ -56,7 +56,7 @@ const TingBox = () => {
 
       await axios(config)
         .then(async (response) => {
-          console.log(response.data);
+          //console.log(response.data);
    
           await window.location.reload();
         })
@@ -83,7 +83,7 @@ const TingBox = () => {
 
     await axios(config)
       .then(async (response) => {
-        console.log("성공?", response.data);
+        //console.log("성공?", response.data);
 
         await SetData({
           ...SaveData,
