@@ -60,7 +60,7 @@ const Mypage = () => {
       axios(config)
         .then((response) => {
           localStorage.setItem('isBill', false)
-          console.log(response);
+          //console.log(response);
           toast.success(response.data.log, {
             style: { backgroundColor: "#fff", color: "#000" },
             progressStyle: { backgroundColor: "#7D4CDB" },
@@ -87,7 +87,7 @@ const Mypage = () => {
           headers: { authentication: loginCheck },
         })
         .then((response) => {
-          console.log(response.data);
+         // console.log(response.data);
           let data = response.data;
 
           let billFormat = moment(data.billStartDate).format('YYYY-MM-DD');

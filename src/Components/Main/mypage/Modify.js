@@ -37,7 +37,7 @@ const Modify = () => {
 
   //회원정보 수정 클릭시
   const ModifyUser = async () => {
-    console.log(Userprofile);
+    //console.log(Userprofile);
 
     const auth = getAuth();
     const user = auth.currentUser;
@@ -50,9 +50,9 @@ const Modify = () => {
       // you have one. Use User.getToken() instead.
       //const uid = user.uid;
 
-      console.log(displayName, email);
+      //console.log(displayName, email);
       SetLoading(true);
-      console.log(userName);
+      //console.log(userName);
 
       await updateProfile(auth.currentUser, {
         displayName: userName,
@@ -90,7 +90,7 @@ const Modify = () => {
   const ReAuthProfile = async () => {
     const auth = getAuth();
     const user = auth.currentUser;
-    console.log(user, auth.currentUser);
+    //console.log(user, auth.currentUser);
 
     if (user !== null) {
       let providerId = user.providerData[0].providerId;

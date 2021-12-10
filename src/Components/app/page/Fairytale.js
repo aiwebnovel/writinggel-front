@@ -5,13 +5,13 @@ import {
 } from "grommet";
 import { Update, Close, Add, Download } from "grommet-icons";
 import React, { useEffect, useContext, useState } from "react";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import axios from "axios";
 import { OuterClick } from "react-outer-click";
 import ScrollToTop from '../../../routes/ScrollToTop';
-
+import Modal from "../../SmallModal";
 
 import ServiceLayout from "../Layout";
 import styled from "styled-components";
@@ -25,6 +25,9 @@ const Fairytale = () => {
   const size = useContext(ResponsiveContext);
   const History = useHistory();
 
+  const [count, SetCount] = useState("");
+  const [isBill, SetBill] = useState("");
+  const [CountModal, SetCountModal] = useState(false);
   const [isSider, SetSider] = useState(false);
   const [isOpen, SetOpen] = useState(false);
   const [isLoading, SetLoading] = useState(false);
@@ -45,6 +48,11 @@ const Fairytale = () => {
     SetOpen(!isOpen);
   };
 
+  const HandleSmallModals = () => {
+    SetCountModal(!CountModal);
+  };
+
+
   const [category, Setcategory] = useState({
     mainCharacter: "", //Main_Character 주요 인물,
     period: "", //Period 시간 (api 문서에서는 time)
@@ -63,16 +71,18 @@ const Fairytale = () => {
     let OutputLength = e.target.value.length; //결과물+사람이 새로 쓴 문장 총 길이
     let Length = OutputLength - tempLength; // 사람이 쓴 것까지 합한 문장 길이 - 결과물 길이
     SetNewLength(Length);
-    console.log(Output[0], OutputLength, tempLength, Length);
-    console.log(newLength);
+    //console.log(Output[0], OutputLength, tempLength, Length);
+    //console.log(newLength);
 
-    if (newLength > 100) {
+    if (newLength >= 30) {
       SetContinue("Continue");
     }
   };
 
   const NewStory = async () => {
-    console.log(category);
+    if (count === 0 && isBill === false) {
+      SetCountModal(true);
+    } else {
     if (
       category.mainCharacter.length > 0 &&
       category.period.length > 0 &&
@@ -103,7 +113,7 @@ const Fairytale = () => {
 
       await axios(config)
         .then((response) => {
-          console.log(response.data);
+          //response.data);
 
           if (response.data[0] === "") {
             toast.error(
@@ -111,7 +121,7 @@ const Fairytale = () => {
             );
             SetLoading(false);
           } else {
-            console.log(Output[0], Output[0].length);
+            //console.log(Output[0], Output[0].length);
             //인공지능이 새로 만들어주는 결과물 -> 아예 새로운 도입부만 필요한 거니까 response만 넣어줌
             SetOutput([response.data[0], response.data[1]]);
             //인공지능 결과물 담기(사람이 추가로 쓴 것과 길이 비교 위함.)
@@ -138,10 +148,11 @@ const Fairytale = () => {
       toast.error("빈 칸을 모두 채워주세요!");
       SetLoading(false);
     }
+  }
   };
 
   const ContinueFairy = async () => {
-    if (newLength > 100) {
+    if (newLength >= 30) {
       SetLoading(true);
 
       const config = {
@@ -193,7 +204,7 @@ const Fairytale = () => {
           SetLoading(false);
         });
     } else {
-      toast.info(`${100 - newLength}자를 더 채워주세요!`);
+      toast.info(`${30 - newLength}자를 더 채워주세요!`);
     }
   };
 
@@ -250,7 +261,15 @@ const Fairytale = () => {
     const loginCheck = localStorage.getItem("token");
 
     if (loginCheck !== null) {
-      return;
+      axios
+        .get(`${configUrl.SERVER_URL}/profile`, {
+          headers: { authentication: localStorage.getItem("token") },
+        })
+        .then((res) => {
+          let count = res.data.membership_count;
+          SetCount(count);
+          SetBill(res.data.isBill);
+        });
     } else {
       History.push("/service/fairytale");
       setTimeout(toast.info("로그인을 해주세요!"), 300);
@@ -259,6 +278,7 @@ const Fairytale = () => {
   }, []);
 
   return (
+    <>
     <ServiceLayout>
        <ScrollToTop/>
       {isLoading && <Loading />}
@@ -457,6 +477,7 @@ const Fairytale = () => {
                 height='15px'
                 margin='0 auto'
                 isLabelVisible={false}
+                maxCompleted={30}
               />
             </div>
             <Icons>
@@ -467,6 +488,18 @@ const Fairytale = () => {
         </Grid>
       </Box>
     </ServiceLayout>
+    <Modal onClick={HandleSmallModals} open={CountModal} close={HandleSmallModals}>
+        <div className='MembershipCountText'>
+          <p>무료 사용이 끝났습니다.</p>
+          <p>멤버십 가입을 통해 이용하실 수 있습니다.</p>
+        </div>
+        <div className='MembershipCountBtns'>
+          <button onClick={HandleSmallModals}>취소</button>
+          <Link to='/signIn'><button>멤버십 가입하기</button></Link>
+        </div>
+        
+      </Modal>
+    </>
   );
 };
 

@@ -2,7 +2,7 @@ import { Box, Grid, ResponsiveContext } from "grommet";
 import { Download, Update } from "grommet-icons";
 import axios from "axios";
 import React, { useEffect, useContext, useState } from "react";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import MBTI from "./MBTI";
@@ -29,24 +29,37 @@ const LoveLetter = () => {
   const [isLoading, SetLoading] = useState(false);
   const [isOpen, SetOpen] = useState(false);
   const [isResult, SetResult] = useState(false);
+  const [count, SetCount] = useState("");
+  const [isBill, SetBill] = useState("");
+  const [CountModal, SetCountModal] = useState(false);
 
   const HandleModals = () => {
     SetOpen(!isOpen);
   };
 
+  const HandleSmallModals = () => {
+    SetCountModal(!CountModal);
+  };
+
   const HandleUserMbti = (user) => {
+    if (count === 0 && isBill === false) {
+      SetOpen(false);
+      SetCountModal(true);
+     
+    } else {
     if (user) {
       SetUser(user);
-      console.log("user", user);
+      //console.log("user", user);
     } else {
       console.log("MBTI를 선택해주세요!");
     }
+  }
   };
 
   const HandleLoverMbti = (lover) => {
     if (lover) {
       SetLover(lover);
-      console.log("lover", lover);
+      //console.log("lover", lover);
       SetOpen(true);
     } else {
       console.log("유저를 선택해주세요!");
@@ -142,7 +155,16 @@ const LoveLetter = () => {
     const loginCheck = localStorage.getItem("token");
 
     if (loginCheck !== null) {
-      return;
+      axios
+        .get(`${configUrl.SERVER_URL}/profile`, {
+          headers: { authentication: localStorage.getItem("token") },
+        })
+        .then((res) => {
+      
+          let count = res.data.membership_count;
+          SetCount(count);
+          SetBill(res.data.isBill);
+        });
     } else {
       History.push("/service/loveletter");
       setTimeout(toast.info("로그인을 해주세요!"), 300);
@@ -261,6 +283,17 @@ const LoveLetter = () => {
             </div>
           </div>
         </LetterSure>
+      </Modal>
+      <Modal onClick={HandleSmallModals} open={CountModal} close={HandleSmallModals}>
+        <div className='MembershipCountText'>
+          <p>무료 사용이 끝났습니다.</p>
+          <p>멤버십 가입을 통해 이용하실 수 있습니다.</p>
+        </div>
+        <div className='MembershipCountBtns'>
+          <button onClick={HandleSmallModals}>취소</button>
+          <Link to='/signIn'><button>멤버십 가입하기</button></Link>
+        </div>
+        
       </Modal>
     </>
   );

@@ -40,7 +40,7 @@ const Home = () => {
     if(!loginCheck) {
       SetOpen(!isOpen);
     }else {
-      toast.warn('이미 로그인 되어있네요!');
+      history.push('/app/firstsentence');
     }
  
   };
@@ -52,23 +52,17 @@ const Home = () => {
   const signIn = async (e) => {
     if (isChecked === true) {
       let name = e.target.name;
-      // let provider = new firebaseInstance.auth.GoogleAuthProvider();
       if (name === "Facebook") {
         let provider = new firebaseInstance.auth.FacebookAuthProvider();
-        //await authService.signInWithRedirect(provider)
         await authService
           .signInWithPopup(provider)
           .then(async (dataFacebook) => {
-            console.log(dataFacebook);
-            //const credential = FacebookAuthProvider.credentialFromResult(dataFacebook);
-            //console.log('cre', credential);
+            //console.log(dataFacebook);
 
             let credentials = dataFacebook.credential;
-            //let id = dataFacebook.credential.providerId //facebook.com
             let email = dataFacebook.user.email;
             let create = dataFacebook.user.metadata.creationTime;
             let token = credentials.accessToken;
-            //console.log('result',credentials, email,create,token, id);
 
             await localStorage.setItem("token", token);
             await localStorage.setItem("email", email);
@@ -96,13 +90,13 @@ const Home = () => {
         await authService
           .signInWithPopup(provider)
           .then(async (dataGoogle) => {
-            console.log(dataGoogle);
+           // console.log(dataGoogle);
 
             let credential = dataGoogle.credential;
             let email = dataGoogle.user.email;
             let create = dataGoogle.user.metadata.creationTime;
             let token = credential.idToken;
-            console.log("result", credential, email, create, token);
+            //console.log("result", credential, email, create, token);
 
             await localStorage.setItem("token", token);
             await localStorage.setItem("email", email);
@@ -187,6 +181,7 @@ const Home = () => {
           >
             <Card background='#372874' height='small' onClick={HandleModals} style={{cursor:"pointer", color:'#fff'}}> 
               <CardBody className='cardTitle' justify='center'>
+                <p>인공지능 글쓰기</p>
                 <p>무료체험 해보기</p>
                 <p>(15회)</p>
               </CardBody>

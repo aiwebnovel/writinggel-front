@@ -5,7 +5,7 @@ $sub2 : #ffce1f;
 $white-1 : #fff;
 $white-2 : #f9f9f9;
 $dark-1 : #444;
-
+$red: #f45752;
 $boxShadow : rgb(237 237 237) 2px 3px 8px;
 
 
@@ -170,6 +170,50 @@ $boxShadow : rgb(237 237 237) 2px 3px 8px;
     }
 
 }
+
+.MembershipCountText {
+    text-align: center;
+    color : $main;
+}
+
+.MembershipCountBtns {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 20px;
+    margin-bottom: 5px;
+
+    > button:first-child {
+        background-color : $white-1;
+        border: 1px solid $main;
+        color : $main;
+        padding: 5px 15px;
+        cursor: pointer;
+        transition: all 300ms ease;
+
+        &:hover {
+            background-color : $red;
+            color: $white-1;
+        }
+    }
+
+    > a > button {
+        background-color : $main;
+        border: 1px solid $main;
+        outline: 0;
+        color : $white-1;
+        padding: 5px 25px;
+        cursor: pointer;
+        transition: all 300ms ease;
+
+        &:hover {
+            background-color : $sub2;
+            color: $main;
+        }
+    }
+}
+
 
 
 .guide-Accordion {

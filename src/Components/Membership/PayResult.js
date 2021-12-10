@@ -35,7 +35,7 @@ const PayResult = () => {
       axios(config)
         .then((response) => {
           localStorage.setItem('isBill', false)
-          console.log(response);
+          //console.log(response);
           toast.success(response.data.log, {
             style: { backgroundColor: "#fff", color: "#000" },
             progressStyle: { backgroundColor: "#7D4CDB" },

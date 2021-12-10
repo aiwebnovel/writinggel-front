@@ -1,15 +1,15 @@
 import { Box, Grid, ResponsiveContext } from "grommet";
 import {Cycle, Download } from "grommet-icons";
 import React, { useEffect, useContext, useState } from "react";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ScrollToTop from '../../../routes/ScrollToTop';
 
-
 import ServiceLayout from "../Layout";
 import styled from "styled-components";
 import Modal from "../../Modal";
+import SmallModal from '../../SmallModal';
 import * as configUrl from "../../../config";
 
 import axios from "axios";
@@ -18,7 +18,10 @@ const Dailywrite = () => {
   const size = useContext(ResponsiveContext);
   const History = useHistory();
 
+  const [count, SetCount] = useState("");
+  const [isBill, SetBill] = useState("");
   const [isOpen, SetOpen] = useState(false);
+  const [CountModal, SetCountModal] = useState(false);
   const [isLoading, SetLoading] = useState(false);
   const [OutputContent, SetOutputContent] = useState(["", ""]);
 
@@ -26,8 +29,18 @@ const Dailywrite = () => {
     SetOpen(!isOpen);
   };
 
+  const HandleSmallModals = () => {
+    SetCountModal(!CountModal);
+  };
+
   const DailywriteAxios = async () => {
+    if (count === 0 && isBill === false) {
+      SetOpen(false);
+      SetCountModal(true);
+     
+    } else {
     SetOutputContent(["", ""]);
+    SetOpen(true);
     SetLoading(true);
     const config = {
       method: "post",
@@ -43,7 +56,6 @@ const Dailywrite = () => {
       
       }else {
         SetOutputContent(response.data);
-        SetOpen(true);
       }
         
       })
@@ -63,6 +75,7 @@ const Dailywrite = () => {
       }).finally(()=>{
         SetLoading(false);
       });
+    }
   };
 
   const SaveContent = async() => {
@@ -104,7 +117,16 @@ const Dailywrite = () => {
     const loginCheck = localStorage.getItem("token");
 
     if (loginCheck !== null) {
-      return;
+      axios
+        .get(`${configUrl.SERVER_URL}/profile`, {
+          headers: { authentication: localStorage.getItem("token") },
+        })
+        .then((res) => {
+      
+          let count = res.data.membership_count;
+          SetCount(count);
+          SetBill(res.data.isBill);
+        });
     } else {
       History.push("/service/dailywrite");
       setTimeout(toast.info("로그인을 해주세요!"), 300);
@@ -160,7 +182,6 @@ const Dailywrite = () => {
           <DailyBtn
             onClick={() => {
               DailywriteAxios();
-              HandleModals();
             }}
           >
             일상기록 질문 카드뽑기
@@ -187,6 +208,17 @@ const Dailywrite = () => {
           </ResultCard>
         )}
       </Modal>
+      <SmallModal onClick={HandleSmallModals} open={CountModal} close={HandleModals}>
+        <div className='MembershipCountText'>
+          <p>무료 사용이 끝났습니다.</p>
+          <p>멤버십 가입을 통해 이용하실 수 있습니다.</p>
+        </div>
+        <div className='MembershipCountBtns'>
+          <button onClick={HandleSmallModals}>취소</button>
+          <Link to='/signIn'><button>멤버십 가입하기</button></Link>
+        </div>
+        
+      </SmallModal>
     </>
   );
 };

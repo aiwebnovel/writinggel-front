@@ -44,7 +44,7 @@ const Header = () => {
         //await authService.signInWithRedirect(provider)
         await authService.signInWithPopup(provider)
         .then(async(dataFacebook)=> {
-          console.log(dataFacebook);
+          //console.log(dataFacebook);
           //const credential = FacebookAuthProvider.credentialFromResult(dataFacebook);
           //console.log('cre', credential);
 
@@ -79,13 +79,13 @@ const Header = () => {
         //await authService.signInWithRedirect(provider)
         await authService.signInWithPopup(provider)
         .then(async(dataGoogle)=>{
-          console.log(dataGoogle)
+          //console.log(dataGoogle)
           
           let credential = dataGoogle.credential;
           let email = dataGoogle.user.email;
           let create = dataGoogle.user.metadata.creationTime;
           let token = credential.idToken;
-          console.log('result',credential, email,create,token);
+          //console.log('result',credential, email,create,token);
 
           await localStorage.setItem("token", token);
           await localStorage.setItem("email", email);
@@ -222,7 +222,7 @@ const Header = () => {
         </Nav>
         {size !== "small" ? (
           <Nav direction='row' className='Menus' gap='large' align='center'>
-            <Link to='/explain' className={isBill && 'displayNone'}> <MemButton>멤버십 가입</MemButton></Link>
+            <Link to='/signIn' className={isBill && 'displayNone'}> <MemButton>멤버십 가입</MemButton></Link>
             <Link to='/brand'>브랜드 소개</Link>
             <span className='DropMenu'>
               인공지능 글쓰기 서비스 <Down size='small' />
@@ -286,7 +286,7 @@ const Header = () => {
           SetShow(false);
         }}>
           <Nav direction='column' className='MobileMenus'>
-            <Link to='/explain' className={isBill && 'displayNone'}>멤버십 가입</Link>
+            <Link to='/signIn' className={isBill && 'displayNone'}>멤버십 가입</Link>
             <Link to='/brand'>브랜드 소개</Link>
             <span className='DropMenu' onClick={HandleMobile}>
               인공지능 글쓰기 서비스 <Down size='small' /></span>
