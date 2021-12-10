@@ -2,7 +2,7 @@ import React, { useContext, useState, useRef } from "react";
 import axios from "axios";
 import Layout from "../Layout";
 import { Box, Grid, ResponsiveContext } from "grommet";
-import { Bookmark } from "grommet-icons";
+import { Bookmark, StatusGood, Trigger } from "grommet-icons";
 import Loading from "../Loading";
 
 import * as configUrl from "../../config";
@@ -47,7 +47,6 @@ const SignMember = () => {
   const { selected1, selected2, selected3 } = Selected;
   const { cardNum, cardExpire, cardCvc } = card;
   const { cardPwd, idNum } = userNumber;
-
 
   const HandleChange = (e) => {
     console.log(cardNum);
@@ -103,12 +102,12 @@ const SignMember = () => {
           moid: moidNum, //가맹점 주문번호,
           userId: (await localStorage.getItem("userUid")) + Math.random(),
         };
-       // console.log(option);
+        // console.log(option);
         await axios
           .post(`https://api.innopay.co.kr/api/regAutoCardBill`, option)
           .then(async (response) => {
             let data = response.data;
-           // console.log("test", data);
+            // console.log("test", data);
             await localStorage.setItem("moid", data.moid);
 
             if (data.resultCode === "F112") {
@@ -144,7 +143,7 @@ const SignMember = () => {
               axios(config)
                 .then(async (res) => {
                   SetLoading(false);
-                 // console.log(res);
+                  // console.log(res);
 
                   await history.push("/result");
                   setTimeout(toast.success(`${res.data.log}`), 3000);
@@ -169,45 +168,6 @@ const SignMember = () => {
       toast.warn("로그인을 먼저 해주세요!");
     }
   };
-
-  //결제 변경
-
-  // const ChangeBill = () => {
-  //   console.log(Plan);
-  //   if (Plan !== localStorage.getItem("plan")) {
-
-  //     // if(window.confirm('변경하면 다음 결제 예정일 전까지 변경할 수 없습니다! 정말 변경하시겠습니까?')){
-
-  //     // }
-  //     SetLoading(true);
-  //     let plans = parseInt(Plan);
-
-  //     const config = {
-  //       method: "put",
-  //       url: `${configUrl.SERVER_URL}/pay`,
-  //       headers: { authentication: localStorage.getItem("token") },
-  //       data: {
-  //         plan: plans,
-  //       },
-  //     };
-  //     axios(config)
-  //       .then((response) => {
-  //         console.log(response);
-  //         history.replace('/mypage')
-  //         setTimeout(toast.success(response.data.log), 5000);
-  //       })
-  //       .catch((error) => {
-  //         console.log(error);
-  //         if (error.response.status === 403) {
-  //           toast.error("이미 결제된 내역 입니다!");
-  //         }
-  //       }).finally(()=>{
-  //         SetLoading(false);
-  //       });
-  //   } else {
-  //     toast.warn("기존에 쓰던 멤버십을 선택하셨습니다.");
-  //   }
-  // };
 
   const HandleSelected = (element) => {
     //console.log(e.target.name.split(" "));
@@ -249,8 +209,6 @@ const SignMember = () => {
     }
   };
 
-
-
   return (
     <>
       <Layout>
@@ -266,12 +224,58 @@ const SignMember = () => {
           >
             <h3>멤버십 가입하기</h3>
           </Box>
+
+
+          <div className='TextCon'>
+            <h2>
+              <InfoFilled/>멤버십에 가입 하시면 인공지능 기반 글쓰기 지원 서비스를 무제한
+              이용하실 수 있습니다.
+            </h2>
+            <ExplainTextBox>
+              <StatusFilled color='#fff' size='large' />
+              <ExplainText>
+                <h4>① 100% 인공지능 창작, 표절 &amp; 저작권 걱정 NO</h4>
+                <p>
+                  모든 결과물은 기존 창작물에서 가져오는 것이 아니라, 인공지능이
+                  완전히 새롭게 창작하는 것이므로 표절 문제에서 자유롭습니다.
+                  저작권 역시 해당 사용자(멤버십)에게 귀속됩니다.
+                </p>
+              </ExplainText>
+            </ExplainTextBox>
+
+            <ExplainTextBox>
+              <StatusFilled color='#fff' size='large' />
+              <ExplainText>
+                <h4>② 계속 새로운 서비스 출시, 무제한 사용</h4>
+                <p>
+                  앞으로 매달 1~2개 이상의 서비스를 새롭게 개발/출시할
+                  예정입니다. 멤버십에 가입하시면, 사용 기간 내 출시되는
+                  서비스는 모두 무제한으로 사용하실 수 있습니다.
+                </p>
+              </ExplainText>
+            </ExplainTextBox>
+
+            <ExplainTextBox>
+              <StatusFilled color='#fff' size='large' />
+              <ExplainText>
+                <h4>
+                  ③ 교육(인공지능 글쓰기, 콘텐츠 만들기 등) &amp; 커뮤니티 활동
+                </h4>
+                <p>
+                  인공지능을 활용한 글쓰기, 전자책 등 개인 콘텐츠 만들기 등 관련
+                  교육을 월 1회 받을 수 있고, 그 외 온·오프라인에서 함께
+                  창작활동을 할 수 있습니다.
+                </p>
+              </ExplainText>
+            </ExplainTextBox>
+          </div>
           <Box fill={size !== "small" ? false : true}>
             <p style={pStyle}>1. 원하시는 멤버십 주기를 클릭해주세요.</p>
             <Grid
               fill={size !== "small" ? false : true}
               columns={size !== "small" ? { count: 3, size: "auto" } : "100%"}
               gap='large'
+              className="SignCardGrid"
             >
               <div
                 className={
@@ -340,7 +344,7 @@ const SignMember = () => {
             </Grid>
           </Box>
 
-          <Box justify='center' align='center' pad='large'>
+          <Box justify='center' align='center' style={{padding: '48px 20px 100px 20px'}}>
             <p style={pStyle}>2. 결제 정보를 입력해주세요.</p>
             <div className='CreditBox'>
               <div className='creditCard'>
@@ -489,6 +493,7 @@ const pStyle = {
   width: "100%",
   textAlign: "center",
   margin: "40px 0",
+  padding: "0 20px",
   fontWeight: 900,
   fontSize: "1.2rem",
 };
@@ -509,3 +514,40 @@ const ChoiceBtn = styled.button`
   margin-top: 20px;
   cursor: pointer;
 `;
+
+const ExplainTextBox = styled.div`
+  display: flex;
+  align-items: center;
+  padding: 10px 0;
+
+  > svg {
+    @media screen and (max-width: 680px) {
+      display: none;
+    }
+  }
+`;
+
+const ExplainText = styled.div`
+  > h4 {
+    font-weight: 600;
+  }
+
+  > h4,
+  p {
+    margin: 0;
+    padding: 0 10px;
+   
+  }
+`;
+
+const StatusFilled = styled(StatusGood)`
+  path[fill="none"] {
+    fill: #3b2477;
+  }
+`;
+
+const InfoFilled = styled(Trigger)`
+path[fill="none"] {
+  fill: #ffce1f;
+}
+`

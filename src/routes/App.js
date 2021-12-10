@@ -19,7 +19,6 @@ import StorySrcDetail from '../Components/Main/Details/StorySrcDetail';
 import NewsLetter from '../Components/Main/Newsletter';
 import FaQ from '../Components/Main/FaQ';
 import Ask from '../Components/Main/Ask';
-import ExplainMember from '../Components/Main/ExplainMember';
 import SignMember from '../Components/Membership/SignMember';
 import Mypage from '../Components/Main/mypage';
 import Modify from '../Components/Main/mypage/Modify';
@@ -67,7 +66,6 @@ function App() {
         <Route exact path="/newsletter" component={NewsLetter}></Route>
         <Route exact path="/ask" component={Ask}></Route>
         <Route exact path="/faq" component={FaQ}></Route>
-        <Route exact path="/explain" component={ExplainMember}></Route>
         <Route exact path="/signIn" component={SignMember}></Route>
         <Route exact path="/result" component={PayDone}></Route>
         <Route exact path="/mypage/payment" component={PayResult}></Route>

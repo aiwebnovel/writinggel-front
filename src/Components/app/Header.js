@@ -119,7 +119,7 @@ const Header = () => {
         </Nav>
         {size !== "small" ? (
           <Nav direction='row' gap='medium' align='center'>
-            <Link to='/explain' className={isBill && 'displayNone'}>
+            <Link to='/signIn' className={isBill && 'displayNone'}>
               <LinkBtn>멤버십 가입</LinkBtn>
             </Link>
             < HowToLink href="https://appplatform.notion.site/99f9b5fb95d84477b9e2aa343fb97055" target='_blank' rel="noreferrer">사용 방법</ HowToLink>
@@ -155,7 +155,7 @@ const Header = () => {
           <Nav direction='column' gap='large' className='ServiceDropMenu'>
             {size === 'small' &&
               <Nav direction='row' gap='medium' align='center' justify={size ==='small' && 'between'}>
-              <Link to='/explain' className={isBill && 'displayNone'}>
+              <Link to='/signIn' className={isBill && 'displayNone'}>
                 <LinkBtn>멤버십 가입</LinkBtn>
               </Link>
               <Avatar
