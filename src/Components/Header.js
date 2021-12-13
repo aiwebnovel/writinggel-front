@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect, useCallback } from "react";
-import { Link} from "react-router-dom";
+import { Link, useHistory} from "react-router-dom";
 import axios from "axios";
 import { Header as HeaderLayout, Nav, Avatar, Anchor } from "grommet";
 import { User, Menu, Google, FacebookOption, Down } from "grommet-icons";
@@ -18,6 +18,7 @@ import styled from "styled-components";
 
 const Header = () => {
   const size = useContext(ResponsiveContext);
+  const History = useHistory();
 
   const [isOpen, SetOpen] = useState(false);
   const [isShow, SetShow] = useState(false);
@@ -209,6 +210,17 @@ const Header = () => {
 
   useEffect(()=>{
     requestProfile(); 
+  },[])
+
+  useEffect(()=>{
+    let userAgent = navigator.userAgent;
+    let check = userAgent.indexOf('band' || 'line' || 'kakaotalk' || 'kakaostory' || 'twitter' || 'fb');
+   //console.log(userAgent, check);
+   if(check !== -1) {
+    History.push('/check');
+   }else {
+     return
+   }
   },[])
 
 
