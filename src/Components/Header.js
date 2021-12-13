@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect, useCallback } from "react";
-import { Link} from "react-router-dom";
+import { Link, useHistory} from "react-router-dom";
 import axios from "axios";
 import { Header as HeaderLayout, Nav, Avatar, Anchor } from "grommet";
 import { User, Menu, Google, FacebookOption, Down } from "grommet-icons";
@@ -11,6 +11,7 @@ import  { FacebookAuthProvider} from 'firebase/auth'
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
+import GoBroswer  from '../Components/GoBrowser';
 import Modal from "./Modal";
 import * as config from "../config";
 import "../styles/header.scss";
@@ -18,6 +19,7 @@ import styled from "styled-components";
 
 const Header = () => {
   const size = useContext(ResponsiveContext);
+  const History = useHistory();
 
   const [isOpen, SetOpen] = useState(false);
   const [isShow, SetShow] = useState(false);
@@ -209,6 +211,18 @@ const Header = () => {
 
   useEffect(()=>{
     requestProfile(); 
+  },[])
+
+  useEffect(()=>{
+    let userAgent = navigator.userAgent;
+    let check = userAgent.indexOf('KAKAOTALK' || 'Instagram' || 'NAVER');
+
+   if(check !== -1) {
+    //toast.info(`${check}`);
+    History.push('/check');
+   }else {
+     return
+   }
   },[])
 
 

@@ -44,6 +44,8 @@ import LoveLetter from '../Components/app/page/LoveLetter';
 import Dailywrite from '../Components/app/page/DailyWrite';
 import Storysrc from '../Components/app/page/Storysrc';
 
+import GoBrowser from '../Components/GoBrowser';
+
 
 function App() {
   return (
@@ -62,6 +64,7 @@ function App() {
         <Route exact path="/service/loveletter" component={LoveLetterDetail}></Route>
         <Route exact path="/service/dailywrite" component={DailyWriteDetail}></Route>
         <Route exact path="/service/storysrc" component={StorySrcDetail}></Route>
+        <Route exact path="/check" component={GoBrowser}></Route>
   
         <Route exact path="/newsletter" component={NewsLetter}></Route>
         <Route exact path="/ask" component={Ask}></Route>
