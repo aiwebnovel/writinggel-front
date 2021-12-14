@@ -215,10 +215,12 @@ const Header = () => {
 
   useEffect(()=>{
     let userAgent = navigator.userAgent;
-    let check = userAgent.indexOf('KAKAOTALK' || 'Instagram' || 'NAVER');
+    let check = userAgent.indexOf('KAKAOTALK' || 'NAVER');
+    let checkInsta = userAgent.indexOf('Instagram');
+    let checkFB = userAgent.indexOf('FB')
 
-   if(check !== -1) {
-    //toast.info(`${check}`);
+   if(check !== -1 || checkInsta !== -1 || checkFB !== -1) {
+    //toast.info(`${userAgent}`);
     History.push('/check');
    }else {
      return
