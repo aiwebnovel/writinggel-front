@@ -18,7 +18,7 @@ import styled from "styled-components";
 import Loading from "../../Loading";
 import * as configUrl from "../../../config";
 import ProgressBar from "@ramonak/react-progress-bar";
-
+import TagManager from 'react-gtm-module';
 //const LanguageDetect = require("languagedetect");
 
 const Fairytale = () => {
@@ -256,6 +256,19 @@ const Fairytale = () => {
     SetIsHuman(false);
     handleSider(false);
   };
+
+
+  useEffect(()=>{
+
+    TagManager.dataLayer({
+      dataLayer: {
+        event: 'pageview',
+        pagePath: '/app/fairytale',
+        pageTitle: '동화',
+      },
+    });
+
+  },[])
 
   useEffect(() => {
     const loginCheck = localStorage.getItem("token");

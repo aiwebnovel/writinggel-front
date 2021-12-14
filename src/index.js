@@ -5,7 +5,13 @@ import App from "./routes/App";
 import { grommet, Grommet } from "grommet";
 import  GlobalStyles from './cssReset';
 import { ToastContainer, Flip} from 'react-toastify';
+import TagManager from 'react-gtm-module';
 
+const tagManagerArgs = {
+    gtmId: 'GTM-MNZC6NJ',
+};
+
+TagManager.initialize(tagManagerArgs);
 
 ReactDOM.render(
   <React.StrictMode>

@@ -4,6 +4,7 @@ import axios from "axios";
 import Layout from "../Layout";
 import { Box } from "grommet";
 import ReactGA from "react-ga";
+import TagManager from 'react-gtm-module';
 
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -78,6 +79,19 @@ const NewsLetter = () => {
     ReactGA.initialize("UA-212875619-1");
     ReactGA.pageview(window.location.pathname + window.location.search);
   }, []);
+
+
+  useEffect(()=>{
+
+    TagManager.dataLayer({
+      dataLayer: {
+        event: 'pageview',
+        pagePath: '/newsletter',
+        pageTitle: 'newsletter',
+      },
+    });
+
+  },[])
 
   return (
     <Layout>

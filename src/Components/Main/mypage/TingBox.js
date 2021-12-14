@@ -12,6 +12,7 @@ import styled from "styled-components";
 
 import * as configUrl from "../../../config";
 import Loading from '../../Loading'
+import TagManager from 'react-gtm-module';
 
 const TingBox = () => {
   const size = useContext(ResponsiveContext);
@@ -116,6 +117,19 @@ const TingBox = () => {
       ;
   }, []);
 
+
+  useEffect(()=>{
+
+    TagManager.dataLayer({
+      dataLayer: {
+        event: 'pageview',
+        pagePath: '/tingbox',
+        pageTitle: '팅젤 보관함',
+      },
+    });
+
+  },[])
+  
   useEffect(() => {
     const loginCheck = localStorage.getItem("token");
 

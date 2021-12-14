@@ -1,9 +1,10 @@
-import React, { useContext, useState, useRef } from "react";
+import React, { useContext, useState, useRef, useEffect } from "react";
 import axios from "axios";
 import Layout from "../Layout";
 import { Box, Grid, ResponsiveContext } from "grommet";
 import { Bookmark, StatusGood, Trigger } from "grommet-icons";
 import Loading from "../Loading";
+import TagManager from 'react-gtm-module';
 
 import * as configUrl from "../../config";
 
@@ -208,6 +209,19 @@ const SignMember = () => {
       SetPlan(month);
     }
   };
+
+  useEffect(()=>{
+
+    TagManager.dataLayer({
+      dataLayer: {
+        event: 'pageview',
+        pagePath: '/signIn',
+        pageTitle: '멤버십 가입',
+      },
+    });
+
+  },[])
+
 
   return (
     <>

@@ -5,7 +5,7 @@ import Layout from "../Layout";
 import { Box } from "grommet";
 import moment from 'moment';
 
-
+import TagManager from 'react-gtm-module';
 import * as configUrl from "../../config";
 import styled from "styled-components";
 import { toast } from "react-toastify";
@@ -46,6 +46,19 @@ const PayResult = () => {
         });
     }
   };
+
+
+  useEffect(()=>{
+
+    TagManager.dataLayer({
+      dataLayer: {
+        event: 'pageview',
+        pagePath: '/mypage/payment',
+        pageTitle: '마이페이지 영수증',
+      },
+    });
+
+  },[])
 
   useEffect(() => {
     const loginCheck = localStorage.getItem("token");

@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import MBTI from "./MBTI";
 import ScrollToTop from '../../../routes/ScrollToTop';
-
+import TagManager from 'react-gtm-module';
 
 import Modal from "../../Modal";
 
@@ -150,6 +150,18 @@ const LoveLetter = () => {
     SetUser("");
     SetLover("");
   };
+
+  useEffect(()=>{
+
+    TagManager.dataLayer({
+      dataLayer: {
+        event: 'pageview',
+        pagePath: '/app/loveletter',
+        pageTitle: 'mbti 러브레터',
+      },
+    });
+
+  },[])
 
   useEffect(() => {
     const loginCheck = localStorage.getItem("token");

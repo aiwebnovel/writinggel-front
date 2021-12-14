@@ -15,6 +15,7 @@ import Loading from "../../Loading";
 import styled from "styled-components";
 import ScrollToTop from '../../../routes/ScrollToTop';
 import Modal from "../../SmallModal";
+import TagManager from 'react-gtm-module';
 
 const LanguageDetect = require("languagedetect");
 
@@ -423,6 +424,19 @@ const Webnovel = () => {
       toast.info("저장할 결과가 없습니다!");
     }
   };
+
+  useEffect(()=>{
+
+    TagManager.dataLayer({
+      dataLayer: {
+        event: 'pageview',
+        pagePath: '/app/webnovel',
+        pageTitle: '웹소설',
+      },
+    });
+
+  },[])
+
 
   useEffect(() => {
     const loginCheck = localStorage.getItem("token");

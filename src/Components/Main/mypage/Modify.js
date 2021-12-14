@@ -18,6 +18,8 @@ import {
   deleteUser,
 } from "@firebase/auth";
 import firebase from "@firebase/app-compat";
+import TagManager from 'react-gtm-module';
+
 
 const Modify = () => {
   //const size = useContext(ResponsiveContext);
@@ -173,6 +175,20 @@ const Modify = () => {
     await authService.signOut();
     window.location.reload();
   };
+
+
+  useEffect(()=>{
+
+    TagManager.dataLayer({
+      dataLayer: {
+        event: 'pageview',
+        pagePath: '/mypage/modify',
+        pageTitle: '마이페이지 수정',
+      },
+    });
+
+  },[])
+
 
   useEffect(() => {
     const loginCheck = localStorage.getItem("token");

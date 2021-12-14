@@ -1,10 +1,23 @@
-import React, { useContext } from "react";
+import React, { useContext , useEffect} from "react";
 import Layout from "../Layout";
 import { Box, Grid, Paragraph, ResponsiveContext } from "grommet";
 import styled from "styled-components";
+import TagManager from 'react-gtm-module';
 
 const Brand = () => {
   const size = useContext(ResponsiveContext);
+
+  useEffect(()=>{
+
+    TagManager.dataLayer({
+      dataLayer: {
+        event: 'pageview',
+        pagePath: '/brand',
+        pageTitle: 'Brand',
+      },
+    });
+
+  },[])
 
   return (
     <Layout>

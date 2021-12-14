@@ -13,7 +13,7 @@ import ProgressBar from "@ramonak/react-progress-bar";
 
 import axios from "axios";
 import * as configUrl from "../../../config";
-
+import TagManager from 'react-gtm-module';
 import styled from "styled-components";
 
 import ServiceLayout from "../Layout";
@@ -211,6 +211,18 @@ const BlogFollow = () => {
       });
     }
   };
+
+  useEffect(()=>{
+
+    TagManager.dataLayer({
+      dataLayer: {
+        event: 'pageview',
+        pagePath: '/app/bloger/follow',
+        pageTitle: '블로그 이어쓰기',
+      },
+    });
+
+  },[])
 
   useEffect(() => {
     const loginCheck = localStorage.getItem("token");

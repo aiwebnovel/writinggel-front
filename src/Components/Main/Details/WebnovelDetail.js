@@ -1,12 +1,25 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Layout from "../../Layout";
 import { Box, Grid, ResponsiveContext } from "grommet";
 import { StatusGood } from "grommet-icons";
 import ScrollToTop from '../../../routes/ScrollToTop';
+import TagManager from 'react-gtm-module';
 
 const WebnovelDetail = () => {
   const size = useContext(ResponsiveContext);
+
+  useEffect(()=>{
+
+    TagManager.dataLayer({
+      dataLayer: {
+        event: 'pageview',
+        pagePath: '/service/webnovel',
+        pageTitle: '웹소설 소개',
+      },
+    });
+
+  },[])
 
   return (
     <Layout>

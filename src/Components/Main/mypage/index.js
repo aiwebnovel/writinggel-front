@@ -8,13 +8,14 @@ import moment from 'moment';
 import * as configUrl from "../../../config";
 import { authService } from "../../../firebaseConfig";
 import { toast } from "react-toastify";
-
+import TagManager from 'react-gtm-module';
 //import styled from "styled-components";
 import Modal from "../../SmallModal";
 
 const Mypage = () => {
   const size = useContext(ResponsiveContext);
   const History = useHistory();
+  
 
   const [profile, SetProfile] = useState({
     isBill: '',
@@ -75,6 +76,17 @@ const Mypage = () => {
     }
   }
 
+  useEffect(()=>{
+
+    TagManager.dataLayer({
+      dataLayer: {
+        event: 'pageview',
+        pagePath: '/mypage',
+        pageTitle: '마이페이지',
+      },
+    });
+
+  },[])
 
   useEffect(() => {
     const loginCheck = localStorage.getItem("token");

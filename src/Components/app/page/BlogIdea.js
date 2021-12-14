@@ -16,6 +16,8 @@ import styled from "styled-components";
 
 import ServiceLayout from "../Layout";
 import Loading from "../../Loading";
+import TagManager from 'react-gtm-module';
+
 
 const BlogIdea = () => {
   const size = useContext(ResponsiveContext);
@@ -189,6 +191,19 @@ const BlogIdea = () => {
       });
     }
   };
+
+  useEffect(()=>{
+
+    TagManager.dataLayer({
+      dataLayer: {
+        event: 'pageview',
+        pagePath: '/app/bloger/idea',
+        pageTitle: '블로그 아이디어',
+      },
+    });
+
+  },[])
+
 
   useEffect(() => {
     const loginCheck = localStorage.getItem("token");
