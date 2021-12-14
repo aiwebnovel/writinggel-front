@@ -13,7 +13,7 @@ import axios from "axios";
 import * as configUrl from "../../../config";
 
 import styled from "styled-components";
-
+import TagManager from 'react-gtm-module';
 import ServiceLayout from "../Layout";
 import Loading from "../../Loading";
 
@@ -186,6 +186,18 @@ const BlogIntro = () => {
       });
     }
   };
+
+  useEffect(()=>{
+
+    TagManager.dataLayer({
+      dataLayer: {
+        event: 'pageview',
+        pagePath: '/app/bloger/intro',
+        pageTitle: '블로그 도입부',
+      },
+    });
+
+  },[])
 
   useEffect(() => {
     const loginCheck = localStorage.getItem("token");

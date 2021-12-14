@@ -17,7 +17,7 @@ import Modal from '../../SmallModal'
 import ServiceLayout from "../Layout";
 import * as configUrl from "../../../config";
 import Loading from "../../Loading";
-
+import TagManager from 'react-gtm-module';
 import styled from "styled-components";
 import axios from "axios";
 
@@ -108,6 +108,19 @@ const Businessitem = () => {
       toast.info("저장할 결과가 없습니다!");
     }
   };
+
+    useEffect(()=>{
+
+    TagManager.dataLayer({
+      dataLayer: {
+        event: 'pageview',
+        pagePath: '/app/businessitem',
+        pageTitle: '비지니스 아이디어',
+      },
+    });
+
+  },[])
+
 
   useEffect(() => {
     const loginCheck = localStorage.getItem("token");

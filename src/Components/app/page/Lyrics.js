@@ -8,6 +8,7 @@ import axios from "axios";
 import ScrollToTop from "../../../routes/ScrollToTop";
 import Modal from "../../SmallModal";
 
+import TagManager from 'react-gtm-module';
 import ServiceLayout from "../Layout";
 import * as configUrl from "../../../config";
 import Loading from "../../Loading";
@@ -111,6 +112,20 @@ const Lyrics = () => {
     SetStory(["", "", ""]);
     SetOutputContent("");
   };
+
+  useEffect(()=>{
+
+    TagManager.dataLayer({
+      dataLayer: {
+        event: 'pageview',
+        pagePath: '/app/lyrics',
+        pageTitle: '영어가사 쓰기',
+      },
+    });
+
+  },[])
+
+
 
   useEffect(() => {
     const loginCheck = localStorage.getItem("token");

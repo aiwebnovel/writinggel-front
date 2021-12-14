@@ -12,6 +12,7 @@ import ServiceLayout from "../Layout";
 import Loading from "../../Loading";
 //import styled from "styled-components";
 import * as configUrl from "../../../config";
+import TagManager from 'react-gtm-module';
 
 const Storysrc = () => {
   const size = useContext(ResponsiveContext);
@@ -234,6 +235,20 @@ const Storysrc = () => {
         });
     }
   };
+
+  useEffect(()=>{
+
+    TagManager.dataLayer({
+      dataLayer: {
+        event: 'pageview',
+        pagePath: '/app/storysrc',
+        pageTitle: '이야기 재료',
+      },
+    });
+
+  },[])
+
+
 
   useEffect(() => {
     const loginCheck = localStorage.getItem("token");

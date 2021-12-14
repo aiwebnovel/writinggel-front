@@ -11,7 +11,7 @@ import ServiceLayout from "../Layout";
 import styled from "styled-components";
 import * as configUrl from "../../../config";
 import Loading from "../../Loading";
-
+import TagManager from 'react-gtm-module';
 import axios from "axios";
 
 const Discussion = () => {
@@ -199,6 +199,18 @@ const Discussion = () => {
     }
   }
   };
+
+    useEffect(()=>{
+
+    TagManager.dataLayer({
+      dataLayer: {
+        event: 'pageview',
+        pagePath: '/app/discussion',
+        pageTitle: '찬반 논거',
+      },
+    });
+
+  },[])
 
   useEffect(() => {
     const loginCheck = localStorage.getItem("token");

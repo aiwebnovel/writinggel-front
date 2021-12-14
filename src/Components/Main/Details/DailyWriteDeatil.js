@@ -1,14 +1,28 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Layout from "../../Layout";
 import { Box, Grid, ResponsiveContext } from "grommet";
 import { StatusGood } from "grommet-icons";
 import ScrollToTop from '../../../routes/ScrollToTop';
-
+import TagManager from 'react-gtm-module';
 import styled from "styled-components";
 
 const DailyWriteDetail = () => {
+  
   const size = useContext(ResponsiveContext);
+
+  useEffect(()=>{
+
+    TagManager.dataLayer({
+      dataLayer: {
+        event: 'pageview',
+        pagePath: '/service/dailywrite',
+        pageTitle: '일상기록 소개',
+      },
+    });
+
+  },[])
+
 
   return (
     <Layout>

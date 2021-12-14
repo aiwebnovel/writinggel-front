@@ -21,6 +21,7 @@ import * as config from "../config";
 import { authService, firebaseInstance } from "../firebaseConfig";
 import LinkObject from "./app/LinkObject";
 import "../styles/Main.scss";
+import TagManager from 'react-gtm-module';
 
 const Home = () => {
   const [isChecked, SetChecked] = useState(false);
@@ -169,7 +170,17 @@ const Home = () => {
     });
   }, []);
   
+  useEffect(()=>{
 
+    TagManager.dataLayer({
+      dataLayer: {
+        event: 'pageview',
+        pagePath: '/',
+        pageTitle: '홈',
+      },
+    });
+
+  },[])
 
   return (
     <>

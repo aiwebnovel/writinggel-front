@@ -9,7 +9,7 @@ import { Box, ResponsiveContext } from "grommet";
 import { Download, Cycle } from "grommet-icons";
 
 import * as configUrl from "../../../config";
-
+import TagManager from 'react-gtm-module';
 import ServiceLayout from "../Layout";
 import Loading from "../../Loading";
 import styled from "styled-components";
@@ -126,6 +126,19 @@ const Firstsentence = () => {
       toast.info("저장할 결과가 없습니다!");
     }
   };
+
+  useEffect(()=>{
+
+    TagManager.dataLayer({
+      dataLayer: {
+        event: 'pageview',
+        pagePath: '/app/firstsentence',
+        pageTitle: '첫문장 자판기',
+      },
+    });
+
+  },[])
+
 
   useEffect(() => {
     const loginCheck = localStorage.getItem("token");

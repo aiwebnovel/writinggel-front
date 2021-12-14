@@ -12,7 +12,7 @@ import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import styled from "styled-components";
-
+import TagManager from 'react-gtm-module';
 import ServiceLayout from "../Layout";
 import Loading from "../../Loading";
 
@@ -145,6 +145,18 @@ const BlogKeyword = () => {
       toast.info("저장할 결과가 없습니다!");
     }
   };
+
+  useEffect(()=>{
+
+    TagManager.dataLayer({
+      dataLayer: {
+        event: 'pageview',
+        pagePath: '/app/bloger/keyword',
+        pageTitle: '블로그 키워드',
+      },
+    });
+
+  },[])
 
   useEffect(() => {
     const loginCheck = localStorage.getItem("token");

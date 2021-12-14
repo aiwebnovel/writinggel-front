@@ -11,7 +11,7 @@ import styled from "styled-components";
 import Modal from "../../Modal";
 import SmallModal from '../../SmallModal';
 import * as configUrl from "../../../config";
-
+import TagManager from 'react-gtm-module';
 import axios from "axios";
 
 const Dailywrite = () => {
@@ -112,6 +112,19 @@ const Dailywrite = () => {
 
 
   }
+
+  useEffect(()=>{
+
+    TagManager.dataLayer({
+      dataLayer: {
+        event: 'pageview',
+        pagePath: '/app/dailywrite',
+        pageTitle: '일상기록 질문',
+      },
+    });
+
+  },[])
+
 
   useEffect(() => {
     const loginCheck = localStorage.getItem("token");

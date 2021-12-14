@@ -1,13 +1,26 @@
-import React from "react";
+import React, {useEffect} from "react";
 import Layout from "../Layout";
 import { Box, Accordion, AccordionPanel } from "grommet";
 import { CircleQuestion, Alert, BlockQuote } from "grommet-icons";
+import TagManager from 'react-gtm-module';
 
 import styled from "styled-components";
 
 const FaQ = () => {
 
   //const size = useContext(ResponsiveContext);
+
+  useEffect(()=>{
+
+    TagManager.dataLayer({
+      dataLayer: {
+        event: 'pageview',
+        pagePath: '/faq',
+        pageTitle: 'FAQ',
+      },
+    });
+
+  },[])
 
   return (
     <Layout>
