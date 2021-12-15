@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect, useCallback } from "react";
 import { Link, useHistory} from "react-router-dom";
 import axios from "axios";
-import { Header as HeaderLayout, Nav, Avatar, Anchor } from "grommet";
+import { Header as HeaderLayout, Nav, Avatar, Anchor, Button } from "grommet";
 import { User, Menu, Google, FacebookOption, Down } from "grommet-icons";
 import { ResponsiveContext } from "grommet";
 import { OuterClick } from "react-outer-click";
@@ -288,7 +288,7 @@ const Header = () => {
                 />
               </Anchor>
             ) : (
-              <User color='brand' onClick={HandleModals} />
+              <Link to='/login'><Button>로그인</Button></Link>
             )}
           </Nav>
         ) : (
@@ -349,53 +349,12 @@ const Header = () => {
               <Link to='/mypage'>마이 페이지</Link>
               </>
             ) : (
-              <span onClick={HandleModals} style={{cursor:'pointer', fontWeight:600}}>Login</span>
+              <Link to='/login'  style={{cursor:'pointer', fontWeight:600}}>Login</Link>
             )}
           </Nav>
         </OuterClick>
       )}
-      <Modal onClick={HandleModals} open={isOpen} close={HandleModals} title='Login'>
-        <div className='AvatarBox'>
-          <img src='/user.png' alt='singinUser' className='loginAvatar' />
-        </div>
-
-        <div className='signBox'>
-          <button className='googleButton' name="Google" onClick={(e) => signIn(e)} >
-            <Google color='plain' size='medium' /> Sign in with Google
-          </button>
-
-          <div className='signBox'>
-            <button className='facebookButton' name="Facebook" onClick={(e) => signIn(e)} >
-              <FacebookOption color='plain' size='medium' /> Sign in with
-              Facebook
-            </button>
-          </div>
-          <div className='isChecked'>
-            <input
-              type='checkbox'
-              name='agree'
-              onClick={(e)=> {HandleChecked(e)}}
-              style={{ width: "18px", height: "18px", marginRight: "5px" }}
-            />
-            <a
-              href='https://appplatform.notion.site/8be8232fff0341799cf8c13728610b6b'
-              target='_blank'
-              rel='noreferrer'
-            >
-              이용약관
-            </a>
-            과 &nbsp;
-            <a
-              href='https://www.notion.so/appplatform/d99f247a66d141bbbdf227739861a0a2'
-              target='_blank'
-              rel='noreferrer'
-            >
-              개인정보처리방침
-            </a>
-            에&nbsp;동의합니다.
-          </div>
-        </div>
-      </Modal>
+ 
 
       {isShowMenu && (
         <div>

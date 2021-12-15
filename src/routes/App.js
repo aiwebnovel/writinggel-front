@@ -43,8 +43,10 @@ import Lyrics from '../Components/app/page/Lyrics';
 import LoveLetter from '../Components/app/page/LoveLetter';
 import Dailywrite from '../Components/app/page/DailyWrite';
 import Storysrc from '../Components/app/page/Storysrc';
+import Login from '../Components/Login';
 
 import GoBrowser from '../Components/GoBrowser';
+import Register from '../Components/Register';
 
 
 function App() {
@@ -52,6 +54,9 @@ function App() {
     <BrowserRouter>
       <Switch>
         <Route exact path="/" component={Home}></Route>
+        <Route exact path="/regist" component={Register}></Route>
+        <Route exact path="/login" component={Login}></Route>
+        
         <Route exact path="/brand" component={Brand}></Route>
 
         <Route exact path="/service/webnovel" component={WebnovelDetail}></Route>
