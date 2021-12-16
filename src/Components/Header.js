@@ -2,17 +2,14 @@ import React, { useContext, useState, useEffect, useCallback } from "react";
 import { Link, useHistory} from "react-router-dom";
 import axios from "axios";
 import { Header as HeaderLayout, Nav, Avatar, Anchor, Button } from "grommet";
-import { User, Menu, Google, FacebookOption, Down } from "grommet-icons";
+import {  Menu, Down } from "grommet-icons";
 import { ResponsiveContext } from "grommet";
 import { OuterClick } from "react-outer-click";
 
-import { authService, firebaseInstance } from "../firebaseConfig";
-import  { FacebookAuthProvider} from 'firebase/auth'
+import { authService } from "../firebaseConfig";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-import GoBroswer  from '../Components/GoBrowser';
-import Modal from "./Modal";
 import * as config from "../config";
 import "../styles/header.scss";
 import styled from "styled-components";
@@ -20,15 +17,13 @@ import styled from "styled-components";
 const Header = () => {
   const size = useContext(ResponsiveContext);
   const History = useHistory();
+  const check =localStorage.getItem("token");
 
-  const [isOpen, SetOpen] = useState(false);
   const [isShow, SetShow] = useState(false);
-  const [isChecked, SetChecked] = useState(false);
-  const [isUser, SetUser] = useState(false);
   const [isShowMenu, SetShowMenu] = useState(false);
   const [profile, SetProfile] = useState({
     userName: "Guest",
-    userImage: `User`,
+    userImage: `/user_colored.png`,
     isBill:'',
     Plan:''
   });
@@ -36,93 +31,19 @@ const Header = () => {
 
   const { userName, userImage, isBill, Plan } = profile;
 
-  const signIn = async (e) => {
-    if (isChecked === true) {
 
-     let name = e.target.name;
-      // let provider = new firebaseInstance.auth.GoogleAuthProvider();
-      if (name === "Facebook") {
-       let provider = new firebaseInstance.auth.FacebookAuthProvider();
-        //await authService.signInWithRedirect(provider)
-        await authService.signInWithPopup(provider)
-        .then(async(dataFacebook)=> {
-          //console.log(dataFacebook);
-          //const credential = FacebookAuthProvider.credentialFromResult(dataFacebook);
-          //console.log('cre', credential);
+  const requestProfile = useCallback(async () => {
+    console.log(check)
 
-          let credentials = dataFacebook.credential;
-          //let id = dataFacebook.credential.providerId //facebook.com
-          let email = dataFacebook.user.email;
-          let create = dataFacebook.user.metadata.creationTime;
-          let token = credentials.accessToken;
-          //console.log('result',credentials, email,create,token, id);
-
-          await localStorage.setItem("token", token);
-          await localStorage.setItem("email", email);
-          await localStorage.setItem("create", create);
-
-          await requestProfile();
-          await SetUser(true);
-          await SetOpen(false);
-
-          refreshProfile();
-          window.location.reload();
-        })
-        .catch((error) => {
-            console.log(error)
-            if (error.code === 'auth/account-exists-with-different-credential') {
-              toast.error('이미 구글로 로그인했던 계정입니다. 동일한 이메일 주소를 사용하여 여러 계정을 만들 수 없습니다.');
-
-            }
-        });
-        ;
-      } else if (name === "Google") {
-        let provider = new firebaseInstance.auth.GoogleAuthProvider();
-        //await authService.signInWithRedirect(provider)
-        await authService.signInWithPopup(provider)
-        .then(async(dataGoogle)=>{
-          //console.log(dataGoogle)
-          
-          let credential = dataGoogle.credential;
-          let email = dataGoogle.user.email;
-          let create = dataGoogle.user.metadata.creationTime;
-          let token = credential.idToken;
-          //console.log('result',credential, email,create,token);
-
-          await localStorage.setItem("token", token);
-          await localStorage.setItem("email", email);
-          await localStorage.setItem("create", create);
-
-          await requestProfile();
-          await SetUser(true);
-          await SetOpen(false);
-
-          refreshProfile();
-          window.location.reload();
-        })
-        .catch((error) => {
-          console.log(error)
-          if (error.code === 'auth/account-exists-with-different-credential') {
-            toast.error('이미 페이스북으로 로그인했던 계정입니다. 동일한 이메일 주소를 사용하여 여러 계정을 만들 수 없습니다.');
-          }
-        });       
-        ;
-      }
-    } else {
-      toast.error("이용약관 및 개인정보처리방침에 동의해주세요!");
-    }
-  };
-
-
-  const requestProfile =  useCallback(async () => {
-
-    if (localStorage.getItem("token") !== null) {
+    if (check !== null) {
     
       await axios
         .get(`${config.SERVER_URL}/profile`, {
-          headers: { authentication: localStorage.getItem("token") },
+          headers: { authentication: check },
         })
         .then((response) => {
+          console.log(response);
+          console.log(response.data);
           SetProfile({
             ...profile,
             userName: response.data.name,
@@ -136,7 +57,7 @@ const Header = () => {
           localStorage.setItem("isBill", response.data.isBill);
           localStorage.setItem('userName', response.data.name);
           localStorage.setItem('userImage', response.data.photoURL);
-
+        
         })
         .catch((error) => 
         {
@@ -147,11 +68,12 @@ const Header = () => {
         }
         );
     }
-  },[profile]);
+  },[]);
 
   const refreshProfile = useCallback(async () => {
-
+    
     authService.onAuthStateChanged(async (user) => {
+      console.log(user)
       if (authService.currentUser) {
         authService.currentUser
           .getIdToken()
@@ -175,9 +97,10 @@ const Header = () => {
     await localStorage.removeItem("create");
     await localStorage.removeItem("exp");
     await localStorage.removeItem("moid");
-    await localStorage.removeItem("time");
+    await localStorage.removeItem("time");    
+    await localStorage.removeItem("userName");
+    await localStorage.removeItem("userImage");
 
-    SetUser(false);
     SetShowMenu(false);
   
     await authService.signOut();
@@ -188,13 +111,6 @@ const Header = () => {
     SetMobileSubMenu(!MobileSubMenu);
   }
 
-  const HandleModals = () => {
-    SetOpen(!isOpen);
-  };
-
-  const HandleChecked = (e) => {
-    SetChecked(e.target.checked);
-  };
 
   const HandleShow = () => {
     SetShow(!isShow)
@@ -211,6 +127,7 @@ const Header = () => {
 
   useEffect(()=>{
     requestProfile(); 
+
   },[])
 
   useEffect(()=>{
@@ -238,7 +155,7 @@ const Header = () => {
         </Nav>
         {size !== "small" ? (
           <Nav direction='row' className='Menus' gap='large' align='center'>
-            <Link to='/signIn' className={isBill && 'displayNone'}> <MemButton>멤버십 가입</MemButton></Link>
+            <Link to='/signIn' className={isBill ? 'displayNone' : 'MenusLink'}> <MemButton>멤버십 가입</MemButton></Link>
             <Link to='/brand'>브랜드 소개</Link>
             <span className='DropMenu'>
               인공지능 글쓰기 서비스 <Down size='small' />
@@ -281,6 +198,7 @@ const Header = () => {
             {localStorage.getItem("token") ? (
               <Anchor>
                 <Avatar
+                  
                   referrerpolicy='no-referer'
                   src={userImage && userImage}
                   style={{ width: "40px", height: "40px" }}
@@ -360,7 +278,7 @@ const Header = () => {
         <div>
           <div className='afterLogin'>
             <div className='Username'>
-              <p>{userName} 님</p>
+              <p>{userName !=='Guest' ? userName : localStorage.getItem('userName')} 님</p>
             </div>
             <p className="plan">
                 {localStorage.getItem("plan") === "free"

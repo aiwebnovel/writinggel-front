@@ -47,7 +47,7 @@ import Login from '../Components/Login';
 
 import GoBrowser from '../Components/GoBrowser';
 import Register from '../Components/Register';
-
+import Welcome from '../Components/Welcome';
 
 function App() {
   return (
@@ -55,8 +55,8 @@ function App() {
       <Switch>
         <Route exact path="/" component={Home}></Route>
         <Route exact path="/regist" component={Register}></Route>
+        <Route exact path='/welcome' component={Welcome}></Route>
         <Route exact path="/login" component={Login}></Route>
-        
         <Route exact path="/brand" component={Brand}></Route>
 
         <Route exact path="/service/webnovel" component={WebnovelDetail}></Route>

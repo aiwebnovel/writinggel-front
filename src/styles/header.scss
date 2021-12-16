@@ -26,11 +26,12 @@ $boxShadow : rgb(237 237 237) 2px 3px 8px;
   cursor: pointer;
   transition: all 300ms ease-in-out;
 
-  > a {
-    &:hover {
-      font-weight: 600;
-    }
-  }
+}
+
+.MenusLink {
+  &:hover {
+    font-weight: 600;
+}
 }
 
 .displayNone {

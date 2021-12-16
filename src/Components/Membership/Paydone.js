@@ -6,7 +6,7 @@ import { Box } from "grommet";
 
 import * as configUrl from "../../config";
 
-const PayResult = () => {
+const PayDone = () => {
 
   const History = useHistory();
 
@@ -94,4 +94,4 @@ const PayResult = () => {
   );
 };
 
-export default PayResult;
+export default PayDone;

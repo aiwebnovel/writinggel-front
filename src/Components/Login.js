@@ -4,10 +4,15 @@ import axios from "axios";
 import { Box } from "grommet";
 import { Google, FacebookOption } from "grommet-icons";
 import { ResponsiveContext } from "grommet";
+
 import { authService, firebaseInstance } from "../firebaseConfig";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+
+import Loading from './SmallLoading';
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ScrollToTop from "../routes/ScrollToTop";
+import TagManager from 'react-gtm-module';
 
 import * as config from "../config";
 import "../styles/header.scss";
@@ -17,8 +22,7 @@ const Login = () => {
   const size = useContext(ResponsiveContext);
   const History = useHistory();
 
-  const [isChecked, SetChecked] = useState(false);
-
+  const [isLoading, SetLoading] = useState(false);
   const [profile, SetProfile] = useState({
     userName: "Guest",
     userImage: `User`,
@@ -26,70 +30,86 @@ const Login = () => {
     Plan: "",
   });
 
-  const [RegistInput, SetRegistInput] = useState({
-    RegEmail: "",
-    RegPassword: "",
-  });
+
   const [LoginInput, SetLoginInput] = useState({
     LogEmail: "",
     LogPassword: "",
   });
 
-  const [isEmail, SetIsEmail] = useState(false);
-  const [isPassword, SetIsPassword] = useState(false);
-  const [ValiMessage, SetMessage] = useState("");
-  const [PasValiMessage, SetPasMessage] =
-    useState("특수문자,숫자를 꼭 넣어주세요.");
+  const {LogEmail, LogPassword} = LoginInput;
 
-  const { RegEmail, RegPassword } = RegistInput;
-  const { LogEmail, LogPassword } = LoginInput;
-  const { userName, userImage, isBill, Plan } = profile;
 
-  const LoginChange = () => {
-    console.log("Regi change");
+  const LoginChange = (e) => {
+    SetLoginInput({...LoginInput, [e.target.name] : e.target.value})
+    
   };
 
-  const RegistChange = (e) => {
-    SetRegistInput({ ...RegistInput, [e.target.name]: e.target.value });
+  const GoLogin = (e) => {
+    e.preventDefault();
+    console.log('login');
+    SetLoading(true);
+    const auth = getAuth();
+    signInWithEmailAndPassword(auth, LogEmail, LogPassword)
+      .then(async(userCredential) => {
+        const user = userCredential.user;
 
-    const emailRegex =
-      /([\w-.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+        console.log(user);
 
-    if (!emailRegex.test(RegEmail)) {
-      SetMessage("올바른 이메일 형식이 아닙니다.😭");
-      SetIsEmail(false);
-    } else {
-      SetMessage("올바른 이메일 형식이에요!👍");
-      SetIsEmail(true);
-    }
+        const splitEmail = user.email.split('@');
+        let create = user.metadata.creationTime;
 
-    const PasRegex =
-      /^.*(?=^.{8,20}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/;
+        const token = user.accessToken;
+        const userName = splitEmail[0];
+        await localStorage.setItem("token", token);
+        await localStorage.setItem("userName", userName);
+        await localStorage.setItem("email", user.email);
+        await localStorage.setItem("create", create);
 
-    if (!PasRegex.test(RegPassword)) {
-      SetPasMessage("올바른 비밀번호가 아닙니다.😭");
-      SetIsPassword(false);
-    } else {
-      SetPasMessage("올바른 비밀번호에요!👍");
-      SetIsPassword(true);
-    }
+        await SetLoading(false);
+        await History.replace('/');
+     
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        const userNotFound = errorMessage.indexOf('user-not-found');
+        const invalidEmail  = errorMessage.indexOf('invalid-email');
+        const wrongPassword  = errorMessage.indexOf('wrong-password');
+        console.log(errorCode, errorMessage,userNotFound, invalidEmail);
+        SetLoading(false);
+        
+        if(userNotFound !== -1) {
+          toast.error('삭제 되었거나 등록되지 않은 유저입니다ㅠㅠ');
+          SetLoading(false);
+        }
 
-    console.log(RegEmail, RegPassword);
-  };
+        if(invalidEmail !== -1) {
+          toast.error('올바른 이메일 형식이 아닙니다ㅠㅠ');
+          SetLoading(false);
+        }
+
+        if(wrongPassword !== -1) {
+          toast.error('비밀번호가 맞지 않습니다ㅠㅠ');
+          SetLoading(false);
+        }
+      })
+      ;
+
+  }
+
 
   const signIn = async (e) => {
-    if (isChecked === true) {
+   
       let name = e.target.name;
       // let provider = new firebaseInstance.auth.GoogleAuthProvider();
       if (name === "Facebook") {
+        SetLoading(true);
         let provider = new firebaseInstance.auth.FacebookAuthProvider();
-        //await authService.signInWithRedirect(provider)
+       
         await authService
           .signInWithPopup(provider)
           .then(async (dataFacebook) => {
-            //console.log(dataFacebook);
-            //const credential = FacebookAuthProvider.credentialFromResult(dataFacebook);
-            //console.log('cre', credential);
+    
 
             let credentials = dataFacebook.credential;
             //let id = dataFacebook.credential.providerId //facebook.com
@@ -104,26 +124,30 @@ const Login = () => {
 
             await requestProfile();
 
-            refreshProfile();
-            window.location.reload();
+            await refreshProfile();
+            SetLoading(false);
+            await History.replace('/');
           })
           .catch((error) => {
             console.log(error);
+            SetLoading(false);
             if (
               error.code === "auth/account-exists-with-different-credential"
             ) {
               toast.error(
                 "이미 구글로 로그인했던 계정입니다. 동일한 이메일 주소를 사용하여 여러 계정을 만들 수 없습니다."
               );
+              SetLoading(false);
             }
-          });
+          })
+;
       } else if (name === "Google") {
+        SetLoading(true);
         let provider = new firebaseInstance.auth.GoogleAuthProvider();
         //await authService.signInWithRedirect(provider)
         await authService
           .signInWithPopup(provider)
           .then(async (dataGoogle) => {
-            //console.log(dataGoogle)
 
             let credential = dataGoogle.credential;
             let email = dataGoogle.user.email;
@@ -138,31 +162,37 @@ const Login = () => {
             await requestProfile();
 
             refreshProfile();
-            window.location.reload();
+            SetLoading(false);
+            History.replace('/');
+
           })
           .catch((error) => {
             console.log(error);
+            SetLoading(false);
             if (
               error.code === "auth/account-exists-with-different-credential"
             ) {
               toast.error(
                 "이미 페이스북으로 로그인했던 계정입니다. 동일한 이메일 주소를 사용하여 여러 계정을 만들 수 없습니다."
               );
+              SetLoading(false);
             }
           });
-      }
-    } else {
-      toast.error("이용약관 및 개인정보처리방침에 동의해주세요!");
-    }
+      
+    } 
   };
 
   const requestProfile = useCallback(async () => {
+
+    //console.log(localStorage.getItem("token"));
+
     if (localStorage.getItem("token") !== null) {
       await axios
         .get(`${config.SERVER_URL}/profile`, {
           headers: { authentication: localStorage.getItem("token") },
         })
         .then((response) => {
+          console.log(response)
           SetProfile({
             ...profile,
             userName: response.data.name,
@@ -188,20 +218,35 @@ const Login = () => {
 
   const refreshProfile = useCallback(async () => {
     authService.onAuthStateChanged(async (user) => {
-      if (authService.currentUser) {
-        authService.currentUser
-          .getIdToken()
-          .then(async (data) => {
-            await localStorage.setItem("token", data);
-          })
-          .catch(async (error) => {
-            console.log(error);
-          });
-      }
+
+      console.log(user, authService.currentUser);
+      //if (authService.currentUser) {
+          // .getIdToken()
+          // .then(async (data) => {
+          //   await localStorage.setItem("token", data);
+          // })
+          // .catch(async (error) => {
+          //   console.log(error);
+          // });
+      //}
     });
   }, []);
 
+    
+  useEffect(()=>{
+
+    TagManager.dataLayer({
+      dataLayer: {
+        event: 'pageview',
+        pagePath: '/login',
+        pageTitle: '로그인',
+      },
+    });
+
+  },[])
+
   return (
+    <>{isLoading && <Loading/>}
     <Box className='LoginContainer'>
       <ScrollToTop />
       <div className='loginHeader'>
@@ -215,13 +260,14 @@ const Login = () => {
             <h2>로그인</h2>
             <p>로그인 후 라이팅젤 서비스를 즐겨보세요!</p>
           </div>
-          <div className='Form'>
+          <form className='Form'>
             <div className='LoginFormField'>
               <div>
                 <label>이메일</label>
                 <input
                   placeholder='example@naver.com'
                   required
+                  name='LogEmail'
                   onChange={LoginChange}
                 />
               </div>
@@ -231,13 +277,14 @@ const Login = () => {
                   type='password'
                   placeholder='password'
                   required
+                  name='LogPassword'
                   onChange={LoginChange}
                 />
               </div>
             </div>
 
-            <LogBtn>로그인</LogBtn>
-          </div>
+            <LogBtn type='submit' onClick={GoLogin}>로그인</LogBtn>
+          </form>
           <div style={{ textAlign: "center", margin: "20px 0 25px 0" }}>
             <div
               style={{
@@ -296,6 +343,7 @@ const Login = () => {
         </Box>
       </Box>
     </Box>
+    </>
   );
 };
 
