@@ -56,17 +56,28 @@ const Login = () => {
         console.log(user);
 
         const splitEmail = user.email.split('@');
+        let providerId = user.providerData[0].providerId;
         let create = user.metadata.creationTime;
+        let displayName = user.displayName;
 
         const token = user.accessToken;
         const userName = splitEmail[0];
-        await localStorage.setItem("token", token);
-        await localStorage.setItem("userName", userName);
-        await localStorage.setItem("email", user.email);
-        await localStorage.setItem("create", create);
 
+        if(user.displayName !== null) {
+          localStorage.setItem("token", token);
+          localStorage.setItem("userName", displayName);
+          localStorage.setItem("email", user.email);
+          localStorage.setItem("create", create);
+          localStorage.setItem("provider", providerId);
+        } else {
+        localStorage.setItem("token", token);
+        localStorage.setItem("userName", userName);
+        localStorage.setItem("email", user.email);
+        localStorage.setItem("create", create);
+        localStorage.setItem("provider", providerId);
+        }
         await SetLoading(false);
-        await History.replace('/');
+        History.replace('/');
      
       })
       .catch((error) => {
@@ -89,7 +100,7 @@ const Login = () => {
         }
 
         if(wrongPassword !== -1) {
-          toast.error('비밀번호가 맞지 않습니다ㅠㅠ');
+          toast.error('비밀번호가 맞지 않습니다. 혹시 구글이나 페이스북 계정으로 가입한 계정일까요?');
           SetLoading(false);
         }
       })
@@ -109,24 +120,28 @@ const Login = () => {
         await authService
           .signInWithPopup(provider)
           .then(async (dataFacebook) => {
-    
+            
+            console.log(dataFacebook);
 
             let credentials = dataFacebook.credential;
-            //let id = dataFacebook.credential.providerId //facebook.com
+            let user = dataFacebook.user;
+            let providerId = dataFacebook.credential.providerId //facebook.com
             let email = dataFacebook.user.email;
             let create = dataFacebook.user.metadata.creationTime;
             let token = credentials.accessToken;
+            let username = user.displayName;
+            let userPhoto = user.photoURL;
             //console.log('result',credentials, email,create,token, id);
 
             await localStorage.setItem("token", token);
             await localStorage.setItem("email", email);
             await localStorage.setItem("create", create);
+            await localStorage.setItem("provider", providerId);
+            await localStorage.setItem("userName", username);
+            await localStorage.setItem("userImage", userPhoto);
 
-            await requestProfile();
-
-            await refreshProfile();
             SetLoading(false);
-            await History.replace('/');
+            setTimeout(History.replace('/'),3000);
           })
           .catch((error) => {
             console.log(error);
@@ -148,22 +163,27 @@ const Login = () => {
         await authService
           .signInWithPopup(provider)
           .then(async (dataGoogle) => {
-
+            //console.log(dataGoogle);
             let credential = dataGoogle.credential;
-            let email = dataGoogle.user.email;
-            let create = dataGoogle.user.metadata.creationTime;
+            let user = dataGoogle.user;
+
             let token = credential.idToken;
-            //console.log('result',credential, email,create,token);
+            let providerId = credential.providerId;
+            let email = user.email;
+            let create = user.metadata.creationTime;
+            let username = user.displayName;
+            let userPhoto = user.photoURL;
+
 
             await localStorage.setItem("token", token);
             await localStorage.setItem("email", email);
             await localStorage.setItem("create", create);
+            await localStorage.setItem("provider", providerId);
+            await localStorage.setItem("userName", username);
+            await localStorage.setItem("userImage", userPhoto);
 
-            await requestProfile();
-
-            refreshProfile();
-            SetLoading(false);
-            History.replace('/');
+          SetLoading(false);
+          setTimeout(History.replace('/'),3000);
 
           })
           .catch((error) => {
@@ -182,57 +202,7 @@ const Login = () => {
     } 
   };
 
-  const requestProfile = useCallback(async () => {
 
-    //console.log(localStorage.getItem("token"));
-
-    if (localStorage.getItem("token") !== null) {
-      await axios
-        .get(`${config.SERVER_URL}/profile`, {
-          headers: { authentication: localStorage.getItem("token") },
-        })
-        .then((response) => {
-          console.log(response)
-          SetProfile({
-            ...profile,
-            userName: response.data.name,
-            userImage: response.data.photoURL,
-            isBill: response.data.isBill,
-            Plan: response.data.plan,
-          });
-
-          localStorage.setItem("userUid", response.data.uid);
-          localStorage.setItem("plan", response.data.plan);
-          localStorage.setItem("isBill", response.data.isBill);
-          localStorage.setItem("userName", response.data.name);
-          localStorage.setItem("userImage", response.data.photoURL);
-        })
-        .catch((error) => {
-          console.log(error);
-          if (error.response.status === 412) {
-            toast.error("새로고침하거나 다시 로그인 해주세요!");
-          }
-        });
-    }
-  }, [profile]);
-
-  const refreshProfile = useCallback(async () => {
-    authService.onAuthStateChanged(async (user) => {
-
-      console.log(user, authService.currentUser);
-      //if (authService.currentUser) {
-          // .getIdToken()
-          // .then(async (data) => {
-          //   await localStorage.setItem("token", data);
-          // })
-          // .catch(async (error) => {
-          //   console.log(error);
-          // });
-      //}
-    });
-  }, []);
-
-    
   useEffect(()=>{
 
     TagManager.dataLayer({

@@ -16,6 +16,7 @@ import {
   updateProfile,
   // updateEmail,
   deleteUser,
+  reauthenticateWithCredential
 } from "@firebase/auth";
 import firebase from "@firebase/app-compat";
 import TagManager from 'react-gtm-module';
@@ -79,7 +80,7 @@ const Modify = () => {
       //     toast.error("이메일을 수정할 수 없습니다!");
       //     SetLoading(false);
       //   });
-         await toast.info('재인증을 위해 로그인을 다시 해주세요!');
+      await toast.info('재인증을 위해 로그인을 다시 해주세요!');
       await ReAuthProfile();
       SetLoading(false);
 
@@ -96,8 +97,7 @@ const Modify = () => {
 
     if (user !== null) {
       let providerId = user.providerData[0].providerId;
-
-
+      
       if (providerId === "google.com") {
         let providerG = new firebase.auth.GoogleAuthProvider();
         providerG.addScope("profile");
@@ -164,13 +164,18 @@ const Modify = () => {
   };
 
   const signOut = async () => {
-    await localStorage.removeItem("token");
+await localStorage.removeItem("token");
     await localStorage.removeItem("email");
     await localStorage.removeItem("userUid");
     await localStorage.removeItem("plan");
     await localStorage.removeItem("isBill");
     await localStorage.removeItem("create");
-    await localStorage.removeItem("phone");
+    await localStorage.removeItem("exp");
+    await localStorage.removeItem("moid");
+    await localStorage.removeItem("time");
+    await localStorage.removeItem("userName");
+    await localStorage.removeItem("userImage");
+    await localStorage.removeItem("provider");
 
     await authService.signOut();
     window.location.reload();

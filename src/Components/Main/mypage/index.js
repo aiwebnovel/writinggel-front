@@ -168,7 +168,7 @@ const Mypage = () => {
           <Box className='UserContent'>
             <div className='dataBox'>
               <p>이름</p>
-              <p>{userName}</p>
+              <p>{userName ? `${userName}님`: `${email.split('@')[0]}님` }</p>
             </div>
             <div className='dataBox'>
               <p>아이디</p>

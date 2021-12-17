@@ -13,7 +13,7 @@ import ScrollToTop from "../routes/ScrollToTop";
 import TagManager from "react-gtm-module";
 import Loading from './SmallLoading';
 
-import * as config from "../config";
+import * as configUrl from "../config";
 import "../styles/header.scss";
 import styled from "styled-components";
 
@@ -113,11 +113,34 @@ const Register = () => {
 
 
       createUserWithEmailAndPassword(auth, RegEmail, RegPassword)
-        .then((userCredential) => {
+        .then(async(userCredential) => {
           // Signed in
           const user = userCredential.user;
-          console.log(user);
-          History.push('/welcome');
+          const token = user.accessToken;
+          console.log(user, token);
+          
+          const config = {
+            method: "get",
+            url: `${configUrl.SERVER_URL}/signup`,
+            headers: { authentication: token },
+          }
+
+          await axios(config) 
+          .then(async(response)=>{
+            console.log(response)
+            SetLoading(false);
+            History.push('/welcome');
+          })
+          .catch((error)=>{
+            console.log(error);
+            SetLoading(false);
+            if( error.response.data.errorCode === 108) {
+                toast.error('이미 가입된 유저 또는 가입 불가능한 정보입니다😭');
+                SetLoading(false);
+            }
+          })
+
+  
         })
         .catch((error) => {
           const errorCode = error.code;
@@ -126,12 +149,9 @@ const Register = () => {
           console.log(errorCode, errorMessage, errorIndex);
           if(errorIndex !== -1 ) {
               toast.error('이미 누군가 쓰고 있는 이메일 입니다.😭');
+              SetLoading(false);
           }
-        })
-        .finally(()=>{
-          SetLoading(false);
         });
-
     } else {
       toast.error("유효하지 않은 정보가 있습니다!!");
     }
@@ -149,33 +169,39 @@ const Register = () => {
         .signInWithPopup(provider)
         .then(async (dataFacebook) => {
        
+          console.log(dataFacebook);
+
           let credentials = dataFacebook.credential;
-          //let id = dataFacebook.credential.providerId //facebook.com
+          let user = dataFacebook.user;
+          let providerId = dataFacebook.credential.providerId //facebook.com
           let email = dataFacebook.user.email;
           let create = dataFacebook.user.metadata.creationTime;
           let token = credentials.accessToken;
+          let username = user.displayName;
+          let userPhoto = user.photoURL;
           //console.log('result',credentials, email,create,token, id);
 
           await localStorage.setItem("token", token);
           await localStorage.setItem("email", email);
           await localStorage.setItem("create", create);
+          await localStorage.setItem("provider", providerId);
+          await localStorage.setItem("userName", username);
+          await localStorage.setItem("userImage", userPhoto);
 
-          await requestProfile();
-
-          refreshProfile();
-          History.replace("/");
+          SetLoading(false);
+          setTimeout(History.replace('/'),3000);
         })
         .catch((error) => {
           console.log(error);
+          SetLoading(false);
           if (error.code === "auth/account-exists-with-different-credential") {
             toast.error(
               "이미 구글로 로그인했던 계정입니다. 동일한 이메일 주소를 사용하여 여러 계정을 만들 수 없습니다."
             );
+            SetLoading(false);
           }
         })
-        .finally(()=>{
-          SetLoading(false)
-        });
+
     } else if (name === "Google") {
       SetLoading(true);
       let provider = new firebaseInstance.auth.GoogleAuthProvider();
@@ -183,82 +209,42 @@ const Register = () => {
       await authService
         .signInWithPopup(provider)
         .then(async (dataGoogle) => {
-          //console.log(dataGoogle)
-          SetLoading(true);
           let credential = dataGoogle.credential;
-          let email = dataGoogle.user.email;
-          let create = dataGoogle.user.metadata.creationTime;
+          let user = dataGoogle.user;
+
           let token = credential.idToken;
-          //console.log('result',credential, email,create,token);
+          let providerId = credential.providerId;
+          let email = user.email;
+          let create = user.metadata.creationTime;
+          let username = user.displayName;
+          let userPhoto = user.photoURL;
+
 
           await localStorage.setItem("token", token);
           await localStorage.setItem("email", email);
           await localStorage.setItem("create", create);
+          await localStorage.setItem("provider", providerId);
+          await localStorage.setItem("userName", username);
+          await localStorage.setItem("userImage", userPhoto);
 
-          await requestProfile();
-
-         refreshProfile();
-          await History.replace("/");
+        SetLoading(false);
+        setTimeout(History.replace('/'),3000);
         })
         .catch((error) => {
           console.log(error);
+          SetLoading(false);
           if (error.code === "auth/account-exists-with-different-credential") {
             toast.error(
               "이미 페이스북으로 로그인했던 계정입니다. 동일한 이메일 주소를 사용하여 여러 계정을 만들 수 없습니다."
             );
+            SetLoading(false);
           }
         })
-        .finally(()=>{
-          SetLoading(false)
-        });
+
     }
 
   };
 
-  const requestProfile = useCallback(async () => {
-    if (localStorage.getItem("token") !== null) {
-      await axios
-        .get(`${config.SERVER_URL}/profile`, {
-          headers: { authentication: localStorage.getItem("token") },
-        })
-        .then((response) => {
-          SetProfile({
-            ...profile,
-            userName: response.data.name,
-            userImage: response.data.photoURL,
-            isBill: response.data.isBill,
-            Plan: response.data.plan,
-          });
-
-          localStorage.setItem("userUid", response.data.uid);
-          localStorage.setItem("plan", response.data.plan);
-          localStorage.setItem("isBill", response.data.isBill);
-          localStorage.setItem("userName", response.data.name);
-          localStorage.setItem("userImage", response.data.photoURL);
-        })
-        .catch((error) => {
-          console.log(error);
-          if (error.response.status === 412) {
-            toast.error("새로고침하거나 다시 로그인 해주세요!");
-          }
-        });
-    }
-  }, [profile]);
-
-  const refreshProfile = useCallback(async () => {
-    authService.onAuthStateChanged(async (user) => {
-      if (authService.currentUser) {
-        authService.currentUser
-          .getIdToken()
-          .then(async (data) => {
-            await localStorage.setItem("token", data);
-          })
-          .catch(async (error) => {
-            console.log(error);
-          });
-      }
-    });
-  }, []);
 
 
   useEffect(() => {
