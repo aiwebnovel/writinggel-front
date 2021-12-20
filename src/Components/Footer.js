@@ -1,6 +1,6 @@
 import React from 'react'
 import { Footer as FooterLayout, Box} from 'grommet';
-import {Facebook, Instagram, Twitter} from 'grommet-icons'
+import {Facebook, Instagram, Twitter, Youtube} from 'grommet-icons'
 import styled from 'styled-components'
 
 import '../styles/footer.scss'
@@ -46,6 +46,7 @@ const Footer = () => {
           <a target="_blank" rel="noreferrer" href="https://facebook.com/ai.tinytingel/"><Facebook size="medium"/></a>
           <a target="_blank" rel="noreferrer" href="https://www.instagram.com/tinytingel/"><Instagram size="medium"/></a>
           <a target="_blank" rel="noreferrer" href="https://twitter.com/tinytingel"><Twitter size="medium"/></a>
+          <a target="_blank" rel="noreferrer" href="https://www.youtube.com/channel/UCZA1B4QdPgG0WI3OigXWmdw"><Youtube size="medium"/></a>
           </Box>
           
         </FooterLayout>
@@ -63,4 +64,5 @@ const footerStyle = {
 
 const IconLicense = styled.div`
   font-size: 13px;
+  text-align: center;
 `

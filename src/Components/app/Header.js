@@ -37,7 +37,7 @@ const Header = () => {
   const refreshProfile = useCallback(async () => {
 
     authService.onAuthStateChanged(async (user) => {
-      console.log(user)
+      //console.log(user)
       if (user) {
         await authService.currentUser
           .getIdToken()
@@ -73,7 +73,7 @@ const Header = () => {
           localStorage.setItem("userUid", response.data.uid);
           localStorage.setItem("plan", response.data.plan);
           localStorage.setItem("isBill", response.data.isBill);
-          console.log('profile', profile);
+      
         })
         .catch((error) => {
           if(error.response.status === 412) {

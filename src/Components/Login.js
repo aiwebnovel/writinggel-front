@@ -53,7 +53,7 @@ const Login = () => {
       .then(async(userCredential) => {
         const user = userCredential.user;
 
-        console.log(user);
+        //console.log(user);
 
         const splitEmail = user.email.split('@');
         let providerId = user.providerData[0].providerId;
@@ -121,7 +121,7 @@ const Login = () => {
           .signInWithPopup(provider)
           .then(async (dataFacebook) => {
             
-            console.log(dataFacebook);
+            //console.log(dataFacebook);
 
             let credentials = dataFacebook.credential;
             let user = dataFacebook.user;
@@ -252,9 +252,12 @@ const Login = () => {
                 />
               </div>
             </div>
-
+          
             <LogBtn type='submit' onClick={GoLogin}>로그인</LogBtn>
           </form>
+          <p className="RegiLink"> 
+              아직 회원이 아니신가요? <Link to='/regist'>회원가입</Link>
+            </p>
           <div style={{ textAlign: "center", margin: "20px 0 25px 0" }}>
             <div
               style={{
@@ -306,9 +309,7 @@ const Login = () => {
                 을 확인하였고&nbsp;동의합니다.
               </p>
             </div>
-            <p>
-              아직 회원이 아니신가요? <Link to='/regist'>회원가입</Link>
-            </p>
+          
           </div>
         </Box>
       </Box>

@@ -6,12 +6,16 @@ import { Google, FacebookOption } from "grommet-icons";
 import { ResponsiveContext } from "grommet";
 
 import { authService, firebaseInstance } from "../firebaseConfig";
-import { getAuth, createUserWithEmailAndPassword } from "@firebase/auth";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  updateProfile,
+} from "@firebase/auth";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ScrollToTop from "../routes/ScrollToTop";
 import TagManager from "react-gtm-module";
-import Loading from './SmallLoading';
+import Loading from "./SmallLoading";
 
 import * as configUrl from "../config";
 import "../styles/header.scss";
@@ -33,6 +37,7 @@ const Register = () => {
     RegEmail: "",
     RegPassword: "",
     CheckPassword: "",
+    RegName: "",
   });
 
   const [ValiMessage, SetMessage] = useState({
@@ -46,7 +51,12 @@ const Register = () => {
   const [isCheckPw, SetIsCheckPw] = useState(false);
 
   const { EmailMessage, PasValiMessage, CheckMessage } = ValiMessage;
-  const { RegEmail, RegPassword, CheckPassword } = RegistInput;
+  const { RegEmail, RegPassword, CheckPassword, RegName } = RegistInput;
+
+  const NameChange = (e) => {
+    SetRegistInput({ ...RegistInput,[e.target.name]:e.target.value});
+    //console.log(RegName);
+  };
 
   const EmailChange = (e) => {
     const emailRegex =
@@ -106,59 +116,71 @@ const Register = () => {
   };
 
   const GoRegister = () => {
-    if (isEmail && isPassword && isCheckPw) {
+    if (isEmail && isPassword && isCheckPw && RegName) {
       SetLoading(true);
-      console.log("가입");
+      //console.log("가입");
       const auth = getAuth();
 
-
       createUserWithEmailAndPassword(auth, RegEmail, RegPassword)
-        .then(async(userCredential) => {
+        .then(async (userCredential) => {
           // Signed in
           const user = userCredential.user;
           const token = user.accessToken;
-          console.log(user, token);
-          
-          const config = {
-            method: "get",
-            url: `${configUrl.SERVER_URL}/signup`,
-            headers: { authentication: token },
-          }
 
-          await axios(config) 
-          .then(async(response)=>{
-            console.log(response)
-            SetLoading(false);
-            History.push('/welcome');
-          })
-          .catch((error)=>{
-            console.log(error);
-            SetLoading(false);
-            if( error.response.data.errorCode === 108) {
-                toast.error('이미 가입된 유저 또는 가입 불가능한 정보입니다😭');
-                SetLoading(false);
-            }
-          })
+          //console.log(user, token);
 
-  
+          updateProfile(user, {
+            displayName: RegName,
+          })
+            .then(async () => {
+              
+                const config = {
+                  method: "get",
+                  url: `${configUrl.SERVER_URL}/signup`,
+                  headers: { authentication: token },
+                };
+
+                await axios(config)
+                  .then(async (response) => {
+                    //console.log(response);
+                    SetLoading(false);
+                    History.push("/welcome");
+                  })
+                  .catch((error) => {
+                    console.log(error);
+                    SetLoading(false);
+                    if (error.response.data.errorCode === 108) {
+                      toast.error(
+                        "이미 가입된 유저 또는 가입 불가능한 정보입니다😭"
+                      );
+                      SetLoading(false);
+                    }
+                  });
+              
+            })
+            .catch((error) => {
+              console.log(error);
+              SetLoading(false);
+            });
         })
         .catch((error) => {
           const errorCode = error.code;
           const errorMessage = error.message;
-          const errorIndex = errorMessage.indexOf('email-already-in-us');
+          const errorIndex = errorMessage.indexOf("email-already-in-us");
           console.log(errorCode, errorMessage, errorIndex);
-          if(errorIndex !== -1 ) {
-              toast.error('이미 누군가 쓰고 있는 이메일 입니다.😭');
-              SetLoading(false);
+          if (errorIndex !== -1) {
+            toast.error("이미 누군가 쓰고 있는 이메일 입니다.😭");
+            SetLoading(false);
+          } else {
+            toast.error(errorMessage);
           }
         });
     } else {
-      toast.error("유효하지 않은 정보가 있습니다!!");
+      toast.error("빈 칸이 있거나 유효하지 않은 정보가 있습니다!");
     }
   };
 
   const signIn = async (e) => {
-  
     let name = e.target.name;
     // let provider = new firebaseInstance.auth.GoogleAuthProvider();
     if (name === "Facebook") {
@@ -168,12 +190,11 @@ const Register = () => {
       await authService
         .signInWithPopup(provider)
         .then(async (dataFacebook) => {
-       
           console.log(dataFacebook);
 
           let credentials = dataFacebook.credential;
           let user = dataFacebook.user;
-          let providerId = dataFacebook.credential.providerId //facebook.com
+          let providerId = dataFacebook.credential.providerId; //facebook.com
           let email = dataFacebook.user.email;
           let create = dataFacebook.user.metadata.creationTime;
           let token = credentials.accessToken;
@@ -189,7 +210,7 @@ const Register = () => {
           await localStorage.setItem("userImage", userPhoto);
 
           SetLoading(false);
-          setTimeout(History.replace('/'),3000);
+          setTimeout(History.replace("/"), 3000);
         })
         .catch((error) => {
           console.log(error);
@@ -200,8 +221,7 @@ const Register = () => {
             );
             SetLoading(false);
           }
-        })
-
+        });
     } else if (name === "Google") {
       SetLoading(true);
       let provider = new firebaseInstance.auth.GoogleAuthProvider();
@@ -219,7 +239,6 @@ const Register = () => {
           let username = user.displayName;
           let userPhoto = user.photoURL;
 
-
           await localStorage.setItem("token", token);
           await localStorage.setItem("email", email);
           await localStorage.setItem("create", create);
@@ -227,8 +246,8 @@ const Register = () => {
           await localStorage.setItem("userName", username);
           await localStorage.setItem("userImage", userPhoto);
 
-        SetLoading(false);
-        setTimeout(History.replace('/'),3000);
+          SetLoading(false);
+          setTimeout(History.replace("/"), 3000);
         })
         .catch((error) => {
           console.log(error);
@@ -239,13 +258,9 @@ const Register = () => {
             );
             SetLoading(false);
           }
-        })
-
+        });
     }
-
   };
-
-
 
   useEffect(() => {
     TagManager.dataLayer({
@@ -258,68 +273,79 @@ const Register = () => {
   }, []);
 
   return (
-    <>{isLoading && <Loading/>}
-    <Box className='RegisterContainer'>
-      <ScrollToTop />
-      <div className='loginHeader'>
-        <Link to='/'>
-          <img src='/logo2.png' alt='로그인 이미지' />
-        </Link>
-      </div>
-      <Box className='RegBox'>
-        <Box>
-          <div className='RegTitle'>
-            {/* <img src='/tinggle.png' alt='회원가입 이미지'/> */}
-            <h2>회원가입</h2>
-            <p>가입 하시면 더 많은 서비스를 즐기실 수 있어요!</p>
-          </div>
-          <div className='Form'>
-            <div className='RegFormField'>
-              <div>
-                <label>이메일</label>
-                <input
-                  placeholder='E-mail'
-                  required
-                  name='RegEmail'
-                  onChange={EmailChange}
-                  onFocus={EmailChange}
-                />
-                <p className={isEmail ? "RegCorrect" : "RegIncorrect"}>
-                  {EmailMessage}
-                </p>
-              </div>
-
-              <div>
-                <label>비밀번호</label>
-                <input
-                  placeholder='password'
-                  type='password'
-                  required
-                  name='RegPassword'
-                  onChange={PasswordChange}
-                  onFocus={PasswordChange}
-                />
-                <p className={isPassword ? "RegCorrect" : "RegIncorrect"}>
-                  {PasValiMessage}
-                </p>
-              </div>
-              <div>
-                <label>비밀번호 확인</label>
-                <input
-                  placeholder='password'
-                  type='password'
-                  required
-                  name='CheckPassword'
-                  onChange={CheckPwChange}
-                  onFocus={CheckPwChange}
-                />
-                <p className={isCheckPw ? "RegCorrect" : "RegIncorrect"}>
-                  {CheckMessage}
-                </p>
-              </div>
+    <>
+      {isLoading && <Loading />}
+      <Box className='RegisterContainer'>
+        <ScrollToTop />
+        <div className='loginHeader'>
+          <Link to='/'>
+            <img src='/logo2.png' alt='로그인 이미지' />
+          </Link>
+        </div>
+        <Box className='RegBox'>
+          <Box>
+            <div className='RegTitle'>
+              {/* <img src='/tinggle.png' alt='회원가입 이미지'/> */}
+              <h2>회원가입</h2>
+              <p>가입 하시면 더 많은 서비스를 즐기실 수 있어요!</p>
             </div>
-            <div className='isChecked'>
-              {/* <input
+            <div className='Form'>
+              <div className='RegFormField'>
+                {" "}
+                <div>
+                  <label>이름</label>
+                  <input
+                    placeholder='이름'
+                    required
+                    name='RegName'
+                    onChange={NameChange}
+                    onFocus={NameChange}
+                  />
+                </div>
+                <div>
+                  <label>이메일</label>
+                  <input
+                    placeholder='E-mail'
+                    required
+                    name='RegEmail'
+                    onChange={EmailChange}
+                    onFocus={EmailChange}
+                  />
+                  <p className={isEmail ? "RegCorrect" : "RegIncorrect"}>
+                    {EmailMessage}
+                  </p>
+                </div>
+                <div>
+                  <label>비밀번호</label>
+                  <input
+                    placeholder='password'
+                    type='password'
+                    required
+                    name='RegPassword'
+                    onChange={PasswordChange}
+                    onFocus={PasswordChange}
+                  />
+                  <p className={isPassword ? "RegCorrect" : "RegIncorrect"}>
+                    {PasValiMessage}
+                  </p>
+                </div>
+                <div>
+                  <label>비밀번호 확인</label>
+                  <input
+                    placeholder='password'
+                    type='password'
+                    required
+                    name='CheckPassword'
+                    onChange={CheckPwChange}
+                    onFocus={CheckPwChange}
+                  />
+                  <p className={isCheckPw ? "RegCorrect" : "RegIncorrect"}>
+                    {CheckMessage}
+                  </p>
+                </div>
+              </div>
+              <div className='isChecked'>
+                {/* <input
                 type='checkbox'
                 name='agree'
                 onClick={(e) => {
@@ -327,66 +353,66 @@ const Register = () => {
                 }}
                 style={{ width: "15px", height: "15px", marginRight: "5px" }}
               /> */}
+                <p>
+                  <a
+                    href='https://appplatform.notion.site/8be8232fff0341799cf8c13728610b6b'
+                    target='_blank'
+                    rel='noreferrer'
+                  >
+                    이용약관
+                  </a>
+                  과&nbsp;
+                  <a
+                    href='https://www.notion.so/appplatform/d99f247a66d141bbbdf227739861a0a2'
+                    target='_blank'
+                    rel='noreferrer'
+                  >
+                    개인정보처리방침
+                  </a>
+                  에&nbsp;동의합니다.
+                </p>
+              </div>
+              <RegBtn onClick={GoRegister}>회원가입</RegBtn>
+            </div>
+            <div style={{ textAlign: "center", margin: "20px 0 25px 0" }}>
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <Line></Line>
+                <p style={{ padding: "0 12px", color: "#aaa" }}>or</p>
+                <Line></Line>
+              </div>
+            </div>
+            <div className='signBox'>
+              <div className='SnsSignBox'>
+                <button
+                  className='googleButton'
+                  name='Google'
+                  onClick={(e) => signIn(e)}
+                >
+                  <Google color='plain' />
+                  구글로 시작하기
+                </button>
+
+                <button
+                  className='facebookButton'
+                  name='Facebook'
+                  onClick={(e) => signIn(e)}
+                >
+                  <FacebookOption color='plain' /> 페이스북으로 시작하기
+                </button>
+              </div>
               <p>
-                <a
-                  href='https://appplatform.notion.site/8be8232fff0341799cf8c13728610b6b'
-                  target='_blank'
-                  rel='noreferrer'
-                >
-                  이용약관
-                </a>
-                과&nbsp;
-                <a
-                  href='https://www.notion.so/appplatform/d99f247a66d141bbbdf227739861a0a2'
-                  target='_blank'
-                  rel='noreferrer'
-                >
-                  개인정보처리방침
-                </a>
-                에&nbsp;동의합니다.
+                회원이신가요? <Link to='/login'>로그인</Link>
               </p>
             </div>
-            <RegBtn onClick={GoRegister}>회원가입</RegBtn>
-          </div>
-          <div style={{ textAlign: "center", margin: "20px 0 25px 0" }}>
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <Line></Line>
-              <p style={{ padding: "0 12px", color: "#aaa" }}>or</p>
-              <Line></Line>
-            </div>
-          </div>
-          <div className='signBox'>
-            <div className='SnsSignBox'>
-              <button
-                className='googleButton'
-                name='Google'
-                onClick={(e) => signIn(e)}
-              >
-                <Google color='plain' />
-                구글로 시작하기
-              </button>
-
-              <button
-                className='facebookButton'
-                name='Facebook'
-                onClick={(e) => signIn(e)}
-              >
-                <FacebookOption color='plain' /> 페이스북으로 시작하기
-              </button>
-            </div>
-            <p>
-              회원이신가요? <Link to='/login'>로그인</Link>
-            </p>
-          </div>
+          </Box>
         </Box>
       </Box>
-    </Box>
     </>
   );
 };

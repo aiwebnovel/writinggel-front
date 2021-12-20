@@ -20,8 +20,18 @@ import TagManager from 'react-gtm-module';
 
 const Home = () => {
 
+  const check = localStorage.getItem('token');
   const size = useContext(ResponsiveContext);
   const history = useHistory();
+
+  const FreeUse = () => {
+    if(check !== null) {
+      history.push('/app/firstsentence');
+    } else {
+      history.push('/login');
+    }
+   
+  }
 
   useEffect(()=>{
 
@@ -35,6 +45,7 @@ const Home = () => {
 
   },[])
 
+
   return (
       <Layout>
       <ScrollToTop/>
@@ -44,7 +55,7 @@ const Home = () => {
             gap='medium'
             fill={size !== "small" ? false : true}
           >
-            <Card background='#372874' height='small' onClick={()=> {history.push('/login')}} style={{cursor:"pointer", color:'#fff'}}> 
+            <Card background='#372874' height='small' onClick={FreeUse} style={{cursor:"pointer", color:'#fff'}}> 
               <CardBody className='cardTitle' justify='center'>
                 <p>인공지능 글쓰기</p>
                 <p>무료체험 해보기</p>

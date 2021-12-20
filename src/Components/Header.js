@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect, useCallback } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import { Header as HeaderLayout, Nav, Avatar, Anchor, Button } from "grommet";
 import { Menu, Down } from "grommet-icons";
@@ -16,7 +16,6 @@ import styled from "styled-components";
 
 const Header = () => {
   const size = useContext(ResponsiveContext);
-  const History = useHistory();
   const check = localStorage.getItem("token");
   const provider = localStorage.getItem('provider');
 
@@ -34,7 +33,7 @@ const Header = () => {
 
   const refreshProfile = useCallback(async () => {
     authService.onAuthStateChanged(async (user) => {
-      console.log("user", user);
+      //console.log("user", user);
       if (user) {
         await authService.currentUser
           .getIdToken()
@@ -51,10 +50,10 @@ const Header = () => {
 
   const requestProfile = useCallback(async () => {
 
-    if (localStorage.getItem("token") !== null) {
+    if (check !== null) {
       await axios
         .get(`${config.SERVER_URL}/profile`, {
-          headers: { authentication: localStorage.getItem("token") },
+          headers: { authentication: check },
         })
         .then((response) => {
           // console.log('previus', profile);
@@ -70,15 +69,17 @@ const Header = () => {
           localStorage.setItem("userUid", response.data.uid);
           localStorage.setItem("plan", response.data.plan);
           localStorage.setItem("isBill", response.data.isBill);
-          console.log('profile', profile);
+          
         })
         .catch((error) => {
           if(error.response.status === 412) {
-            toast.error('새로고침하거나 다시 로그인 해주세요!')   
+            //toast.error('새로고침하거나 다시 로그인 해주세요!') 
+            window.location.reload();  
           }
+          // toast.error(error.message);
         });
     }
-  }, [profile]);
+  }, []);
 
   const GetProfile = useCallback(async () => {
     if (check !== null) {
@@ -91,12 +92,12 @@ const Header = () => {
 
           SetProfile({
             ...profile,
-            userName: localStorage.getItem("userName"),
+            userName:response.data.name,
             isBill: response.data.isBill,
             Plan: response.data.plan,
           });
 
-          localStorage.setItem("token", localStorage.getItem("token"));
+          localStorage.setItem("token", check);
           localStorage.setItem("userUid", response.data.uid);
           localStorage.setItem("plan", response.data.plan);
           localStorage.setItem("isBill", response.data.isBill);
@@ -155,21 +156,21 @@ const Header = () => {
     } else if (provider === "google.com" || "facebook.com") {
       requestProfile();
     }
-  }, []);
+  }, [provider, GetProfile, requestProfile]);
 
-  useEffect(() => {
-    let userAgent = navigator.userAgent;
-    let check = userAgent.indexOf("KAKAOTALK" || "NAVER");
-    let checkInsta = userAgent.indexOf("Instagram");
-    let checkFB = userAgent.indexOf("FB");
+  // useEffect(() => {
+  //   let userAgent = navigator.userAgent;
+  //   let check = userAgent.indexOf("KAKAOTALK" || "NAVER");
+  //   let checkInsta = userAgent.indexOf("Instagram");
+  //   let checkFB = userAgent.indexOf("FB");
 
-    if (check !== -1 || checkInsta !== -1 || checkFB !== -1) {
-      //toast.info(`${userAgent}`);
-      History.push("/check");
-    } else {
-      return;
-    }
-  }, [History]);
+  //   if (check !== -1 || checkInsta !== -1 || checkFB !== -1) {
+  //     //toast.info(`${userAgent}`);
+  //     History.push("/check");
+  //   } else {
+  //     return;
+  //   }
+  // }, [History]);
 
   return (
     <>
@@ -303,7 +304,7 @@ const Header = () => {
               </>
             ) : (
               <Link to='/login' style={{ cursor: "pointer", fontWeight: 600 }}>
-                Login
+                로그인
               </Link>
             )}
           </Nav>

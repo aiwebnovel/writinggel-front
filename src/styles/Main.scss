@@ -97,6 +97,21 @@ $red: #f45752;
     }
 }
 
+
+.RegiLink  {
+    font-size: 14px;
+    text-align: center;
+
+    >a {
+        text-decoration: underline;
+
+        &:hover {
+            font-weight: 600;
+        }
+    }
+}
+
+
 .isChecked {
     >p {
         font-size: 14px;
