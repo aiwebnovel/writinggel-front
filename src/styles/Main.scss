@@ -93,10 +93,23 @@ $red: #f45752;
             padding: 8px 10px;
             border-radius: 5px;
             height: 40px;
+            font-size: 15px;
         }
     }
 }
 
+.LoginLink {
+    font-size: 14px;
+    text-align: center;
+
+    >a {
+            font-weight: 600;
+
+            &:hover {
+                text-decoration: underline;
+            }
+    }
+}
 
 .RegiLink  {
     font-size: 14px;
