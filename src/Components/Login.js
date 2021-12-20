@@ -23,13 +23,7 @@ const Login = () => {
   const History = useHistory();
 
   const [isLoading, SetLoading] = useState(false);
-  const [profile, SetProfile] = useState({
-    userName: "Guest",
-    userImage: `User`,
-    isBill: "",
-    Plan: "",
-  });
-
+  const [isInApp, SetInApp] = useState(false);
 
   const [LoginInput, SetLoginInput] = useState({
     LogEmail: "",
@@ -202,6 +196,20 @@ const Login = () => {
     } 
   };
 
+  useEffect(()=>{
+    let userAgent = navigator.userAgent;
+    let check = userAgent.indexOf("KAKAOTALK");
+    let checkNaver = userAgent.indexOf("NAVER");
+    let checkInsta = userAgent.indexOf("Instagram");
+    let checkFB = userAgent.indexOf("FB");
+
+    if (check !== -1 || checkNaver !== -1 || checkInsta !== -1 || checkFB !== -1) {
+      SetInApp(true);
+    } else {
+      return;
+    }
+  },[isInApp]);
+
 
   useEffect(()=>{
 
@@ -273,6 +281,7 @@ const Login = () => {
           </div>
           <div className='signBox'>
             <div className='SnsSignBox'>
+              {!isInApp &&
               <button
                 className='googleButton'
                 name='Google'
@@ -280,7 +289,7 @@ const Login = () => {
               >
                 <Google color='plain' /> 구글로 시작하기
               </button>
-
+            }
               <button
                 className='facebookButton'
                 name='Facebook'

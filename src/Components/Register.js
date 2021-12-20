@@ -26,12 +26,8 @@ const Register = () => {
   const History = useHistory();
 
   const [isLoading, SetLoading] = useState(false);
-  const [profile, SetProfile] = useState({
-    userName: "Guest",
-    userImage: `User`,
-    isBill: "",
-    Plan: "",
-  });
+  const [isInApp, SetInApp] = useState(false);
+
 
   const [RegistInput, SetRegistInput] = useState({
     RegEmail: "",
@@ -262,6 +258,21 @@ const Register = () => {
     }
   };
 
+  useEffect(()=>{
+    let userAgent = navigator.userAgent;
+    let check = userAgent.indexOf("KAKAOTALK");
+    let checkNaver = userAgent.indexOf("NAVER");
+    let checkInsta = userAgent.indexOf("Instagram");
+    let checkFB = userAgent.indexOf("FB");
+
+    if (check !== -1 || checkNaver !== -1 || checkInsta !== -1 || checkFB !== -1) {
+      SetInApp(true);
+    } else {
+      return;
+    }
+  },[isInApp]);
+
+
   useEffect(() => {
     TagManager.dataLayer({
       dataLayer: {
@@ -374,6 +385,9 @@ const Register = () => {
               </div>
               <RegBtn onClick={GoRegister}>회원가입</RegBtn>
             </div>
+            <p className="LoginLink">
+                라이팅젤 회원이신가요? <Link to='/login'>로그인</Link>
+              </p>
             <div style={{ textAlign: "center", margin: "20px 0 25px 0" }}>
               <div
                 style={{
@@ -389,6 +403,7 @@ const Register = () => {
             </div>
             <div className='signBox'>
               <div className='SnsSignBox'>
+              {!isInApp &&
                 <button
                   className='googleButton'
                   name='Google'
@@ -397,7 +412,7 @@ const Register = () => {
                   <Google color='plain' />
                   구글로 시작하기
                 </button>
-
+}
                 <button
                   className='facebookButton'
                   name='Facebook'
@@ -406,9 +421,7 @@ const Register = () => {
                   <FacebookOption color='plain' /> 페이스북으로 시작하기
                 </button>
               </div>
-              <p>
-                회원이신가요? <Link to='/login'>로그인</Link>
-              </p>
+
             </div>
           </Box>
         </Box>
