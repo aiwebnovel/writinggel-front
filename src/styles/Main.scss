@@ -10,13 +10,249 @@ $white-1 : #fff;
 $white-2 : #f9f9f9;
 $dark-1 : #444;
 $red: #f45752;
-// Home , /Main 쪽 파일들(Membership 폴더 제외)
+
 
 //공통
 
 .BoxContainer {
     width: 100%;
     height: 100%;
+}
+
+//Login
+
+.LoginContainer,
+.RegisterContainer,
+.WelcomeContainer {
+    width: 100%;
+    height: 100%;
+    background-color: $white-2;
+
+    @media screen and (max-width: 1024px) {
+        height: 100vh;
+    }
+
+    @media screen and (max-width: 680px) {
+        height: 100%;
+    }
+}
+
+.LoginBox {
+    >div {
+        margin: 0 auto;
+        padding: 64px 15px;
+    }
+}
+
+.loginHeader {
+    background-color: #fff;
+    padding: 10px 20px;
+    border-bottom: 1px solid #ededed;
+
+    >a>img {
+        width: 120px;
+    }
+
+}
+
+.loginTitle {
+
+    >h2 {
+        font-size: 30px;
+        font-weight: 600;
+        line-height: 35px;
+    }
+
+
+    >p {
+        font-size: 15px;
+        margin-bottom: 35px;
+
+    }
+}
+
+
+.LoginFormField {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+
+    >div {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 10px;
+
+        >label {
+            margin-bottom: 3px;
+        }
+
+        >input {
+            background-color: $white-1;
+            padding: 8px 0px 8px 10px;
+            border: 1px solid $dark-1;
+            padding: 8px 10px;
+            border-radius: 5px;
+            height: 40px;
+        }
+    }
+}
+
+
+.RegiLink  {
+    font-size: 14px;
+    text-align: center;
+
+    >a {
+        text-decoration: underline;
+
+        &:hover {
+            font-weight: 600;
+        }
+    }
+}
+
+
+.isChecked {
+    >p {
+        font-size: 14px;
+
+        >a {
+            text-decoration: underline;
+
+            &:hover {
+                font-weight: 600;
+            }
+        }
+    }
+}
+
+.signBox {
+    text-align: center;
+    margin-bottom: 10px;
+
+    >p {
+        font-size: 15px;
+        margin-top: 10px;
+
+        >a {
+            font-weight: 600;
+            cursor: pointer;
+        }
+    }
+}
+
+.SnsSignBox {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    >button {
+        box-shadow: $boxShadow;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        padding: 10px 15px;
+    }
+
+    >p {
+        font-size: 13px;
+        color: gray;
+    }
+}
+
+
+.googleButton,
+.facebookButton {
+    cursor: pointer;
+    border: 0;
+    outline: 0;
+    transition: all 300ms ease;
+    font-size: 15px;
+
+    &:hover {
+        box-shadow: rgba(0, 0, 0, 0.06) 0px 2px 4px 0px inset;
+    }
+
+}
+
+.googleButton {
+    background-color: $white-1;
+    color: $dark-1;
+
+    >svg {
+        background-color: transparent;
+    }
+}
+
+.facebookButton {
+    background-color: #3d5a97;
+    color: $white-1;
+
+}
+
+
+//Register
+
+.RegBox {
+    >div {
+        margin: 0 auto;
+        padding: 64px 18px;
+    }
+}
+
+.RegTitle {
+
+    >h2 {
+        font-size: 30px;
+        font-weight: 600;
+        line-height: 40px;
+    }
+
+
+    >p {
+        font-size: 15px;
+        margin-bottom: 35px;
+
+    }
+}
+
+.RegFormField {
+    display: flex;
+    flex-direction: column;
+
+
+    > div {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 10px;
+
+        > p {
+            font-size: 13px;
+        }
+
+        >label {
+            margin-bottom: 3px;
+        }
+
+        >input {
+            background-color: $white-1;
+            padding: 8px 0px 8px 10px;
+            border: 1px solid $dark-1;
+            padding: 8px 10px;
+            border-radius: 5px;
+            height: 40px;
+        }
+    }
+}
+
+
+.RegCorrect {
+    color: #ff9300;
+}
+
+.RegIncorrect {
+    color: red;
 }
 
 
@@ -32,7 +268,7 @@ $red: #f45752;
     // overflow: hidden;
 
     @media screen and (max-width: 768px) {
-        
+
         padding: 60px 30px;
         justify-content: center;
         /* word-break: keep-all; */
@@ -130,8 +366,8 @@ $red: #f45752;
         max-width: 500px;
         // list-style-type: disc;
         margin-top: 20px;
-        
-        > li {
+
+        >li {
             font-family: "NeoDunggeunmo";
             font-size: 14px;
         }
@@ -426,7 +662,7 @@ $red: #f45752;
 .LetterBox {
     padding: 150px 0;
 
-    @media screen and (max-width:768px){
+    @media screen and (max-width:768px) {
         padding-right: 20px;
         padding-left: 20px;
     }
@@ -439,50 +675,51 @@ $red: #f45752;
     flex-direction: column;
     align-items: center;
 
-    > img {
-    width: 250px;
-    margin : 35px 0;
+    >img {
+        width: 250px;
+        margin: 35px 0;
 
-    @media screen and (max-width: 768px) {
-        width: 200px;
+        @media screen and (max-width: 768px) {
+            width: 200px;
+        }
     }
-}
 }
 
 .speech {
     position: relative;
-	background: $sub2;
-	border-radius: .4em;
+    background: $sub2;
+    border-radius: .4em;
     padding: 15px;
 
-    > h2 {
+    >h2 {
         font-family: 'NeoDunggeunmo';
         text-align: center;
 
     }
 
     &::after {
-    content: '';
-	position: absolute;
-	bottom: 0;
-	left: 50%;
-	width: 0;
-	height: 0;
-	border: 20px solid transparent;
-	border-top-color: $sub2;
-	border-bottom: 0;
-	margin-left: -20px;
-	margin-bottom: -20px;
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        width: 0;
+        height: 0;
+        border: 20px solid transparent;
+        border-top-color: $sub2;
+        border-bottom: 0;
+        margin-left: -20px;
+        margin-bottom: -20px;
     }
 }
 
 .FormInputs {
 
-    max-width: 400px;    
+    max-width: 400px;
     width: 100%;
-    > p{
+
+    >p {
         font-size: 13px;
-        color : $point;
+        color: $point;
     }
 
     >input {
@@ -491,8 +728,8 @@ $red: #f45752;
         padding: 10px 5px;
         font-size: 1rem;
         border: 1px solid #051619;
-        margin:0;
-    
+        margin: 0;
+
         // @media screen and (max-width:768px) {
         //     width: 300px;
         // }
@@ -511,7 +748,7 @@ $red: #f45752;
 }
 
 .incorrect {
-color : red;
+    color: red;
 }
 
 .CheckSubs {
@@ -545,9 +782,9 @@ color : red;
 }
 
 .error {
-    background-color : #f9f9f9;
-    border: 1px solid  #444;
-    color : #444;
+    background-color: #f9f9f9;
+    border: 1px solid #444;
+    color: #444;
     cursor: pointer;
 
     outline: 0;
@@ -560,18 +797,18 @@ color : red;
 .PrevLetter {
     padding: 40px 0;
 
-    > div > a {
-        background-color : $sub2;
-        border:1px solid $sub2;
+    >div>a {
+        background-color: $sub2;
+        border: 1px solid $sub2;
         border-radius: 5px;
         padding: 10px 15px;
         transition: all 300ms ease-in-out;
 
         &:hover {
-        background-color : $point;
-        border:1px solid $point;
+            background-color: $point;
+            border: 1px solid $point;
 
-        font-weight: 600;
+            font-weight: 600;
         }
     }
 }
@@ -608,7 +845,9 @@ color : red;
     }
 
     @media screen and (max-width: 768px) {
-        >h2, h3 {
+
+        >h2,
+        h3 {
             font-size: 20px;
         }
     }
@@ -644,8 +883,7 @@ color : red;
     }
 
     .EmailInput,
-    .PhoneInput
-    {   
+    .PhoneInput {
         background-color: $white-1;
         padding: 10px 8px;
         border: 1px solid #444;
@@ -806,7 +1044,7 @@ color : red;
     border: 1px solid $main;
     cursor: pointer;
     min-height: 200px;
-    transition: all 300ms ease-in-out;    
+    transition: all 300ms ease-in-out;
 
     @media screen and (max-width: 768px) {
         width: 100%;
@@ -823,40 +1061,41 @@ color : red;
     background-color: #fff;
     display: flex;
     justify-content: space-between;
-    
+
     padding: 0 3px 0 8px;
 
-    > p {
+    >p {
         padding: 5px;
     }
 
-    > span {
-        font-size : 15px;
+    >span {
+        font-size: 15px;
     }
 }
 
 .MemCardBody {
     padding: 30px 20px;
-    
-    > h3, h4 {
+
+    >h3,
+    h4 {
         font-weight: 600;
     }
 
-    > h3 {
+    >h3 {
         font-size: 25px;
         text-decoration: underline;
         margin-bottom: 20px;
     }
 
-    > h4{
+    >h4 {
         font-size: 23px;
     }
 
-    > p {
-    
+    >p {
+
         >span {
             text-decoration: line-through;
-           
+
         }
     }
 
@@ -871,8 +1110,8 @@ hr {
     padding: 120px 48px;
     max-width: 1020px;
 
-    > h2 {
-        
+    >h2 {
+
         font-size: 1.2rem;
         display: flex;
         flex-direction: column;
@@ -880,8 +1119,8 @@ hr {
         gap: 15px;
         font-weight: 600;
         padding-bottom: 20px;
-        border-bottom : 1px solid $dark-1;
-        margin-bottom : 15px;
+        border-bottom: 1px solid $dark-1;
+        margin-bottom: 15px;
     }
 
     @media screen and (max-width: 680px) {
@@ -909,7 +1148,7 @@ hr {
 .SignInHeader {
     padding: 48px;
 
-    > h3 {
+    >h3 {
         font-size: 1.3rem;
     }
 }
@@ -947,40 +1186,41 @@ hr {
     justify-content: space-between;
     padding: 0 3px 0 8px;
 
-    > p {
+    >p {
         padding: 5px;
     }
 
-    > span {
-        font-size : 15px;
+    >span {
+        font-size: 15px;
     }
 }
 
 .SignMemCardBody {
-   
-   width: 200px;
-   padding: 30px 20px;
 
-  
-    > h3, h4 {
+    width: 200px;
+    padding: 30px 20px;
+
+
+    >h3,
+    h4 {
         font-weight: 600;
     }
 
-    > h3 {
+    >h3 {
         font-size: 25px;
         text-decoration: underline;
         margin-bottom: 20px;
     }
 
-    > h4{
+    >h4 {
         font-size: 23px;
     }
 
-    > p {
+    >p {
 
         >span {
             text-decoration: line-through;
-        
+
         }
     }
 
@@ -1105,7 +1345,7 @@ hr {
 
 .unSubText {
     text-align: center;
-    margin-bottom : 15px;
+    margin-bottom: 15px;
 }
 
 .unSubBtn {
@@ -1113,16 +1353,16 @@ hr {
     justify-content: center;
     align-items: center;
     gap: 10px;
-    
-    > button:first-child {
-        background-color : $main;
+
+    >button:first-child {
+        background-color: $main;
         border: 1px solid $main;
         padding: 8px 15px;
         color: $white-1;
         cursor: pointer;
     }
 
-    > button:nth-child(2) {
+    >button:nth-child(2) {
         background-color: $red;
         border: 1px solid $red;
         padding: 8px 15px;
@@ -1181,11 +1421,11 @@ hr {
         font-weight: 600;
     }
 
-    > div {
-        > button {
+    >div {
+        >button {
             background-color: $sub2;
             margin-left: 10px;
-            border:1px solid $sub2;
+            border: 1px solid $sub2;
             border-radius: 5px;
             padding: 5px 8px;
             outline: 0;
@@ -1193,7 +1433,7 @@ hr {
             cursor: pointer;
             transition: all 300ms ease-in-out;
 
-            &:hover{
+            &:hover {
                 background-color: $sub1;
                 border: 1px solid $sub1;
             }
@@ -1204,8 +1444,8 @@ hr {
             gap: 10px;
             margin-left: 8px;
 
-            > button {
-                margin:0;
+            >button {
+                margin: 0;
                 font-size: 13px;
             }
         }
@@ -1345,8 +1585,8 @@ hr {
     transition: all 300ms ease-in-out;
 
     &:hover {
-        background-color:  #f45752;
-        border: 1px solid  #f45752;
+        background-color: #f45752;
+        border: 1px solid #f45752;
     }
 }
 
@@ -1366,8 +1606,8 @@ hr {
     padding: 215px 64px;
 
     @media screen and (max-width: 768px) {
-        padding-right:24px;
-        padding-left:24px;
+        padding-right: 24px;
+        padding-left: 24px;
     }
 }
 
@@ -1380,47 +1620,47 @@ hr {
 
 .titleAbutton {
     gap: 5px;
- 
-    > h3 {
+
+    >h3 {
         font-weight: 600;
         width: 120px;
         font-size: 17px;
         text-align: center;
 
     }
-    
-    > div {
+
+    >div {
         // width: 100%;
         display: flex;
         flex-direction: column;
         align-items: center;
         gap: 5px;
-        
-    > button {
-        padding: 2px 8px;
-        cursor: pointer;
-        font-size: 14px;
-        background-color: $point;
-        border: 1px solid $point;
-        color: #000;
 
-        &:hover {
-            background-color: $sub2;
-            border: 1px solid $sub2;
-            
+        >button {
+            padding: 2px 8px;
+            cursor: pointer;
+            font-size: 14px;
+            background-color: $point;
+            border: 1px solid $point;
+            color: #000;
+
+            &:hover {
+                background-color: $sub2;
+                border: 1px solid $sub2;
+
+            }
         }
-    }
 
     }
 
     @media screen and (max-width: 768px) {
         justify-content: space-between;
 
-        > div {
+        >div {
             flex-direction: row;
         }
 
-        > h3 {
+        >h3 {
             text-align: left;
         }
     }
@@ -1432,15 +1672,16 @@ hr {
     padding: 18px 15px;
     background-color: $sub2;
     border-bottom: 1px solid $dark-1;
-    display:flex;
+    display: flex;
     align-items: center;
     gap: 10px;
+
     // justify-content: space-between;
-    > h3 {
+    >h3 {
         font-weight: 600;
     }
 
-    > p {
+    >p {
         font-size: 15px;
     }
 
@@ -1451,14 +1692,14 @@ hr {
 
 .SaveContent {
     max-width: 700px;
-    
+
 }
 
 
 .tingNoContent {
 
 
-    > div {
+    >div {
         text-align: center;
 
         >img {
@@ -1473,7 +1714,7 @@ hr {
         }
     }
 
-    > a > button {
+    >a>button {
         border: 1px solid $sub1;
         background-color: $sub1;
         color: $white-2;
@@ -1492,8 +1733,8 @@ hr {
 
 //payDone
 
-.DoneContainer{
-    width:100%;
+.DoneContainer {
+    width: 100%;
     height: 100vh;
 
     @media screen and (max-width: 768px) {
@@ -1503,24 +1744,29 @@ hr {
 
 .DoneBox {
     //padding: 180px 0;
-    display:flex;
+    display: flex;
     flex-direction: column;
-    gap: 50px;
+    gap: 30px;
 }
 
 .DoneText {
     text-align: center;
 
-    > h2 {
+    >h2 {
         font-size: 35px;
         font-weight: 600;
         margin-bottom: 15px;
     }
 
+    > h3, h4 {
+        font-size: 18px;
+        line-height: 30px;
+    }
+
 
     @media screen and (max-width: 768px) {
-         > h2 {
-             font-size : 1.2rem;
+        >h2 {
+            font-size: 1.2rem;
         }
     }
 
@@ -1529,17 +1775,18 @@ hr {
 .DoneButton {
     text-align: center;
 
-    > button:first-child {
+    >button:first-child {
         background-color: $main;
         border: 1px solid $main;
-        color : $white-1;
+        color: $white-1;
         font-size: 20px;
         margin-right: 15px;
         padding: 5px 25px;
         cursor: pointer;
 
     }
-    > button:nth-child(2) {
+
+    >button:nth-child(2) {
         background-color: $white-2;
         border: 1px solid $dark-1;
         font-size: 20px;
@@ -1555,12 +1802,12 @@ hr {
         justify-content: center;
         gap: 15px;
 
-        > button {
+        >button {
             width: 100%
         }
 
-        > button:first-child {
-            margin:0;
+        >button:first-child {
+            margin: 0;
         }
     }
 }

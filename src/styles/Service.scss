@@ -147,7 +147,7 @@ $boxShadow : rgb(237 237 237) 2px 3px 8px;
         animation-iteration-count: infinite;
 
         >img {
-            width: 300px;
+            width: 250px;
         }
 
         >p {
@@ -168,6 +168,28 @@ $boxShadow : rgb(237 237 237) 2px 3px 8px;
             transform: translateY(0px);
         }
     }
+
+}
+
+.SmallLodingBox {
+    z-index: 3;
+    font-family: 'NeoDunggeunmo';
+    // background: rgb(255, 206, 31, 0.9);
+    background: rgb(255, 245, 242, 0.9);
+    display: none;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 99;
+
+    >div {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+
 
 }
 
