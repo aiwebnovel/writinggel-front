@@ -56,7 +56,7 @@ const Header = () => {
           headers: { authentication: check },
         })
         .then((response) => {
-          // console.log('previus', profile);
+          
           SetProfile({
             ...profile,
             userName:  response.data.name,
@@ -73,8 +73,8 @@ const Header = () => {
         })
         .catch((error) => {
           if(error.response.status === 412) {
-            //toast.error('새로고침하거나 다시 로그인 해주세요!') 
-            window.location.reload();  
+            toast.error('새로고침하거나 다시 로그인 해주세요!') 
+            //window.location.reload();  
           }
           // toast.error(error.message);
         });
