@@ -45,7 +45,7 @@ const Businessitem = () => {
       const config = {
         method: "post",
         url: `${configUrl.SERVER_URL}/writinggel/businessitem`,
-        headers: { authentication: localStorage.getItem("token") },
+        headers: { authentication: sessionStorage.getItem("token") },
         data: { story: input },
       };
 
@@ -83,7 +83,7 @@ const Businessitem = () => {
       const config = {
         method: "post",
         url: `${configUrl.SERVER_URL}/archive`,
-        headers: { authentication: localStorage.getItem("token") },
+        headers: { authentication: sessionStorage.getItem("token") },
         data: {
           story: output,
           category: "비즈니스 아이템",
@@ -123,12 +123,12 @@ const Businessitem = () => {
 
 
   useEffect(() => {
-    const loginCheck = localStorage.getItem("token");
+    const loginCheck = sessionStorage.getItem("token");
 
     if (loginCheck !== null) {
       axios
         .get(`${configUrl.SERVER_URL}/profile`, {
-          headers: { authentication: localStorage.getItem("token") },
+          headers: { authentication: sessionStorage.getItem("token") },
         })
         .then((res) => {
           let count = res.data.membership_count;

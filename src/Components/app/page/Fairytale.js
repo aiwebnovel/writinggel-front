@@ -100,7 +100,7 @@ const Fairytale = () => {
       const config = {
         method: "post",
         url: `${configUrl.SERVER_URL}/writinggel/fairytale`,
-        headers: { authentication: localStorage.getItem("token") },
+        headers: { authentication: sessionStorage.getItem("token") },
         data: {
           Story: "",
           Time: category.period,
@@ -158,7 +158,7 @@ const Fairytale = () => {
       const config = {
         method: "post",
         url: `${configUrl.SERVER_URL}/writinggel/fairytale`,
-        headers: { authentication: localStorage.getItem("token") },
+        headers: { authentication: sessionStorage.getItem("token") },
         data: {
           Story: Output[0],
           Time: category.period,
@@ -213,7 +213,7 @@ const Fairytale = () => {
       const config = {
         method: "post",
         url: `${configUrl.SERVER_URL}/archive`,
-        headers: { authentication: localStorage.getItem("token") },
+        headers: { authentication: sessionStorage.getItem("token") },
         data: {
           story: Output[0],
           category: "동화",
@@ -271,12 +271,12 @@ const Fairytale = () => {
   },[])
 
   useEffect(() => {
-    const loginCheck = localStorage.getItem("token");
+    const loginCheck = sessionStorage.getItem("token");
 
     if (loginCheck !== null) {
       axios
         .get(`${configUrl.SERVER_URL}/profile`, {
-          headers: { authentication: localStorage.getItem("token") },
+          headers: { authentication: sessionStorage.getItem("token") },
         })
         .then((res) => {
           let count = res.data.membership_count;

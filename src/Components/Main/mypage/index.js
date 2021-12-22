@@ -35,12 +35,12 @@ const Mypage = () => {
   const { isBill, userName, plan, stopPay, email, create, billStart,  exp} = profile;
 
   const signOut = async () => {
-    await localStorage.removeItem("token");
-    await localStorage.removeItem("email");
-    await localStorage.removeItem("userUid");
-    await localStorage.removeItem("plan");
-    await localStorage.removeItem("isBill");
-    await localStorage.removeItem("create");
+    await sessionStorage.removeItem("token");
+    await sessionStorage.removeItem("email");
+    await sessionStorage.removeItem("userUid");
+    await sessionStorage.removeItem("plan");
+    await sessionStorage.removeItem("isBill");
+    await sessionStorage.removeItem("create");
 
     await authService.signOut();
     window.location.reload();
@@ -56,11 +56,11 @@ const Mypage = () => {
       const config = {
         method: "delete",
         url: `${configUrl.SERVER_URL}/pay`,
-        headers: { authentication: localStorage.getItem("token") },
+        headers: { authentication: sessionStorage.getItem("token") },
       };
       axios(config)
         .then((response) => {
-          localStorage.setItem('isBill', false)
+          sessionStorage.setItem('isBill', false)
           //console.log(response);
           toast.success(response.data.log, {
             style: { backgroundColor: "#fff", color: "#000" },
@@ -89,9 +89,9 @@ const Mypage = () => {
   },[])
 
   useEffect(() => {
-    const loginCheck = localStorage.getItem("token");
-    const email = localStorage.getItem("email");
-    const create = localStorage.getItem("create");
+    const loginCheck = sessionStorage.getItem("token");
+    const email = sessionStorage.getItem("email");
+    const create = sessionStorage.getItem("create");
     
     if (loginCheck !== null) {
       axios
@@ -136,7 +136,7 @@ const Mypage = () => {
         authService.currentUser
           .getIdToken()
           .then(async (data) => {
-            await localStorage.setItem("token", data);
+            await sessionStorage.setItem("token", data);
 
           })
           .catch(async (error) => {
@@ -168,7 +168,7 @@ const Mypage = () => {
           <Box className='UserContent'>
             <div className='dataBox'>
               <p>이름</p>
-              <p>{userName ? `${userName}님`: `${email.split('@')[0]}님` }</p>
+              <p>{userName ? `${userName}님`: `${sessionStorage.getItem('userName')}님` }</p>
             </div>
             <div className='dataBox'>
               <p>아이디</p>

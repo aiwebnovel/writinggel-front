@@ -54,7 +54,7 @@ const BlogKeyword = () => {
   };
 
   const Requestkeywords = async () => {
-    if (localStorage.getItem("token") !== null) {
+    if (sessionStorage.getItem("token") !== null) {
       if (count === 0 && isBill === false) {
         SetCountModal(true);
       } else {
@@ -67,7 +67,7 @@ const BlogKeyword = () => {
         SetLoading(true);
         await axios
           .get(`${configUrl.SERVER_URL}/keyword/${blogKeyword}`, {
-            headers: { authentication: localStorage.getItem("token") },
+            headers: { authentication: sessionStorage.getItem("token") },
           })
           .then(async (response) => {
             //console.log(response.data.list);
@@ -89,7 +89,7 @@ const BlogKeyword = () => {
                 style: { backgroundColor: "#fff", color: "#000" },
                 progressStyle: { backgroundColor: "#7D4CDB" },
               });
-              localStorage.removeItem("token");
+              sessionStorage.removeItem("token");
             }
 
             if (error.response.status === 500) {
@@ -111,14 +111,14 @@ const BlogKeyword = () => {
   };
 
   const SaveContent = async () => {
-    console.log(keywordOutput);
+    //console.log(keywordOutput);
     let stringKeyword = String(keywordOutput);
 
     if (keywordOutput) {
       const config = {
         method: "post",
         url: `${configUrl.SERVER_URL}/archive`,
-        headers: { authentication: localStorage.getItem("token") },
+        headers: { authentication: sessionStorage.getItem("token") },
         data: {
           story: stringKeyword,
           category: "블로그 키워드",
@@ -159,12 +159,12 @@ const BlogKeyword = () => {
   },[])
 
   useEffect(() => {
-    const loginCheck = localStorage.getItem("token");
+    const loginCheck = sessionStorage.getItem("token");
 
     if (loginCheck !== null) {
       axios
         .get(`${configUrl.SERVER_URL}/profile`, {
-          headers: { authentication: localStorage.getItem("token") },
+          headers: { authentication: sessionStorage.getItem("token") },
         })
         .then((res) => {
          

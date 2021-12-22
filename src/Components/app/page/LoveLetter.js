@@ -73,7 +73,7 @@ const LoveLetter = () => {
       const config = {
         method: "post",
         url: `${configUrl.SERVER_URL}/writinggel/mbti`,
-        headers: { authentication: localStorage.getItem("token") },
+        headers: { authentication: sessionStorage.getItem("token") },
         data: { from: UserMbti, to: LoverMbti },
       };
 
@@ -118,7 +118,7 @@ const LoveLetter = () => {
       const config = {
         method: "post",
         url: `${configUrl.SERVER_URL}/archive`,
-        headers: { authentication: localStorage.getItem("token") },
+        headers: { authentication: sessionStorage.getItem("token") },
         data: {
           story: LoveLetter.LoveKor,
           category: "MBTI 연애편지",
@@ -164,12 +164,12 @@ const LoveLetter = () => {
   },[])
 
   useEffect(() => {
-    const loginCheck = localStorage.getItem("token");
+    const loginCheck = sessionStorage.getItem("token");
 
     if (loginCheck !== null) {
       axios
         .get(`${configUrl.SERVER_URL}/profile`, {
-          headers: { authentication: localStorage.getItem("token") },
+          headers: { authentication: sessionStorage.getItem("token") },
         })
         .then((res) => {
       

@@ -59,7 +59,7 @@ const SignMember = () => {
   };
 
   const HandleNumber = (e) => {
-    console.log(e.target.value, e.target.name);
+    //console.log(e.target.value, e.target.name);
     if (isNaN(e.target.value) === false) {
       SetNumber({ ...userNumber, [e.target.name]: e.target.value });
     } else {
@@ -73,7 +73,7 @@ const SignMember = () => {
 
   // 결제 post
   const RequestBill = async () => {
-    let user = await localStorage.getItem("token");
+    let user = await sessionStorage.getItem("token");
     //console.log(Price, Plan);
     if (user !== null) {
       if (selected1 === false && selected2 === false && selected3 === false) {
@@ -101,7 +101,7 @@ const SignMember = () => {
           idNum: idNum, //주민번호 앞 6 자리
           mid: "pgapppla1m", //상점 아이디
           moid: moidNum, //가맹점 주문번호,
-          userId: (await localStorage.getItem("userUid")) + Math.random(),
+          userId: (await sessionStorage.getItem("userUid")) + Math.random(),
         };
         // console.log(option);
         await axios
@@ -109,7 +109,7 @@ const SignMember = () => {
           .then(async (response) => {
             let data = response.data;
             // console.log("test", data);
-            await localStorage.setItem("moid", data.moid);
+            await sessionStorage.setItem("moid", data.moid);
 
             if (data.resultCode === "F112") {
               toast.error(`error : ${data.resultMsg}!`);
@@ -133,7 +133,7 @@ const SignMember = () => {
               const config = {
                 method: "post",
                 url: `${configUrl.SERVER_URL}/pay`,
-                headers: { authentication: localStorage.getItem("token") },
+                headers: { authentication: sessionStorage.getItem("token") },
                 data: {
                   billKey: key,
                   plan: plans,

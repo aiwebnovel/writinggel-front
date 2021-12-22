@@ -38,7 +38,7 @@ const NewsLetter = () => {
       const config = {
         method: "post",
         url: `https://veryshort.best:5051/api/v1/newsletter?email=${Email}&name=${Name}`,
-        headers: { authentication: localStorage.getItem("token") },
+        headers: { authentication: sessionStorage.getItem("token") },
       };
 
       await axios(config)

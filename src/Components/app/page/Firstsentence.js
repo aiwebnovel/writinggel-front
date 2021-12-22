@@ -42,7 +42,7 @@ const Firstsentence = () => {
         const config = {
           method: "post",
           url: `${configUrl.SERVER_URL}/writinggel/firstsentence`,
-          headers: { authentication: localStorage.getItem("token") },
+          headers: { authentication: sessionStorage.getItem("token") },
         };
 
         await axios(config)
@@ -101,7 +101,7 @@ const Firstsentence = () => {
       const config = {
         method: "post",
         url: `${configUrl.SERVER_URL}/archive`,
-        headers: { authentication: localStorage.getItem("token") },
+        headers: { authentication: sessionStorage.getItem("token") },
         data: {
           story: KorOutput,
           category: "첫문장 자판기",
@@ -141,12 +141,12 @@ const Firstsentence = () => {
 
 
   useEffect(() => {
-    const loginCheck = localStorage.getItem("token");
+    const loginCheck = sessionStorage.getItem("token");
 
     if (loginCheck !== null) {
       axios
         .get(`${configUrl.SERVER_URL}/profile`, {
-          headers: { authentication: localStorage.getItem("token") },
+          headers: { authentication: sessionStorage.getItem("token") },
         })
         .then((res) => {
           let count = res.data.membership_count;
@@ -235,7 +235,8 @@ const RandomBtn = styled.button`
   padding: 8px 15px;
   width: 500px;
   font-size: 1rem;
-
+  color: #444;
+  
   @media screen and (max-width: 680px) {
     width: 80%;
   }

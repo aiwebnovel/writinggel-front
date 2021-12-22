@@ -69,7 +69,7 @@ const BlogIdea = () => {
       const config = {
         method: "post",
         url: `${configUrl.SERVER_URL}/archive`,
-        headers: { authentication: localStorage.getItem("token") },
+        headers: { authentication: sessionStorage.getItem("token") },
         data: {
           story: outputKorean,
           category: "블로그 아이디어",
@@ -100,14 +100,14 @@ const BlogIdea = () => {
   };
 
   const requestcontents = async () => {
-    if (localStorage.getItem("token") !== null) {
+    if (sessionStorage.getItem("token") !== null) {
       if (count === 0 && isBill === false) {
         SetCountModal(true);
       } else {
         let story = input;
 
         const date = new Date();
-        let time = localStorage.getItem("time");
+        let time = sessionStorage.getItem("time");
 
         if (time !== undefined && time !== null && time !== "") {
           const timeD = -(Date.parse(time) - date.getTime());
@@ -119,7 +119,7 @@ const BlogIdea = () => {
             return;
           }
         }
-        localStorage.setItem("time", date);
+        sessionStorage.setItem("time", date);
 
         if (story === " " || story === "") {
           toast.warn(`키워드를 입력해 주세요!`);
@@ -133,7 +133,7 @@ const BlogIdea = () => {
               story: story,
             },
             {
-              headers: { authentication: localStorage.getItem("token") },
+              headers: { authentication: sessionStorage.getItem("token") },
             }
           )
           .then(async (response) => {
@@ -177,7 +177,7 @@ const BlogIdea = () => {
                 style: { backgroundColor: "#fff", color: "#000" },
                 progressStyle: { backgroundColor: "#7D4CDB" },
               });
-              localStorage.removeItem("token");
+              sessionStorage.removeItem("token");
             }
           })
           .finally(() => {
@@ -206,12 +206,12 @@ const BlogIdea = () => {
 
 
   useEffect(() => {
-    const loginCheck = localStorage.getItem("token");
+    const loginCheck = sessionStorage.getItem("token");
 
     if (loginCheck !== null) {
       axios
         .get(`${configUrl.SERVER_URL}/profile`, {
-          headers: { authentication: localStorage.getItem("token") },
+          headers: { authentication: sessionStorage.getItem("token") },
         })
         .then((res) => {
         

@@ -70,16 +70,6 @@ const Modify = () => {
           toast.error("이름을 수정할 수 없습니다!");
         });
 
-      // await updateEmail(auth.currentUser, userEmail)
-      //   .then(() => {
-      //     console.log("email updated!");
-      //     localStorage.setItem("email", userEmail);
-      //   })
-      //   .catch((error) => {
-      //     console.log(error);
-      //     toast.error("이메일을 수정할 수 없습니다!");
-      //     SetLoading(false);
-      //   });
       await toast.info('재인증을 위해 로그인을 다시 해주세요!');
       await ReAuthProfile();
       SetLoading(false);
@@ -151,7 +141,7 @@ const Modify = () => {
       deleteUser(user)
         .then(async () => {
           // User deleted.
-          console.log("탈퇴 되었습니다!");
+          //console.log("탈퇴 되었습니다!");
           await signOut();
           setTimeout(toast.success("탈퇴 되었습니다!"), 5000);
         })
@@ -164,19 +154,7 @@ const Modify = () => {
   };
 
   const signOut = async () => {
-await localStorage.removeItem("token");
-    await localStorage.removeItem("email");
-    await localStorage.removeItem("userUid");
-    await localStorage.removeItem("plan");
-    await localStorage.removeItem("isBill");
-    await localStorage.removeItem("create");
-    await localStorage.removeItem("exp");
-    await localStorage.removeItem("moid");
-    await localStorage.removeItem("time");
-    await localStorage.removeItem("userName");
-    await localStorage.removeItem("userImage");
-    await localStorage.removeItem("provider");
-
+    await sessionStorage.clear();
     await authService.signOut();
     window.location.reload();
   };
@@ -196,8 +174,8 @@ await localStorage.removeItem("token");
 
 
   useEffect(() => {
-    const loginCheck = localStorage.getItem("token");
-    const email = localStorage.getItem("email");
+    const loginCheck = sessionStorage.getItem("token");
+    const email = sessionStorage.getItem("email");
 
     if (loginCheck !== null) {
       axios
@@ -205,7 +183,7 @@ await localStorage.removeItem("token");
           headers: { authentication: loginCheck },
         })
         .then((response) => {
-          console.log(response.data);
+          //console.log(response.data);
           let data = response.data;
           SetProfile({
             ...Userprofile,
@@ -230,7 +208,7 @@ await localStorage.removeItem("token");
           className='MypageHeader'
         >
           <h2>
-            {localStorage.getItem("token") !== null
+            {sessionStorage.getItem("token") !== null
               ? "회원 정보 수정"
               : "회원정보가 없습니다!"}
           </h2>
@@ -268,14 +246,14 @@ await localStorage.removeItem("token");
               type='submit'
               className='MBtn'
               onClick={
-                localStorage.getItem("token") !== null
+                sessionStorage.getItem("token") !== null
                   ? ModifyUser
                   : () => {
                       toast.error("로그인 해주세요!");
                     }
               }
             >
-              {localStorage.getItem("token") !== null
+              {sessionStorage.getItem("token") !== null
                 ? "회원정보 수정"
                 : "회원정보 없음"}
             </button>

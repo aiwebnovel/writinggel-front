@@ -10,6 +10,8 @@ import {
   getAuth,
   createUserWithEmailAndPassword,
   updateProfile,
+  setPersistence,
+  browserSessionPersistence,
 } from "@firebase/auth";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -183,10 +185,11 @@ const Register = () => {
       SetLoading(true);
       let provider = new firebaseInstance.auth.FacebookAuthProvider();
 
-      await authService
-        .signInWithPopup(provider)
+      setPersistence(authService, browserSessionPersistence)
+      .then(async()=>{
+        await authService.signInWithPopup(provider)
         .then(async (dataFacebook) => {
-          console.log(dataFacebook);
+          //console.log(dataFacebook);
 
           let credentials = dataFacebook.credential;
           let user = dataFacebook.user;
@@ -198,12 +201,12 @@ const Register = () => {
           let userPhoto = user.photoURL;
           //console.log('result',credentials, email,create,token, id);
 
-          await localStorage.setItem("token", token);
-          await localStorage.setItem("email", email);
-          await localStorage.setItem("create", create);
-          await localStorage.setItem("provider", providerId);
-          await localStorage.setItem("userName", username);
-          await localStorage.setItem("userImage", userPhoto);
+          await sessionStorage.setItem("token", token);
+          await sessionStorage.setItem("email", email);
+          await sessionStorage.setItem("create", create);
+          await sessionStorage.setItem("provider", providerId);
+          await sessionStorage.setItem("userName", username);
+          await sessionStorage.setItem("userImage", userPhoto);
 
           SetLoading(false);
           setTimeout(History.replace("/"), 3000);
@@ -218,13 +221,19 @@ const Register = () => {
             SetLoading(false);
           }
         });
+      })
+      .catch((error)=>{
+        console.log(error);
+        SetLoading(false);
+      })
     } else if (name === "Google") {
       SetLoading(true);
       let provider = new firebaseInstance.auth.GoogleAuthProvider();
-      //await authService.signInWithRedirect(provider)
-      await authService
-        .signInWithPopup(provider)
+       setPersistence(authService, browserSessionPersistence)
+      .then(async()=>{
+        await authService.signInWithPopup(provider)
         .then(async (dataGoogle) => {
+          //console.log(dataGoogle);
           let credential = dataGoogle.credential;
           let user = dataGoogle.user;
 
@@ -235,12 +244,12 @@ const Register = () => {
           let username = user.displayName;
           let userPhoto = user.photoURL;
 
-          await localStorage.setItem("token", token);
-          await localStorage.setItem("email", email);
-          await localStorage.setItem("create", create);
-          await localStorage.setItem("provider", providerId);
-          await localStorage.setItem("userName", username);
-          await localStorage.setItem("userImage", userPhoto);
+          await sessionStorage.setItem("token", token);
+          await sessionStorage.setItem("email", email);
+          await sessionStorage.setItem("create", create);
+          await sessionStorage.setItem("provider", providerId);
+          await sessionStorage.setItem("userName", username);
+          await sessionStorage.setItem("userImage", userPhoto);
 
           SetLoading(false);
           setTimeout(History.replace("/"), 3000);
@@ -254,8 +263,14 @@ const Register = () => {
             );
             SetLoading(false);
           }
+        })
+        .catch((error)=>{
+          console.log(error);
+          SetLoading(false);
         });
+        
     }
+      )}
   };
 
   useEffect(()=>{
