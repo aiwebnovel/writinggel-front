@@ -51,7 +51,7 @@ const TingBox = () => {
       const config = {
         method: "delete",
         url: `${configUrl.SERVER_URL}/archive/${uid}`,
-        headers: { authentication: localStorage.getItem("token") },
+        headers: { authentication: sessionStorage.getItem("token") },
         data: { uid: uid },
       };
 
@@ -79,12 +79,11 @@ const TingBox = () => {
     const config = {
       method: "get",
       url: `${configUrl.SERVER_URL}/archive`,
-      headers: { authentication: localStorage.getItem("token") },
+      headers: { authentication: sessionStorage.getItem("token") },
     };
 
     await axios(config)
       .then(async (response) => {
-        //console.log("성공?", response.data);
 
         await SetData({
           ...SaveData,
@@ -131,7 +130,7 @@ const TingBox = () => {
   },[])
   
   useEffect(() => {
-    const loginCheck = localStorage.getItem("token");
+    const loginCheck = sessionStorage.getItem("token");
 
     if (loginCheck !== null) {
       return;
@@ -153,14 +152,14 @@ const TingBox = () => {
           <h2>팅젤 보관함</h2>
         </Box>
         <Box fill className='tingContainer' justify='center' align='center'>
-          {SaveData[0] !== undefined ? (
+          {SaveData[0] !== undefined &&  SaveData[0] !== "" ? (
             <Box fill className='tingContent'>
               <div className='ListTitle'>
                 <h3>최근 저장된 콘텐츠</h3>
                 <p>_최대 10개까지 저장됩니다.</p>
               </div>
               {/* 저장 리스트 */}
-              {SaveData[0] !== undefined && (
+              {SaveData[0] !== undefined  && (
                 <SaveList fill direction={size !== "small" ? "row" : "column"}>
                   <Box
                     direction={size !== "small" ? "column" : "row"}

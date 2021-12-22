@@ -45,7 +45,7 @@ const Dailywrite = () => {
     const config = {
       method: "post",
       url: `${configUrl.SERVER_URL}/writinggel/lifequestion`,
-      headers: { authentication: localStorage.getItem("token") },
+      headers: { authentication: sessionStorage.getItem("token") },
     };
 
     await axios(config)
@@ -84,7 +84,7 @@ const Dailywrite = () => {
       const config = {
         method: "post",
         url: `${configUrl.SERVER_URL}/archive`,
-        headers: { authentication: localStorage.getItem("token") },
+        headers: { authentication: sessionStorage.getItem("token") },
         data: {
           story: OutputContent[0],
           category:'일상 기록 질문',
@@ -127,12 +127,12 @@ const Dailywrite = () => {
 
 
   useEffect(() => {
-    const loginCheck = localStorage.getItem("token");
+    const loginCheck = sessionStorage.getItem("token");
 
     if (loginCheck !== null) {
       axios
         .get(`${configUrl.SERVER_URL}/profile`, {
-          headers: { authentication: localStorage.getItem("token") },
+          headers: { authentication: sessionStorage.getItem("token") },
         })
         .then((res) => {
       

@@ -1,22 +1,9 @@
-import React, { useEffect } from "react";
-import axios from "axios";
-import { useHistory, Link } from "react-router-dom";
-import Layout from "../Components/Layout";
+import React from "react";
+import { Link } from "react-router-dom";
 import { Box } from "grommet";
 import styled from "styled-components";
 
 const Welcome = () => {
-  //const History = useHistory();
-
-//   useEffect(() => {
-//     const loginCheck = localStorage.getItem("token");
-
-//     if (loginCheck !== null) {
-//       return;
-//     } else {
-//       History.push("/");
-//     }
-//   }, []);
 
   return (
     <Box className="WelcomeContainer">

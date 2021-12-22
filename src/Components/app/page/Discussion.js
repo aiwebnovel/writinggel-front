@@ -43,7 +43,7 @@ const Discussion = () => {
         const config = {
           method: "post",
           url: `${configUrl.SERVER_URL}/archive`,
-          headers: { authentication: localStorage.getItem("token") },
+          headers: { authentication: sessionStorage.getItem("token") },
           data: {
             story: ProsOutput[0],
             category: "찬반 논거",
@@ -71,7 +71,7 @@ const Discussion = () => {
         const config = {
           method: "post",
           url: `${configUrl.SERVER_URL}/archive`,
-          headers: { authentication: localStorage.getItem("token") },
+          headers: { authentication: sessionStorage.getItem("token") },
           data: {
             story: ConsOutput[0],
             category: "찬반 논거",
@@ -114,7 +114,7 @@ const Discussion = () => {
       const config = {
         method: "post",
         url: `${configUrl.SERVER_URL}/writinggel/discussion`,
-        headers: { authentication: localStorage.getItem("token") },
+        headers: { authentication: sessionStorage.getItem("token") },
         data: { option: ProsOption, story: input },
       };
 
@@ -164,7 +164,7 @@ const Discussion = () => {
       const config = {
         method: "post",
         url: `${configUrl.SERVER_URL}/writinggel/discussion`,
-        headers: { authentication: localStorage.getItem("token") },
+        headers: { authentication: sessionStorage.getItem("token") },
         data: { option: ConsOption, story: input },
       };
 
@@ -213,12 +213,12 @@ const Discussion = () => {
   },[])
 
   useEffect(() => {
-    const loginCheck = localStorage.getItem("token");
+    const loginCheck = sessionStorage.getItem("token");
 
     if (loginCheck !== null) {
       axios
       .get(`${configUrl.SERVER_URL}/profile`, {
-        headers: { authentication: localStorage.getItem("token") },
+        headers: { authentication: sessionStorage.getItem("token") },
       })
       .then((res) => {
         let count = res.data.membership_count;

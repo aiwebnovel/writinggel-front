@@ -11,7 +11,7 @@ const Newscontent = () => {
 
 
   useEffect(() => {
-    const loginCheck = localStorage.getItem("token");
+    const loginCheck = sessionStorage.getItem("token");
 
     if (loginCheck !== null) {
       return;

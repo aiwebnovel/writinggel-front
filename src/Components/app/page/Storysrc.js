@@ -52,7 +52,7 @@ const Storysrc = () => {
       const config = {
         method: "post",
         url: `${configUrl.SERVER_URL}/archive`,
-        headers: { authentication: localStorage.getItem("token") },
+        headers: { authentication: sessionStorage.getItem("token") },
         data: {
           story: contentKor,
           category: "이야기 재료",
@@ -66,6 +66,7 @@ const Storysrc = () => {
         })
         .catch(async (error) => {
           console.log(error);
+          
 
           if (error.response.status === 403) {
             toast.error("보관함이 꽉 찼습니다!");
@@ -88,7 +89,7 @@ const Storysrc = () => {
       const config = {
         method: "post",
         url: `${configUrl.SERVER_URL}/writinggel/storysrc`,
-        headers: { authentication: localStorage.getItem("token") },
+        headers: { authentication: sessionStorage.getItem("token") },
       };
 
       await axios(config)
@@ -251,12 +252,12 @@ const Storysrc = () => {
 
 
   useEffect(() => {
-    const loginCheck = localStorage.getItem("token");
+    const loginCheck = sessionStorage.getItem("token");
 
     if (loginCheck !== null) {
       axios
         .get(`${configUrl.SERVER_URL}/profile`, {
-          headers: { authentication: localStorage.getItem("token") },
+          headers: { authentication: sessionStorage.getItem("token") },
         })
         .then((res) => {
           let count = res.data.membership_count;

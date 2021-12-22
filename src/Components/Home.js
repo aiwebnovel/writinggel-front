@@ -20,7 +20,7 @@ import TagManager from 'react-gtm-module';
 
 const Home = () => {
 
-  const check = localStorage.getItem('token');
+  const check = sessionStorage.getItem('token');
   const size = useContext(ResponsiveContext);
   const history = useHistory();
 

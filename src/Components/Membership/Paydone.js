@@ -10,49 +10,10 @@ const PayDone = () => {
 
   const History = useHistory();
 
-  const [profile, SetProfile] = useState({
-    isBill: false,
-    userName: "",
-    plan: "",
-    uid: "",
-    email: "",
-    create: "",
-  });
 
-  // const { isBill, userName, plan, uid, email, create } = profile;
-
-
-  // useEffect(() => {
-  //   const loginCheck = localStorage.getItem("token");
-  //   const email = localStorage.getItem("email");
-  //   const create = localStorage.getItem("create");
-
-  //   if (loginCheck !== null) {
-  //     axios
-  //       .get(`${configUrl.SERVER_URL}/profile`, {
-  //         headers: { authentication: loginCheck },
-  //       })
-  //       .then((response) => {
-  //         // console.log(response.data);
-  //         let data = response.data;
-  //         SetProfile({
-  //           ...profile,
-  //           isBill: data.isBill,
-  //           userName: data.name,
-  //           plan: data.plan,
-  //           uid: data.uid,
-  //           email: email,
-  //           create: create,
-  //         });
-  //         // console.log(isBill, userName,plan,uid,email)
-  //       });
-  //   } else {
-  //     History.replace("/");
-  //   }
-  // }, []);
 
   const requestProfile = async() => {
-    let user = await localStorage.getItem("token");
+    let user = await sessionStorage.getItem("token");
 
     if (user !== null) {
       axios
@@ -61,8 +22,8 @@ const PayDone = () => {
         })
         .then((response) => {
           //console.log(response)
-          // localStorage.setItem("userUid", response.data.uid);
-          // localStorage.setItem("plan", response.data.plan);
+          // sessionStorage.setItem("userUid", response.data.uid);
+          // sessionStorage.setItem("plan", response.data.plan);
           
         })
         .catch((error) => {

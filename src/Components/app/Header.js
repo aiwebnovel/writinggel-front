@@ -17,8 +17,8 @@ import styled from "styled-components";
 const Header = () => {
   const size = useContext(ResponsiveContext);
 
-  const check = localStorage.getItem("token");
-  const provider = localStorage.getItem('provider');
+  const check = sessionStorage.getItem("token");
+  const provider = sessionStorage.getItem('provider');
 
   const [isShow, SetShow] = useState(false);
   const [isUser, SetUser] = useState(false);
@@ -33,16 +33,42 @@ const Header = () => {
 
   const { userName, userImage, isBill, Plan } = profile;
 
-
-  const refreshProfile = useCallback(async () => {
+  const reLoadProfile = useCallback(async()=>{
 
     authService.onAuthStateChanged(async (user) => {
-      //console.log(user)
+      //console.log("user", user);
       if (user) {
         await authService.currentUser
           .getIdToken()
           .then(async (data) => {
-            await localStorage.setItem("token", data);
+           
+            await axios
+            .get(`${config.SERVER_URL}/profile`, {
+              headers: { authentication: data},
+            })
+            .then((response) => {
+              
+              SetProfile({
+                ...profile,
+                userName:  response.data.name,
+                userImage: response.data.photoURL,
+                isBill: response.data.isBill,
+                Plan: response.data.plan
+              });
+        
+              sessionStorage.setItem('token',data);
+              sessionStorage.setItem("userUid", response.data.uid);
+              sessionStorage.setItem("plan", response.data.plan);
+              sessionStorage.setItem("isBill", response.data.isBill);
+              
+            })
+            .catch((error) => {
+              if(error.response.status === 412) {
+                toast.error('새로고침하거나 다시 로그인 해주세요!') 
+                //window.location.reload();  
+              }
+              // toast.error(error.message);
+            });
           })
           .catch(async (error) => {
             console.log(error);
@@ -50,38 +76,55 @@ const Header = () => {
           });
       }
     });
-  }, []);
+   
+  },[]);
 
     const requestProfile = useCallback(async () => {
 
-    if (localStorage.getItem("token") !== null) {
-      await axios
-        .get(`${config.SERVER_URL}/profile`, {
-          headers: { authentication: localStorage.getItem("token") },
-        })
-        .then((response) => {
-          // console.log('previus', profile);
-          SetProfile({
-            ...profile,
-            userName:  response.data.name,
-            userImage: response.data.photoURL,
-            isBill: response.data.isBill,
-            Plan: response.data.plan
-          });
-    
+    if (check !== null) {
      
-          localStorage.setItem("userUid", response.data.uid);
-          localStorage.setItem("plan", response.data.plan);
-          localStorage.setItem("isBill", response.data.isBill);
+      if(authService.currentUser) {
+        let Idtoken = authService.currentUser.multiFactor.user.accessToken
+  
+       // console.log(sessionStorage.getItem('token'))
+        //console.log(Idtoken)
+  
+        await axios
+          .get(`${config.SERVER_URL}/profile`, {
+            headers: { authentication: Idtoken },
+          })
+          .then((response) => {
+            
+            SetProfile({
+              ...profile,
+              userName:  response.data.name,
+              userImage: response.data.photoURL,
+              isBill: response.data.isBill,
+              Plan: response.data.plan
+            });
       
-        })
-        .catch((error) => {
-          if(error.response.status === 412) {
-            toast.error('새로고침하거나 다시 로그인 해주세요!')   
-          }
-        });
+            sessionStorage.setItem('token',Idtoken);
+            sessionStorage.setItem("userUid", response.data.uid);
+            sessionStorage.setItem("plan", response.data.plan);
+            sessionStorage.setItem("isBill", response.data.isBill);
+            
+          })
+          .catch((error) => {
+            if(error.response.status === 412) {
+              toast.error('새로고침하거나 다시 로그인 해주세요!') 
+              //window.location.reload();  
+            }
+            // toast.error(error.message);
+          });
+      } else {
+        reLoadProfile();
+        
+      }
+    }else {
+      return
     }
-  }, [profile]);
+    
+  }, []);
 
 
   const GetProfile = useCallback(async() => {
@@ -91,19 +134,19 @@ const Header = () => {
         headers: { authentication: check },
       })
       .then(async(response) => {
-        console.log(response.data);
+        //console.log(response.data);
       
         SetProfile({
           ...profile,
-          userName: localStorage.getItem('userName'),
+          userName: sessionStorage.getItem('userName'),
           isBill: response.data.isBill,
           Plan: response.data.plan,
         });
 
-        localStorage.setItem("token", localStorage.getItem('token'));
-        localStorage.setItem("userUid", response.data.uid);
-        localStorage.setItem("plan", response.data.plan);
-        localStorage.setItem("isBill", response.data.isBill);
+        sessionStorage.setItem("token", sessionStorage.getItem('token'));
+        sessionStorage.setItem("userUid", response.data.uid);
+        sessionStorage.setItem("plan", response.data.plan);
+        sessionStorage.setItem("isBill", response.data.isBill);
       })
       .catch((error) => {
         console.log(error);
@@ -115,18 +158,7 @@ const Header = () => {
   },[]);
 
   const signOut = async () => {
-    await localStorage.removeItem("token");
-    await localStorage.removeItem("email");
-    await localStorage.removeItem("userUid");
-    await localStorage.removeItem("plan");
-    await localStorage.removeItem("isBill");
-    await localStorage.removeItem("create");
-    await localStorage.removeItem("exp");
-    await localStorage.removeItem("moid");
-    await localStorage.removeItem("time");
-    await localStorage.removeItem("userName");
-    await localStorage.removeItem("userImage");
-    await localStorage.removeItem("provider");
+    await sessionStorage.clear();
 
     SetUser(false);
     SetShowMenu(false);
@@ -142,10 +174,6 @@ const Header = () => {
   const showMenu = () => {
     SetShowMenu(!isShowMenu);
   };
-
-  useEffect(() => {
-    refreshProfile();
-  }, []);
 
   useEffect(()=>{
 
@@ -172,7 +200,7 @@ const Header = () => {
             </Link>
             < HowToLink href="https://appplatform.notion.site/99f9b5fb95d84477b9e2aa343fb97055" target='_blank' rel="noreferrer">사용 방법</ HowToLink>
             <Avatar
-              src={userImage}
+               src={sessionStorage.getItem('userImage') ? sessionStorage.getItem('userImage') : userImage}
               style={{ width: "40px", height: "40px"}}
               onClick={showMenu}
               
@@ -253,10 +281,10 @@ const Header = () => {
         <div>
           <div className='ServiceAfterLogin'>
             <div className='ServiceUsername'>
-              <p>{userName} 님</p>
+              <p>{userName !== undefined ? userName : sessionStorage.getItem('userName')}님</p>
             </div>
             <p className='ServicePlan'>
-              {localStorage.getItem("plan") === "free"
+              {sessionStorage.getItem("plan") === "free"
                 ? "free"
                 : `${Plan}개월 구독`}
             </p>

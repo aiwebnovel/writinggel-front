@@ -141,7 +141,7 @@ const Webnovel = () => {
     if (count === 0 && isBill === false) {
       SetCountModal(true);
     } else {
-    if (localStorage.getItem("token") !== null) {
+    if (sessionStorage.getItem("token") !== null) {
       if (selectOptions === "") {
         toast.error(`장르를 선택해 주세요!`);
         return;
@@ -183,7 +183,7 @@ const Webnovel = () => {
             Material: Material,
           },
           {
-            headers: { authentication: localStorage.getItem("token") },
+            headers: { authentication: sessionStorage.getItem("token") },
             timeout: 100000,
           }
         )
@@ -230,7 +230,7 @@ const Webnovel = () => {
               icon: "🙅‍♀️",
               progressStyle: { backgroundColor: "#7D4CDB" },
             });
-            localStorage.removeItem("token");
+            sessionStorage.removeItem("token");
           } else {
             if (
               error.response.status === 403 &&
@@ -259,7 +259,7 @@ const Webnovel = () => {
 
   const requestcontents = async () => {
     //console.log(progress, isHuman);
-    if (localStorage.getItem("token") !== null) {
+    if (sessionStorage.getItem("token") !== null) {
       let story = outputEnglish;
 
       if (isHuman === true && progress < 30) {
@@ -307,7 +307,7 @@ const Webnovel = () => {
             Material: Material,
           },
           {
-            headers: { authentication: localStorage.getItem("token") },
+            headers: { authentication: sessionStorage.getItem("token") },
             timeout: 100000,
           }
         )
@@ -350,7 +350,7 @@ const Webnovel = () => {
               icon: "🙅‍♀️",
               progressStyle: { backgroundColor: "#7D4CDB" },
             });
-            localStorage.removeItem("token");
+            sessionStorage.removeItem("token");
           } else {
             if (
               error.response.status === 403 &&
@@ -401,7 +401,7 @@ const Webnovel = () => {
       const config = {
         method: "post",
         url: `${configUrl.SERVER_URL}/archive`,
-        headers: { authentication: localStorage.getItem("token") },
+        headers: { authentication: sessionStorage.getItem("token") },
         data: {
           story: outputKorean,
           category: "릴레이 웹소설",
@@ -414,10 +414,14 @@ const Webnovel = () => {
           toast.success(`${response.data.log}`);
         })
         .catch(async (error) => {
-          console.log(error);
+          const errorMessage = error.message;
+          console.log(errorMessage);
+          if (error.response.status === 403) {
+            toast.error("보관함이 꽉 찼습니다!");
+          }
          
           if (error.response.status === 500) {
-            toast.error("해당 에러는 관리자에게 문의해주세요!");
+            toast.error("해당 에러는 관리자에게 문의해주세요.");
           }
         });
     } else {
@@ -439,12 +443,12 @@ const Webnovel = () => {
 
 
   useEffect(() => {
-    const loginCheck = localStorage.getItem("token");
+    const loginCheck = sessionStorage.getItem("token");
 
     if (loginCheck !== null) {
       axios
         .get(`${configUrl.SERVER_URL}/profile`, {
-          headers: { authentication: localStorage.getItem("token") },
+          headers: { authentication: sessionStorage.getItem("token") },
         })
         .then((res) => {
           let count = res.data.membership_count;

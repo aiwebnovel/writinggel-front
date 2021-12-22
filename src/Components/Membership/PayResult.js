@@ -30,11 +30,11 @@ const PayResult = () => {
       const config = {
         method: "delete",
         url: `${configUrl.SERVER_URL}/pay`,
-        headers: { authentication: localStorage.getItem("token") },
+        headers: { authentication: sessionStorage.getItem("token") },
       };
       axios(config)
         .then((response) => {
-          localStorage.setItem('isBill', false)
+          sessionStorage.setItem('isBill', false)
           //console.log(response);
           toast.success(response.data.log, {
             style: { backgroundColor: "#fff", color: "#000" },
@@ -61,9 +61,9 @@ const PayResult = () => {
   },[])
 
   useEffect(() => {
-    const loginCheck = localStorage.getItem("token");
-    const email = localStorage.getItem("email");
-    const create = localStorage.getItem("create");
+    const loginCheck = sessionStorage.getItem("token");
+    const email = sessionStorage.getItem("email");
+    const create = sessionStorage.getItem("create");
 
     if (loginCheck !== null) {
       axios
@@ -106,7 +106,7 @@ const PayResult = () => {
         <Box fill background='#3b2477' color='#fff' className='MypageHeader'>
           <h2>결제 내역</h2>
         </Box>
-        {localStorage.getItem("isBill") === false ? (
+        {sessionStorage.getItem("isBill") === false ? (
           <div>결제 내역이 없습니다!</div>
         ) : (
           <Box fill className='paymentBox'>
