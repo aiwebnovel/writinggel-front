@@ -164,6 +164,9 @@ $red: #f45752;
         box-shadow: $boxShadow;
         display: flex;
         align-items: center;
+        justify-content: center;
+
+        width: 100%;
         gap: 5px;
         padding: 10px 15px;
     }
@@ -176,17 +179,30 @@ $red: #f45752;
 
 
 .googleButton,
-.facebookButton {
+.facebookButton, 
+.kakaoButton {
     cursor: pointer;
     border: 0;
     outline: 0;
     transition: all 300ms ease;
     font-size: 15px;
+    border-radius: 10px;
+    margin-bottom: 16px;
 
     &:hover {
         box-shadow: rgba(0, 0, 0, 0.06) 0px 2px 4px 0px inset;
     }
 
+}
+
+.kakaoButton {
+    background-color: #FEE500;
+    color : rgb(0, 0, 0, 0.85) ;
+
+    > img {
+        width: 24px;
+        height: 24px;
+    }
 }
 
 .googleButton {
@@ -201,6 +217,10 @@ $red: #f45752;
 .facebookButton {
     background-color: #3d5a97;
     color: $white-1;
+
+    > svg {
+        background-color: $white-1;
+    }
 
 }
 

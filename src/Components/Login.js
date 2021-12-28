@@ -11,7 +11,6 @@ import {
   signInWithEmailAndPassword,
   setPersistence,
   browserSessionPersistence,
-
 } from "firebase/auth";
 
 import Loading from "./SmallLoading";
@@ -119,94 +118,101 @@ const Login = () => {
       let provider = new firebaseInstance.auth.FacebookAuthProvider();
 
       setPersistence(authService, browserSessionPersistence)
-      .then(async()=>{
-        await authService.signInWithPopup(provider)
-        .then(async (dataFacebook) => {
-          //console.log(dataFacebook);
+        .then(async () => {
+          await authService
+            .signInWithPopup(provider)
+            .then(async (dataFacebook) => {
+              //console.log(dataFacebook);
 
-          let credentials = dataFacebook.credential;
-          let user = dataFacebook.user;
-          let providerId = dataFacebook.credential.providerId; //facebook.com
-          let email = dataFacebook.user.email;
-          let create = dataFacebook.user.metadata.creationTime;
-          let token = credentials.accessToken;
-          let username = user.displayName;
-          let userPhoto = user.photoURL;
-          //console.log('result',credentials, email,create,token, id);
+              let credentials = dataFacebook.credential;
+              let user = dataFacebook.user;
+              let providerId = dataFacebook.credential.providerId; //facebook.com
+              let email = dataFacebook.user.email;
+              let create = dataFacebook.user.metadata.creationTime;
+              let token = credentials.accessToken;
+              let username = user.displayName;
+              let userPhoto = user.photoURL;
+              //console.log('result',credentials, email,create,token, id);
 
-          await sessionStorage.setItem("token", token);
-          await sessionStorage.setItem("email", email);
-          await sessionStorage.setItem("create", create);
-          await sessionStorage.setItem("provider", providerId);
-          await sessionStorage.setItem("userName", username);
-          await sessionStorage.setItem("userImage", userPhoto);
+              await sessionStorage.setItem("token", token);
+              await sessionStorage.setItem("email", email);
+              await sessionStorage.setItem("create", create);
+              await sessionStorage.setItem("provider", providerId);
+              await sessionStorage.setItem("userName", username);
+              await sessionStorage.setItem("userImage", userPhoto);
 
-          SetLoading(false);
-          setTimeout(History.replace("/"), 3000);
+              SetLoading(false);
+              setTimeout(History.replace("/"), 3000);
+            })
+            .catch((error) => {
+              console.log(error);
+              SetLoading(false);
+              if (
+                error.code === "auth/account-exists-with-different-credential"
+              ) {
+                toast.error(
+                  "이미 구글로 로그인했던 계정입니다. 동일한 이메일 주소를 사용하여 여러 계정을 만들 수 없습니다."
+                );
+                SetLoading(false);
+              }
+            });
         })
         .catch((error) => {
           console.log(error);
           SetLoading(false);
-          if (error.code === "auth/account-exists-with-different-credential") {
-            toast.error(
-              "이미 구글로 로그인했던 계정입니다. 동일한 이메일 주소를 사용하여 여러 계정을 만들 수 없습니다."
-            );
-            SetLoading(false);
-          }
         });
-      })
-      .catch((error)=>{
-        console.log(error);
-        SetLoading(false);
-      })
-
     } else if (name === "Google") {
       SetLoading(true);
       let provider = new firebaseInstance.auth.GoogleAuthProvider();
       //await authService.signInWithRedirect(provider)
 
-      setPersistence(authService, browserSessionPersistence)
-      .then(async()=>{
-        await authService.signInWithPopup(provider)
-        .then(async (dataGoogle) => {
-          //console.log(dataGoogle);
-          let credential = dataGoogle.credential;
-          let user = dataGoogle.user;
+      setPersistence(authService, browserSessionPersistence).then(async () => {
+        await authService
+          .signInWithPopup(provider)
+          .then(async (dataGoogle) => {
+            //console.log(dataGoogle);
+            let credential = dataGoogle.credential;
+            let user = dataGoogle.user;
 
-          let token = credential.idToken;
-          let providerId = credential.providerId;
-          let email = user.email;
-          let create = user.metadata.creationTime;
-          let username = user.displayName;
-          let userPhoto = user.photoURL;
+            let token = credential.idToken;
+            let providerId = credential.providerId;
+            let email = user.email;
+            let create = user.metadata.creationTime;
+            let username = user.displayName;
+            let userPhoto = user.photoURL;
 
-          await sessionStorage.setItem("token", token);
-          await sessionStorage.setItem("email", email);
-          await sessionStorage.setItem("create", create);
-          await sessionStorage.setItem("provider", providerId);
-          await sessionStorage.setItem("userName", username);
-          await sessionStorage.setItem("userImage", userPhoto);
+            await sessionStorage.setItem("token", token);
+            await sessionStorage.setItem("email", email);
+            await sessionStorage.setItem("create", create);
+            await sessionStorage.setItem("provider", providerId);
+            await sessionStorage.setItem("userName", username);
+            await sessionStorage.setItem("userImage", userPhoto);
 
-          SetLoading(false);
-          setTimeout(History.replace("/"), 3000);
-        })
-        .catch((error) => {
-          console.log(error);
-          SetLoading(false);
-          if (error.code === "auth/account-exists-with-different-credential") {
-            toast.error(
-              "이미 페이스북으로 로그인했던 계정입니다. 동일한 이메일 주소를 사용하여 여러 계정을 만들 수 없습니다."
-            );
             SetLoading(false);
-          }
-        })
-        .catch((error)=>{
-          console.log(error);
-          SetLoading(false);
-        });
-        
+            setTimeout(History.replace("/"), 3000);
+          })
+          .catch((error) => {
+            console.log(error);
+            SetLoading(false);
+            if (
+              error.code === "auth/account-exists-with-different-credential"
+            ) {
+              toast.error(
+                "이미 페이스북으로 로그인했던 계정입니다. 동일한 이메일 주소를 사용하여 여러 계정을 만들 수 없습니다."
+              );
+              SetLoading(false);
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+            SetLoading(false);
+          });
+      });
     }
-    ) } 
+  };
+
+  const SignInKakao = () => {
+    console.log("kakao");
   };
 
   useEffect(() => {
@@ -299,13 +305,21 @@ const Login = () => {
             </div>
             <div className='signBox'>
               <div className='SnsSignBox'>
+              <button
+                  className='kakaoButton'
+                  name='kakao'
+                  onClick={SignInKakao}
+                >
+                  <img src='/kakao_symbol.png' alt='kakao' />
+                  <span>카카오 로그인</span>
+                </button>
                 {!isInApp && (
                   <button
                     className='googleButton'
                     name='Google'
                     onClick={(e) => signIn(e)}
                   >
-                    <Google color='plain' /> 구글로 시작하기
+                    <Google color='plain' /> 구글 로그인
                   </button>
                 )}
                 <button
@@ -313,7 +327,7 @@ const Login = () => {
                   name='Facebook'
                   onClick={(e) => signIn(e)}
                 >
-                  <FacebookOption color='plain' /> 페이스북으로 시작하기
+                  <FacebookOption color='plain' /> 페이스북 로그인
                 </button>
               </div>
               <div className='isChecked'>
