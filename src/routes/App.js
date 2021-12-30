@@ -45,9 +45,10 @@ import Dailywrite from '../Components/app/page/DailyWrite';
 import Storysrc from '../Components/app/page/Storysrc';
 import Login from '../Components/Login';
 
-import GoBrowser from '../Components/GoBrowser';
+//import GoBrowser from '../Components/GoBrowser';
 import Register from '../Components/Register';
 import Welcome from '../Components/Welcome';
+import AuthPage from '../Components/AuthPage';
 
 function App() {
   return (
@@ -56,6 +57,7 @@ function App() {
         <Route exact path="/" component={Home}></Route>
         <Route exact path="/regist" component={Register}></Route>
         <Route exact path='/welcome' component={Welcome}></Route>
+        <Route exact path='/oauth' component={AuthPage}></Route>
         <Route exact path="/login" component={Login}></Route>
         <Route exact path="/brand" component={Brand}></Route>
 

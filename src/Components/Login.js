@@ -1,10 +1,9 @@
-import React, { useContext, useState, useEffect, useCallback } from "react";
+import React, { useContext, useState, useEffect} from "react";
 import { Link, useHistory } from "react-router-dom";
 import axios from "axios";
 import { Box } from "grommet";
 import { Google, FacebookOption } from "grommet-icons";
 import { ResponsiveContext } from "grommet";
-
 import { authService, firebaseInstance } from "../firebaseConfig";
 import {
   getAuth,
@@ -19,11 +18,11 @@ import "react-toastify/dist/ReactToastify.css";
 import ScrollToTop from "../routes/ScrollToTop";
 import TagManager from "react-gtm-module";
 
-import * as config from "../config";
 import "../styles/header.scss";
 import styled from "styled-components";
 
 const Login = () => {
+  const {Kakao} = window;
   const size = useContext(ResponsiveContext);
   const History = useHistory();
 
@@ -211,10 +210,40 @@ const Login = () => {
     }
   };
 
+
   const SignInKakao = () => {
     console.log("kakao");
-  };
 
+    // Kakao.Auth.authorize({
+    //   redirectUri:'http://localhost:3000/oauth'
+    // });
+    Kakao.Auth.login({
+      success: async function(response) {
+        console.log(response);
+        History.push('/');
+        //Kakao.Auth.getStatusInfo(({status})=>{console.log(status)})
+        await Kakao.API.request({
+          url: '/v2/user/me',
+          success: function(response) {
+              console.log(response);
+          },
+          fail: function(error) {
+              console.log(error);
+          }
+      });
+      
+      },
+      fail: function(error) {
+        console.log(error);
+      },
+      throughTalk: false
+    })
+    
+
+  }
+
+
+   
   useEffect(() => {
     let userAgent = navigator.userAgent;
     let check = userAgent.indexOf("KAKAOTALK");
@@ -306,6 +335,7 @@ const Login = () => {
             <div className='signBox'>
               <div className='SnsSignBox'>
               <button
+                  id='kakao-login-btn'
                   className='kakaoButton'
                   name='kakao'
                   onClick={SignInKakao}
