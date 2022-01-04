@@ -292,7 +292,7 @@ const Header = () => {
           }}
         >
           <Nav direction='column' className='MobileMenus'>
-            <Link to='/signIn' className={isBill && "displayNone"}>
+            <Link to='/signIn' className={isBill ? "displayNone": "MenusLink"}>
               멤버십 가입
             </Link>
             <Link to='/brand'>브랜드 소개</Link>

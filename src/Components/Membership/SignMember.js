@@ -4,14 +4,16 @@ import Layout from "../Layout";
 import { Box, Grid, ResponsiveContext } from "grommet";
 import { Bookmark, StatusGood, Trigger } from "grommet-icons";
 import Loading from "../Loading";
-import TagManager from 'react-gtm-module';
+import TagManager from "react-gtm-module";
 
 import * as configUrl from "../../config";
 
 import CreditCardInput from "react-credit-card-input";
+import { PaymentInputsWrapper, usePaymentInputs } from "react-payment-inputs";
+import images from "react-payment-inputs/images";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import styled from "styled-components";
+import styled, {css } from "styled-components";
 import { useHistory } from "react-router";
 import Modal from "../SmallModal";
 
@@ -21,6 +23,44 @@ const SignMember = () => {
   const element = useRef();
   const element3 = useRef();
   const element6 = useRef();
+
+  const styles={
+    inputWrapper: {
+      base: css`
+        border-color: #ededed;
+        box-shadow: none;
+      `,
+      errored: css`
+        border-color: #f45752;
+      `,
+      focused: css`
+        border-color: unset;
+        box-shadow: unset;
+        outline: 2px solid #f9f9f9;
+        outline-offset: 1px;
+      `
+    },
+    input: {
+      errored: css`
+        color: #f45752;
+      `,
+      cardNumber: css`
+        font-size: 16px;
+      `,
+    },
+    errorText: {
+      base: css`
+        color: #f45752;
+      `
+    }
+  };
+
+  const { getCardNumberProps,
+    getExpiryDateProps,
+    getCVCProps,
+    getCardImageProps,
+    wrapperProps
+   } = usePaymentInputs();
 
   const [isOpen, SetOpen] = useState(false);
 
@@ -210,18 +250,15 @@ const SignMember = () => {
     }
   };
 
-  useEffect(()=>{
-
+  useEffect(() => {
     TagManager.dataLayer({
       dataLayer: {
-        event: 'pageview',
-        pagePath: '/signIn',
-        pageTitle: '멤버십 가입',
+        event: "pageview",
+        pagePath: "/signIn",
+        pageTitle: "멤버십 가입",
       },
     });
-
-  },[])
-
+  }, []);
 
   return (
     <>
@@ -239,10 +276,10 @@ const SignMember = () => {
             <h3>멤버십 가입하기</h3>
           </Box>
 
-
           <div className='TextCon'>
             <h2>
-              <InfoFilled/>멤버십에 가입 하시면 인공지능 기반 글쓰기 지원 서비스를 무제한
+              <InfoFilled />
+              멤버십에 가입 하시면 인공지능 기반 글쓰기 지원 서비스를 무제한
               이용하실 수 있습니다.
             </h2>
             <ExplainTextBox>
@@ -289,7 +326,7 @@ const SignMember = () => {
               fill={size !== "small" ? false : true}
               columns={size !== "small" ? { count: 3, size: "auto" } : "100%"}
               gap='large'
-              className="SignCardGrid"
+              className='SignCardGrid'
             >
               <div
                 className={
@@ -358,36 +395,46 @@ const SignMember = () => {
             </Grid>
           </Box>
 
-          <Box justify='center' align='center' style={{padding: '48px 20px 100px 20px'}}>
+          <Box
+            justify='center'
+            align='center'
+            style={{ width: '100%', padding: "48px 20px 100px 20px" }}
+          >
             <p style={pStyle}>2. 결제 정보를 입력해주세요.</p>
             <div className='CreditBox'>
               <div className='creditCard'>
-                <CreditCardInput
-                  cardNumberInputProps={{
-                    value: cardNum,
-                    onChange: HandleChange,
-                    name: "cardNum",
-                  }}
-                  cardExpiryInputProps={{
-                    value: cardExpire,
-                    onChange: HandleChange,
-                    name: "cardExpire",
-                    onError: (err) => toast.error(err),
-                  }}
-                  cardCVCInputProps={{
-                    value: cardCvc,
-                    onChange: HandleChange,
-                    name: "cardCvc",
-                    onError: (err) => toast.error(err),
-                  }}
-                  fieldClassName='input'
-                  fieldStyle={{
-                    width: "100%",
-                  }}
-                  containerStyle={{
-                    borderBottom: "1px solid #ededed",
-                  }}
-                />
+              <PaymentInputsWrapper {...wrapperProps}
+               styles={{...styles}}
+              >
+                  <svg {...getCardImageProps({ images })} />
+                  <input
+                    {...getCardNumberProps({ onChange: HandleChange })}
+                    value={cardNum}
+                    name='cardNum'
+                    maxLength='20'
+                  />
+                </PaymentInputsWrapper>
+                <div className='cardExNcvc'>
+                  <PaymentInputsWrapper
+                  styles={{...styles}}
+                  >
+                    <input
+                      {...getExpiryDateProps({ onChange: HandleChange })}
+                      value={cardExpire}
+                      name='cardExpire'
+                    />
+                    </PaymentInputsWrapper> 
+                    <PaymentInputsWrapper
+                    styles={{...styles}}
+                    >
+                    <input
+                      {...getCVCProps({ onChange: HandleChange })}
+                      value={cardCvc}
+                      name='cardCvc'
+                    />
+                  </PaymentInputsWrapper> 
+                </div>          
+
               </div>
 
               <div className='ElementBox'>
@@ -406,7 +453,7 @@ const SignMember = () => {
                     }
                   }}
                   name='buyerName'
-                  maxLength='4'
+                  
                 ></input>
               </div>
 
@@ -453,7 +500,7 @@ const SignMember = () => {
                 ></input>
                 <span>
                   {" "}
-                  - <b>*******</b>
+                  <b>- *******</b>
                 </span>
               </div>
               <div className='PriceBox'>
@@ -550,7 +597,6 @@ const ExplainText = styled.div`
   p {
     margin: 0;
     padding: 0 10px;
-   
   }
 `;
 
@@ -561,7 +607,7 @@ const StatusFilled = styled(StatusGood)`
 `;
 
 const InfoFilled = styled(Trigger)`
-path[fill="none"] {
-  fill: #ffce1f;
-}
-`
+  path[fill="none"] {
+    fill: #ffce1f;
+  }
+`;
