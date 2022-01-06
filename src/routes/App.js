@@ -49,6 +49,7 @@ import Login from '../Components/Login';
 import Register from '../Components/Register';
 import Welcome from '../Components/Welcome';
 import AuthPage from '../Components/AuthPage';
+import Callback from '../Components/Callback';
 
 function App() {
   return (
@@ -58,6 +59,7 @@ function App() {
         <Route exact path="/regist" component={Register}></Route>
         <Route exact path='/welcome' component={Welcome}></Route>
         <Route exact path='/oauth' component={AuthPage}></Route>
+        <Route exact path='/naver/oauth' component={Callback}></Route>
         <Route exact path="/login" component={Login}></Route>
         <Route exact path="/brand" component={Brand}></Route>
 

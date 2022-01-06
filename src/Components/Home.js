@@ -32,6 +32,29 @@ const Home = () => {
     }
    
   }
+  // useEffect(()=>{
+
+  //   const token = sessionStorage.getItem('naver_token');
+  //   console.log(token);
+  //   const header = "Bearer " + token;
+  //   console.log(header);
+  //   if(token) {
+  //       fetch('https://openapi.naver.com/v1/nid/me', {
+  //           method: 'GET',
+  //           headers: {
+  //               Authorization : header
+  //           }
+  //       })
+  //       .then((res)=>{
+  //           console.log(res);
+  //           //History.push('/');
+  //       })
+  //       .catch((err)=>{
+  //           console.log(err);
+  //       })
+  //   }
+  // },[])
+
 
   useEffect(()=>{
 

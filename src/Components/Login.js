@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect} from "react";
+import React, { useContext, useState, useEffect, useRef} from "react";
 import { Link, useHistory } from "react-router-dom";
 import axios from "axios";
 import { Box } from "grommet";
@@ -22,7 +22,8 @@ import "../styles/header.scss";
 import styled from "styled-components";
 
 const Login = () => {
-  const {Kakao} = window;
+  const {Kakao, naver} = window;
+  const naverRef = useRef();
   const size = useContext(ResponsiveContext);
   const History = useHistory();
 
@@ -238,12 +239,26 @@ const Login = () => {
       },
       throughTalk: false
     })
-    
-
   }
 
+ const InitNaverLogin = () => {
+    const naverLogin = new naver.LoginWithNaverId({
+      clientId: 'kvEjoe_5dXM5a94N_FVv',
+      callbackUrl: "http://localhost:3000/naver/oauth",
+      isPopup: false,
+      callbackHandle: true,
+      loginButton: { color: 'green', type: 3, height: '50' }
+    });
+    naverLogin.init();
+    naverLogin.logout();
+ }
 
-   
+  useEffect(()=>{
+    InitNaverLogin();
+  },[]);
+
+
+
   useEffect(() => {
     let userAgent = navigator.userAgent;
     let check = userAgent.indexOf("KAKAOTALK");
@@ -359,7 +374,20 @@ const Login = () => {
                 >
                   <FacebookOption color='plain' /> 페이스북 로그인
                 </button>
+              <div id="naverIdLogin" ref={naverRef} style={{display:'none'}}></div>
+               <button
+                  className='NaverButton'
+                  name='naver'
+                  onClick={() => {
+                    //console.log(naverRef.current.children)
+                    naverRef.current.children[0].click()
+                  }}   
+                >
+                  <img src='/btnG_naver.png' alt='naver' />
+                  <span>네이버 로그인</span>
+                </button>
               </div>
+              
               <div className='isChecked'>
                 <p>
                   <a

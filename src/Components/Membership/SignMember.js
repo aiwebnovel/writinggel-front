@@ -27,17 +27,23 @@ const SignMember = () => {
   const styles={
     inputWrapper: {
       base: css`
+        border:0;
+        border-radius: 0;
+        border-bottom : 1px solid #ededed;
         border-color: #ededed;
         box-shadow: none;
       `,
       errored: css`
-        border-color: #f45752;
+        border-color: unset;
+        box-shadow: unset;
+        border:0;
+        border-bottom : 1px solid #f45752;
       `,
       focused: css`
         border-color: unset;
         box-shadow: unset;
-        outline: 2px solid #f9f9f9;
-        outline-offset: 1px;
+        border-bottom: 1px solid #372874;
+        outline:0;
       `
     },
     input: {

@@ -180,7 +180,8 @@ $red: #f45752;
 
 .googleButton,
 .facebookButton, 
-.kakaoButton {
+.kakaoButton,
+.NaverButton {
     cursor: pointer;
     border: 0;
     outline: 0;
@@ -222,6 +223,16 @@ $red: #f45752;
         background-color: $white-1;
     }
 
+}
+
+.NaverButton {
+    background-color: #03c75a;
+    color : #fff;
+
+    >img {
+        width: 24px;
+        height: 24px;
+    }
 }
 
 
