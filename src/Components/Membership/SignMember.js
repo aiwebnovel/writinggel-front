@@ -2,9 +2,10 @@ import React, { useContext, useState, useRef, useEffect } from "react";
 import axios from "axios";
 import Layout from "../Layout";
 import { Box, Grid, ResponsiveContext } from "grommet";
-import { Bookmark, StatusGood, Trigger } from "grommet-icons";
+import { Bookmark, StatusGood, Trigger, CreditCard } from "grommet-icons";
 import Loading from "../Loading";
 import TagManager from "react-gtm-module";
+import ScrollToTop from "../../routes/ScrollToTop";
 
 import * as configUrl from "../../config";
 import { PaymentInputsWrapper, usePaymentInputs } from "react-payment-inputs";
@@ -76,6 +77,10 @@ const SignMember = () => {
     selected2: false,
     selected3: false,
   });
+
+  const [isCredit, setCreditPay] = useState(false);
+  const [isKakao, setKakaopay] = useState(false);
+
   const [Price, SetPrice] = useState("");
   const [card, SetCard] = useState({
     cardNum: "",
@@ -258,27 +263,31 @@ const SignMember = () => {
 
   const KakaoPay = () => {
     console.log("kakao");
-    IMP.init('imp33624147');
-    IMP.request_pay({
-      pg : 'kakaopay',
-      pay_method : 'kakaopay', // 기능 없음.
-      merchant_uid: "order_monthly_0001", // 상점에서 관리하는 주문 번호
-      name : '최초인증결제',
-      amount : 1004, // 빌링키 발급과 함께 1,004원 결제승인을 시도합니다.
-      customer_uid : 'your-customer-unique-id', // 필수 입력
-      buyer_email : 'iamport@siot.do',
-      buyer_name : '아임포트',
-      buyer_tel : '02-1234-1234',
-      m_redirect_url: 'http://localhost:3000/kakaopay'
-    }, (rsp) => {
-      if (rsp.success) { //callback
-        console.log(rsp);
-        alert("빌링키 발급 성공");
-      } else {
-        console.log(rsp, rsp.error_msg);
-        alert(rsp.error_msg);
+    IMP.init("imp33624147");
+    IMP.request_pay(
+      {
+        pg: "kakaopay",
+        pay_method: "kakaopay", // 기능 없음.
+        merchant_uid: "order_monthly_0001", // 상점에서 관리하는 주문 번호
+        name: "최초인증결제",
+        amount: 1004, // 빌링키 발급과 함께 1,004원 결제승인을 시도합니다.
+        customer_uid: "your-customer-unique-id", // 필수 입력
+        buyer_email: "iamport@siot.do",
+        buyer_name: "아임포트",
+        buyer_tel: "02-1234-1234",
+        m_redirect_url: "http://localhost:3000/kakaopay",
+      },
+      (rsp) => {
+        if (rsp.success) {
+          //callback
+          console.log(rsp);
+          alert("빌링키 발급 성공");
+        } else {
+          console.log(rsp, rsp.error_msg);
+          alert(rsp.error_msg);
+        }
       }
-    });
+    );
   };
 
   useEffect(() => {
@@ -294,6 +303,7 @@ const SignMember = () => {
   return (
     <>
       <Layout>
+      <ScrollToTop/>
         {isLoading && <Loading />}
         <Box fill justify='center' align='center'>
           <Box
@@ -351,102 +361,113 @@ const SignMember = () => {
               </ExplainText>
             </ExplainTextBox>
           </div>
-          <Box fill={size !== "small" ? false : true}>
-            <p style={pStyle}>1. 원하시는 멤버십 주기를 클릭해주세요.</p>
-            <Grid
-              fill={size !== "small" ? false : true}
-              columns={size !== "small" ? { count: 3, size: "auto" } : "100%"}
-              gap='large'
-              className='SignCardGrid'
-            >
-              <div
-                className={
-                  selected1 ? "SignMemCardCon selected" : "SignMemCardCon"
-                }
-                onClick={() => HandleSelected(element)}
+          <Box className='Sign-select'>
+            <Box justify='center' align='center'>
+              <h4>1. 멤버십 선택</h4>
+
+              <Grid
+                fill={size !== "small" ? false : true}
+                columns={size !== "small" ? { count: 3, size: "auto" } : "100%"}
+                gap='large'
+                className='SignCardGrid'
               >
-                <div className='SignMemCardHead'>
-                  <span></span>
-                  <BookmarkFilled size='medium' color='#3b2477' />
+                <div
+                  className={
+                    selected1 ? "SignMemCardCon selected" : "SignMemCardCon"
+                  }
+                  onClick={() => HandleSelected(element)}
+                >
+                  <div className='SignMemCardHead'>
+                    <span></span>
+                    <BookmarkFilled size='medium' color='#3b2477' />
+                  </div>
+                  <div className='SignMemCardBody'>
+                    <h3>1개월 이용권</h3>
+                    <h4 style={{ marginBottom: "20px" }}>월 25,000원</h4>
+                    <p>1개월마다 결제</p>
+                    <br />
+                    <ChoiceBtn ref={element} name='1 25,000'>
+                      선택
+                    </ChoiceBtn>
+                  </div>
                 </div>
-                <div className='SignMemCardBody'>
-                  <h3>1개월 이용권</h3>
-                  <h4 style={{ marginBottom: "20px" }}>월 25,000원</h4>
-                  <p>1개월마다 결제</p>
-                  <br />
-                  <ChoiceBtn ref={element} name='1 25,000'>
-                    선택
-                  </ChoiceBtn>
+                <div
+                  className={
+                    selected2 ? "SignMemCardCon selected" : "SignMemCardCon"
+                  }
+                  onClick={() => HandleSelected(element3)}
+                >
+                  <div className='SignMemCardHead'>
+                    <span>20% 할인</span>
+                    <BookmarkFilled size='medium' color='#3b2477' />
+                  </div>
+                  <div className='SignMemCardBody'>
+                    <h3>3개월 이용권</h3>
+                    <h4>월 20,000원</h4>
+                    <p style={{ marginBottom: "20px", fontSize: "15px" }}>
+                      <span>75,000</span> 60,000원
+                    </p>
+                    <p>3개월마다 결제</p>
+                    <ChoiceBtn ref={element3} name='3 60,000'>
+                      선택
+                    </ChoiceBtn>
+                  </div>
                 </div>
-              </div>
-              <div
-                className={
-                  selected2 ? "SignMemCardCon selected" : "SignMemCardCon"
-                }
-                onClick={() => HandleSelected(element3)}
-              >
-                <div className='SignMemCardHead'>
-                  <span>20% 할인</span>
-                  <BookmarkFilled size='medium' color='#3b2477' />
+                <div
+                  className={
+                    selected3 ? "SignMemCardCon selected" : "SignMemCardCon"
+                  }
+                  onClick={() => HandleSelected(element6)}
+                >
+                  <div className='SignMemCardHead'>
+                    <span>40% 할인</span>
+                    <BookmarkFilled size='medium' color='#3b2477' />
+                  </div>
+                  <div className='SignMemCardBody'>
+                    <h3>6개월 이용권</h3>
+                    <h4>월 15,000원</h4>
+                    <p style={{ marginBottom: "20px", fontSize: "15px" }}>
+                      <span>150,000</span> 90,000원
+                    </p>
+                    <p>6개월마다 결제</p>
+                    <ChoiceBtn ref={element6} name='6 90,000'>
+                      선택
+                    </ChoiceBtn>
+                  </div>
                 </div>
-                <div className='SignMemCardBody'>
-                  <h3>3개월 이용권</h3>
-                  <h4>월 20,000원</h4>
-                  <p style={{ marginBottom: "20px", fontSize: "15px" }}>
-                    <span>75,000</span> 60,000원
-                  </p>
-                  <p>3개월마다 결제</p>
-                  <ChoiceBtn ref={element3} name='3 60,000'>
-                    선택
-                  </ChoiceBtn>
-                </div>
-              </div>
-              <div
-                className={
-                  selected3 ? "SignMemCardCon selected" : "SignMemCardCon"
-                }
-                onClick={() => HandleSelected(element6)}
-              >
-                <div className='SignMemCardHead'>
-                  <span>40% 할인</span>
-                  <BookmarkFilled size='medium' color='#3b2477' />
-                </div>
-                <div className='SignMemCardBody'>
-                  <h3>6개월 이용권</h3>
-                  <h4>월 15,000원</h4>
-                  <p style={{ marginBottom: "20px", fontSize: "15px" }}>
-                    <span>150,000</span> 90,000원
-                  </p>
-                  <p>6개월마다 결제</p>
-                  <ChoiceBtn ref={element6} name='6 90,000'>
-                    선택
-                  </ChoiceBtn>
-                </div>
-              </div>
-            </Grid>
+              </Grid>
+            </Box>
           </Box>
 
-          <Box
-            justify='center'
-            align='center'
-            style={{ width: "100%", padding: "48px 20px 100px 20px" }}
-          >
-            <p style={pStyle}>2. 결제 정보를 입력해주세요.</p>
-            <button
-              onClick={KakaoPay}
-              style={{
-                backgroundColor: "gray",
-                padding: "10px",
-                outline: "0",
-                border: "0",
-                color: "#fff",
-                marginBottom: "10px",
-                cursor: "pointer",
-              }}
-            >
-              카카오 페이
-            </button>
+          <Box justify='center' align='center' className='SignMethodCon'>
+            <h4>2. 결제 방식</h4>
+            <Box direction='row' gap='small' className="SignMethodBox" justify='center' align='center'>
+              <button 
+              onClick={()=> {
+                setCreditPay(false);
+                setKakaopay(true);
+              }} 
+              className="kakaoPayBtn">
+                <img src='payment_icon_yellow_small.png' alt='카카오페이' /> 
+                <span>카카오페이</span>
+              </button>
+              <button className="creditNormal" onClick={()=> {
+                setKakaopay(false);
+                setCreditPay(true);
+                }}>
+                <CreditCard />
+                <span>신용카드</span>
+              </button>
+            </Box>
+            {!isCredit && isKakao &&
+            <div>
+              짜잔
+              <button onClick={KakaoPay} >결제하기</button>
+            </div>
+            }
+            {isCredit && !isKakao && (
             <div className='CreditBox'>
+               <h4>카드 정보 입력</h4>
               <div className='creditCard'>
                 <PaymentInputsWrapper {...wrapperProps} styles={{ ...styles }}>
                   <svg {...getCardImageProps({ images })} />
@@ -549,7 +570,46 @@ const SignMember = () => {
                 </button>
               </div>
             </div>
+            )}
           </Box>
+          <Box fill background='#f9f9f9' className='ExplainSign'>
+          <div className='ExplainSign-Content'>
+            <h4>
+              <StatusGood />
+              멤버십 안내
+            </h4>
+            <p>
+              멤버십 가입을 위한 결제가 완료되면, 곧바로 서비스를 이용하실 수
+              있습니다.
+            </p>
+            <p>
+              멤버십 구독료는 선택하신 결제주기에 따라 1개월, 3개월, 6개월마다
+              이뤄집니다.
+            </p>
+            <p>
+              멤버십 이용 기간은 다음 결제 주기에 해당하는 월(1개월 뒤, 3개월
+              뒤, 6개월 뒤)에 동일한 날짜까지 입니다.
+            </p>
+            <p>
+              다음 결제 주기 이전에 멤버십 이용을 취소하시면, 해당 기간까지
+              서비스를 이용할 수 있습니다.
+            </p>
+          </div>
+          <div className='ExplainSign-Content'>
+            <h4>
+              <StatusGood />
+              환불 안내
+            </h4>
+            <p>
+              결제일로부터 7일이 지나지 않았고 서비스이력이 없는 경우, 콘텐츠
+              이용 취소 및 전액 환불이 가능합니다.
+            </p>
+            <p>
+              결제 취소 및 환불은 환불 신청 접수 후 7영업일 이내에 처리합니다.
+            </p>
+            <p>환불 신청 절차는 FAQ에서 확인하실 수 있습니다.</p>
+          </div>
+        </Box>
         </Box>
       </Layout>
       <Modal open={isOpen} close={HandleModals}>
@@ -585,16 +645,8 @@ const ConfirmBtn = styled.button`
   font-size: 1rem;
   width: 150px;
   cursor: pointer;
+  color: #444;
 `;
-
-const pStyle = {
-  width: "100%",
-  textAlign: "center",
-  margin: "40px 0",
-  padding: "0 20px",
-  fontWeight: 900,
-  fontSize: "1.2rem",
-};
 
 const payButton = {
   textAlign: "center",
