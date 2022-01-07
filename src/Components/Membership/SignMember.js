@@ -7,13 +7,11 @@ import Loading from "../Loading";
 import TagManager from "react-gtm-module";
 
 import * as configUrl from "../../config";
-
-import CreditCardInput from "react-credit-card-input";
 import { PaymentInputsWrapper, usePaymentInputs } from "react-payment-inputs";
 import images from "react-payment-inputs/images";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import styled, {css } from "styled-components";
+import styled, { css } from "styled-components";
 import { useHistory } from "react-router";
 import Modal from "../SmallModal";
 
@@ -24,27 +22,27 @@ const SignMember = () => {
   const element3 = useRef();
   const element6 = useRef();
 
-  const styles={
+  const styles = {
     inputWrapper: {
       base: css`
-        border:0;
+        border: 0;
         border-radius: 0;
-        border-bottom : 1px solid #ededed;
+        border-bottom: 1px solid #ededed;
         border-color: #ededed;
         box-shadow: none;
       `,
       errored: css`
         border-color: unset;
         box-shadow: unset;
-        border:0;
-        border-bottom : 1px solid #f45752;
+        border: 0;
+        border-bottom: 1px solid #f45752;
       `,
       focused: css`
         border-color: unset;
         box-shadow: unset;
         border-bottom: 1px solid #372874;
-        outline:0;
-      `
+        outline: 0;
+      `,
     },
     input: {
       errored: css`
@@ -57,17 +55,19 @@ const SignMember = () => {
     errorText: {
       base: css`
         color: #f45752;
-      `
-    }
+      `,
+    },
   };
 
-  const { getCardNumberProps,
+  const {
+    getCardNumberProps,
     getExpiryDateProps,
     getCVCProps,
     getCardImageProps,
-    wrapperProps
-   } = usePaymentInputs();
+    wrapperProps,
+  } = usePaymentInputs();
 
+  const { IMP } = window;
   const [isOpen, SetOpen] = useState(false);
 
   const [isLoading, SetLoading] = useState(false);
@@ -256,6 +256,31 @@ const SignMember = () => {
     }
   };
 
+  const KakaoPay = () => {
+    console.log("kakao");
+    IMP.init('imp33624147');
+    IMP.request_pay({
+      pg : 'kakaopay',
+      pay_method : 'kakaopay', // 기능 없음.
+      merchant_uid: "order_monthly_0001", // 상점에서 관리하는 주문 번호
+      name : '최초인증결제',
+      amount : 1004, // 빌링키 발급과 함께 1,004원 결제승인을 시도합니다.
+      customer_uid : 'your-customer-unique-id', // 필수 입력
+      buyer_email : 'iamport@siot.do',
+      buyer_name : '아임포트',
+      buyer_tel : '02-1234-1234',
+      m_redirect_url: 'http://localhost:3000/kakaopay'
+    }, (rsp) => {
+      if (rsp.success) { //callback
+        console.log(rsp);
+        alert("빌링키 발급 성공");
+      } else {
+        console.log(rsp, rsp.error_msg);
+        alert(rsp.error_msg);
+      }
+    });
+  };
+
   useEffect(() => {
     TagManager.dataLayer({
       dataLayer: {
@@ -404,14 +429,26 @@ const SignMember = () => {
           <Box
             justify='center'
             align='center'
-            style={{ width: '100%', padding: "48px 20px 100px 20px" }}
+            style={{ width: "100%", padding: "48px 20px 100px 20px" }}
           >
             <p style={pStyle}>2. 결제 정보를 입력해주세요.</p>
+            <button
+              onClick={KakaoPay}
+              style={{
+                backgroundColor: "gray",
+                padding: "10px",
+                outline: "0",
+                border: "0",
+                color: "#fff",
+                marginBottom: "10px",
+                cursor: "pointer",
+              }}
+            >
+              카카오 페이
+            </button>
             <div className='CreditBox'>
               <div className='creditCard'>
-              <PaymentInputsWrapper {...wrapperProps}
-               styles={{...styles}}
-              >
+                <PaymentInputsWrapper {...wrapperProps} styles={{ ...styles }}>
                   <svg {...getCardImageProps({ images })} />
                   <input
                     {...getCardNumberProps({ onChange: HandleChange })}
@@ -421,26 +458,21 @@ const SignMember = () => {
                   />
                 </PaymentInputsWrapper>
                 <div className='cardExNcvc'>
-                  <PaymentInputsWrapper
-                  styles={{...styles}}
-                  >
+                  <PaymentInputsWrapper styles={{ ...styles }}>
                     <input
                       {...getExpiryDateProps({ onChange: HandleChange })}
                       value={cardExpire}
                       name='cardExpire'
                     />
-                    </PaymentInputsWrapper> 
-                    <PaymentInputsWrapper
-                    styles={{...styles}}
-                    >
+                  </PaymentInputsWrapper>
+                  <PaymentInputsWrapper styles={{ ...styles }}>
                     <input
                       {...getCVCProps({ onChange: HandleChange })}
                       value={cardCvc}
                       name='cardCvc'
                     />
-                  </PaymentInputsWrapper> 
-                </div>          
-
+                  </PaymentInputsWrapper>
+                </div>
               </div>
 
               <div className='ElementBox'>
@@ -459,7 +491,6 @@ const SignMember = () => {
                     }
                   }}
                   name='buyerName'
-                  
                 ></input>
               </div>
 

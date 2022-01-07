@@ -1,6 +1,5 @@
-import React, { useContext, useState, useEffect, useCallback } from "react";
+import React, { useContext, useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
-import axios from "axios";
 import Layout from "./Layout";
 import {
   Box,
@@ -11,8 +10,6 @@ import {
   ResponsiveContext,
 } from "grommet";
 import ScrollToTop from "../routes/ScrollToTop";
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 
 import LinkObject from "./app/LinkObject";
 import "../styles/Main.scss";
@@ -32,28 +29,6 @@ const Home = () => {
     }
    
   }
-  // useEffect(()=>{
-
-  //   const token = sessionStorage.getItem('naver_token');
-  //   console.log(token);
-  //   const header = "Bearer " + token;
-  //   console.log(header);
-  //   if(token) {
-  //       fetch('https://openapi.naver.com/v1/nid/me', {
-  //           method: 'GET',
-  //           headers: {
-  //               Authorization : header
-  //           }
-  //       })
-  //       .then((res)=>{
-  //           console.log(res);
-  //           //History.push('/');
-  //       })
-  //       .catch((err)=>{
-  //           console.log(err);
-  //       })
-  //   }
-  // },[])
 
 
   useEffect(()=>{
