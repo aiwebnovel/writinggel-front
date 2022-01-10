@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Layout from "../../Layout";
 import { Box, Grid, ResponsiveContext } from "grommet";
-import { StatusGood } from "grommet-icons";
+
 import ScrollToTop from '../../../routes/ScrollToTop';
 import TagManager from 'react-gtm-module';
 
