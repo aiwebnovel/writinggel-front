@@ -15,6 +15,7 @@ import "../styles/header.scss";
 import styled from "styled-components";
 
 const Header = () => {
+  const { Kakao } = window;
   const size = useContext(ResponsiveContext);
   const check = sessionStorage.getItem("token");
   const provider = sessionStorage.getItem('provider');
@@ -179,11 +180,34 @@ const Header = () => {
 
   const signOut = async () => {
 
-    await sessionStorage.clear();
+    const token = 'Bearer ' + sessionStorage.getItem('token');
+    console.log(token)
     SetShowMenu(false);
 
-    await authService.signOut();
-    window.location.reload();
+    Kakao.API.request({
+      url:'/v1/user/logout',
+      success: function(res) {
+        console.log(res)
+      },
+      fail: function(error) {
+        console.error(error)
+      }
+    })
+
+    //    Kakao.API.request({
+    //   url:'/v1/user/unlink',
+    //   success: function(res) {
+    //     console.log(res)
+    //   },
+    //   fail: function(error) {
+    //     console.error(error)
+    //   }
+    // })
+
+   await authService.signOut();
+  //await sessionStorage.clear();
+  //await localStorage.clear();
+   window.location.reload();
   };
 
   const HandleMobile = () => {

@@ -1,9 +1,8 @@
-import React, { useContext, useState, useEffect, useRef } from "react";
+import React, {  useState, useEffect, useRef } from "react";
 import { Link, useHistory } from "react-router-dom";
 import axios from "axios";
 import { Box } from "grommet";
 import { Google, FacebookOption } from "grommet-icons";
-import { ResponsiveContext } from "grommet";
 import { authService, firebaseInstance } from "../firebaseConfig";
 import {
   getAuth,
@@ -12,6 +11,7 @@ import {
   browserSessionPersistence,
 } from "firebase/auth";
 
+import * as configUrl from "../config";
 import Loading from "./SmallLoading";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -22,9 +22,9 @@ import "../styles/header.scss";
 import styled from "styled-components";
 
 const Login = () => {
-  const { Kakao, naver } = window;
-  const naverRef = useRef();
-  const size = useContext(ResponsiveContext);
+  const { Kakao} = window;
+  // const naverRef = useRef();
+
   const History = useHistory();
 
   const [isLoading, SetLoading] = useState(false);
@@ -211,7 +211,7 @@ const Login = () => {
     }
   };
 
-  const SignInKakao = () => {
+  const LoginKakao = () => {
     console.log("kakao");
 
     // Kakao.Auth.authorize({
@@ -220,14 +220,15 @@ const Login = () => {
     Kakao.Auth.login({
       success: async function (response) {
         console.log(response);
-        History.push("/");
-        //Kakao.Auth.getStatusInfo(({status})=>{console.log(status)})
+        History.push('/');
         await Kakao.API.request({
           url: "/v2/user/me",
-          success: function (response) {
+          success: (response) => {
             console.log(response);
+            
+          
           },
-          fail: function (error) {
+          fail: (error)=> {
             console.log(error);
           },
         });
@@ -235,25 +236,25 @@ const Login = () => {
       fail: function (error) {
         console.log(error);
       },
-      throughTalk: false,
+      // throughTalk: false,
     });
   };
 
-  const InitNaverLogin = () => {
-    const naverLogin = new naver.LoginWithNaverId({
-      clientId: "kvEjoe_5dXM5a94N_FVv",
-      callbackUrl: "http://localhost:3000/naver/oauth",
-      isPopup: false,
-      callbackHandle: true,
-      loginButton: { color: "green", type: 3, height: "50" },
-    });
-    naverLogin.init();
-    naverLogin.logout();
-  };
+  // const InitNaverLogin = () => {
+  //   const naverLogin = new naver.LoginWithNaverId({
+  //     clientId: "kvEjoe_5dXM5a94N_FVv",
+  //     callbackUrl: "http://localhost:3000/naver/oauth",
+  //     isPopup: false,
+  //     callbackHandle: true,
+  //     loginButton: { color: "green", type: 3, height: "50" },
+  //   });
+  //   naverLogin.init();
+  //   naverLogin.logout();
+  // };
 
-  useEffect(() => {
-    InitNaverLogin();
-  }, []);
+  // useEffect(() => {
+  //   InitNaverLogin();
+  // }, []);
 
   useEffect(() => {
     let userAgent = navigator.userAgent;
@@ -358,7 +359,7 @@ const Login = () => {
                   id='kakao-login-btn'
                   className='kakaoButton'
                   name='kakao'
-                  onClick={SignInKakao}
+                  onClick={LoginKakao}
                 >
                   <img src='/kakao_symbol.png' alt='kakao' />
                   <span>카카오 로그인</span>
@@ -370,7 +371,7 @@ const Login = () => {
                 >
                   <FacebookOption color='plain' /> 페이스북 로그인
                 </button>
-                <div
+                {/* <div
                   id='naverIdLogin'
                   ref={naverRef}
                   style={{ display: "none" }}
@@ -385,7 +386,7 @@ const Login = () => {
                 >
                   <img src='/btnG_naver.png' alt='naver' />
                   <span>네이버 로그인</span>
-                </button>
+                </button> */}
               </div>
 
               <div className='isChecked'>

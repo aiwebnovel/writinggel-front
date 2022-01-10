@@ -1,4 +1,6 @@
 import React, { useEffect } from "react";
+import axios from 'axios';
+import * as configUrl from '../config';
 import { useHistory } from "react-router-dom";
 
 const AuthPage = () => {
@@ -37,9 +39,27 @@ const AuthPage = () => {
         body : queryStringBody
       })
         .then(res => res.json())
-        .then((data) => {
+        .then(async (data) => {
           console.log(data);
-            History.push('/')
+          const access = data.access_token;
+          console.log(access)
+          const config = {
+                  method: "get",
+                  url: `${configUrl.SERVER_URL}/signup`,
+                  headers: {
+                    authentication : access,
+                    provider: "kakao",
+                  },
+                };
+                await axios(config)
+                .then((res)=>{
+                  console.log(res);
+                  History.push("/");
+                })
+                .catch((error)=>{
+                  console.log(error, error.message);
+                })
+            //History.push('/')
         })
     }else{
       console.log("No AuthorizeCodeFromKakao")

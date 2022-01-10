@@ -24,6 +24,7 @@ import "../styles/header.scss";
 import styled from "styled-components";
 
 const Register = () => {
+  const { Kakao, naver } = window;
   const size = useContext(ResponsiveContext);
   const History = useHistory();
 
@@ -135,7 +136,9 @@ const Register = () => {
                 const config = {
                   method: "get",
                   url: `${configUrl.SERVER_URL}/signup`,
-                  headers: { authentication: token },
+                  headers: { 
+                    authentication: token                  
+                  },
                 };
 
                 await axios(config)
@@ -271,6 +274,61 @@ const Register = () => {
         
     }
       )}
+  };
+
+  const SignInKakao = () => {
+    console.log("kakao");
+
+    // Kakao.Auth.authorize({
+    //   redirectUri:'http://localhost:3000/oauth'
+    // });
+    Kakao.Auth.login({
+      success: async function (response) {
+        console.log(response);
+        console.log(response.access_token);
+        sessionStorage.setItem("token", response.access_token);
+        const token = response.access_token
+
+        const config = {
+          method: "get",
+          url: `${configUrl.SERVER_URL}/signup`,
+          headers: {
+            authentication : token,
+            provider: "kakao",
+          },
+        };
+        axios(config)
+        .then((res)=>{
+          console.log(res);
+          sessionStorage.setItem("token", token);
+          sessionStorage.setItem("userName", res.data);
+          sessionStorage.setItem("userImage", res.photoURL);
+          sessionStorage.setItem("userUid", res.uid);
+          sessionStorage.setItem("plan", res.plan);
+          History.push("/");
+        })
+        .catch((error)=>{
+          console.log(error, error.message);
+          if(error.response.status === 403) {
+            toast.error('이미 가입된 사용자 입니다!');
+          }
+        })
+    
+        // await Kakao.API.request({
+        //   url: "/v2/user/me",
+        //   success: function (response) {
+        //     console.log(response);
+        //   },
+        //   fail: function (error) {
+        //     console.log(error);
+        //   },
+        // });
+      },
+      fail: function (error) {
+        console.log(error);
+      },
+      throughTalk: false,
+    });
   };
 
   useEffect(()=>{
@@ -427,7 +485,15 @@ const Register = () => {
                   <Google color='plain' />
                   구글로 시작하기
                 </button>
-}
+}<button
+                  id='kakao-login-btn'
+                  className='kakaoButton'
+                  name='kakao'
+                  onClick={SignInKakao}
+                >
+                  <img src='/kakao_symbol.png' alt='kakao' />
+                  <span>카카오 로그인</span>
+                </button>
                 <button
                   className='facebookButton'
                   name='Facebook'
