@@ -119,6 +119,10 @@ const Modify = () => {
           .auth()
           .signInWithPopup(providerG)
           .then(async function (result) {
+            console.log(result)
+            let user = result.user._delegate;
+            let displayName = user.displayName;
+            sessionStorage.setItem('userName', displayName);
             window.location.reload();
           })
           .catch((error) => {
@@ -134,6 +138,9 @@ const Modify = () => {
           .auth()
           .signInWithPopup(providerF)
           .then(function (result) {
+            let user = result.user._delegate;
+            let displayName = user.displayName;
+            sessionStorage.setItem('userName', displayName);
             window.location.reload();
           });
       }
@@ -199,6 +206,7 @@ const Modify = () => {
 
   useEffect(() => {
     const loginCheck = sessionStorage.getItem("token");
+    const name = sessionStorage.getItem('userName');
     const email = sessionStorage.getItem("email");
 
     if (provider === "kakao") {
@@ -221,19 +229,24 @@ const Modify = () => {
       });
     } else {
       if (loginCheck !== null) {
-        axios
-          .get(`${config.SERVER_URL}/profile`, {
-            headers: { authentication: loginCheck },
-          })
-          .then((response) => {
-            console.log(response.data);
-            let data = response.data;
-            SetProfile({
-              ...Userprofile,
-              userName: data.name,
-              userEmail: email,
-            });
-          });
+        // axios
+        //   .get(`${config.SERVER_URL}/profile`, {
+        //     headers: { authentication: loginCheck },
+        //   })
+        //   .then((response) => {
+        //     console.log(response.data);
+        //     let data = response.data;
+        //     SetProfile({
+        //       ...Userprofile,
+        //       userName: name,
+        //       userEmail: email,
+        //     });
+        //   });
+        SetProfile({
+          ...Userprofile,
+          userName: name,
+          userEmail: email,
+        });
       } else {
         History.replace("/");
       }

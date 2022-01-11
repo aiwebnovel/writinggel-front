@@ -132,7 +132,7 @@ const Login = () => {
               let token = credentials.accessToken;
               let username = user.displayName;
               let userPhoto = user.photoURL;
-              //console.log('result',credentials, email,create,token, id);
+              console.log('result',credentials, email,create,token);
 
               await sessionStorage.setItem("token", token);
               await sessionStorage.setItem("email", email);

@@ -52,8 +52,6 @@ const Header = () => {
               
               SetProfile({
                 ...profile,
-                userName:  response.data.name,
-                userImage: response.data.photoURL,
                 isBill: response.data.isBill,
                 Plan: response.data.plan
               });
@@ -87,26 +85,25 @@ const Header = () => {
 
       if(authService.currentUser) {
       let Idtoken = authService.currentUser.multiFactor.user.accessToken
-
-      //console.log(sessionStorage.getItem('token'))
-      //console.log(Idtoken)
+      const name = sessionStorage.getItem('userName');
+      // console.log(sessionStorage.getItem('token'))
+      // console.log(Idtoken)
 
       await axios
         .get(`${config.SERVER_URL}/profile`, {
           headers: { authentication: Idtoken },
         })
         .then((response) => {
-          
+          console.log(response)
           SetProfile({
             ...profile,
-            userName:  response.data.name,
+            userName:  name,
             userImage: response.data.photoURL,
             isBill: response.data.isBill,
             Plan: response.data.plan
           });
     
           sessionStorage.setItem('token',Idtoken);
-         // sessionStorage.setItem("userUid", response.data.uid);
           sessionStorage.setItem("plan", response.data.plan);
           sessionStorage.setItem("isBill", response.data.isBill);
           
@@ -114,6 +111,10 @@ const Header = () => {
         .catch((error) => {
           if(error.response.status === 412) {
             toast.error('새로고침하거나 다시 로그인 해주세요!') 
+            //window.location.reload();  
+          }
+          if(error.response.status === 403) {
+            toast.error('존재하지 않는 유저입니다.') 
             //window.location.reload();  
           }
           // toast.error(error.message);
@@ -129,7 +130,7 @@ const Header = () => {
 
   const GetProfile = useCallback(async () => {
     if (check !== null) {
-      
+      const name = sessionStorage.getItem('userName');
       await axios
         .get(`${config.SERVER_URL}/login`, {
           headers: { authentication: check },
@@ -139,7 +140,7 @@ const Header = () => {
 
           SetProfile({
             ...profile,
-            userName:response.data.name,
+            userName: name,
             isBill: response.data.isBill,
             Plan: response.data.plan,
           });
@@ -153,6 +154,7 @@ const Header = () => {
         })
         .catch((error) => {
           console.log(error);
+          
           if (error.response.status === 412) {
             toast.error("새로고침하거나 다시 로그인 해주세요");
           }
@@ -166,7 +168,7 @@ const Header = () => {
 
   const KakaoProfile = useCallback(async() => {
     //console.log('kakao login');
-
+    const name = sessionStorage.getItem('userName');
     if(kakao_token !== null)
     await axios
     .get(`${config.SERVER_URL}/login`, {
@@ -176,7 +178,7 @@ const Header = () => {
       console.log(response);
       SetProfile({
         ...profile,
-        userName: sessionStorage.getItem('userName'),
+        userName: name,
         isBill: response.data.isBill,
         Plan: response.data.plan
       });
@@ -380,7 +382,7 @@ const Header = () => {
           <div className='afterLogin'>
             <div className='Username'>
               <p>
-                {userName !== undefined ? userName : sessionStorage.getItem('userName')}님
+                {userName}님
               </p>
             </div>
             <p className='plan'>

@@ -303,7 +303,6 @@ const Register = () => {
           sessionStorage.setItem("token", token);
           sessionStorage.setItem("userName", res.data);
           sessionStorage.setItem("userImage", res.photoURL);
-          sessionStorage.setItem("userUid", res.uid);
           sessionStorage.setItem("plan", res.plan);
           sessionStorage.setItem("provider", 'kakao');
           History.push("/");
