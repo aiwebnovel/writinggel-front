@@ -19,6 +19,8 @@ const Header = () => {
 
   const check = sessionStorage.getItem("token");
   const provider = sessionStorage.getItem('provider');
+  const { Kakao } = window;
+  const kakao_token = Kakao.Auth.getAccessToken();
 
   const [isShow, SetShow] = useState(false);
   const [isUser, SetUser] = useState(false);
@@ -104,7 +106,6 @@ const Header = () => {
             });
       
             sessionStorage.setItem('token',Idtoken);
-            sessionStorage.setItem("userUid", response.data.uid);
             sessionStorage.setItem("plan", response.data.plan);
             sessionStorage.setItem("isBill", response.data.isBill);
             
@@ -144,7 +145,6 @@ const Header = () => {
         });
 
         sessionStorage.setItem("token", sessionStorage.getItem('token'));
-        sessionStorage.setItem("userUid", response.data.uid);
         sessionStorage.setItem("plan", response.data.plan);
         sessionStorage.setItem("isBill", response.data.isBill);
       })
@@ -157,15 +157,54 @@ const Header = () => {
     }
   },[]);
 
-  const signOut = async () => {
-    await sessionStorage.clear();
 
-    SetUser(false);
+  const KakaoProfile = useCallback(async() => {
+    //console.log('kakao login');
+
+    if(kakao_token !== null)
+    await axios
+    .get(`${config.SERVER_URL}/login`, {
+      headers: { authentication: kakao_token},
+    })
+    .then((response) => {
+      console.log(response);
+      SetProfile({
+        ...profile,
+        userName: sessionStorage.getItem('userName'),
+        isBill: response.data.isBill,
+        Plan: response.data.plan
+      });
+      sessionStorage.setItem('token', kakao_token);
+      sessionStorage.setItem("plan", response.data.plan);
+      sessionStorage.setItem("isBill", response.data.isBill);
+      
+    })
+    .catch((error) => {
+      if(error.response.status === 412) {
+        toast.error('새로고침하거나 다시 로그인 해주세요!') 
+        //window.location.reload();  
+      }
+      // toast.error(error.message);
+    });
+  },[]);
+
+
+  const signOut = async () => {
+
     SetShowMenu(false);
 
-    await authService.signOut();
-    window.location.reload();
+    if(provider === 'kakao') {
+      Kakao.Auth.logout(()=>{
+        sessionStorage.clear();
+        window.location.reload();
+      })
+    } else {
+      await sessionStorage.clear();
+      await authService.signOut();
+      window.location.reload();
+    }
   };
+
 
   const HandleShow = () => {
     SetShow(!isShow);
@@ -179,10 +218,14 @@ const Header = () => {
 
     if(provider === 'password'){
       GetProfile();
-    } else if(provider === 'google.com' || 'facebook.com') {
+    } 
+    if (provider === "google.com" || "facebook.com") {
       requestProfile();
+    } 
+    if (provider === 'kakao') {
+      KakaoProfile();
     }
-  },[])
+  },[provider, GetProfile, requestProfile, KakaoProfile])
 
 
   return (

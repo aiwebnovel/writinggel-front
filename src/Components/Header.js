@@ -15,7 +15,10 @@ import "../styles/header.scss";
 import styled from "styled-components";
 
 const Header = () => {
+
   const { Kakao } = window;
+  const kakao_token = Kakao.Auth.getAccessToken();
+
   const size = useContext(ResponsiveContext);
   const check = sessionStorage.getItem("token");
   const provider = sessionStorage.getItem('provider');
@@ -31,23 +34,6 @@ const Header = () => {
   const [MobileSubMenu, SetMobileSubMenu] = useState(false);
 
   const { userName, userImage, isBill, Plan } = profile;
-
-  // const refreshProfile = useCallback(async () => {
-  //   authService.onAuthStateChanged(async (user) => {
-  //     //console.log("user", user);
-  //     if (user) {
-  //       await authService.currentUser
-  //         .getIdToken()
-  //         .then(async (data) => {
-  //           await localStorage.setItem("token", data);
-  //         })
-  //         .catch(async (error) => {
-  //           console.log(error);
-  //           toast.error("새로고침하거나 다시 로그인 해주세요!");
-  //         });
-  //     }
-  //   });
-  // }, []);
 
   const reLoadProfile = useCallback(async()=>{
 
@@ -73,7 +59,7 @@ const Header = () => {
               });
         
               sessionStorage.setItem('token',data);
-              sessionStorage.setItem("userUid", response.data.uid);
+              //sessionStorage.setItem("userUid", response.data.uid);
               sessionStorage.setItem("plan", response.data.plan);
               sessionStorage.setItem("isBill", response.data.isBill);
               
@@ -120,7 +106,7 @@ const Header = () => {
           });
     
           sessionStorage.setItem('token',Idtoken);
-          sessionStorage.setItem("userUid", response.data.uid);
+         // sessionStorage.setItem("userUid", response.data.uid);
           sessionStorage.setItem("plan", response.data.plan);
           sessionStorage.setItem("isBill", response.data.isBill);
           
@@ -149,7 +135,7 @@ const Header = () => {
           headers: { authentication: check },
         })
         .then(async (response) => {
-          //console.log(response.data);
+          console.log(response.data);
 
           SetProfile({
             ...profile,
@@ -159,7 +145,7 @@ const Header = () => {
           });
 
           sessionStorage.setItem("token", check);
-          sessionStorage.setItem("userUid", response.data.uid);
+          //sessionStorage.setItem("userUid", response.data.uid);
           sessionStorage.setItem("plan", response.data.plan);
           sessionStorage.setItem("isBill", response.data.isBill);
 
@@ -178,36 +164,50 @@ const Header = () => {
   }, []);
 
 
+  const KakaoProfile = useCallback(async() => {
+    //console.log('kakao login');
+
+    if(kakao_token !== null)
+    await axios
+    .get(`${config.SERVER_URL}/login`, {
+      headers: { authentication: kakao_token},
+    })
+    .then((response) => {
+      console.log(response);
+      SetProfile({
+        ...profile,
+        userName: sessionStorage.getItem('userName'),
+        isBill: response.data.isBill,
+        Plan: response.data.plan
+      });
+      sessionStorage.setItem('token', kakao_token);
+      sessionStorage.setItem("plan", response.data.plan);
+      sessionStorage.setItem("isBill", response.data.isBill);
+      
+    })
+    .catch((error) => {
+      if(error.response.status === 412) {
+        toast.error('새로고침하거나 다시 로그인 해주세요!') 
+        //window.location.reload();  
+      }
+      // toast.error(error.message);
+    });
+  },[]);
+
   const signOut = async () => {
 
-    const token = 'Bearer ' + sessionStorage.getItem('token');
-    console.log(token)
     SetShowMenu(false);
 
-    Kakao.API.request({
-      url:'/v1/user/logout',
-      success: function(res) {
-        console.log(res)
-      },
-      fail: function(error) {
-        console.error(error)
-      }
-    })
-
-    //    Kakao.API.request({
-    //   url:'/v1/user/unlink',
-    //   success: function(res) {
-    //     console.log(res)
-    //   },
-    //   fail: function(error) {
-    //     console.error(error)
-    //   }
-    // })
-
-   await authService.signOut();
-  //await sessionStorage.clear();
-  //await localStorage.clear();
-   window.location.reload();
+    if(provider === 'kakao') {
+      Kakao.Auth.logout(()=>{
+        sessionStorage.clear();
+        window.location.reload();
+      })
+    } else {
+      await sessionStorage.clear();
+      await authService.signOut();
+      window.location.reload();
+    }
   };
 
   const HandleMobile = () => {
@@ -222,17 +222,18 @@ const Header = () => {
     SetShowMenu(!isShowMenu);
   };
 
-  // useEffect(()=>{
-  //   refreshProfile();
-  // },[refreshProfile])
 
   useEffect(() => {
     if (provider === "password") {
       GetProfile();
-    } else if (provider === "google.com" || "facebook.com") {
+    } 
+    if (provider === "google.com" || "facebook.com") {
       requestProfile();
+    } 
+    if (provider === 'kakao') {
+      KakaoProfile();
     }
-  }, [provider, GetProfile, requestProfile]);
+  }, [provider, GetProfile, requestProfile, KakaoProfile]);
 
 
 
@@ -288,7 +289,7 @@ const Header = () => {
             <Link to='/newsletter'>뉴스레터</Link>
             <Link to='/faq'>FAQ</Link>
             {/* <Link to='/ask'>문의</Link> */}
-            {sessionStorage.getItem("token") ? (
+            {sessionStorage.getItem("token") || kakao_token ? (
               <Anchor>
                 <Avatar
                   referrerpolicy='no-referer'
@@ -360,7 +361,7 @@ const Header = () => {
             <Link to='/newsletter'>뉴스레터</Link>
             {/* <Link to='/ask'>문의</Link> */}
             <Link to='/faq'>FAQ</Link>
-            {sessionStorage.getItem("token") ? (
+            {sessionStorage.getItem("token") || kakao_token ? (
               <>
                 <Link to='/tingbox'>팅젤 보관함</Link>
                 <Link to='/mypage'>마이 페이지</Link>

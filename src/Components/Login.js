@@ -22,8 +22,8 @@ import "../styles/header.scss";
 import styled from "styled-components";
 
 const Login = () => {
-  const { Kakao} = window;
-  // const naverRef = useRef();
+  const { Kakao, naver} = window;
+ //const naverRef = useRef();
 
   const History = useHistory();
 
@@ -212,32 +212,12 @@ const Login = () => {
   };
 
   const LoginKakao = () => {
-    console.log("kakao");
 
-    // Kakao.Auth.authorize({
-    //   redirectUri:'http://localhost:3000/oauth'
-    // });
-    Kakao.Auth.login({
-      success: async function (response) {
-        console.log(response);
-        History.push('/');
-        await Kakao.API.request({
-          url: "/v2/user/me",
-          success: (response) => {
-            console.log(response);
-            
-          
-          },
-          fail: (error)=> {
-            console.log(error);
-          },
-        });
-      },
-      fail: function (error) {
-        console.log(error);
-      },
-      // throughTalk: false,
+    Kakao.Auth.authorize({
+      redirectUri:'http://localhost:3000/oauth'
+      // redirectUri:'http://172.30.1.53:3000/oauth'
     });
+
   };
 
   // const InitNaverLogin = () => {

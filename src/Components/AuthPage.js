@@ -1,29 +1,31 @@
 import React, { useEffect } from "react";
 import axios from 'axios';
-import * as configUrl from '../config';
 import { useHistory } from "react-router-dom";
+import Loading from "./SmallLoading";
 
 const AuthPage = () => {
   //const { Kakao } = window;
   const History = useHistory();
 
   useEffect(() => {
-
+    const { Kakao } = window;
     const search = new URL(window.location.href);
-    const token = search.searchParams.get("code");
-    localStorage.setItem("search", search);
-    localStorage.setItem("token", token);
+    const code = search.searchParams.get("code");
+    sessionStorage.setItem("search", search);
+    sessionStorage.setItem("code", code);
     const redirectUri = 'http://localhost:3000/oauth'
+    //const redirectUri = 'http://172.30.1.53:3000/oauth'
     console.log(redirectUri)
 
-    if(token !== undefined){
-      console.log(`authorizeCodeFromKakao : ${token}`)
+
+    if(code !== undefined){
+      console.log(`authorizeCodeFromKakao : ${code}`)
       
       const body = {
         grant_type: "authorization_code",
         client_id: 'cc67916adadf130f20e79f6d4a622909',
         redirect_uri: redirectUri,
-        code: token
+        code: code
       }
       
       const queryStringBody = Object.keys(body)
@@ -40,72 +42,43 @@ const AuthPage = () => {
       })
         .then(res => res.json())
         .then(async (data) => {
+          
           console.log(data);
           const access = data.access_token;
-          console.log(access)
-          const config = {
-                  method: "get",
-                  url: `${configUrl.SERVER_URL}/signup`,
-                  headers: {
-                    authentication : access,
-                    provider: "kakao",
+          //const authToken = 'Bearer ' + access
+          //sessionStorage.setItem('token', access);
+          await Kakao.Auth.setAccessToken(access);
+
+          await Kakao.API.request({
+                  url: "/v2/user/me",
+                  success: (response) => {
+                    console.log(response);
+                    let id = response.id;
+                    let email = response.kakao_account.email;
+                    let profile = response.kakao_account.profile;
+        
+                    let nickname = response.properties.nickname;
+                    let photoURL = profile.thumbnail_image_url;
+                    
+                    sessionStorage.setItem('userUid', id);
+                    sessionStorage.setItem("email", email);
+                    sessionStorage.setItem("create", response.connected_at);
+                    sessionStorage.setItem("provider", 'kakao');
+                    sessionStorage.setItem("userName", nickname);
+                    sessionStorage.setItem("userImage", photoURL);
+                    History.push('/');
                   },
-                };
-                await axios(config)
-                .then((res)=>{
-                  console.log(res);
-                  History.push("/");
-                })
-                .catch((error)=>{
-                  console.log(error, error.message);
-                })
-            //History.push('/')
+                  fail: (error)=> {
+                    console.log(error);
+                  },
+                });
         })
     }else{
       console.log("No AuthorizeCodeFromKakao")
     }
 
-
-
-    // if(token){
-    //     console.log(`authorizeCodeFromKakao : ${token}`)
-    //     axios.post({
-    //         url:'https://kauth.kakao.com/oauth/token',
-    //         data:{
-    //           grant_type:'authorization_code',
-    //           client_id:'cc67916adadf130f20e79f6d4a622909',
-    //           redirect_uri:redirectUri,
-    //           code:token
-    //         },
-    //         success: (res) => {
-    //           console.log(res)
-    //           History.push("/");
-    //         },
-    //         fail: (err) => {
-    //             console.log(err)
-
-    //         }
-    //     });
-
-    //   }else{
-    //     console.log("No AuthorizeCodeFromKakao")
-    //   }
-      
-    // if (token) {
-    //   Kakao.Auth.setAccessToken(token);
-    //   History.push('/');
-    //   Kakao.Auth.getStatusInfo(({ status }) => {
-    //     console.log(status);
-    //     if (status === "connected") {
-    //       console.log(Kakao.Auth.getAccessToken());
-    //       History.push("/");
-    //     } else {
-    //       Kakao.Auth.setAccessToken(null);
-    //     }
-    //   });
-   // }
   }, []);
-  return <div>Loading</div>;
+  return <Loading />;
 };
 
 export default AuthPage;

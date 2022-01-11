@@ -305,6 +305,7 @@ const Register = () => {
           sessionStorage.setItem("userImage", res.photoURL);
           sessionStorage.setItem("userUid", res.uid);
           sessionStorage.setItem("plan", res.plan);
+          sessionStorage.setItem("provider", 'kakao');
           History.push("/");
         })
         .catch((error)=>{

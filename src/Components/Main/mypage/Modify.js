@@ -16,15 +16,17 @@ import {
   updateProfile,
   // updateEmail,
   deleteUser,
-  reauthenticateWithCredential
+  reauthenticateWithCredential,
 } from "@firebase/auth";
 import firebase from "@firebase/app-compat";
-import TagManager from 'react-gtm-module';
-
+import TagManager from "react-gtm-module";
 
 const Modify = () => {
   //const size = useContext(ResponsiveContext);
   const History = useHistory();
+  const { Kakao } = window;
+  const kakao_token = Kakao.Auth.getAccessToken();
+  const provider = sessionStorage.getItem("provider");
 
   const [isLoading, SetLoading] = useState(false);
   const [Userprofile, SetProfile] = useState({
@@ -40,18 +42,12 @@ const Modify = () => {
 
   //회원정보 수정 클릭시
   const ModifyUser = async () => {
-    //console.log(Userprofile);
-
     const auth = getAuth();
     const user = auth.currentUser;
+
     if (user !== null) {
-      // The user object has basic properties such as display name, email, etc.
       const displayName = user.displayName;
       const email = user.email;
-      // The user's ID, unique to the Firebase project. Do NOT use
-      // this value to authenticate with your backend server, if
-      // you have one. Use User.getToken() instead.
-      //const uid = user.uid;
 
       //console.log(displayName, email);
       SetLoading(true);
@@ -60,23 +56,48 @@ const Modify = () => {
       await updateProfile(auth.currentUser, {
         displayName: userName,
       })
-        .then(() => {
+        .then(async () => {
           // Profile updated!
           console.log("updated!");
+          await toast.info("재인증을 위해 로그인을 다시 해주세요!");
+          await ReAuthProfile();
         })
         .catch((error) => {
           // An error occurred
           console.log(error);
           toast.error("이름을 수정할 수 없습니다!");
         });
-
-      await toast.info('재인증을 위해 로그인을 다시 해주세요!');
-      await ReAuthProfile();
       SetLoading(false);
-
     } else {
-      signOut();
-      toast.info("유저 정보를 불러올 수 없어요. 다시 로그인해주세요!");
+      if (provider === "kakao" && kakao_token) {
+        await Kakao.API.request({
+          url: "/v1/user/update_profile",
+          data: {
+            properties: {
+              nickname: userName,
+            },
+          },
+          success: (res) => {
+            console.log(res);
+            Kakao.Auth.logout(() => {
+              sessionStorage.clear();
+              History.replace("/");
+              setTimeout(
+                toast.info("재인증을 위해 로그인을 다시 해주세요!"),
+                5000
+              );
+            });
+          },
+          fail: (error) => {
+            console.log(error);
+          },
+        });
+
+        SetLoading(false);
+      } else {
+        toast.info("유저 정보를 불러올 수 없어요. 다시 로그인해주세요!");
+        signOut();
+      }
     }
   };
 
@@ -87,7 +108,7 @@ const Modify = () => {
 
     if (user !== null) {
       let providerId = user.providerData[0].providerId;
-      
+
       if (providerId === "google.com") {
         let providerG = new firebase.auth.GoogleAuthProvider();
         providerG.addScope("profile");
@@ -98,13 +119,6 @@ const Modify = () => {
           .auth()
           .signInWithPopup(providerG)
           .then(async function (result) {
-            // This gives you a Google Access Token.
-            //console.log(result);
-            //let token = result.credential.accessToken;
-            // The signed-in user info.
-            // let user = result.user;
-            // let id = result.credential.idToken
-            // console.log(id);
             window.location.reload();
           })
           .catch((error) => {
@@ -120,11 +134,6 @@ const Modify = () => {
           .auth()
           .signInWithPopup(providerF)
           .then(function (result) {
-            // This gives you a Facebook Access Token.
-            //let token = result.credential.accessToken;
-            // The signed-in user info.
-            // let user = result.user;
-            // console.log(token, user);
             window.location.reload();
           });
       }
@@ -137,19 +146,38 @@ const Modify = () => {
     const auth = getAuth();
     const user = auth.currentUser;
     console.log(user);
-    if (window.confirm("정말 탈퇴하시겠습니까? 탈퇴하시면, 멤버십 가입 내역도 삭제되어 서비스 이용이 불가합니다.")) {
-      deleteUser(user)
-        .then(async () => {
-          // User deleted.
-          //console.log("탈퇴 되었습니다!");
-          await signOut();
-          setTimeout(toast.success("탈퇴 되었습니다!"), 5000);
-        })
-        .catch((error) => {
-          // An error ocurred
-          console.log(error);
-          toast.error("재로그인 후 다시 시도해주세요!");
+    if (
+      window.confirm(
+        "정말 탈퇴하시겠습니까? 탈퇴하시면, 멤버십 가입 내역도 삭제되어 서비스 이용이 불가합니다."
+      )
+    ) {
+      if (provider === "kakao") {
+        Kakao.API.request({
+          url: "/v1/user/unlink",
+          success: function (res) {
+            console.log(res);
+            sessionStorage.cler();
+            History.replace("/");
+            setTimeout(toast.success("탈퇴 되었습니다!"), 5000);
+          },
+          fail: function (error) {
+            console.error(error);
+          },
         });
+      } else {
+        deleteUser(user)
+          .then(async () => {
+            // User deleted.
+            //console.log("탈퇴 되었습니다!");
+            await signOut();
+            setTimeout(toast.success("탈퇴 되었습니다!"), 5000);
+          })
+          .catch((error) => {
+            // An error ocurred
+            console.log(error);
+            toast.error("재로그인 후 다시 시도해주세요!");
+          });
+      }
     }
   };
 
@@ -159,40 +187,56 @@ const Modify = () => {
     window.location.reload();
   };
 
-
-  useEffect(()=>{
-
+  useEffect(() => {
     TagManager.dataLayer({
       dataLayer: {
-        event: 'pageview',
-        pagePath: '/mypage/modify',
-        pageTitle: '마이페이지 수정',
+        event: "pageview",
+        pagePath: "/mypage/modify",
+        pageTitle: "마이페이지 수정",
       },
     });
-
-  },[])
-
+  }, []);
 
   useEffect(() => {
     const loginCheck = sessionStorage.getItem("token");
     const email = sessionStorage.getItem("email");
 
-    if (loginCheck !== null) {
-      axios
-        .get(`${config.SERVER_URL}/profile`, {
-          headers: { authentication: loginCheck },
-        })
-        .then((response) => {
-          //console.log(response.data);
-          let data = response.data;
+    if (provider === "kakao") {
+      Kakao.API.request({
+        url: "/v2/user/me",
+        success: (response) => {
+          console.log(response);
+          let email = response.kakao_account.email;
+          let nickname = response.properties.nickname;
+
           SetProfile({
             ...Userprofile,
-            userName: data.name,
+            userName: nickname,
             userEmail: email,
           });
-        });
+        },
+        fail: (error) => {
+          console.log(error);
+        },
+      });
     } else {
-      History.replace("/");
+      if (loginCheck !== null) {
+        axios
+          .get(`${config.SERVER_URL}/profile`, {
+            headers: { authentication: loginCheck },
+          })
+          .then((response) => {
+            console.log(response.data);
+            let data = response.data;
+            SetProfile({
+              ...Userprofile,
+              userName: data.name,
+              userEmail: email,
+            });
+          });
+      } else {
+        History.replace("/");
+      }
     }
   }, [History]);
 
@@ -208,7 +252,7 @@ const Modify = () => {
           className='MypageHeader'
         >
           <h2>
-            {sessionStorage.getItem("token") !== null
+            {sessionStorage.getItem("token") || kakao_token !== null
               ? "회원 정보 수정"
               : "회원정보가 없습니다!"}
           </h2>

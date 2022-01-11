@@ -17,6 +17,9 @@ import TagManager from 'react-gtm-module';
 const TingBox = () => {
   const size = useContext(ResponsiveContext);
   const History = useHistory();
+  const { Kakao } = window;
+  const kakao_token = Kakao.Auth.getAccessToken();
+
 
   const [SaveData, SetData] = useState({
     0: "",
@@ -132,7 +135,7 @@ const TingBox = () => {
   useEffect(() => {
     const loginCheck = sessionStorage.getItem("token");
 
-    if (loginCheck !== null) {
+    if (loginCheck !== null || kakao_token !== null) {
       return;
     } else {
       History.push("/");
