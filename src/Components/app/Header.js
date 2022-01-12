@@ -167,7 +167,7 @@ const Header = () => {
       headers: { authentication: kakao_token},
     })
     .then((response) => {
-      console.log(response);
+      //console.log(response);
       SetProfile({
         ...profile,
         userName: sessionStorage.getItem('userName'),

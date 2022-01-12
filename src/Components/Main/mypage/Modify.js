@@ -229,19 +229,7 @@ const Modify = () => {
       });
     } else {
       if (loginCheck !== null) {
-        // axios
-        //   .get(`${config.SERVER_URL}/profile`, {
-        //     headers: { authentication: loginCheck },
-        //   })
-        //   .then((response) => {
-        //     console.log(response.data);
-        //     let data = response.data;
-        //     SetProfile({
-        //       ...Userprofile,
-        //       userName: name,
-        //       userEmail: email,
-        //     });
-        //   });
+
         SetProfile({
           ...Userprofile,
           userName: name,

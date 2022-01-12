@@ -127,12 +127,12 @@ const Login = () => {
               let credentials = dataFacebook.credential;
               let user = dataFacebook.user;
               let providerId = dataFacebook.credential.providerId; //facebook.com
-              let email = dataFacebook.user.email;
-              let create = dataFacebook.user.metadata.creationTime;
+              let email =user.email;
+              let create =user.metadata.creationTime;
               let token = credentials.accessToken;
               let username = user.displayName;
               let userPhoto = user.photoURL;
-              console.log('result',credentials, email,create,token);
+              //console.log('result',token);
 
               await sessionStorage.setItem("token", token);
               await sessionStorage.setItem("email", email);

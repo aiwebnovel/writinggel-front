@@ -284,10 +284,10 @@ const Register = () => {
     // });
     Kakao.Auth.login({
       success: async function (response) {
-        console.log(response);
-        console.log(response.access_token);
-        sessionStorage.setItem("token", response.access_token);
-        const token = response.access_token
+        //console.log(response);
+       // console.log(response.access_token);
+        const token = response.access_token;
+        await Kakao.Auth.setAccessToken(token);
 
         const config = {
           method: "get",
@@ -298,13 +298,33 @@ const Register = () => {
           },
         };
         axios(config)
-        .then((res)=>{
+        .then(async(res)=>{
           console.log(res);
           sessionStorage.setItem("token", token);
-          sessionStorage.setItem("userName", res.data);
-          sessionStorage.setItem("userImage", res.photoURL);
-          sessionStorage.setItem("plan", res.plan);
-          sessionStorage.setItem("provider", 'kakao');
+     
+          await Kakao.API.request({
+                  url: "/v2/user/me",
+                  success: (response) => {
+                    //console.log(response);
+                    //let id = response.id;
+                    let email = response.kakao_account.email;
+                    let profile = response.kakao_account.profile;
+        
+                    let nickname = response.properties.nickname;
+                    let photoURL = profile.thumbnail_image_url;
+                    
+                  
+                    sessionStorage.setItem("email", email);
+                    sessionStorage.setItem("create", response.connected_at);
+                    sessionStorage.setItem("provider", 'kakao');
+                    sessionStorage.setItem("userName", nickname);
+                    sessionStorage.setItem("userImage", photoURL);
+                    History.push('/');
+                  },
+                  fail: (error)=> {
+                    console.log(error);
+                  },
+                });
           History.push("/");
         })
         .catch((error)=>{
@@ -313,16 +333,7 @@ const Register = () => {
             toast.error('이미 가입된 사용자 입니다!');
           }
         })
-    
-        // await Kakao.API.request({
-        //   url: "/v2/user/me",
-        //   success: function (response) {
-        //     console.log(response);
-        //   },
-        //   fail: function (error) {
-        //     console.log(error);
-        //   },
-        // });
+
       },
       fail: function (error) {
         console.log(error);

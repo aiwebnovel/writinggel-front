@@ -105,7 +105,7 @@ const Mypage = () => {
         .then((response) => {
 
           let data = response.data;
-          console.log(data);
+          //console.log(data);
 
           let billFormat = moment(data.billStartDate).format("YYYY-MM-DD");
           let createFormat = moment(create).format("YYYY-MM-DD");
@@ -145,7 +145,7 @@ const Mypage = () => {
           .then((response) => {
             // console.log(response.data);
             let data = response.data;
-            console.log(data);
+            //console.log(data);
             let billFormat = moment(data.billStartDate).format("YYYY-MM-DD");
             let createFormat = moment(create).format("YYYY-MM-DD");
             let MonthLater = moment(data.billStartDate)

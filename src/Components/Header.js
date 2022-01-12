@@ -43,13 +43,13 @@ const Header = () => {
         await authService.currentUser
           .getIdToken()
           .then(async (data) => {
-           
+          
             await axios
             .get(`${config.SERVER_URL}/profile`, {
               headers: { authentication: data},
             })
             .then((response) => {
-              
+              //console.log(response)
               SetProfile({
                 ...profile,
                 isBill: response.data.isBill,
@@ -57,7 +57,6 @@ const Header = () => {
               });
         
               sessionStorage.setItem('token',data);
-              //sessionStorage.setItem("userUid", response.data.uid);
               sessionStorage.setItem("plan", response.data.plan);
               sessionStorage.setItem("isBill", response.data.isBill);
               
@@ -65,9 +64,9 @@ const Header = () => {
             .catch((error) => {
               if(error.response.status === 412) {
                 toast.error('새로고침하거나 다시 로그인 해주세요!') 
-                //window.location.reload();  
+                
               }
-              // toast.error(error.message);
+             
             });
           })
           .catch(async (error) => {
@@ -86,15 +85,14 @@ const Header = () => {
       if(authService.currentUser) {
       let Idtoken = authService.currentUser.multiFactor.user.accessToken
       const name = sessionStorage.getItem('userName');
-      // console.log(sessionStorage.getItem('token'))
-      // console.log(Idtoken)
+
 
       await axios
         .get(`${config.SERVER_URL}/profile`, {
           headers: { authentication: Idtoken },
         })
         .then((response) => {
-          console.log(response)
+         // console.log(response)
           SetProfile({
             ...profile,
             userName:  name,
@@ -136,7 +134,7 @@ const Header = () => {
           headers: { authentication: check },
         })
         .then(async (response) => {
-          console.log(response.data);
+          //console.log(response.data);
 
           SetProfile({
             ...profile,
@@ -175,14 +173,14 @@ const Header = () => {
       headers: { authentication: kakao_token},
     })
     .then((response) => {
-      console.log(response);
+      //console.log(response);
       SetProfile({
         ...profile,
         userName: name,
         isBill: response.data.isBill,
         Plan: response.data.plan
       });
-      sessionStorage.setItem('token', kakao_token);
+  
       sessionStorage.setItem("plan", response.data.plan);
       sessionStorage.setItem("isBill", response.data.isBill);
       
