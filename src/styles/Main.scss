@@ -308,7 +308,7 @@ $red: #f45752;
     padding: 180px 120px;
     height: 100%;
     overflow: hidden;
-  
+
     @media screen and (max-width: 768px) {
 
         padding: 60px;
@@ -1321,16 +1321,16 @@ hr {
     padding-right: 15px;
     padding-left: 10px;
     border-radius: 10px;
-    border:0;
+    border: 0;
     outline: 0;
 
     >img {
         width: 70px;
     }
 
-    > span {
+    >span {
         font-weight: 600;
-        
+
         @media screen and (max-width: 680px) {
             display: none;
         }
@@ -1346,7 +1346,7 @@ hr {
     box-shadow: rgba(0, 0, 0, 0.15) 0.95px 0.95px 1.6px;
     padding: 8px 20px;
     border-radius: 10px;
-    border:0;
+    border: 0;
     outline: 0;
 
 
@@ -1354,13 +1354,13 @@ hr {
         border: 1px solid $dark-1;
     }
 
-    > svg {
+    >svg {
         margin-right: 10px;
         width: 28px;
         height: 28px;
     }
 
-    > span {
+    >span {
         font-weight: 600;
         word-break: keep-all;
     }
@@ -1373,8 +1373,8 @@ hr {
     border: 1px solid $main;
     border-radius: 10px;
     padding: 25px;
-    
-    > h4 {
+
+    >h4 {
         margin-bottom: 30px;
         text-align: center;
         font-weight: 600;
@@ -1390,7 +1390,7 @@ hr {
     width: 100%;
     max-width: 400px;
 
-    > button {
+    >button {
         width: 100%;
         background-color: #30009C;
         font-size: 1rem;
@@ -1402,10 +1402,11 @@ hr {
         outline: 0;
         margin-top: 15px;
     }
-  
+
 }
 
-.creditCard, .KakaoPayBox {
+.creditCard,
+.KakaoPayBox {
     width: 100%;
     padding-bottom: 30px;
     display: flex;
@@ -1462,7 +1463,7 @@ hr {
     width: 100%;
     max-width: 500px;
 
-    > button {
+    >button {
         width: 100%;
     }
 }
@@ -2038,28 +2039,49 @@ hr {
 //이벤트 파이팅젤
 
 .box1 {
-    padding: 60px;    
+    padding: 60px;
+
+    @media screen and (max-width: 680px) {
+        padding: 60px 30px;
+    }
 }
 
 .TitleBox1 {
-   background-color : $dark-2; 
-   color: $white-1;
-   font-weight: 600;
+    background-color: $dark-2;
+    color: $white-1;
+    font-weight: 600;
     width: 100%;
     max-width: 700px;
     padding: 10px;
     font-size: 1.8rem;
+    word-break: keep-all;
+
+    @media screen and (max-width: 680px) {
+        font-size: 1.5rem;
+        line-height: 1.8rem;
+        padding: 5px;
+
+    }
 }
 
 
-.content1_1, .content1_2 {
+.content1_1,
+.content1_2 {
     color: $dark-2;
 
-    > h2 {
+    >h2 {
         font-size: 3rem;
         line-height: 3.5rem;
+        word-break: keep-all;
+
         >span {
             font-weight: 900;
+        }
+
+        @media screen and (max-width: 680px) {
+            font-size: 2rem;
+            line-height: 2.5rem;
+
         }
     }
 }
@@ -2069,49 +2091,75 @@ hr {
 }
 
 .content1_2 {
-    
+
     padding-top: 40px;
 
-    > h4 {
+    >h4 {
+        line-height: 2.2rem;
         font-size: 1.2rem;
     }
 }
 
 .content1_3 {
     color: $dark-2;
+    word-break: keep-all;
 
-    > div {
+    >div {
         padding: 60px 30px;
         text-align: center;
-        > img {
+
+        >img {
             width: 300px;
         }
     }
 
-    > h4 {
+    >h4 {
         font-size: 1.2rem;
-        line-height: 1.8rem;
+        line-height: 2.2rem;
     }
 
-    > h3 {
+    >h3 {
         line-height: 2.2rem;
-        font-size : 2rem;
+        font-size: 2rem;
 
-        > span {
+        >span {
             font-weight: 900;
+        }
+    }
+
+    @media screen and (max-width: 680px) {
+
+        >div {
+            >img {
+                width: 180px;
+            }
+        }
+
+        >h3 {
+            font-size: 1.8rem;
+            line-height: 2rem;
+
         }
     }
 }
 
 .TitleBox2 {
-    background-color : $sub2; 
-   color: $white-1;
-   font-weight: 900;
+    background-color: $sub2;
+    color: $white-1;
+    font-weight: 900;
     width: 100%;
     max-width: 400px;
     padding: 5px 8px;
     font-size: 1.6rem;
     margin-top: 38px;
+    word-break: keep-all;
+
+    @media screen and (max-width: 680px) {
+        font-size: 1.5rem;
+        line-height: 1.8rem;
+        padding: 5px;
+
+    }
 }
 
 .content1_4 {
@@ -2119,32 +2167,42 @@ hr {
     background-color: rgba(255, 206, 31, 0.4);
     padding: 10px;
 
-    > h4 {
+    >h4 {
         font-size: 1.2rem;
-        line-height: 1.8rem;
+        margin-bottom: 5px;
+        word-break: keep-all;
     }
 
-    > h3 {
+    >h3 {
+        font-size: 1.8rem;
         line-height: 2rem;
-        font-size : 1.8rem;
 
-    > span {
-        font-weight: 900;
+        >span {
+            font-weight: 900;
+        }
     }
+
+
+    @media screen and (max-width: 680px) {
+
+        >h3 {
+            font-size: 1.5rem;
+            line-height: 1.8rem;
+        }
     }
 
 }
 
 .box2 {
-    background-color : $main;
+    background-color: $main;
     padding: 40px;
 
-    > div {
+    >div {
         width: 100%;
-        max-width: 500px;
+        max-width: 600px;
         word-break: keep-all;
 
-        > p {
+        >p {
             color: $white-1;
             font-weight: 600;
             font-size: 1.6rem;
@@ -2154,36 +2212,55 @@ hr {
 }
 
 .box3 {
-    background-color : #FFEFCA;
+    background-color: #FFEFCA;
     color: $dark-2;
     font-family: 'NeoDunggeunmo';
     padding: 40px;
 
-    > div {
+    >div {
         width: 100%;
         max-width: 500px;
         word-break: keep-all;
 
-        > h4 {
+        >h4 {
+            font-size: 2rem;
             line-height: 2.2rem;
-            font-size : 2rem;
             display: inline-block;
             border-bottom: 1px solid $dark-2;
             margin-bottom: 10px;
         }
 
-        > ol {
+        >ol {
             list-style: auto;
             list-style-position: inside;
             text-indent: -30px;
             padding-left: 30px;
-        > li {
-            font-size: 1.3rem;
-            line-height: 1.6rem;
+
+            >li {
+                font-size: 1.3rem;
+                line-height: 1.6rem;
+            }
         }
     }
+
+    @media screen and (max-width: 680px) {
+        padding-right: 20px;
+        padding-left: 20px;
+
+        >div {
+            >h4 {
+                font-size: 1.8rem;
+                line-height: 2rem;
+            }
+
+            >ol {
+               
+                >li {
+                    font-size: 1.2rem;
+                    line-height: 1.5rem;
+                }
+            }
+        }
     }
 
-   
 }
-

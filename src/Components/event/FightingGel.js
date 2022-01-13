@@ -8,7 +8,7 @@ const FightingGel = () => {
     <EventContainer>
       <Box className='box1' fill align='center'>
         <Box className='contentBox1'>
-          <div className='TitleBox1'>라이팅젤로 글쓰기 파이팅 하기</div>
+          <div className='TitleBox1'>라이팅젤로 글쓰기 파이팅하기</div>
           <div className='content1_1'>
             <h2>올 한해 글쓰기로</h2>
             <h2>
@@ -31,9 +31,9 @@ const FightingGel = () => {
               글쓰기에 필요한 영감도 얻고, 문장 완성으로 막힌 부분을 뚫어주는
             </h4>
             <h3>
-              <span>인공지능</span>으로 <span>글쓰기 부담</span>을
+              <span>인공지능</span>으로 <span>글쓰기 부담</span>을 확 줄여드려요.
             </h3>
-            <h3>확 줄여드려요.</h3>
+            <h3></h3>
           </div>
 
           <div className='TitleBox2'>그리고 이번 이벤트 기간만의 혜택</div>
@@ -46,9 +46,7 @@ const FightingGel = () => {
       </Box>
       <Box className='box2' align="center">
         <div>
-          <p>2022년 1월 31일까지 멤버십에 가입 후</p>
-          <p> 6개월 이내에 콘텐츠를 완성하신 경우,</p>
-          <p> 해당 콘텐츠를 e-book으로 제작해 대형서점에 등록해드립니다.</p>
+          <p>2022년 1월 31일까지 멤버십에 가입 후 6개월 이내에 콘텐츠를 완성하신 경우, 해당 콘텐츠를 전자책으로 제작해 대형서점에 등록해드립니다.</p>
         </div>
       </Box>
       <Box className='box3' align="center">
@@ -57,7 +55,7 @@ const FightingGel = () => {
           <ol>
             <li>멤버십에 가입한다.</li>
             <li>라이팅젤을 활용해 콘텐츠를 완성한다.</li>
-            <li>support@appplatform.co.kr로 콘텐츠를 보낸다. (hwp, word 형태)</li>
+            <li><span style={{wordBreak:'break-all'}}>support@appplatform.co.kr로 콘텐츠를 보낸다.</span> (hwp, word 형태)</li>
             <li>확인 이메일과 연락을 받는다.</li>
             <li>대형서점에 등록된 나의 e-book을 확인한다. (약 2-3주 소요).</li>
           </ol>
@@ -72,8 +70,8 @@ export default FightingGel;
 const EventContainer = styled.div`
   width: 100%;
   height: 100%;
-  background-color: #f9f9f9;
-  //   background-image: url(${EventBackground});
-  //   background-repeat: no-repeat;
-  //   background-size: cover;
+  //background-color: #f9f9f9;
+    background-image: url(${EventBackground});
+    background-repeat: no-repeat;
+    background-size: cover;
 `;
