@@ -201,6 +201,7 @@ const Header = () => {
     if(provider === 'kakao') {
       Kakao.Auth.logout(()=>{
         sessionStorage.clear();
+        localStorage.clear();
         window.location.reload();
       })
     } else {

@@ -60,16 +60,7 @@ const LinkObject = [
     link: "/app/storysrc",
     detail: '/service/storysrc',
   },
-  {
-    id:11,
-    title: "Coming Soon!",
-    link: "/",
-  },
-  // {
-  //   id:12,
-  //   title: "Coming Soon!",
-  //   link: "/",
-  // },
+ 
 ];
 
 export default LinkObject;

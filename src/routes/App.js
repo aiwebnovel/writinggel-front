@@ -45,11 +45,13 @@ import Dailywrite from '../Components/app/page/DailyWrite';
 import Storysrc from '../Components/app/page/Storysrc';
 import Login from '../Components/Login';
 
+import FightingGel from '../Components/event/FightingGel';
 //import GoBrowser from '../Components/GoBrowser';
 import Register from '../Components/Register';
 import Welcome from '../Components/Welcome';
 import AuthPage from '../Components/AuthPage';
 import Callback from '../Components/Callback';
+
 
 function App() {
   return (
@@ -85,7 +87,7 @@ function App() {
         <Route exact path="/mypage/modify" component={Modify}></Route>
         <Route exact path="/tingbox" component={TingBox}></Route>
 
-
+        <Route exact path='/fightingGel' component={FightingGel}></Route>
 
       {/* service */}
         <Route exact path="/app/webnovel" component={Webnovel}></Route>

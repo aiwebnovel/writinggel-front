@@ -9,6 +9,7 @@ $sub2 : #ffce1f;
 $white-1 : #fff;
 $white-2 : #f9f9f9;
 $dark-1 : #444;
+$dark-2 : #000;
 $red: #f45752;
 
 
@@ -304,38 +305,30 @@ $red: #f45752;
 
 .MainHome {
     width: 100%;
-    padding: 180px 60px;
+    padding: 180px 120px;
     height: 100%;
     overflow: hidden;
-    // padding: 48px;
-    // height: 100vh;
-    // overflow: hidden;
-
+  
     @media screen and (max-width: 768px) {
 
-        padding: 60px 30px;
+        padding: 60px;
         justify-content: center;
-        /* word-break: keep-all; */
+        word-break: keep-all;
     }
 }
+
+// .freeUse {
+//     display:flex;
+//     flex-direction: column;
+//     justify-content: center;
+// }
 
 .cardTop {
     padding: 18px;
-    background-color: $main;
+    background-color: $sub1;
 }
 
-.cardTitle {
-    text-align: center;
-    padding: 0 10px;
-    font-family: 'NeoDunggeunmo';
-    word-break: keep-all;
 
-    @media screen and (max-width: 768px) {
-        padding: 30px;
-        justify-content: center;
-        /* word-break: keep-all; */
-    }
-}
 
 
 //Brand
@@ -2040,3 +2033,157 @@ hr {
         }
     }
 }
+
+
+//이벤트 파이팅젤
+
+.box1 {
+    padding: 60px;    
+}
+
+.TitleBox1 {
+   background-color : $dark-2; 
+   color: $white-1;
+   font-weight: 600;
+    width: 100%;
+    max-width: 700px;
+    padding: 10px;
+    font-size: 1.8rem;
+}
+
+
+.content1_1, .content1_2 {
+    color: $dark-2;
+
+    > h2 {
+        font-size: 3rem;
+        line-height: 3.5rem;
+        >span {
+            font-weight: 900;
+        }
+    }
+}
+
+.content1_1 {
+    padding-top: 25px;
+}
+
+.content1_2 {
+    
+    padding-top: 40px;
+
+    > h4 {
+        font-size: 1.2rem;
+    }
+}
+
+.content1_3 {
+    color: $dark-2;
+
+    > div {
+        padding: 60px 30px;
+        text-align: center;
+        > img {
+            width: 300px;
+        }
+    }
+
+    > h4 {
+        font-size: 1.2rem;
+        line-height: 1.8rem;
+    }
+
+    > h3 {
+        line-height: 2.2rem;
+        font-size : 2rem;
+
+        > span {
+            font-weight: 900;
+        }
+    }
+}
+
+.TitleBox2 {
+    background-color : $sub2; 
+   color: $white-1;
+   font-weight: 900;
+    width: 100%;
+    max-width: 400px;
+    padding: 5px 8px;
+    font-size: 1.6rem;
+    margin-top: 38px;
+}
+
+.content1_4 {
+    color: $dark-2;
+    background-color: rgba(255, 206, 31, 0.4);
+    padding: 10px;
+
+    > h4 {
+        font-size: 1.2rem;
+        line-height: 1.8rem;
+    }
+
+    > h3 {
+        line-height: 2rem;
+        font-size : 1.8rem;
+
+    > span {
+        font-weight: 900;
+    }
+    }
+
+}
+
+.box2 {
+    background-color : $main;
+    padding: 40px;
+
+    > div {
+        width: 100%;
+        max-width: 500px;
+        word-break: keep-all;
+
+        > p {
+            color: $white-1;
+            font-weight: 600;
+            font-size: 1.6rem;
+            line-height: 2rem;
+        }
+    }
+}
+
+.box3 {
+    background-color : #FFEFCA;
+    color: $dark-2;
+    font-family: 'NeoDunggeunmo';
+    padding: 40px;
+
+    > div {
+        width: 100%;
+        max-width: 500px;
+        word-break: keep-all;
+
+        > h4 {
+            line-height: 2.2rem;
+            font-size : 2rem;
+            display: inline-block;
+            border-bottom: 1px solid $dark-2;
+            margin-bottom: 10px;
+        }
+
+        > ol {
+            list-style: auto;
+            list-style-position: inside;
+            text-indent: -30px;
+            padding-left: 30px;
+        > li {
+            font-size: 1.3rem;
+            line-height: 1.6rem;
+        }
+    }
+    }
+
+   
+}
+
