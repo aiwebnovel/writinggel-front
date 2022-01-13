@@ -135,7 +135,7 @@ const TingBox = () => {
   useEffect(() => {
     const loginCheck = sessionStorage.getItem("token");
 
-    if (loginCheck !== null || kakao_token !== null) {
+    if (loginCheck !== null ) {
       return;
     } else {
       History.push("/");

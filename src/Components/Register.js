@@ -279,67 +279,67 @@ const Register = () => {
   const SignInKakao = () => {
     console.log("kakao");
 
-    // Kakao.Auth.authorize({
-    //   redirectUri:'http://localhost:3000/oauth'
-    // });
-    Kakao.Auth.login({
-      success: async function (response) {
+    Kakao.Auth.authorize({
+      redirectUri:'https://639d-183-98-33-132.ngrok.io/oauth'
+    });
+    // Kakao.Auth.login({
+    //   success: async function (response) {
         //console.log(response);
        // console.log(response.access_token);
-        const token = response.access_token;
-        await Kakao.Auth.setAccessToken(token);
+        // const token = response.access_token;
+        // await Kakao.Auth.setAccessToken(token);
 
-        const config = {
-          method: "get",
-          url: `${configUrl.SERVER_URL}/signup`,
-          headers: {
-            authentication : token,
-            provider: "kakao",
-          },
-        };
-        axios(config)
-        .then(async(res)=>{
-          console.log(res);
-          sessionStorage.setItem("token", token);
+        // const config = {
+        //   method: "get",
+        //   url: `${configUrl.SERVER_URL}/signup`,
+        //   headers: {
+        //     authentication : token,
+        //     provider: "kakao",
+        //   },
+        // };
+        // axios(config)
+        // .then(async(res)=>{
+        //   console.log(res);
+        //   sessionStorage.setItem("token", token);
      
-          await Kakao.API.request({
-                  url: "/v2/user/me",
-                  success: (response) => {
-                    //console.log(response);
-                    //let id = response.id;
-                    let email = response.kakao_account.email;
-                    let profile = response.kakao_account.profile;
+        //   await Kakao.API.request({
+        //           url: "/v2/user/me",
+        //           success: (response) => {
+        //             //console.log(response);
+        //             //let id = response.id;
+        //             let email = response.kakao_account.email;
+        //             let profile = response.kakao_account.profile;
         
-                    let nickname = response.properties.nickname;
-                    let photoURL = profile.thumbnail_image_url;
+        //             let nickname = response.properties.nickname;
+        //             let photoURL = profile.thumbnail_image_url;
                     
                   
-                    sessionStorage.setItem("email", email);
-                    sessionStorage.setItem("create", response.connected_at);
-                    sessionStorage.setItem("provider", 'kakao');
-                    sessionStorage.setItem("userName", nickname);
-                    sessionStorage.setItem("userImage", photoURL);
-                    History.push('/');
-                  },
-                  fail: (error)=> {
-                    console.log(error);
-                  },
-                });
-          History.push("/");
-        })
-        .catch((error)=>{
-          console.log(error, error.message);
-          if(error.response.status === 403) {
-            toast.error('이미 가입된 사용자 입니다!');
-          }
-        })
+        //             sessionStorage.setItem("email", email);
+        //             sessionStorage.setItem("create", response.connected_at);
+        //             sessionStorage.setItem("provider", 'kakao');
+        //             sessionStorage.setItem("userName", nickname);
+        //             sessionStorage.setItem("userImage", photoURL);
+        //             History.push('/');
+        //           },
+        //           fail: (error)=> {
+        //             console.log(error);
+        //           },
+        //         });
+        //   History.push("/");
+        // })
+        // .catch((error)=>{
+        //   console.log(error, error.message);
+        //   if(error.response.status === 403) {
+        //     toast.error('이미 가입된 사용자 입니다!');
+        //   }
+        // })
 
-      },
-      fail: function (error) {
-        console.log(error);
-      },
-      throughTalk: false,
-    });
+    //   },
+    //   fail: function (error) {
+    //     console.log(error);
+    //   },
+    //   throughTalk: false,
+    // });
   };
 
   useEffect(()=>{
@@ -503,7 +503,7 @@ const Register = () => {
                   onClick={SignInKakao}
                 >
                   <img src='/kakao_symbol.png' alt='kakao' />
-                  <span>카카오 로그인</span>
+                  <span>카카오로 시작하기</span>
                 </button>
                 <button
                   className='facebookButton'

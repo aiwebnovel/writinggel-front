@@ -290,7 +290,7 @@ const Header = () => {
             <Link to='/newsletter'>뉴스레터</Link>
             <Link to='/faq'>FAQ</Link>
             {/* <Link to='/ask'>문의</Link> */}
-            {sessionStorage.getItem("token")  ? (
+            {sessionStorage.getItem("token") ? (
               <Anchor>
                 <Avatar
                   referrerpolicy='no-referer'
@@ -362,10 +362,11 @@ const Header = () => {
             <Link to='/newsletter'>뉴스레터</Link>
             {/* <Link to='/ask'>문의</Link> */}
             <Link to='/faq'>FAQ</Link>
-            {sessionStorage.getItem("token") || kakao_token ? (
+            {sessionStorage.getItem("token") ? (
               <>
                 <Link to='/tingbox'>팅젤 보관함</Link>
                 <Link to='/mypage'>마이 페이지</Link>
+                <span onClick={signOut}>로그아웃</span>
               </>
             ) : (
               <Link to='/login' style={{ cursor: "pointer", fontWeight: 600 }}>

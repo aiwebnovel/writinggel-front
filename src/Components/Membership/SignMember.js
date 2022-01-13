@@ -262,8 +262,14 @@ const SignMember = () => {
   };
 
   const KakaoPay = () => {
-    console.log("kakao");
-    IMP.init("imp33624147");
+    const user = sessionStorage.getItem('token');
+
+    if (user !== null) {
+      if (selected1 === false && selected2 === false && selected3 === false) {
+        //toast.error("멤버십을 선택해주세요!");
+        SetOpen(true);
+      } else {
+        IMP.init("imp33624147");
     IMP.request_pay(
       {
         pg: "kakaopay",
@@ -288,6 +294,11 @@ const SignMember = () => {
         }
       }
     );
+      }
+    }else {
+      toast.warn("로그인을 먼저 해주세요!");
+    }
+    
   };
 
   useEffect(() => {

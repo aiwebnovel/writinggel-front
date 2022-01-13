@@ -214,8 +214,8 @@ const Login = () => {
   const LoginKakao = () => {
 
     Kakao.Auth.authorize({
-      redirectUri:'http://localhost:3000/oauth'
-      // redirectUri:'http://172.30.1.53:3000/oauth'
+      //redirectUri:'http://localhost:3000/oauth'
+      redirectUri:'https://639d-183-98-33-132.ngrok.io/oauth'
     });
 
   };

@@ -163,7 +163,7 @@ const Modify = () => {
           url: "/v1/user/unlink",
           success: function (res) {
             console.log(res);
-            sessionStorage.cler();
+            sessionStorage.clear();
             History.replace("/");
             setTimeout(toast.success("탈퇴 되었습니다!"), 5000);
           },
@@ -253,7 +253,7 @@ const Modify = () => {
           className='MypageHeader'
         >
           <h2>
-            {sessionStorage.getItem("token") || kakao_token !== null
+            {sessionStorage.getItem("token")  !== null
               ? "회원 정보 수정"
               : "회원정보가 없습니다!"}
           </h2>

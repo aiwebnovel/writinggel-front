@@ -1960,7 +1960,7 @@ hr {
     height: 100vh;
 
     @media screen and (max-width: 768px) {
-        padding: 0 20px;
+        padding: 60px 20px;
     }
 }
 
@@ -1976,15 +1976,16 @@ hr {
 
     >h2 {
         font-size: 35px;
-        font-weight: 600;
+        font-weight: 900;
         margin-bottom: 15px;
     }
 
-    >h3,
-    h4 {
+    >p {
         font-size: 18px;
         line-height: 30px;
     }
+
+
 
 
     @media screen and (max-width: 768px) {
@@ -2010,7 +2011,7 @@ hr {
     }
 
     >button:nth-child(2) {
-        background-color: $white-2;
+        background-color: $white-1;
         border: 1px solid $dark-1;
         font-size: 20px;
         padding: 5px 25px;
@@ -2023,7 +2024,8 @@ hr {
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        gap: 15px;
+        gap: 10px;
+        padding-top: 20px;
 
         >button {
             width: 100%
@@ -2215,7 +2217,7 @@ hr {
     background-color: #FFEFCA;
     color: $dark-2;
     font-family: 'NeoDunggeunmo';
-    padding: 40px;
+    padding: 50px 0;
 
     >div {
         width: 100%;
@@ -2230,22 +2232,19 @@ hr {
             margin-bottom: 10px;
         }
 
-        >ol {
-            list-style: auto;
-            list-style-position: inside;
+        > p{
             text-indent: -30px;
             padding-left: 30px;
-
-            >li {
-                font-size: 1.3rem;
-                line-height: 1.6rem;
-            }
+            font-size: 1.4rem;
+            line-height: 1.8rem;
+        
         }
+
     }
 
     @media screen and (max-width: 680px) {
-        padding-right: 20px;
-        padding-left: 20px;
+        padding-right: 30px;
+        padding-left: 30px;
 
         >div {
             >h4 {
@@ -2253,13 +2252,11 @@ hr {
                 line-height: 2rem;
             }
 
-            >ol {
-               
-                >li {
-                    font-size: 1.2rem;
-                    line-height: 1.5rem;
-                }
+            > p {
+                font-size: 1.2rem;
+                line-height: 1.8rem;
             }
+
         }
     }
 

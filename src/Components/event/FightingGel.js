@@ -55,13 +55,11 @@ const FightingGel = () => {
       <Box className='box3' align="center">
         <div>
           <h4>참여방법</h4>
-          <ol>
-            <li>멤버십에 가입한다.</li>
-            <li>라이팅젤을 활용해 콘텐츠를 완성한다.</li>
-            <li><span style={{wordBreak:'break-all'}}>support@appplatform.co.kr로 콘텐츠를 보낸다.</span> (hwp, word 형태)</li>
-            <li>확인 이메일과 연락을 받는다.</li>
-            <li>대형서점에 등록된 나의 e-book을 확인한다. (약 2-3주 소요).</li>
-          </ol>
+            <p>1. 멤버십에 가입한다.</p>
+            <p>2. 라이팅젤을 활용해 콘텐츠를 완성한다.</p>
+            <p>3. <span style={{wordBreak:'break-all'}}>support@appplatform.co.kr</span>로 콘텐츠를 보낸다. (hwp, word 형태)</p>
+            <p>4. 확인 이메일과 연락을 받는다.</p>
+            <p>5. 대형서점에 등록된 나의 e-book을 확인한다. (약 2-3주 소요).</p> 
         </div>
         <MBtnBox>
           <Link to='/signIn'>
@@ -79,10 +77,11 @@ export default FightingGel;
 const EventContainer = styled.div`
   width: 100%;
   height: 100%;
-  //background-color: #f9f9f9;
-    background-image: url(${EventBackground});
-    background-repeat: no-repeat;
-    background-size: cover;
+  background-image: url(${EventBackground});
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+
 `;
 
 const MBtnBox = styled.div`
