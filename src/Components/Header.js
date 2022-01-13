@@ -290,7 +290,7 @@ const Header = () => {
             <Link to='/newsletter'>뉴스레터</Link>
             <Link to='/faq'>FAQ</Link>
             {/* <Link to='/ask'>문의</Link> */}
-            {sessionStorage.getItem("token") || kakao_token ? (
+            {sessionStorage.getItem("token")  ? (
               <Anchor>
                 <Avatar
                   referrerpolicy='no-referer'

@@ -1,11 +1,14 @@
 import React from "react";
-import { Box, Paragraph } from "grommet";
+import { Link } from 'react-router-dom';
+import { Box } from "grommet";
 import styled from "styled-components";
 import EventBackground from "./turnPng5915038.png";
+import ScrollToTop from '../../routes/ScrollToTop';
 
 const FightingGel = () => {
   return (
     <EventContainer>
+      <ScrollToTop/>
       <Box className='box1' fill align='center'>
         <Box className='contentBox1'>
           <div className='TitleBox1'>라이팅젤로 글쓰기 파이팅하기</div>
@@ -60,7 +63,13 @@ const FightingGel = () => {
             <li>대형서점에 등록된 나의 e-book을 확인한다. (약 2-3주 소요).</li>
           </ol>
         </div>
+        <MBtnBox>
+          <Link to='/signIn'>
+          <MemGoBtn>멤버십 가입하기 👉</MemGoBtn>
+          </Link>
+        </MBtnBox>
       </Box>
+
     </EventContainer>
   );
 };
@@ -75,3 +84,18 @@ const EventContainer = styled.div`
     background-repeat: no-repeat;
     background-size: cover;
 `;
+
+const MBtnBox = styled.div`
+  padding-top: 40px;
+  text-align: center;
+`
+
+const MemGoBtn = styled.button`
+  background-color: #372874;
+  border: 1px solid #372874;
+  color: #fff;
+  font-size: 20px;
+  margin-right: 15px;
+  padding: 5px 25px;
+  cursor: pointer;
+`
