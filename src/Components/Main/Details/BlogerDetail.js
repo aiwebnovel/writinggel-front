@@ -42,7 +42,7 @@ const BlogerDetail = () => {
             align='center'
             className='Detail1'
           >
-            <img src='/tinggle.png' alt='팅젤이' className="Detail-img"/>
+            <img src='/lantern.png' alt='팅젤이' className="Detail-img"/>
             <div className='Detail-TextBox'>
               <div>
                 <h3>나만의 콘텐츠로 독자의 이목을 끌어보세요.</h3>

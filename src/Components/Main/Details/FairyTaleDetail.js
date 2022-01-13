@@ -41,7 +41,7 @@ const FairyTaleDetail = () => {
             align='center'
             className='Detail1'
           >
-            <img src='/tinggle.png' alt='팅젤이' className="Detail-img"/>
+            <img src='/lantern.png' alt='팅젤이' className="Detail-img"/>
             <div className='Detail-TextBox'>
               <div>
                 <h3>동화는 위대한 상상력의 장소입니다.</h3>

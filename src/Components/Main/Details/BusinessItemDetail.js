@@ -41,7 +41,7 @@ const BusinessItemDetail = () => {
             align='center'
             className='Detail1'
           >
-            <img src='/tinggle.png' alt='팅젤이' className='Detail-img' />
+            <img src='/lantern.png' alt='팅젤이' className='Detail-img' />
             <div className='Detail-TextBox'>
               <div>
                 <h3>콘텐츠가 사업과 이어질 수 있는 연결고리를 먼저 설계해보세요.</h3>

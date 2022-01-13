@@ -45,7 +45,7 @@ const DailyWriteDetail = () => {
             align="center"
             className="Detail1"
           >
-            <img src="/tinggle.png" alt="팅젤이" className="Detail-img" />
+            <img src="/lantern.png" alt="팅젤이" className="Detail-img" />
             <div className="Detail-TextBox">
               <div>
                 <h3>
@@ -67,11 +67,10 @@ const DailyWriteDetail = () => {
                 <QuoteBox>
                   <h4>
                     🖊 The habit of writing thus for my own eye only is good
-                    practice. It loosens the ligaments
+                    practice.
                   </h4>
                   <p>
-                    나만의 시각을 위해 쓰는 습관은 좋은 연습이다. 인대를
-                    느슨하게 합니다.
+                    나만의 시각을 위해 쓰는 습관은 좋은 연습이다.
                   </p>
                   <p style={{ textAlign: "right" }}>- 버지니아 울프</p>
                 </QuoteBox>

@@ -39,10 +39,10 @@ const WebnovelDetail = () => {
             align='center'
             className='Detail1'
           >
-            <img src='/tinggle.png' alt='팅젤이' className="Detail-img"/>
+            <img src='/lantern.png' alt='팅젤이' className="Detail-img"/>
             <div className='Detail-TextBox'>
               <div>
-                <h3>웹소설 써보고 싶은데 시작을 망설이고 있나요?</h3>
+                <h3>웹소설을 써보고 싶은데 시작을 망설이고 있나요?</h3>
                 <p>
                   '틈만 나면 읽는 웹소설 장르에 작가로 뛰어들 수는 없을까'
                   고민하고 있으신 분들에게 인공지능과 바통을 주고받으며 완성하는

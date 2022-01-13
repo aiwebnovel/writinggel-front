@@ -44,7 +44,7 @@ const FirstSentencelDetail = () => {
             align='center'
             className='Detail1'
           >
-            <img src='/tinggle.png' alt='팅젤이' className='Detail-img' />
+            <img src='/lantern.png' alt='팅젤이' className='Detail-img' />
             <div className='Detail-TextBox'>
               <div>
                 <h3>첫문장은 이야기의 첫인상입니다.</h3>
