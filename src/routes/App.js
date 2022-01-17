@@ -52,9 +52,12 @@ import Welcome from '../Components/Welcome';
 import AuthPage from '../Components/AuthPage';
 import Callback from '../Components/Callback';
 
+import { RecoilRoot } from 'recoil';
+
 
 function App() {
   return (
+    <RecoilRoot>
     <BrowserRouter>
       <Switch>
         <Route exact path="/" component={Home}></Route>
@@ -111,6 +114,7 @@ function App() {
 
       </Switch>
     </BrowserRouter>
+    </RecoilRoot>
   );
 }
 

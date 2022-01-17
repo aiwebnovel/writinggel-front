@@ -78,7 +78,7 @@ const Modify = () => {
             },
           },
           success: (res) => {
-            console.log(res);
+           // console.log(res);
             Kakao.Auth.logout(() => {
               sessionStorage.clear();
               History.replace("/");
@@ -162,7 +162,7 @@ const Modify = () => {
         Kakao.API.request({
           url: "/v1/user/unlink",
           success: function (res) {
-            console.log(res);
+           // console.log(res);
             sessionStorage.clear();
             History.replace("/");
             setTimeout(toast.success("탈퇴 되었습니다!"), 5000);

@@ -14,6 +14,10 @@ import * as config from "../../config";
 import "../../styles/Service.scss";
 import styled from "styled-components";
 
+// import { useRecoilState,useRecoilValue} from "recoil";
+// import { ProfileState } from '../../Recoils' 
+
+
 const Header = () => {
   const size = useContext(ResponsiveContext);
 
@@ -33,6 +37,10 @@ const Header = () => {
   });
 
   const { userName, userImage, isBill, Plan } = profile;
+
+  // const [userInfo, setInfo] = useRecoilState(ProfileState);
+  // const value = useRecoilValue(ProfileState);
+  // console.log(value);
 
   const reLoadProfile = useCallback(async()=>{
 
@@ -166,16 +174,29 @@ const Header = () => {
       headers: { authentication: kakao_token},
     })
     .then((response) => {
-      //console.log(response);
+      console.log(response);
       SetProfile({
         ...profile,
         userName: sessionStorage.getItem('userName'),
+        userImage: response.data.photoURL,
         isBill: response.data.isBill,
         Plan: response.data.plan
       });
+
+      // setInfo({
+      //   ...userInfo,
+      //   userName: sessionStorage.getItem('userName'),
+      //   isBill: response.data.isBill,
+      //   Plan: response.data.plan,
+      //   membership_count : response.data.membership_count,
+      //   stopPayWish: response.data.stopPayWish
+      // })
+
       sessionStorage.setItem('token', kakao_token);
       sessionStorage.setItem("plan", response.data.plan);
       sessionStorage.setItem("isBill", response.data.isBill);
+
+     
       
     })
     .catch((error) => {
@@ -277,7 +298,7 @@ const Header = () => {
                 <LinkBtn>멤버십 가입</LinkBtn>
               </Link>
               <Avatar
-                src={userImage && userImage}
+                src={sessionStorage.getItem('userImage') ? sessionStorage.getItem('userImage') : userImage}
                 style={{ width: "40px", height: "40px" }}
                 onClick={showMenu}
               />
