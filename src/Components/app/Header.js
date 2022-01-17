@@ -23,7 +23,6 @@ const Header = () => {
   const kakao_token = Kakao.Auth.getAccessToken();
 
   const [isShow, SetShow] = useState(false);
-  const [isUser, SetUser] = useState(false);
   const [isShowMenu, SetShowMenu] = useState(false);
   // const [provider, SetProvider] = useState('');
   const [profile, SetProfile] = useState({
@@ -96,7 +95,7 @@ const Header = () => {
             headers: { authentication: Idtoken },
           })
           .then((response) => {
-            
+            console.log(response)
             SetProfile({
               ...profile,
               userName:  response.data.name,
@@ -140,11 +139,11 @@ const Header = () => {
         SetProfile({
           ...profile,
           userName: sessionStorage.getItem('userName'),
+          // userImage: response.data.photoURL,
           isBill: response.data.isBill,
           Plan: response.data.plan,
         });
-
-        sessionStorage.setItem("token", sessionStorage.getItem('token'));
+        //sessionStorage.setItem('userImage', response.data.photoURL)
         sessionStorage.setItem("plan", response.data.plan);
         sessionStorage.setItem("isBill", response.data.isBill);
       })
@@ -219,7 +218,7 @@ const Header = () => {
     if(provider === 'password'){
       GetProfile();
     } 
-    if (provider === "google.com" || "facebook.com") {
+    if (provider === "google.com" || provider === "facebook.com") {
       requestProfile();
     } 
     if (provider === 'kakao') {
@@ -238,12 +237,12 @@ const Header = () => {
         </Nav>
         {size !== "small" ? (
           <Nav direction='row' gap='medium' align='center'>
-            <Link to='/signIn' className={isBill ? "displayNone" : "MobileMenusLink"}>
+            <Link to='/signIn' className={Plan === 'free' || Plan === '0' ? "MenusLink" : "displayNone"}>
               <LinkBtn>멤버십 가입</LinkBtn>
             </Link>
             < HowToLink href="https://appplatform.notion.site/99f9b5fb95d84477b9e2aa343fb97055" target='_blank' rel="noreferrer">사용 방법</ HowToLink>
             <Avatar
-               src={sessionStorage.getItem('userImage') ? sessionStorage.getItem('userImage') : userImage}
+               src={userImage? userImage : sessionStorage.getItem('userImage')}
               style={{ width: "40px", height: "40px"}}
               onClick={showMenu}
               
@@ -274,7 +273,7 @@ const Header = () => {
           <Nav direction='column' gap='large' className='ServiceDropMenu'>
             {size === 'small' &&
               <Nav direction='row' gap='medium' align='center' justify={size ==='small' && 'between'}>
-              <Link to='/signIn' className={isBill && 'displayNone'}>
+              <Link to='/signIn' className={Plan === 'free' || Plan === '0' ? "MenusLink" : "displayNone"}>
                 <LinkBtn>멤버십 가입</LinkBtn>
               </Link>
               <Avatar
@@ -327,7 +326,7 @@ const Header = () => {
               <p>{userName !== undefined ? userName : sessionStorage.getItem('userName')}님</p>
             </div>
             <p className='ServicePlan'>
-              {sessionStorage.getItem("plan") === "free"
+              {Plan === 'free' || Plan === '0'
                 ? "free"
                 : `${Plan}개월 구독`}
             </p>

@@ -280,7 +280,7 @@ const Register = () => {
     console.log("kakao");
 
     Kakao.Auth.authorize({
-      redirectUri:'https://639d-183-98-33-132.ngrok.io/oauth'
+      redirectUri:'http://localhost:3000/oauth'
     });
     // Kakao.Auth.login({
     //   success: async function (response) {

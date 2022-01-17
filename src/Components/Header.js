@@ -92,7 +92,7 @@ const Header = () => {
           headers: { authentication: Idtoken },
         })
         .then((response) => {
-         // console.log(response)
+         console.log(response)
           SetProfile({
             ...profile,
             userName:  name,
@@ -134,7 +134,7 @@ const Header = () => {
           headers: { authentication: check },
         })
         .then(async (response) => {
-          //console.log(response.data);
+          console.log(response.data);
 
           SetProfile({
             ...profile,
@@ -143,8 +143,9 @@ const Header = () => {
             Plan: response.data.plan,
           });
 
-          sessionStorage.setItem("token", check);
+          //sessionStorage.setItem("token", check);
           //sessionStorage.setItem("userUid", response.data.uid);
+          sessionStorage.setItem('userImage','/user_colored.png')
           sessionStorage.setItem("plan", response.data.plan);
           sessionStorage.setItem("isBill", response.data.isBill);
 
@@ -228,7 +229,7 @@ const Header = () => {
     if (provider === "password") {
       GetProfile();
     } 
-    if (provider === "google.com" || "facebook.com") {
+    if (provider === "google.com" || provider === "facebook.com") {
       requestProfile();
     } 
     if (provider === 'kakao') {
@@ -248,7 +249,7 @@ const Header = () => {
         </Nav>
         {size !== "small" ? (
           <Nav direction='row' className='Menus' gap='large' align='center'>
-            <Link to='/signIn' className={isBill ? "displayNone" : "MenusLink"}>
+            <Link to='/signIn' className={Plan === 'free' || Plan === '0' ? "MenusLink" : "displayNone"}>
               <MemButton>멤버십 가입</MemButton>
             </Link>
             <Link to='/brand'>브랜드 소개</Link>
@@ -318,7 +319,7 @@ const Header = () => {
           }}
         >
           <Nav direction='column' className='MobileMenus'>
-            <Link to='/signIn' className={isBill ? "displayNone": "MenusLink"}>
+            <Link to='/signIn' className={Plan === 'free' || Plan === '0' ? "MenusLink" : "displayNone"}>
               멤버십 가입
             </Link>
             <Link to='/brand'>브랜드 소개</Link>
@@ -382,11 +383,11 @@ const Header = () => {
           <div className='afterLogin'>
             <div className='Username'>
               <p>
-                {userName}님
+                {userName === '' ? sessionStorage.getItem('userName'): userName}님
               </p>
             </div>
             <p className='plan'>
-              {sessionStorage.getItem("plan") === "free"
+              {Plan === 'free' || Plan === '0'
                 ? "free"
                 : `${Plan}개월 구독`}
             </p>

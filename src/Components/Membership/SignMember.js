@@ -262,43 +262,52 @@ const SignMember = () => {
   };
 
   const KakaoPay = () => {
-    const user = sessionStorage.getItem('token');
+    const user = sessionStorage.getItem("token");
 
     if (user !== null) {
       if (selected1 === false && selected2 === false && selected3 === false) {
         //toast.error("멤버십을 선택해주세요!");
         SetOpen(true);
       } else {
+        const now = new Date();
+        let moidNum =
+          now.getFullYear() +
+          "" +
+          (now.getMonth() + 1) +
+          now.getDate() +
+          now.getHours() +
+          now.getMinutes() +
+          now.getSeconds(); //가맹점 주문번호
+
         IMP.init("imp33624147");
-    IMP.request_pay(
-      {
-        pg: "kakaopay",
-        pay_method: "kakaopay", // 기능 없음.
-        merchant_uid: "order_monthly_0001", // 상점에서 관리하는 주문 번호
-        name: "최초인증결제",
-        amount: 1004, // 빌링키 발급과 함께 1,004원 결제승인을 시도합니다.
-        customer_uid: "your-customer-unique-id", // 필수 입력
-        buyer_email: "iamport@siot.do",
-        buyer_name: "아임포트",
-        buyer_tel: "02-1234-1234",
-        m_redirect_url: "http://localhost:3000/kakaopay",
-      },
-      (rsp) => {
-        if (rsp.success) {
-          //callback
-          console.log(rsp);
-          alert("빌링키 발급 성공");
-        } else {
-          console.log(rsp, rsp.error_msg);
-          toast.error(rsp.error_msg);
-        }
+        IMP.request_pay(
+          {
+            pg: "kakaopay",
+            //pay_method: "kakaopay", // 기능 없음.
+            merchant_uid: "order_monthly_0003", // 상점에서 관리하는 주문 번호
+            name: "최초인증결제",
+            amount: 0, // 빌링키 발급만 진행하며 결제승인을 하지 않습니다.
+            customer_uid: "customer_id", // 필수 입력
+            buyer_email: "iamport@siot.do",
+            buyer_name: "아임포트",
+            buyer_tel: "02-1234-1234",
+            //m_redirect_url: "http://localhost:3000/kakaopay",
+          },
+          (rsp) => {
+            if (rsp.success) {
+              //callback
+              console.log(rsp);
+              alert("빌링키 발급 성공", rsp);
+            } else {
+              console.log(rsp, rsp.error_msg);
+              toast.error(rsp.error_msg);
+            }
+          }
+        );
       }
-    );
-      }
-    }else {
+    } else {
       toast.warn("로그인을 먼저 해주세요!");
     }
-    
   };
 
   useEffect(() => {
@@ -596,7 +605,7 @@ const SignMember = () => {
                     ></input>
                   </div>
                 </div>
-                <div className="PayCheck">
+                <div className='PayCheck'>
                   <PayInfo>
                     <h4>멤버십 </h4>
                     <p>

@@ -14,8 +14,8 @@ const AuthPage = () => {
     const code = search.searchParams.get("code");
     // sessionStorage.setItem("search", search);
     // sessionStorage.setItem("code", code);
-    //const redirectUri = 'http://localhost:3000/oauth'
-    const redirectUri = "https://639d-183-98-33-132.ngrok.io/oauth";
+    const redirectUri = 'http://localhost:3000/oauth'
+   
     //console.log(redirectUri);
 
     if (code !== undefined) {
