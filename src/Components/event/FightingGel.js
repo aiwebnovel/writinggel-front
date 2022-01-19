@@ -49,7 +49,7 @@ const FightingGel = () => {
       </Box>
       <Box className='box2' align="center">
         <div>
-          <p>2022년 1월 31일까지 멤버십에 가입 후 6개월 이내에 콘텐츠를 완성하신 경우, 해당 콘텐츠를 전자책으로 제작해 대형서점에 등록해드립니다.</p>
+          <p>2022년 2월 28일까지 멤버십에 가입 후 6개월 이내에 콘텐츠를 완성하신 경우, 해당 콘텐츠를 전자책으로 제작해 대형서점에 등록해드립니다.</p>
         </div>
       </Box>
       <Box className='box3' align="center">

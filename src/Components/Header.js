@@ -30,10 +30,11 @@ const Header = () => {
     userImage: `/user_colored.png`,
     isBill: "",
     Plan: "",
+
   });
   const [MobileSubMenu, SetMobileSubMenu] = useState(false);
 
-  const { userName, userImage, isBill, Plan } = profile;
+  const { userName, userImage,  Plan } = profile;
 
   const reLoadProfile = useCallback(async()=>{
 
@@ -43,7 +44,7 @@ const Header = () => {
         await authService.currentUser
           .getIdToken()
           .then(async (data) => {
-          
+          //console.log(data)
             await axios
             .get(`${config.SERVER_URL}/profile`, {
               headers: { authentication: data},
@@ -59,6 +60,8 @@ const Header = () => {
               sessionStorage.setItem('token',data);
               sessionStorage.setItem("plan", response.data.plan);
               sessionStorage.setItem("isBill", response.data.isBill);
+              sessionStorage.setItem("userUid", response.data.uid);
+              
               
             })
             .catch((error) => {
@@ -85,25 +88,26 @@ const Header = () => {
       if(authService.currentUser) {
       let Idtoken = authService.currentUser.multiFactor.user.accessToken
       const name = sessionStorage.getItem('userName');
-
+      //console.log(Idtoken)
 
       await axios
         .get(`${config.SERVER_URL}/profile`, {
           headers: { authentication: Idtoken },
         })
         .then((response) => {
-         console.log(response)
+         //console.log(response)
           SetProfile({
             ...profile,
             userName:  name,
             userImage: response.data.photoURL,
             isBill: response.data.isBill,
-            Plan: response.data.plan
+            Plan: response.data.plan,
           });
     
           sessionStorage.setItem('token',Idtoken);
           sessionStorage.setItem("plan", response.data.plan);
           sessionStorage.setItem("isBill", response.data.isBill);
+          sessionStorage.setItem('userUid', response.data.uid);
           
         })
         .catch((error) => {
@@ -144,7 +148,7 @@ const Header = () => {
           });
 
           //sessionStorage.setItem("token", check);
-          //sessionStorage.setItem("userUid", response.data.uid);
+          sessionStorage.setItem("userUid", response.data.uid);
           sessionStorage.setItem('userImage','/user_colored.png')
           sessionStorage.setItem("plan", response.data.plan);
           sessionStorage.setItem("isBill", response.data.isBill);
@@ -174,17 +178,18 @@ const Header = () => {
       headers: { authentication: kakao_token},
     })
     .then((response) => {
-      //console.log(response);
+      console.log(response);
       SetProfile({
         ...profile,
         userName: name,
         isBill: response.data.isBill,
-        Plan: response.data.plan
+        Plan: response.data.plan,
+
       });
   
       sessionStorage.setItem("plan", response.data.plan);
       sessionStorage.setItem("isBill", response.data.isBill);
-      
+      sessionStorage.setItem("userUid", response.data.uid);
     })
     .catch((error) => {
       if(error.response.status === 412) {
@@ -249,7 +254,7 @@ const Header = () => {
         </Nav>
         {size !== "small" ? (
           <Nav direction='row' className='Menus' gap='large' align='center'>
-            <Link to='/signIn' className={Plan === 'free' || Plan === '0' ? "MenusLink" : "displayNone"}>
+            <Link to='/signIn' className={Plan === 'free' || Plan === '0' || Plan === '' ? "MenusLink" : "displayNone"}>
               <MemButton>멤버십 가입</MemButton>
             </Link>
             <Link to='/brand'>브랜드 소개</Link>
@@ -319,7 +324,7 @@ const Header = () => {
           }}
         >
           <Nav direction='column' className='MobileMenus'>
-            <Link to='/signIn' className={Plan === 'free' || Plan === '0' ? "MenusLink" : "displayNone"}>
+            <Link to='/signIn' className={Plan === 'free' || Plan === '0' || Plan === ''? "MenusLink" : "displayNone"}>
               멤버십 가입
             </Link>
             <Link to='/brand'>브랜드 소개</Link>

@@ -277,30 +277,59 @@ const SignMember = () => {
           now.getDate() +
           now.getHours() +
           now.getMinutes() +
-          now.getSeconds(); //가맹점 주문번호
+          now.getSeconds(); //주문번호
+
+        const uid = sessionStorage.getItem("userUid");
+        console.log(moidNum)
 
         IMP.init("imp33624147");
         IMP.request_pay(
           {
             pg: "kakaopay",
             //pay_method: "kakaopay", // 기능 없음.
-            merchant_uid: "order_monthly_0003", // 상점에서 관리하는 주문 번호
-            name: "최초인증결제",
+            merchant_uid: `${uid}_${moidNum}`, // 상점에서 관리하는 주문 번호
+            name: "라이팅젤 멤버십",
             amount: 0, // 빌링키 발급만 진행하며 결제승인을 하지 않습니다.
-            customer_uid: "customer_id", // 필수 입력
-            buyer_email: "iamport@siot.do",
-            buyer_name: "아임포트",
-            buyer_tel: "02-1234-1234",
-            //m_redirect_url: "http://localhost:3000/kakaopay",
+            customer_uid: `customer_${uid}`, // 필수 입력
+            buyer_email: sessionStorage.getItem('email'),
+            buyer_name: sessionStorage.getItem('userName'),
+           
+            m_redirect_url: "https://0e0b-183-98-33-132.ngrok.io/signIn",
           },
-          (rsp) => {
+          async (rsp) => {
             if (rsp.success) {
               //callback
-              console.log(rsp);
-              alert("빌링키 발급 성공", rsp);
+              const config = {
+                method: "post",
+                url: `${configUrl.SERVER_URL}/pay/iamport`,
+                headers: { authentication: sessionStorage.getItem("token") },
+                data: {
+                  billKey: rsp.customer_uid,
+                  plan: parseInt(Plan),
+                  name: rsp.buyer_name,
+                },
+              }
+              console.log(rsp, rsp.customer_uid);
+              SetLoading(true);
+              await axios(config)
+              .then((res)=>{
+                console.log(res);
+                toast.success(res.data.log);
+                SetLoading(false);
+              })
+              
+              .catch((err)=>{
+                console.log(err, err.response.data)
+                if(err.response.status === 403) {
+                  SetLoading(false);
+                  toast.error(err.response.data.errorDescription);
+                };
+                SetLoading(false);
+              })
             } else {
               console.log(rsp, rsp.error_msg);
               toast.error(rsp.error_msg);
+              
             }
           }
         );

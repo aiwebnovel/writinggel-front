@@ -358,7 +358,7 @@ $red: #f45752;
 }
 
 .paraBox {
-
+    word-break : keep-all;
     >p {
         @media screen and (max-width: 768px) {
             font-size: 1.1rem;

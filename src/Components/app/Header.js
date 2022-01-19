@@ -115,7 +115,7 @@ const Header = () => {
             sessionStorage.setItem('token',Idtoken);
             sessionStorage.setItem("plan", response.data.plan);
             sessionStorage.setItem("isBill", response.data.isBill);
-            
+            sessionStorage.setItem("userUid", response.data.uid);
           })
           .catch((error) => {
             if(error.response.status === 412) {
@@ -154,6 +154,7 @@ const Header = () => {
         //sessionStorage.setItem('userImage', response.data.photoURL)
         sessionStorage.setItem("plan", response.data.plan);
         sessionStorage.setItem("isBill", response.data.isBill);
+        sessionStorage.setItem("userUid", response.data.uid);
       })
       .catch((error) => {
         console.log(error);
@@ -195,6 +196,7 @@ const Header = () => {
       sessionStorage.setItem('token', kakao_token);
       sessionStorage.setItem("plan", response.data.plan);
       sessionStorage.setItem("isBill", response.data.isBill);
+      sessionStorage.setItem("userUid", response.data.uid);
 
      
       
@@ -258,7 +260,7 @@ const Header = () => {
         </Nav>
         {size !== "small" ? (
           <Nav direction='row' gap='medium' align='center'>
-            <Link to='/signIn' className={Plan === 'free' || Plan === '0' ? "MenusLink" : "displayNone"}>
+            <Link to='/signIn' className={Plan === 'free' || Plan === '0' || Plan === '' ? "MenusLink" : "displayNone"}>
               <LinkBtn>멤버십 가입</LinkBtn>
             </Link>
             < HowToLink href="https://appplatform.notion.site/99f9b5fb95d84477b9e2aa343fb97055" target='_blank' rel="noreferrer">사용 방법</ HowToLink>
@@ -294,7 +296,7 @@ const Header = () => {
           <Nav direction='column' gap='large' className='ServiceDropMenu'>
             {size === 'small' &&
               <Nav direction='row' gap='medium' align='center' justify={size ==='small' && 'between'}>
-              <Link to='/signIn' className={Plan === 'free' || Plan === '0' ? "MenusLink" : "displayNone"}>
+              <Link to='/signIn' className={Plan === 'free' || Plan === '0' || Plan === '' ? "MenusLink" : "displayNone"}>
                 <LinkBtn>멤버십 가입</LinkBtn>
               </Link>
               <Avatar
