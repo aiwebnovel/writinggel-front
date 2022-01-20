@@ -1,8 +1,8 @@
 import React, { useContext, useState, useEffect, useCallback } from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import axios from "axios";
 import { Header as HeaderLayout, Nav, Avatar, Anchor, Button } from "grommet";
-import { Menu, Down, Refresh } from "grommet-icons";
+import { Menu, Down } from "grommet-icons";
 import { ResponsiveContext } from "grommet";
 import { OuterClick } from "react-outer-click";
 
@@ -19,6 +19,7 @@ const Header = () => {
   const { Kakao } = window;
   const kakao_token = Kakao.Auth.getAccessToken();
 
+  const History = useHistory();
   const size = useContext(ResponsiveContext);
   const check = sessionStorage.getItem("token");
   const provider = sessionStorage.getItem('provider');
@@ -26,7 +27,7 @@ const Header = () => {
   const [isShow, SetShow] = useState(false);
   const [isShowMenu, SetShowMenu] = useState(false);
   const [profile, SetProfile] = useState({
-    userName: "",
+    userName: "Guest",
     userImage: `/user_colored.png`,
     isBill: "",
     Plan: "",
@@ -111,12 +112,15 @@ const Header = () => {
           
         })
         .catch((error) => {
-          if(error.response.status === 412) {
-            toast.error('새로고침하거나 다시 로그인 해주세요!') 
+          if(error.response.status === 403) {
+            sessionStorage.clear();
+            authService.signOut();
+            History.push('/regist');
+            setTimeout(()=> toast.error('존재하지 않은 회원입니다! 회원가입을 먼저해주세요!'))
             //window.location.reload();  
           }
-          if(error.response.status === 403) {
-            toast.error('존재하지 않는 유저입니다. 회원가입을 먼저 진행해주세요.') 
+          if(error.response.status === 412) {
+            toast.error('새로고침하거나 다시 로그인 해주세요!') 
             //window.location.reload();  
           }
           // toast.error(error.message);
@@ -200,6 +204,7 @@ const Header = () => {
     });
   },[]);
 
+  
   const signOut = async () => {
 
     SetShowMenu(false);
@@ -216,6 +221,7 @@ const Header = () => {
       window.location.reload();
     }
   };
+
 
   const HandleMobile = () => {
     SetMobileSubMenu(!MobileSubMenu);
@@ -428,3 +434,4 @@ const MemButton = styled.button`
     font-weight: 600;
   }
 `;
+
