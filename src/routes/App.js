@@ -51,8 +51,11 @@ import Register from '../Components/Register';
 import Welcome from '../Components/Welcome';
 import AuthPage from '../Components/AuthPage';
 import Callback from '../Components/Callback';
+import NotFound from './404';
 
 import { RecoilRoot } from 'recoil';
+import FailPay from './failPay';
+import PayRedirect from '../Components/Membership/PayRedirect';
 
 
 function App() {
@@ -110,8 +113,10 @@ function App() {
         <Route exact path="/app/loveletter" component={LoveLetter}></Route>
         <Route exact path="/app/dailywrite" component={Dailywrite}></Route>
         <Route exact path="/app/storysrc" component={Storysrc}></Route>
-        
 
+        <Route exact path='/pay_redirect' component={PayRedirect}/>
+        <Route exact path='/fail' component={FailPay}/>
+        <Route component={NotFound}/>
       </Switch>
     </BrowserRouter>
     </RecoilRoot>

@@ -36,7 +36,7 @@ const FightingGel = () => {
             <h3>
               <span>인공지능</span>으로 <span>글쓰기 부담</span>을 확 줄여드려요.
             </h3>
-            <h3></h3>
+        
           </div>
 
           <div className='TitleBox2'>그리고 이번 이벤트 기간만의 혜택</div>

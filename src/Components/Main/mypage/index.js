@@ -12,6 +12,9 @@ import TagManager from "react-gtm-module";
 //import styled from "styled-components";
 import Modal from "../../SmallModal";
 
+import { useRecoilValue } from "recoil";
+import  { PayPlanState } from '../../../Recoils'
+
 const Mypage = () => {
   const size = useContext(ResponsiveContext);
   const History = useHistory();
@@ -101,7 +104,7 @@ const Mypage = () => {
     if (loginCheck !== null) {
       if (provider === "kakao") {
         axios
-          .get(`${configUrl.SERVER_URL}/login`, {
+          .get(`${configUrl.SERVER_URL}/profile`, {
             headers: { authentication: kakao_token },
           })
           .then((response) => {
@@ -172,7 +175,7 @@ const Mypage = () => {
       else if (provider === "password") {
         const name = sessionStorage.getItem("userName");
         axios
-          .get(`${configUrl.SERVER_URL}/login`, {
+          .get(`${configUrl.SERVER_URL}/profile`, {
             headers: { authentication: loginCheck },
           })
           .then(async (response) => {
@@ -282,11 +285,12 @@ const Mypage = () => {
               <div className='dataBox'>
                 <p>결제 내역</p>
                 <p style={{ textDecoration: "underline" }}>
-                  {plan > 0 ? (
-                    <Link to='/mypage/payment'>보러가기</Link>
-                  ) : (
+                  {plan === '0' || plan === 'free'
+                      ?  (
                     "결제 내역이 없어요!"
-                  )}
+                  ): (
+                    <Link to='/mypage/payment'>보러가기</Link>
+                  ) }
                 </p>
               </div>
               <hr style={{ width: "100%" }} />

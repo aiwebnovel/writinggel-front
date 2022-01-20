@@ -171,7 +171,7 @@ const Header = () => {
 
     if(kakao_token !== null)
     await axios
-    .get(`${config.SERVER_URL}/login`, {
+    .get(`${config.SERVER_URL}/profile`, {
       headers: { authentication: kakao_token},
     })
     .then((response) => {

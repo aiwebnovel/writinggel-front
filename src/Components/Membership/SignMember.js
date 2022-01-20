@@ -3,7 +3,7 @@ import axios from "axios";
 import Layout from "../Layout";
 import { Box, Grid, ResponsiveContext } from "grommet";
 import { Bookmark, StatusGood, Trigger, CreditCard } from "grommet-icons";
-import Loading from "../Loading";
+import Loading from "../SmallLoading";
 import TagManager from "react-gtm-module";
 import ScrollToTop from "../../routes/ScrollToTop";
 
@@ -15,6 +15,7 @@ import "react-toastify/dist/ReactToastify.css";
 import styled, { css } from "styled-components";
 import { useHistory } from "react-router";
 import Modal from "../SmallModal";
+import moment from 'moment';
 
 const SignMember = () => {
   const size = useContext(ResponsiveContext);
@@ -94,7 +95,7 @@ const SignMember = () => {
     idNum: "",
   });
 
-  const [Plan, SetPlan] = useState("");
+  const [Plan, SetPlan] = useState('');
 
   const { selected1, selected2, selected3 } = Selected;
   const { cardNum, cardExpire, cardCvc } = card;
@@ -270,35 +271,28 @@ const SignMember = () => {
         SetOpen(true);
       } else {
         const now = new Date();
-        let moidNum =
-          now.getFullYear() +
-          "" +
-          (now.getMonth() + 1) +
-          now.getDate() +
-          now.getHours() +
-          now.getMinutes() +
-          now.getSeconds(); //주문번호
-
+        const moidNum =moment(now).format('YYMMDDhhmmss');
         const uid = sessionStorage.getItem("userUid");
-        console.log(moidNum)
+        console.log(moidNum);
 
         IMP.init("imp33624147");
         IMP.request_pay(
           {
             pg: "kakaopay",
             //pay_method: "kakaopay", // 기능 없음.
-            merchant_uid: `${uid}_${moidNum}`, // 상점에서 관리하는 주문 번호
+            merchant_uid: `${uid}_${Plan}_${moidNum}`, // 상점에서 관리하는 주문 번호
             name: "라이팅젤 멤버십",
             amount: 0, // 빌링키 발급만 진행하며 결제승인을 하지 않습니다.
             customer_uid: `customer_${uid}`, // 필수 입력
-            buyer_email: sessionStorage.getItem('email'),
-            buyer_name: sessionStorage.getItem('userName'),
-           
-            m_redirect_url: "https://0e0b-183-98-33-132.ngrok.io/signIn",
+            buyer_email: sessionStorage.getItem("email"),
+            buyer_name: sessionStorage.getItem("userName"),
+
+            m_redirect_url: "https://0f86-183-98-33-132.ngrok.io/pay_redirect",
           },
           async (rsp) => {
             if (rsp.success) {
               //callback
+              console.log(rsp);
               const config = {
                 method: "post",
                 url: `${configUrl.SERVER_URL}/pay/iamport`,
@@ -306,30 +300,36 @@ const SignMember = () => {
                 data: {
                   billKey: rsp.customer_uid,
                   plan: parseInt(Plan),
-                  name: rsp.buyer_name,
+                  name: sessionStorage.getItem("userName"),
                 },
-              }
+              };
               console.log(rsp, rsp.customer_uid);
               SetLoading(true);
               await axios(config)
-              .then((res)=>{
-                console.log(res);
-                toast.success(res.data.log);
-                SetLoading(false);
-              })
-              
-              .catch((err)=>{
-                console.log(err, err.response.data)
-                if(err.response.status === 403) {
+                .then((res) => {
+                  console.log(res);
+                  toast.success(res.data.log);
                   SetLoading(false);
-                  toast.error(err.response.data.errorDescription);
-                };
-                SetLoading(false);
-              })
+                })
+
+                .catch((err) => {
+                  console.log(err, err.response.data);
+                  if (err.response.status === 403) {
+                    SetLoading(false);
+                    history.push("/fail");
+                    toast.error(err.response.data.errorDescription);
+                  } 
+                  if(err.response.status === 500) {
+                    SetLoading(false);
+                    history.push("/fail");
+                    toast.error(err.response.data.errorDescription);
+                  }
+               
+                });
             } else {
+              history.push("/fail");
               console.log(rsp, rsp.error_msg);
               toast.error(rsp.error_msg);
-              
             }
           }
         );

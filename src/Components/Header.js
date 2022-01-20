@@ -44,13 +44,13 @@ const Header = () => {
         await authService.currentUser
           .getIdToken()
           .then(async (data) => {
-          //console.log(data)
+          console.log(data)
             await axios
             .get(`${config.SERVER_URL}/profile`, {
               headers: { authentication: data},
             })
             .then((response) => {
-              //console.log(response)
+              console.log(response)
               SetProfile({
                 ...profile,
                 isBill: response.data.isBill,
@@ -95,7 +95,7 @@ const Header = () => {
           headers: { authentication: Idtoken },
         })
         .then((response) => {
-         //console.log(response)
+         console.log(response)
           SetProfile({
             ...profile,
             userName:  name,
@@ -116,7 +116,7 @@ const Header = () => {
             //window.location.reload();  
           }
           if(error.response.status === 403) {
-            toast.error('존재하지 않는 유저입니다.') 
+            toast.error('존재하지 않는 유저입니다. 회원가입을 먼저 진행해주세요.') 
             //window.location.reload();  
           }
           // toast.error(error.message);
@@ -134,7 +134,7 @@ const Header = () => {
     if (check !== null) {
       const name = sessionStorage.getItem('userName');
       await axios
-        .get(`${config.SERVER_URL}/login`, {
+        .get(`${config.SERVER_URL}/profile`, {
           headers: { authentication: check },
         })
         .then(async (response) => {
@@ -174,7 +174,7 @@ const Header = () => {
     const name = sessionStorage.getItem('userName');
     if(kakao_token !== null)
     await axios
-    .get(`${config.SERVER_URL}/login`, {
+    .get(`${config.SERVER_URL}/profile`, {
       headers: { authentication: kakao_token},
     })
     .then((response) => {
@@ -392,9 +392,10 @@ const Header = () => {
               </p>
             </div>
             <p className='plan'>
-              {Plan === 'free' || Plan === '0'
-                ? "free"
-                : `${Plan}개월 구독`}
+              {Plan === 'free' && "free"}
+              {Plan === '0' && 'free'}
+              {Plan > 0 && `${Plan}개월 구독`}
+             
             </p>
             <hr style={{ width: "100%", color: "#3b2477" }} />
             <div className='afterLoginBottom'>

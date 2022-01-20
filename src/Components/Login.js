@@ -1,4 +1,4 @@
-import React, {  useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Link, useHistory } from "react-router-dom";
 import axios from "axios";
 import { Box } from "grommet";
@@ -22,8 +22,8 @@ import "../styles/header.scss";
 import styled from "styled-components";
 
 const Login = () => {
-  const { Kakao, naver} = window;
- //const naverRef = useRef();
+  const { Kakao, naver } = window;
+  //const naverRef = useRef();
 
   const History = useHistory();
 
@@ -127,8 +127,8 @@ const Login = () => {
               let credentials = dataFacebook.credential;
               let user = dataFacebook.user;
               let providerId = dataFacebook.credential.providerId; //facebook.com
-              let email =user.email;
-              let create =user.metadata.creationTime;
+              let email = user.email;
+              let create = user.metadata.creationTime;
               let token = credentials.accessToken;
               let username = user.displayName;
               let userPhoto = user.photoURL;
@@ -187,7 +187,7 @@ const Login = () => {
             await sessionStorage.setItem("provider", providerId);
             await sessionStorage.setItem("userName", username);
             await sessionStorage.setItem("userImage", userPhoto);
-
+  
             SetLoading(false);
             setTimeout(History.replace("/"), 3000);
           })
@@ -212,12 +212,9 @@ const Login = () => {
   };
 
   const LoginKakao = () => {
-
     Kakao.Auth.authorize({
-      redirectUri:'http://localhost:3000/oauth'
-      
+      redirectUri: "https://0f86-183-98-33-132.ngrok.io/oauth",
     });
-
   };
 
   // const InitNaverLogin = () => {

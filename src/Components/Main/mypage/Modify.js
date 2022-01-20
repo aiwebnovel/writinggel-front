@@ -149,44 +149,44 @@ const Modify = () => {
     }
   };
 
-  const DeleteUser = () => {
-    const auth = getAuth();
-    const user = auth.currentUser;
-    console.log(user);
-    if (
-      window.confirm(
-        "정말 탈퇴하시겠습니까? 탈퇴하시면, 멤버십 가입 내역도 삭제되어 서비스 이용이 불가합니다."
-      )
-    ) {
-      if (provider === "kakao") {
-        Kakao.API.request({
-          url: "/v1/user/unlink",
-          success: function (res) {
-           // console.log(res);
-            sessionStorage.clear();
-            History.replace("/");
-            setTimeout(toast.success("탈퇴 되었습니다!"), 5000);
-          },
-          fail: function (error) {
-            console.error(error);
-          },
-        });
-      } else {
-        deleteUser(user)
-          .then(async () => {
-            // User deleted.
-            //console.log("탈퇴 되었습니다!");
-            await signOut();
-            setTimeout(toast.success("탈퇴 되었습니다!"), 5000);
-          })
-          .catch((error) => {
-            // An error ocurred
-            console.log(error);
-            toast.error("재로그인 후 다시 시도해주세요!");
-          });
-      }
-    }
-  };
+  // const DeleteUser = () => {
+  //   const auth = getAuth();
+  //   const user = auth.currentUser;
+  //   console.log(user);
+  //   if (
+  //     window.confirm(
+  //       "정말 탈퇴하시겠습니까? 탈퇴하시면, 멤버십 가입 내역도 삭제되어 서비스 이용이 불가합니다."
+  //     )
+  //   ) {
+  //     if (provider === "kakao") {
+  //       Kakao.API.request({
+  //         url: "/v1/user/unlink",
+  //         success: function (res) {
+  //          // console.log(res);
+  //           sessionStorage.clear();
+  //           History.replace("/");
+  //           setTimeout(toast.success("탈퇴 되었습니다!"), 5000);
+  //         },
+  //         fail: function (error) {
+  //           console.error(error);
+  //         },
+  //       });
+  //     } else {
+  //       deleteUser(user)
+  //         .then(async () => {
+  //           // User deleted.
+  //           //console.log("탈퇴 되었습니다!");
+  //           await signOut();
+  //           setTimeout(toast.success("탈퇴 되었습니다!"), 5000);
+  //         })
+  //         .catch((error) => {
+  //           // An error ocurred
+  //           console.log(error);
+  //           toast.error("재로그인 후 다시 시도해주세요!");
+  //         });
+  //     }
+  //   }
+  // };
 
   const signOut = async () => {
     await sessionStorage.clear();
@@ -302,9 +302,9 @@ const Modify = () => {
                 ? "회원정보 수정"
                 : "회원정보 없음"}
             </button>
-            <button type='submit' className='OutBtn' onClick={DeleteUser}>
+            {/* <button type='submit' className='OutBtn' onClick={DeleteUser}>
               탈퇴하기
-            </button>
+            </button> */}
           </div>
         </Box>
       </Box>
