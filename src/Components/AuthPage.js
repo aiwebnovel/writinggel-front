@@ -14,7 +14,7 @@ const AuthPage = () => {
     const code = search.searchParams.get("code");
     // sessionStorage.setItem("search", search);
     // sessionStorage.setItem("code", code);
-    const redirectUri = 'http://localhost:3000/oauth'
+    const redirectUri = 'https://tinytingel.ai/oauth'
    
     //console.log(redirectUri);
 

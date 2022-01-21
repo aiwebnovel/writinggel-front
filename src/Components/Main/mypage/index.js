@@ -12,9 +12,6 @@ import TagManager from "react-gtm-module";
 //import styled from "styled-components";
 import Modal from "../../SmallModal";
 
-import { useRecoilValue } from "recoil";
-import  { PayPlanState } from '../../../Recoils'
-
 const Mypage = () => {
   const size = useContext(ResponsiveContext);
   const History = useHistory();
@@ -69,7 +66,6 @@ const Mypage = () => {
       };
       axios(config)
         .then((response) => {
-          sessionStorage.setItem("isBill", false);
           console.log(response);
           toast.success(response.data.log, {
             style: { backgroundColor: "#fff", color: "#000" },
@@ -181,7 +177,7 @@ const Mypage = () => {
           .then(async (response) => {
           
             let data = response.data;
-
+            console.log(data);
             SetProfile({
               ...profile,
               userName: name,

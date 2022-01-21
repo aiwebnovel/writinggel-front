@@ -288,7 +288,7 @@ const SignMember = () => {
             buyer_email: sessionStorage.getItem("email"),
             buyer_name: sessionStorage.getItem("userName"),
 
-            m_redirect_url: "http://localhost:3000/pay_redirect",
+            m_redirect_url: "https://tinytingel.ai/pay_redirect",
           },
           async (rsp) => {
             if (rsp.success) {

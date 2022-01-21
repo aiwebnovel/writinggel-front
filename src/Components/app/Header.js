@@ -138,7 +138,7 @@ const Header = () => {
   const GetProfile = useCallback(async() => {
     if(check !== null) {
     await axios
-      .get(`${config.SERVER_URL}/login`, {
+      .get(`${config.SERVER_URL}/profile`, {
         headers: { authentication: check },
       })
       .then(async(response) => {

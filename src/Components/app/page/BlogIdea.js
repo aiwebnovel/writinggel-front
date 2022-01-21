@@ -210,7 +210,7 @@ const BlogIdea = () => {
     const provider = sessionStorage.getItem('provider');
 
     if (loginCheck !== null) {
-      if(provider === 'google.com' || provider === 'facebook.com'){
+      // if(provider === 'google.com' || provider === 'facebook.com'){
         axios
         .get(`${configUrl.SERVER_URL}/profile`, {
           headers: { authentication: sessionStorage.getItem("token") },
@@ -221,20 +221,9 @@ const BlogIdea = () => {
           SetCount(count);
           SetBill(res.data.isBill);
         });
-      }
+      //}
 
-      if(provider === 'kakao' || provider === 'password') {
-        axios
-        .get(`${configUrl.SERVER_URL}/login`, {
-          headers: { authentication: sessionStorage.getItem("token") },
-        })
-        .then((res) => {
-         // console.log(res)
-          let count = res.data.membership_count;
-          SetCount(count);
-          SetBill(res.data.isBill);
-        });
-      }
+
     } else {
       History.push("/service/bloger");
       setTimeout(toast.info("로그인을 해주세요!"), 300);

@@ -213,7 +213,7 @@ const Login = () => {
 
   const LoginKakao = () => {
     Kakao.Auth.authorize({
-      redirectUri: "http://localhost:3000/oauth",
+      redirectUri: "https://tinytingel.ai/oauth",
     });
   };
 
