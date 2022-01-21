@@ -305,7 +305,7 @@ const Header = () => {
             {sessionStorage.getItem("token") ? (
               <Anchor>
                 <Avatar
-                  referrerpolicy='no-referer'
+                  //referrerpolicy='no-referer'
                   src={sessionStorage.getItem('userImage') ? sessionStorage.getItem('userImage') : userImage}
                   style={{ width: "40px", height: "40px" }}
                   onClick={showMenu}

@@ -271,7 +271,8 @@ const SignMember = () => {
         SetOpen(true);
       } else {
         const now = new Date();
-        const moidNum =moment(now).format('YYMMDDhhmmss');
+        //const moidNum =moment(now).format('YYMMDDhhmmss');
+        const moidNum = moment(now).unix();
         const uid = sessionStorage.getItem("userUid");
         console.log(moidNum);
 
@@ -287,7 +288,7 @@ const SignMember = () => {
             buyer_email: sessionStorage.getItem("email"),
             buyer_name: sessionStorage.getItem("userName"),
 
-            m_redirect_url: "https://0f86-183-98-33-132.ngrok.io/pay_redirect",
+            m_redirect_url: "http://localhost:3000/pay_redirect",
           },
           async (rsp) => {
             if (rsp.success) {

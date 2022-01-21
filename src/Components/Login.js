@@ -213,7 +213,7 @@ const Login = () => {
 
   const LoginKakao = () => {
     Kakao.Auth.authorize({
-      redirectUri: "https://0f86-183-98-33-132.ngrok.io/oauth",
+      redirectUri: "http://localhost:3000/oauth",
     });
   };
 

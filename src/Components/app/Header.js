@@ -265,7 +265,8 @@ const Header = () => {
             </Link>
             < HowToLink href="https://appplatform.notion.site/99f9b5fb95d84477b9e2aa343fb97055" target='_blank' rel="noreferrer">사용 방법</ HowToLink>
             <Avatar
-               src={userImage? userImage : sessionStorage.getItem('userImage')}
+            
+                 src={sessionStorage.getItem('userImage') ? sessionStorage.getItem('userImage') : userImage}
               style={{ width: "40px", height: "40px"}}
               onClick={showMenu}
               
