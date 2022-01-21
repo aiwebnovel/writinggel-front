@@ -205,18 +205,22 @@ const BlogIntro = () => {
 
   useEffect(() => {
     const loginCheck = sessionStorage.getItem("token");
+    const provider = sessionStorage.getItem('provider');
 
     if (loginCheck !== null) {
-      axios
-      .get(`${configUrl.SERVER_URL}/profile`, {
-        headers: { authentication: sessionStorage.getItem("token") },
-      })
-      .then((res) => {
-     
-        let count = res.data.membership_count;
-        SetCount(count);
-        SetBill(res.data.isBill);
-      });
+ 
+        axios
+        .get(`${configUrl.SERVER_URL}/profile`, {
+          headers: { authentication: sessionStorage.getItem("token") },
+        })
+        .then((res) => {
+         // console.log(res)
+          let count = res.data.membership_count;
+          SetCount(count);
+          SetBill(res.data.isBill);
+        });
+    
+    
     } else {
       History.push("/service/bloger");
       setTimeout(toast.info("로그인을 해주세요!"), 300);

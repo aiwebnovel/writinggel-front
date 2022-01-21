@@ -19,10 +19,14 @@ const Welcome = () => {
           </ImgBox>
           <div className='DoneText' style={{ wordBreak: 'keep-all'}}>
             <h2>Welcome! 🥳</h2>
-            <h3>라이팅젤 멤버가 되신 걸 환영해요!</h3>
-            <h4>아래 버튼을 눌러서 로그인해주세요!</h4>
+            <p>라이팅젤 멤버가 되신 걸 환영해요!</p>
+            <p>아래 버튼을 눌러서 로그인을 해주세요!</p>
+            <p>카카오로 가입하신 분들은 Home을 눌러주세요. 🥰</p>
           </div>
           <div className='DoneButton'>
+          <button>
+                <Link to='/'>Home</Link>
+            </button>
             <button>
                 <Link to='/login'>로그인 하기</Link>
             </button>

@@ -1,6 +1,6 @@
 import React, { useContext , useEffect} from "react";
 import Layout from "../Layout";
-import { Box, Grid, Paragraph, ResponsiveContext } from "grommet";
+import { Box, Paragraph, ResponsiveContext } from "grommet";
 import styled from "styled-components";
 import TagManager from 'react-gtm-module';
 
