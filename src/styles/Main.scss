@@ -9,6 +9,7 @@ $sub2 : #ffce1f;
 $white-1 : #fff;
 $white-2 : #f9f9f9;
 $dark-1 : #444;
+$dark-2 : #000;
 $red: #f45752;
 
 
@@ -103,15 +104,15 @@ $red: #f45752;
     text-align: center;
 
     >a {
-            font-weight: 600;
+        font-weight: 600;
 
-            &:hover {
-                text-decoration: underline;
-            }
+        &:hover {
+            text-decoration: underline;
+        }
     }
 }
 
-.RegiLink  {
+.RegiLink {
     font-size: 14px;
     text-align: center;
 
@@ -164,6 +165,9 @@ $red: #f45752;
         box-shadow: $boxShadow;
         display: flex;
         align-items: center;
+        justify-content: center;
+
+        width: 100%;
         gap: 5px;
         padding: 10px 15px;
     }
@@ -176,17 +180,31 @@ $red: #f45752;
 
 
 .googleButton,
-.facebookButton {
+.facebookButton,
+.kakaoButton,
+.NaverButton {
     cursor: pointer;
     border: 0;
     outline: 0;
     transition: all 300ms ease;
     font-size: 15px;
+    border-radius: 10px;
+    margin-bottom: 16px;
 
     &:hover {
         box-shadow: rgba(0, 0, 0, 0.06) 0px 2px 4px 0px inset;
     }
 
+}
+
+.kakaoButton {
+    background-color: #FEE500;
+    color: rgb(0, 0, 0, 0.85);
+
+    >img {
+        width: 24px;
+        height: 24px;
+    }
 }
 
 .googleButton {
@@ -202,6 +220,20 @@ $red: #f45752;
     background-color: #3d5a97;
     color: $white-1;
 
+    >svg {
+        background-color: $white-1;
+    }
+
+}
+
+.NaverButton {
+    background-color: #03c75a;
+    color: #fff;
+
+    >img {
+        width: 24px;
+        height: 24px;
+    }
 }
 
 
@@ -235,12 +267,12 @@ $red: #f45752;
     flex-direction: column;
 
 
-    > div {
+    >div {
         display: flex;
         flex-direction: column;
         margin-bottom: 10px;
 
-        > p {
+        >p {
             font-size: 13px;
         }
 
@@ -273,38 +305,30 @@ $red: #f45752;
 
 .MainHome {
     width: 100%;
-    padding: 180px 60px;
+    padding: 180px 120px;
     height: 100%;
     overflow: hidden;
-    // padding: 48px;
-    // height: 100vh;
-    // overflow: hidden;
 
     @media screen and (max-width: 768px) {
 
-        padding: 60px 30px;
+        padding: 80px 40px;
         justify-content: center;
-        /* word-break: keep-all; */
+        word-break: keep-all;
     }
 }
+
+// .freeUse {
+//     display:flex;
+//     flex-direction: column;
+//     justify-content: center;
+// }
 
 .cardTop {
     padding: 18px;
-    background-color: $main;
+    background-color: $sub1;
 }
 
-.cardTitle {
-    text-align: center;
-    padding: 0 10px;
-    font-family: 'NeoDunggeunmo';
-    word-break: keep-all;
 
-    @media screen and (max-width: 768px) {
-        padding: 30px;
-        justify-content: center;
-        /* word-break: keep-all; */
-    }
-}
 
 
 //Brand
@@ -334,7 +358,7 @@ $red: #f45752;
 }
 
 .paraBox {
-
+    word-break : keep-all;
     >p {
         @media screen and (max-width: 768px) {
             font-size: 1.1rem;
@@ -415,6 +439,7 @@ $red: #f45752;
     justify-content: center;
     align-items: center;
     text-align: center;
+    word-break: keep-all;
 
     >h1 {
         // font-family: 'NeoDunggeunmo';
@@ -443,9 +468,14 @@ $red: #f45752;
 }
 
 .Detail1,
-.DetailBottom1,
-.DetailBottom2 {
+.DetailBottom1 {
     padding: 80px 20px;
+}
+
+.Detail1 {
+    @media screen and (max-width: 768px) {
+        padding: 0px 20px 80px 20px;
+    }
 }
 
 .Detail2 {
@@ -460,7 +490,7 @@ $red: #f45752;
     width: 250px;
 
     @media screen and (max-width: 768px) {
-        display: none;
+        width: 150px
     }
 }
 
@@ -492,6 +522,7 @@ $red: #f45752;
     max-width: 600px;
     justify-content: center;
     gap: 28px;
+    
 
     @media screen and (max-width: 768px) {
         padding: 0 20px;
@@ -602,7 +633,7 @@ $red: #f45752;
     gap: 60px;
 
     @media screen and (max-width: 768px) {
-        padding: 0 20px;
+        padding: 20px;
     }
 }
 
@@ -623,10 +654,6 @@ $red: #f45752;
     }
 }
 
-.DetailBottom2 {
-    padding: 36px;
-    gap: 30px;
-}
 
 .Bottom2-Content {
 
@@ -1018,6 +1045,7 @@ $red: #f45752;
     >p {
         font-size: 17px;
         line-height: 25px;
+        word-break: keep-all;
     }
 
 }
@@ -1124,7 +1152,6 @@ hr {
     max-width: 1020px;
 
     >h2 {
-
         font-size: 1.2rem;
         display: flex;
         flex-direction: column;
@@ -1166,8 +1193,26 @@ hr {
     }
 }
 
+.Sign-select {
+    background-color: $white-1;
+    width: 100%;
+
+    >div>h4 {
+        margin: 60px 0 20px;
+        text-align: center;
+        font-size: 1.4rem;
+        font-weight: 600;
+    }
+
+}
+
 .SignCardGrid {
-    padding: 36px;
+    padding: 48px;
+
+    @media screen and (max-width: 768px) {
+        padding-right: 30px;
+        padding-left: 30px;
+    }
 }
 
 .SignInChange {
@@ -1188,8 +1233,6 @@ hr {
     @media screen and (max-width: 768px) {
         width: 100%;
     }
-
-
 
 }
 
@@ -1252,16 +1295,141 @@ hr {
     font-weight: 600;
 }
 
+.SignMethodCon {
+    width: 100%;
+    background-color: $white-1;
+    padding: 48px 20px 100px 20px;
+
+    >h4 {
+        margin: 30px 0 40px;
+        text-align: center;
+        font-size: 1.4rem;
+        font-weight: 600;
+    }
+
+}
+
+.SignMethodBox {
+    transition: all 300ms ease-in-out;
+    width: 100%;
+    padding: 48px 0;
+}
+
+.kakaoPayBtn,
+.creditNormal {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    color: $dark-1;
+    font-size: 16px;
+}
+
+.kakaoPayBtn {
+    background-color: #ffeb02;
+    padding: 8px 0;
+    padding-right: 15px;
+    padding-left: 10px;
+    border-radius: 10px;
+    border: 0;
+    outline: 0;
+
+    >img {
+        width: 70px;
+    }
+
+    >span {
+        font-weight: 600;
+
+        @media screen and (max-width: 680px) {
+            display: none;
+        }
+    }
+
+    &:focus {
+        border: 1px solid #444;
+    }
+}
+
+.creditNormal {
+    background-color: $white-1;
+    box-shadow: rgba(0, 0, 0, 0.15) 0.95px 0.95px 1.6px;
+    padding: 8px 20px;
+    border-radius: 10px;
+    border: 0;
+    outline: 0;
+
+
+    &:focus {
+        border: 1px solid $dark-1;
+    }
+
+    >svg {
+        margin-right: 10px;
+        width: 28px;
+        height: 28px;
+    }
+
+    >span {
+        font-weight: 600;
+        word-break: keep-all;
+    }
+}
+
 .CreditBox {
+    width: 100%;
+    max-width: 500px;
+    background-color: $white-1;
     border: 1px solid $main;
     border-radius: 10px;
     padding: 25px;
+
+    >h4 {
+        margin-bottom: 30px;
+        text-align: center;
+        font-weight: 600;
+        font-size: 1.2rem;
+    }
+
+    @media screen and (max-width: 680px) {
+        padding: 30px 18px;
+    }
 }
 
-.creditCard {
+.KakaoPayContainer {
     width: 100%;
-    /* height: 30%; */
-    padding-bottom: 15px;
+    max-width: 400px;
+
+    >button {
+        width: 100%;
+        background-color: #30009C;
+        font-size: 1rem;
+        color: #ffffff;
+        border-radius: 8px;
+        padding: 10px 30px;
+        cursor: pointer;
+        border: 0;
+        outline: 0;
+        margin-top: 15px;
+    }
+
+}
+
+.creditCard,
+.KakaoPayBox {
+    width: 100%;
+    padding-bottom: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.cardExNcvc {
+    display: flex;
+    justify-content: space-between;
+
+    >div {
+        width: 48%;
+    }
 }
 
 .creditCard>h3 {
@@ -1275,15 +1443,17 @@ hr {
 
 
 .ElementBox>p {
-    font-size: 0.9em;
+    font-size: 0.95em;
+    margin-bottom: 0.4em;
 }
 
 .ElementBox>input {
-    height: 30px;
+    height: 40px;
     outline: 0;
     border: 1px solid #ededed;
     padding: 6px;
     border-radius: 5px;
+    font-size: 16px;
 }
 
 .PwElement {
@@ -1294,7 +1464,17 @@ hr {
     text-align: right;
     padding: 0 10px 10px 10px;
     border-bottom: 1px solid #ededed;
-    font-size: 1.5em;
+    font-size: 1.3em;
+}
+
+.PayCheck {
+    padding-top: 15px;
+    width: 100%;
+    max-width: 500px;
+
+    >button {
+        width: 100%;
+    }
 }
 
 
@@ -1308,6 +1488,7 @@ hr {
     cursor: pointer;
     border: 0;
     outline: 0;
+    margin-top: 15px;
 }
 
 .changeButton {
@@ -1327,6 +1508,42 @@ hr {
     }
 }
 
+.ExplainSign {
+    padding: 36px;
+    gap: 30px;
+}
+
+.ExplainSign-Content {
+    >h4 {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        font-weight: 600;
+        font-size: 18px;
+        padding: 15px 0;
+        color: #000;
+
+        >svg {
+            fill: #000;
+            stroke: #000;
+            width: 20px;
+            height: 20px;
+
+        }
+    }
+
+
+    >p {
+        color: #000;
+        word-break: keep-all;
+        font-size: 15px;
+        line-height: 25px;
+
+        &::before {
+            content: ' ∙ '
+        }
+    }
+}
 
 //MyPage
 
@@ -1354,6 +1571,7 @@ hr {
     padding: 12px 45px;
     font-size: 1rem;
     margin-top: 5px;
+    cursor: pointer;
 }
 
 .unSubText {
@@ -1751,7 +1969,7 @@ hr {
     height: 100vh;
 
     @media screen and (max-width: 768px) {
-        padding: 0 20px;
+        padding: 60px 20px;
     }
 }
 
@@ -1767,14 +1985,16 @@ hr {
 
     >h2 {
         font-size: 35px;
-        font-weight: 600;
+        font-weight: 900;
         margin-bottom: 15px;
     }
 
-    > h3, h4 {
+    >p {
         font-size: 18px;
         line-height: 30px;
     }
+
+
 
 
     @media screen and (max-width: 768px) {
@@ -1800,7 +2020,7 @@ hr {
     }
 
     >button:nth-child(2) {
-        background-color: $white-2;
+        background-color: $white-1;
         border: 1px solid $dark-1;
         font-size: 20px;
         padding: 5px 25px;
@@ -1813,7 +2033,8 @@ hr {
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        gap: 15px;
+        gap: 10px;
+        padding-top: 20px;
 
         >button {
             width: 100%
@@ -1823,4 +2044,245 @@ hr {
             margin: 0;
         }
     }
+}
+
+
+//이벤트 파이팅젤
+
+.box1 {
+    padding: 60px;
+
+    @media screen and (max-width: 680px) {
+        padding: 60px 30px;
+    }
+}
+
+.TitleBox1 {
+    background-color: $dark-2;
+    color: $white-1;
+    font-weight: 600;
+    width: 100%;
+    max-width: 700px;
+    padding: 10px;
+    font-size: 1.8rem;
+    word-break: keep-all;
+
+    @media screen and (max-width: 680px) {
+        font-size: 1.5rem;
+        line-height: 1.8rem;
+        padding: 5px;
+
+    }
+}
+
+
+.content1_1,
+.content1_2 {
+    color: $dark-2;
+
+    >h2 {
+        font-size: 3rem;
+        line-height: 3.5rem;
+        word-break: keep-all;
+
+        >span {
+            font-weight: 900;
+        }
+
+        @media screen and (max-width: 680px) {
+            font-size: 2rem;
+            line-height: 2.5rem;
+
+        }
+    }
+}
+
+.content1_1 {
+    padding-top: 25px;
+}
+
+.content1_2 {
+
+    padding-top: 40px;
+
+    >h4 {
+        line-height: 2.2rem;
+        font-size: 1.2rem;
+    }
+}
+
+.content1_3 {
+    color: $dark-2;
+    word-break: keep-all;
+
+    >div {
+        padding: 60px 30px;
+        text-align: center;
+
+        >img {
+            width: 300px;
+        }
+    }
+
+    >h4 {
+        font-size: 1.2rem;
+        line-height: 2.2rem;
+    }
+
+    >h3 {
+        line-height: 2.2rem;
+        font-size: 2rem;
+
+        >span {
+            font-weight: 900;
+        }
+    }
+
+    @media screen and (max-width: 680px) {
+
+        >div {
+            >img {
+                width: 180px;
+            }
+        }
+
+        >h3 {
+            font-size: 1.8rem;
+            line-height: 2rem;
+
+        }
+    }
+}
+
+.TitleBox2 {
+    background-color: $sub2;
+    color: $white-1;
+    font-weight: 900;
+    width: 100%;
+    max-width: 400px;
+    padding: 5px 8px;
+    font-size: 1.6rem;
+    margin-top: 38px;
+    word-break: keep-all;
+
+    @media screen and (max-width: 680px) {
+        font-size: 1.5rem;
+        line-height: 1.8rem;
+        padding: 5px;
+
+    }
+}
+
+.content1_4 {
+    color: $dark-2;
+    background-color: rgba(255, 206, 31, 0.4);
+    padding: 10px;
+
+    >h4 {
+        font-size: 1.2rem;
+        margin-bottom: 5px;
+        word-break: keep-all;
+    }
+
+    >h3 {
+        font-size: 1.8rem;
+        line-height: 2rem;
+
+        >span {
+            font-weight: 900;
+        }
+    }
+
+
+    @media screen and (max-width: 680px) {
+
+        >h3 {
+            font-size: 1.5rem;
+            line-height: 1.8rem;
+        }
+    }
+
+}
+
+.box2 {
+    background-color: $main;
+    padding: 40px;
+
+    >div {
+        width: 100%;
+        max-width: 600px;
+        word-break: keep-all;
+
+        >p {
+            color: $white-1;
+            font-weight: 600;
+            font-size: 1.6rem;
+            line-height: 2rem;
+        }
+    }
+}
+
+.box3 {
+    background-color: #FFEFCA;
+    color: $dark-2;
+    font-family: 'NeoDunggeunmo';
+    padding: 50px 0;
+
+    >div {
+        width: 100%;
+        max-width: 550px;
+        word-break: keep-all;
+
+        >h4 {
+            font-size: 2rem;
+            line-height: 2.2rem;
+            display: inline-block;
+            border-bottom: 1px solid $dark-2;
+            margin-bottom: 10px;
+        }
+
+        > p{
+            text-indent: -30px;
+            padding-left: 30px;
+            font-size: 1.4rem;
+            line-height: 1.8rem;
+        
+        }
+
+    }
+
+    @media screen and (max-width: 680px) {
+        padding-right: 30px;
+        padding-left: 30px;
+
+        >div {
+            >h4 {
+                font-size: 1.8rem;
+                line-height: 2rem;
+            }
+
+            > p {
+                font-size: 1.2rem;
+                line-height: 1.8rem;
+            }
+
+        }
+    }
+
+}
+
+//error
+
+.ErrorContainer {
+    width: 100%;
+    height: 100vh;
+    background-color: $white-1;
+
+    // @media screen and (max-width: 1024px) {
+    //     height: 100vh;
+    // }
+
+    // @media screen and (max-width: 680px) {
+    //     height: 100%;
+    // }
 }

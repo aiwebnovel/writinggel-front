@@ -24,12 +24,12 @@ import "../styles/header.scss";
 import styled from "styled-components";
 
 const Register = () => {
+  const { Kakao, naver } = window;
   const size = useContext(ResponsiveContext);
   const History = useHistory();
 
   const [isLoading, SetLoading] = useState(false);
   const [isInApp, SetInApp] = useState(false);
-
 
   const [RegistInput, SetRegistInput] = useState({
     RegEmail: "",
@@ -52,7 +52,7 @@ const Register = () => {
   const { RegEmail, RegPassword, CheckPassword, RegName } = RegistInput;
 
   const NameChange = (e) => {
-    SetRegistInput({ ...RegistInput,[e.target.name]:e.target.value});
+    SetRegistInput({ ...RegistInput, [e.target.name]: e.target.value });
     //console.log(RegName);
   };
 
@@ -131,30 +131,30 @@ const Register = () => {
             displayName: RegName,
           })
             .then(async () => {
-              
-                const config = {
-                  method: "get",
-                  url: `${configUrl.SERVER_URL}/signup`,
-                  headers: { authentication: token },
-                };
+              const config = {
+                method: "get",
+                url: `${configUrl.SERVER_URL}/signup`,
+                headers: {
+                  authentication: token,
+                },
+              };
 
-                await axios(config)
-                  .then(async (response) => {
-                    //console.log(response);
+              await axios(config)
+                .then(async (response) => {
+                  //console.log(response);
+                  SetLoading(false);
+                  History.push("/welcome");
+                })
+                .catch((error) => {
+                  console.log(error);
+                  SetLoading(false);
+                  if (error.response.data.errorCode === 108) {
+                    toast.error(
+                      "이미 가입된 유저 또는 가입 불가능한 정보입니다😭"
+                    );
                     SetLoading(false);
-                    History.push("/welcome");
-                  })
-                  .catch((error) => {
-                    console.log(error);
-                    SetLoading(false);
-                    if (error.response.data.errorCode === 108) {
-                      toast.error(
-                        "이미 가입된 유저 또는 가입 불가능한 정보입니다😭"
-                      );
-                      SetLoading(false);
-                    }
-                  });
-              
+                  }
+                });
             })
             .catch((error) => {
               console.log(error);
@@ -186,107 +186,183 @@ const Register = () => {
       let provider = new firebaseInstance.auth.FacebookAuthProvider();
 
       setPersistence(authService, browserSessionPersistence)
-      .then(async()=>{
-        await authService.signInWithPopup(provider)
-        .then(async (dataFacebook) => {
-          //console.log(dataFacebook);
+        .then(async () => {
+          await authService
+            .signInWithPopup(provider)
+            .then(async (dataFacebook) => {
+              //console.log(dataFacebook);
 
-          let credentials = dataFacebook.credential;
-          let user = dataFacebook.user;
-          let providerId = dataFacebook.credential.providerId; //facebook.com
-          let email = dataFacebook.user.email;
-          let create = dataFacebook.user.metadata.creationTime;
-          let token = credentials.accessToken;
-          let username = user.displayName;
-          let userPhoto = user.photoURL;
-          //console.log('result',credentials, email,create,token, id);
+              let credentials = dataFacebook.credential;
+              let user = dataFacebook.user;
+              let providerId = dataFacebook.credential.providerId; //facebook.com
+              let email = dataFacebook.user.email;
+              let create = dataFacebook.user.metadata.creationTime;
+              let token = credentials.accessToken;
+              let username = user.displayName;
+              let userPhoto = user.photoURL;
+              //console.log('result',credentials, email,create,token, id);
 
-          await sessionStorage.setItem("token", token);
-          await sessionStorage.setItem("email", email);
-          await sessionStorage.setItem("create", create);
-          await sessionStorage.setItem("provider", providerId);
-          await sessionStorage.setItem("userName", username);
-          await sessionStorage.setItem("userImage", userPhoto);
+              await authService.currentUser
+                .getIdToken()
+                .then(async (data) => {
+                  console.log(data);
+                  const config = {
+                    method: "get",
+                    url: `${configUrl.SERVER_URL}/signup`,
+                    headers: {
+                      authentication: data,
+                    },
+                  };
 
-          SetLoading(false);
-          setTimeout(History.replace("/"), 3000);
+                  await axios(config)
+                    .then(async (response) => {
+                      console.log(response);
+                      await sessionStorage.setItem("token", token);
+                      await sessionStorage.setItem("email", email);
+                      await sessionStorage.setItem("create", create);
+                      await sessionStorage.setItem("provider", providerId);
+                      await sessionStorage.setItem("userName", username);
+                      await sessionStorage.setItem("userImage", userPhoto);
+                      SetLoading(false);
+                      History.push("/welcome");
+                    })
+                    .catch((error) => {
+                      console.log(error.response);
+                      SetLoading(false);
+                      if (error.response.data.errorCode === 108) {
+                        toast.error(
+                          "이미 가입된 유저 또는 가입 불가능한 정보입니다😭"
+                        );
+                        SetLoading(false);
+                      }
+                    });
+                })
+                .catch((err) => {
+                  console.log(err);
+                });
+            })
+            .catch((error) => {
+              console.log(error);
+              SetLoading(false);
+              if (
+                error.code === "auth/account-exists-with-different-credential"
+              ) {
+                toast.error(
+                  "이미 구글로 로그인했던 계정입니다. 동일한 이메일 주소를 사용하여 여러 계정을 만들 수 없습니다."
+                );
+                SetLoading(false);
+              }
+            });
         })
         .catch((error) => {
           console.log(error);
           SetLoading(false);
-          if (error.code === "auth/account-exists-with-different-credential") {
-            toast.error(
-              "이미 구글로 로그인했던 계정입니다. 동일한 이메일 주소를 사용하여 여러 계정을 만들 수 없습니다."
-            );
-            SetLoading(false);
-          }
         });
-      })
-      .catch((error)=>{
-        console.log(error);
-        SetLoading(false);
-      })
     } else if (name === "Google") {
       SetLoading(true);
       let provider = new firebaseInstance.auth.GoogleAuthProvider();
-       setPersistence(authService, browserSessionPersistence)
-      .then(async()=>{
-        await authService.signInWithPopup(provider)
-        .then(async (dataGoogle) => {
-          //console.log(dataGoogle);
-          let credential = dataGoogle.credential;
-          let user = dataGoogle.user;
+      setPersistence(authService, browserSessionPersistence).then(async () => {
+        await authService
+          .signInWithPopup(provider)
+          .then(async (dataGoogle) => {
+            //console.log(dataGoogle);
+            let credential = dataGoogle.credential;
+            let user = dataGoogle.user;
 
-          let token = credential.idToken;
-          let providerId = credential.providerId;
-          let email = user.email;
-          let create = user.metadata.creationTime;
-          let username = user.displayName;
-          let userPhoto = user.photoURL;
+            let token = credential.idToken;
+            let providerId = credential.providerId;
+            let email = user.email;
+            let create = user.metadata.creationTime;
+            let username = user.displayName;
+            let userPhoto = user.photoURL;
+            console.log(token);
 
-          await sessionStorage.setItem("token", token);
-          await sessionStorage.setItem("email", email);
-          await sessionStorage.setItem("create", create);
-          await sessionStorage.setItem("provider", providerId);
-          await sessionStorage.setItem("userName", username);
-          await sessionStorage.setItem("userImage", userPhoto);
+            await authService.currentUser
+              .getIdToken()
+              .then(async (data) => {
+                console.log(data);
+                const config = {
+                  method: "get",
+                  url: `${configUrl.SERVER_URL}/signup`,
+                  headers: {
+                    authentication: data,
+                  },
+                };
 
-          SetLoading(false);
-          setTimeout(History.replace("/"), 3000);
-        })
-        .catch((error) => {
-          console.log(error);
-          SetLoading(false);
-          if (error.code === "auth/account-exists-with-different-credential") {
-            toast.error(
-              "이미 페이스북으로 로그인했던 계정입니다. 동일한 이메일 주소를 사용하여 여러 계정을 만들 수 없습니다."
-            );
+                await axios(config)
+                  .then(async (response) => {
+                    console.log(response);
+                    await sessionStorage.setItem("token", token);
+                    await sessionStorage.setItem("email", email);
+                    await sessionStorage.setItem("create", create);
+                    await sessionStorage.setItem("provider", providerId);
+                    await sessionStorage.setItem("userName", username);
+                    await sessionStorage.setItem("userImage", userPhoto);
+                    SetLoading(false);
+                    History.push("/welcome");
+                  })
+                  .catch((error) => {
+                    console.log(error.response);
+                    SetLoading(false);
+                    if (error.response.data.errorCode === 108) {
+                      toast.error(
+                        "이미 가입된 유저 또는 가입 불가능한 정보입니다😭"
+                      );
+                      SetLoading(false);
+                    }
+                  });
+              })
+              .catch((err) => {
+                console.log(err);
+              });
+          })
+          .catch((error) => {
+            console.log(error);
             SetLoading(false);
-          }
-        })
-        .catch((error)=>{
-          console.log(error);
-          SetLoading(false);
-        });
-        
+            if (
+              error.code === "auth/account-exists-with-different-credential"
+            ) {
+              toast.error(
+                "이미 페이스북으로 로그인했던 계정입니다. 동일한 이메일 주소를 사용하여 여러 계정을 만들 수 없습니다."
+              );
+              SetLoading(false);
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+            SetLoading(false);
+          });
+      });
     }
-      )}
   };
 
-  useEffect(()=>{
+  const SignInKakao = () => {
+    console.log("kakao");
+
+    Kakao.Auth.authorize({
+      redirectUri: "https://tinytingel.ai/oauth",
+    });
+  
+  };
+
+  useEffect(() => {
     let userAgent = navigator.userAgent;
     let check = userAgent.indexOf("KAKAOTALK");
     let checkNaver = userAgent.indexOf("NAVER");
     let checkInsta = userAgent.indexOf("Instagram");
     let checkFB = userAgent.indexOf("FB");
 
-    if (check !== -1 || checkNaver !== -1 || checkInsta !== -1 || checkFB !== -1) {
+    if (
+      check !== -1 ||
+      checkNaver !== -1 ||
+      checkInsta !== -1 ||
+      checkFB !== -1
+    ) {
       SetInApp(true);
     } else {
       return;
     }
-  },[isInApp]);
-
+  }, [isInApp]);
 
   useEffect(() => {
     TagManager.dataLayer({
@@ -400,9 +476,9 @@ const Register = () => {
               </div>
               <RegBtn onClick={GoRegister}>회원가입</RegBtn>
             </div>
-            <p className="LoginLink">
-                라이팅젤 회원이신가요? <Link to='/login'>로그인</Link>
-              </p>
+            <p className='LoginLink'>
+              라이팅젤 회원이신가요? <Link to='/login'>로그인</Link>
+            </p>
             <div style={{ textAlign: "center", margin: "20px 0 25px 0" }}>
               <div
                 style={{
@@ -418,16 +494,25 @@ const Register = () => {
             </div>
             <div className='signBox'>
               <div className='SnsSignBox'>
-              {!isInApp &&
+                {!isInApp && (
+                  <button
+                    className='googleButton'
+                    name='Google'
+                    onClick={(e) => signIn(e)}
+                  >
+                    <Google color='plain' />
+                    구글로 시작하기
+                  </button>
+                )}
                 <button
-                  className='googleButton'
-                  name='Google'
-                  onClick={(e) => signIn(e)}
+                  id='kakao-login-btn'
+                  className='kakaoButton'
+                  name='kakao'
+                  onClick={SignInKakao}
                 >
-                  <Google color='plain' />
-                  구글로 시작하기
+                  <img src='/kakao_symbol.png' alt='kakao' />
+                  <span>카카오로 시작하기</span>
                 </button>
-}
                 <button
                   className='facebookButton'
                   name='Facebook'
@@ -436,7 +521,6 @@ const Register = () => {
                   <FacebookOption color='plain' /> 페이스북으로 시작하기
                 </button>
               </div>
-
             </div>
           </Box>
         </Box>

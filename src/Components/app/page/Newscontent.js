@@ -10,16 +10,6 @@ const Newscontent = () => {
   const History = useHistory();
 
 
-  useEffect(() => {
-    const loginCheck = sessionStorage.getItem("token");
-
-    if (loginCheck !== null) {
-      return;
-    } else {
-      History.push("/");
-      setTimeout(toast.info("로그인을 해주세요!"), 300);
-    }
-  }, []);
 
   return (
     <ServiceLayout>

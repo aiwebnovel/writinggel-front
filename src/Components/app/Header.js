@@ -14,14 +14,19 @@ import * as config from "../../config";
 import "../../styles/Service.scss";
 import styled from "styled-components";
 
+// import { useRecoilState,useRecoilValue} from "recoil";
+// import { ProfileState } from '../../Recoils' 
+
+
 const Header = () => {
   const size = useContext(ResponsiveContext);
 
   const check = sessionStorage.getItem("token");
   const provider = sessionStorage.getItem('provider');
+  const { Kakao } = window;
+  const kakao_token = Kakao.Auth.getAccessToken();
 
   const [isShow, SetShow] = useState(false);
-  const [isUser, SetUser] = useState(false);
   const [isShowMenu, SetShowMenu] = useState(false);
   // const [provider, SetProvider] = useState('');
   const [profile, SetProfile] = useState({
@@ -32,6 +37,10 @@ const Header = () => {
   });
 
   const { userName, userImage, isBill, Plan } = profile;
+
+  // const [userInfo, setInfo] = useRecoilState(ProfileState);
+  // const value = useRecoilValue(ProfileState);
+  // console.log(value);
 
   const reLoadProfile = useCallback(async()=>{
 
@@ -94,7 +103,7 @@ const Header = () => {
             headers: { authentication: Idtoken },
           })
           .then((response) => {
-            
+            console.log(response)
             SetProfile({
               ...profile,
               userName:  response.data.name,
@@ -104,10 +113,9 @@ const Header = () => {
             });
       
             sessionStorage.setItem('token',Idtoken);
-            sessionStorage.setItem("userUid", response.data.uid);
             sessionStorage.setItem("plan", response.data.plan);
             sessionStorage.setItem("isBill", response.data.isBill);
-            
+            sessionStorage.setItem("userUid", response.data.uid);
           })
           .catch((error) => {
             if(error.response.status === 412) {
@@ -130,7 +138,7 @@ const Header = () => {
   const GetProfile = useCallback(async() => {
     if(check !== null) {
     await axios
-      .get(`${config.SERVER_URL}/login`, {
+      .get(`${config.SERVER_URL}/profile`, {
         headers: { authentication: check },
       })
       .then(async(response) => {
@@ -139,14 +147,14 @@ const Header = () => {
         SetProfile({
           ...profile,
           userName: sessionStorage.getItem('userName'),
+          // userImage: response.data.photoURL,
           isBill: response.data.isBill,
           Plan: response.data.plan,
         });
-
-        sessionStorage.setItem("token", sessionStorage.getItem('token'));
-        sessionStorage.setItem("userUid", response.data.uid);
+        //sessionStorage.setItem('userImage', response.data.photoURL)
         sessionStorage.setItem("plan", response.data.plan);
         sessionStorage.setItem("isBill", response.data.isBill);
+        sessionStorage.setItem("userUid", response.data.uid);
       })
       .catch((error) => {
         console.log(error);
@@ -157,15 +165,68 @@ const Header = () => {
     }
   },[]);
 
-  const signOut = async () => {
-    await sessionStorage.clear();
 
-    SetUser(false);
+  const KakaoProfile = useCallback(async() => {
+    //console.log('kakao login');
+
+    if(kakao_token !== null)
+    await axios
+    .get(`${config.SERVER_URL}/profile`, {
+      headers: { authentication: kakao_token},
+    })
+    .then((response) => {
+      console.log(response);
+      SetProfile({
+        ...profile,
+        userName: sessionStorage.getItem('userName'),
+        userImage: response.data.photoURL,
+        isBill: response.data.isBill,
+        Plan: response.data.plan
+      });
+
+      // setInfo({
+      //   ...userInfo,
+      //   userName: sessionStorage.getItem('userName'),
+      //   isBill: response.data.isBill,
+      //   Plan: response.data.plan,
+      //   membership_count : response.data.membership_count,
+      //   stopPayWish: response.data.stopPayWish
+      // })
+
+      sessionStorage.setItem('token', kakao_token);
+      sessionStorage.setItem("plan", response.data.plan);
+      sessionStorage.setItem("isBill", response.data.isBill);
+      sessionStorage.setItem("userUid", response.data.uid);
+
+     
+      
+    })
+    .catch((error) => {
+      if(error.response.status === 412) {
+        toast.error('새로고침하거나 다시 로그인 해주세요!') 
+        //window.location.reload();  
+      }
+      // toast.error(error.message);
+    });
+  },[]);
+
+
+  const signOut = async () => {
+
     SetShowMenu(false);
 
-    await authService.signOut();
-    window.location.reload();
+    if(provider === 'kakao') {
+      Kakao.Auth.logout(()=>{
+        sessionStorage.clear();
+        window.location.reload();
+      })
+    } else {
+      await sessionStorage.clear();
+      await authService.signOut();
+      window.location.reload();
+    }
   };
+
 
   const HandleShow = () => {
     SetShow(!isShow);
@@ -179,10 +240,14 @@ const Header = () => {
 
     if(provider === 'password'){
       GetProfile();
-    } else if(provider === 'google.com' || 'facebook.com') {
+    } 
+    if (provider === "google.com" || provider === "facebook.com") {
       requestProfile();
+    } 
+    if (provider === 'kakao') {
+      KakaoProfile();
     }
-  },[])
+  },[provider, GetProfile, requestProfile, KakaoProfile])
 
 
   return (
@@ -195,12 +260,13 @@ const Header = () => {
         </Nav>
         {size !== "small" ? (
           <Nav direction='row' gap='medium' align='center'>
-            <Link to='/signIn' className={isBill ? "displayNone" : "MobileMenusLink"}>
+            <Link to='/signIn' className={Plan === 'free' || Plan === '0' || Plan === '' ? "MenusLink" : "displayNone"}>
               <LinkBtn>멤버십 가입</LinkBtn>
             </Link>
             < HowToLink href="https://appplatform.notion.site/99f9b5fb95d84477b9e2aa343fb97055" target='_blank' rel="noreferrer">사용 방법</ HowToLink>
             <Avatar
-               src={sessionStorage.getItem('userImage') ? sessionStorage.getItem('userImage') : userImage}
+            
+                 src={sessionStorage.getItem('userImage') ? sessionStorage.getItem('userImage') : userImage}
               style={{ width: "40px", height: "40px"}}
               onClick={showMenu}
               
@@ -231,11 +297,11 @@ const Header = () => {
           <Nav direction='column' gap='large' className='ServiceDropMenu'>
             {size === 'small' &&
               <Nav direction='row' gap='medium' align='center' justify={size ==='small' && 'between'}>
-              <Link to='/signIn' className={isBill && 'displayNone'}>
+              <Link to='/signIn' className={Plan === 'free' || Plan === '0' || Plan === '' ? "MenusLink" : "displayNone"}>
                 <LinkBtn>멤버십 가입</LinkBtn>
               </Link>
               <Avatar
-                src={userImage && userImage}
+                src={sessionStorage.getItem('userImage') ? sessionStorage.getItem('userImage') : userImage}
                 style={{ width: "40px", height: "40px" }}
                 onClick={showMenu}
               />
@@ -284,7 +350,7 @@ const Header = () => {
               <p>{userName !== undefined ? userName : sessionStorage.getItem('userName')}님</p>
             </div>
             <p className='ServicePlan'>
-              {sessionStorage.getItem("plan") === "free"
+              {Plan === 'free' || Plan === '0'
                 ? "free"
                 : `${Plan}개월 구독`}
             </p>

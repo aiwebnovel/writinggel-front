@@ -45,17 +45,29 @@ import Dailywrite from '../Components/app/page/DailyWrite';
 import Storysrc from '../Components/app/page/Storysrc';
 import Login from '../Components/Login';
 
-import GoBrowser from '../Components/GoBrowser';
+import FightingGel from '../Components/event/FightingGel';
+//import GoBrowser from '../Components/GoBrowser';
 import Register from '../Components/Register';
 import Welcome from '../Components/Welcome';
+import AuthPage from '../Components/AuthPage';
+import Callback from '../Components/Callback';
+import NotFound from './404';
+
+import { RecoilRoot } from 'recoil';
+import FailPay from './failPay';
+import PayRedirect from '../Components/Membership/PayRedirect';
+
 
 function App() {
   return (
+    <RecoilRoot>
     <BrowserRouter>
       <Switch>
         <Route exact path="/" component={Home}></Route>
         <Route exact path="/regist" component={Register}></Route>
         <Route exact path='/welcome' component={Welcome}></Route>
+        <Route exact path='/oauth' component={AuthPage}></Route>
+        <Route exact path='/naver/oauth' component={Callback}></Route>
         <Route exact path="/login" component={Login}></Route>
         <Route exact path="/brand" component={Brand}></Route>
 
@@ -81,7 +93,7 @@ function App() {
         <Route exact path="/mypage/modify" component={Modify}></Route>
         <Route exact path="/tingbox" component={TingBox}></Route>
 
-
+        <Route exact path='/fightingGel' component={FightingGel}></Route>
 
       {/* service */}
         <Route exact path="/app/webnovel" component={Webnovel}></Route>
@@ -101,10 +113,13 @@ function App() {
         <Route exact path="/app/loveletter" component={LoveLetter}></Route>
         <Route exact path="/app/dailywrite" component={Dailywrite}></Route>
         <Route exact path="/app/storysrc" component={Storysrc}></Route>
-        
 
+        <Route exact path='/pay_redirect' component={PayRedirect}/>
+        <Route exact path='/fail' component={FailPay}/>
+        <Route component={NotFound}/>
       </Switch>
     </BrowserRouter>
+    </RecoilRoot>
   );
 }
 

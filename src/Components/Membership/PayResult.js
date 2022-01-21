@@ -15,7 +15,7 @@ const PayResult = () => {
   const History = useHistory();
 
   const [profile, SetProfile] = useState({
-    isBill: false,
+    isBill: "",
     userName: "",
     plan: "",
     uid: "",
@@ -23,7 +23,7 @@ const PayResult = () => {
     create: "",
   });
 
-  const { isBill, plan, stopPay, billStart, payId, exp } = profile;
+  const { plan, stopPay, billStart, payId, exp } = profile;
 
   const DeletePay = () => {
     if (window.confirm("구독을 취소하시겠습니까?")) {
@@ -34,7 +34,6 @@ const PayResult = () => {
       };
       axios(config)
         .then((response) => {
-          sessionStorage.setItem('isBill', false)
           //console.log(response);
           toast.success(response.data.log, {
             style: { backgroundColor: "#fff", color: "#000" },
@@ -71,7 +70,7 @@ const PayResult = () => {
           headers: { authentication: loginCheck },
         })
         .then((response) => {
-          // console.log(response.data);
+          console.log(response.data);
           let data = response.data;
 
           let billFormat = moment(data.billStartDate).format('YYYY-MM-DD');
@@ -93,7 +92,6 @@ const PayResult = () => {
               beforePlan: data.plan_before
             });
         
-          // console.log(isBill, userName,plan,uid,email)
         });
     } else {
       History.replace("/");
@@ -106,8 +104,18 @@ const PayResult = () => {
         <Box fill background='#3b2477' color='#fff' className='MypageHeader'>
           <h2>결제 내역</h2>
         </Box>
-        {sessionStorage.getItem("isBill") === false ? (
-          <div>결제 내역이 없습니다!</div>
+        {plan === 'free' || plan ==='0' ? (
+            <Box justify='center' align='center' className='DoneContainer'>
+            <Box className="DoneBox">
+              <div className="DoneText">
+              <h2>🙅‍♀️ 아직 결제 내역이 없습니다!</h2>
+              </div>
+              <div className='DoneButton'>
+                <button><Link to='/mypage'>마이 페이지</Link></button>
+                <button><Link to='/'>서비스 이용하기</Link></button>
+              </div>
+            </Box>
+            </Box>
         ) : (
           <Box fill className='paymentBox'>
             <Box className='paymentContent'>
@@ -129,6 +137,7 @@ const PayResult = () => {
                 {plan === '3' && <p>₩ 60,000</p>}
                 {plan === '6' && <p>₩ 90,000</p>}
                 {plan === 'free' && !stopPay && <p>없음</p>}
+                {plan === '0' && <p>없음</p>}
                 {stopPay && <p>구독 취소</p>}
               </div>
               <div className='payBox'>
@@ -141,7 +150,7 @@ const PayResult = () => {
               </div>
               <div className='payBox'>
                 <h4>결제 수단</h4>
-                <p>{isBill && '신용카드/체크카드'}</p>
+                <p>{plan === 'free' || plan === '0' ? "없음": "신용카드/체크카드" }</p>
               </div>
             </Box>
             <BtnContent>
