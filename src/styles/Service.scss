@@ -98,17 +98,17 @@ $boxShadow : rgb(237 237 237) 2px 3px 8px;
 }
 
 .OpenBtn {
- 
+
     gap: 2px;
     background-color: #ffce1f;
     border: 1px solid #444;
     border-left: 0;
- 
+
 
     @media screen and (max-width: 768px) {
         border: 0;
         border-bottom: 1px solid #444;
-        
+
     }
 }
 
@@ -195,7 +195,7 @@ $boxShadow : rgb(237 237 237) 2px 3px 8px;
 
 .MembershipCountText {
     text-align: center;
-    color : $main;
+    color: $main;
 }
 
 .MembershipCountBtns {
@@ -206,31 +206,31 @@ $boxShadow : rgb(237 237 237) 2px 3px 8px;
     margin-top: 20px;
     margin-bottom: 5px;
 
-    > button:first-child {
-        background-color : $white-1;
+    >button:first-child {
+        background-color: $white-1;
         border: 1px solid $main;
-        color : $main;
+        color: $main;
         padding: 5px 15px;
         cursor: pointer;
         transition: all 300ms ease;
 
         &:hover {
-            background-color : $red;
+            background-color: $red;
             color: $white-1;
         }
     }
 
-    > a > button {
-        background-color : $main;
+    >a>button {
+        background-color: $main;
         border: 1px solid $main;
         outline: 0;
-        color : $white-1;
+        color: $white-1;
         padding: 5px 25px;
         cursor: pointer;
         transition: all 300ms ease;
 
         &:hover {
-            background-color : $sub2;
+            background-color: $sub2;
             color: $main;
         }
     }
@@ -338,13 +338,13 @@ $boxShadow : rgb(237 237 237) 2px 3px 8px;
     background-color: $white-1;
 
     @media screen and (max-width:768px) {
-       padding: 15px 20px;
+        padding: 15px 20px;
     }
 
     @media screen and (max-width:360px) {
         padding: 15px;
-     }
-    
+    }
+
 }
 
 .MainLogo2 {
@@ -568,7 +568,7 @@ select::-ms-expand {
     @media screen and (max-width: 768px) {
         flex-direction: column;
         padding: 120px 0px;
-    
+
     }
 }
 
@@ -576,9 +576,9 @@ select::-ms-expand {
 
     justify-content: center;
 
-    > div:first-child {
+    >div:first-child {
         width: 100%;
-        display:flex;
+        display: flex;
         justify-content: center;
         align-items: center;
         gap: 15px;
@@ -586,14 +586,14 @@ select::-ms-expand {
     }
 
     @media screen and (max-width: 768px) {
-      
+
         justify-content: flex-start;
 
-        > div:first-child {
+        >div:first-child {
             flex-direction: column;
         }
     }
-    
+
 }
 
 .outputKo,
@@ -616,6 +616,7 @@ select::-ms-expand {
 
 .blogMainBox {
     padding: 120px 30px;
+
     @media screen and (max-width: 768px) {
         padding: 150px 30px;
     }
@@ -679,7 +680,7 @@ select::-ms-expand {
     border-top: 3px solid #372874;
     border-left: 1px solid $main;
     border-right: 1px solid $main;
-    border-bottom : 1px solid $main;
+    border-bottom: 1px solid $main;
 
     >h4 {
         font-weight: 600;
@@ -709,10 +710,11 @@ select::-ms-expand {
 
     @media screen and (max-width: 680px) {
         flex-direction: column;
-        > div {
+
+        >div {
             flex-direction: column;
 
-            > button {
+            >button {
                 width: 90%;
             }
         }
@@ -759,16 +761,16 @@ select::-ms-expand {
     @media screen and (max-width: 768px) {
         padding: 120px 30px;
     }
-   
+
 }
 
 
 
 
-.KeyContainer{
-    width:100%;
-    display:flex;
-    flex-direction:column;
+.KeyContainer {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
     align-items: center;
     max-width: 700px;
     min-height: 400px;
@@ -778,14 +780,14 @@ select::-ms-expand {
 }
 
 .keywordHeader {
-    display:flex;
+    display: flex;
     align-items: center;
-    gap:5px;
+    gap: 5px;
     width: 100%;
     background-color: $white-2;
     padding: 8px;
-      
-    > svg {
+
+    >svg {
         // background-color: #444;
         fill: $dark-1;
         stroke: $dark-1;
@@ -793,23 +795,23 @@ select::-ms-expand {
         width: 30px;
         height: 30px;
         margin-right: 5px;
-  
+
         border-radius: 50%;
         cursor: pointer;
-      }
+    }
 
-      .close {
-          background-color : #f45752;
-      }
+    .close {
+        background-color: #f45752;
+    }
 
-      .copy {
+    .copy {
         background-color: $point;
     }
 
-     .download {
+    .download {
         background-color: $sub2;
-     }
-  
+    }
+
 }
 
 .keywordDiv {
@@ -822,7 +824,7 @@ select::-ms-expand {
     padding: 30px 10px;
     transition: all 200ms ease-in-out;
 
-    background-color : $white-1;
+    background-color: $white-1;
 }
 
 
@@ -834,7 +836,7 @@ select::-ms-expand {
     word-wrap: keep-all;
     width: 80%;
     font-size: 0.9rem;
-    padding:8px;
+    padding: 8px;
 
     >svg {
         fill: $main;
@@ -855,8 +857,8 @@ select::-ms-expand {
     border: 1px solid $main;
     border-radius: 10px;
 
-    > svg {
-        fill:$white-1;
+    >svg {
+        fill: $white-1;
         stroke: $white-1;
     }
 
@@ -865,18 +867,18 @@ select::-ms-expand {
 .resultBox {
     width: 100%;
     padding: 20px;
-    background-color : $white-1;
+    background-color: $white-1;
     overflow: scroll;
 }
 
 .keywordResult {
     border: 2px solid #55d4bc;
-    background-color:$white-2;
+    background-color: $white-2;
     color: $dark-1;
     padding: 5px;
     border-radius: 15px;
     word-break: break-all;
-   
+
 }
 
 
@@ -896,7 +898,7 @@ select::-ms-expand {
 
 .printBox {
     border: 1px solid #444;
-    background-color : #fff;
+    background-color: #fff;
     border-radius: 15px;
     width: 500px;
     margin-top: 8px;
@@ -983,7 +985,7 @@ select::-ms-expand {
 
     >textarea {
         resize: none;
- 
+
         height: 500px;
 
         &:focus {
@@ -992,7 +994,7 @@ select::-ms-expand {
     }
 
     @media screen and (max-width: 768px) {
-        width: 90%;  
+        width: 90%;
     }
 
 }
@@ -1169,7 +1171,7 @@ select::-ms-expand {
     height: 200px;
     overflow: scroll;
 
-    display:flex;
+    display: flex;
     justify-content: space-between;
     flex-direction: column;
 
@@ -1179,8 +1181,8 @@ select::-ms-expand {
 }
 
 .AreaBox {
-    
-    > div {
+
+    >div {
         white-space: pre-wrap;
     }
 
@@ -1193,8 +1195,8 @@ select::-ms-expand {
 //fairyTale
 
 
-.FairymainBox{
-    
+.FairymainBox {
+
     justify-content: center;
     gap: 20px;
     padding: 120px 30px;
@@ -1209,7 +1211,7 @@ select::-ms-expand {
 }
 
 .FairyOutputBox {
-    display:flex;
+    display: flex;
     justify-content: center;
     align-items: center;
     gap: 20px;
@@ -1235,25 +1237,25 @@ select::-ms-expand {
     padding: 10px 0;
     // padding: 18px 12px 5px 12px;
 
-        >h4 {
-            font-size: 14px;
-            font-weight: 600;
-            margin: 0;
+    >h4 {
+        font-size: 14px;
+        font-weight: 600;
+        margin: 0;
 
-            @media screen and (max-width: 768px) {
-                font-size: 18px;
-            }
-
-            &::before {
-                content: '❗️';
-            }
+        @media screen and (max-width: 768px) {
+            font-size: 18px;
         }
 
-        >svg {
-            width: 22px;
-            height: 22px;
+        &::before {
+            content: '❗️';
         }
- 
+    }
+
+    >svg {
+        width: 22px;
+        height: 22px;
+    }
+
 }
 
 .AcoInput {
@@ -1267,7 +1269,7 @@ select::-ms-expand {
         outline: none;
         border: 0;
         border-bottom: 1px solid $dark-1;
-        background-color : rgb(249, 249, 249, 0.7);
+        background-color: rgb(249, 249, 249, 0.7);
 
         &:focus {
             outline: none;
@@ -1282,7 +1284,7 @@ select::-ms-expand {
         cursor: pointer;
         background-color: $white-2;
         border: 1px solid $white-2;
-        color:$dark-1;
+        color: $dark-1;
         font-weight: 600;
         padding: 5px 15px;
     }
@@ -1345,9 +1347,9 @@ select::-ms-expand {
     gap: 10px;
 }
 
-.KeepFairyBtn{
+.KeepFairyBtn {
     font-size: 1rem;
-    background-color : $sub2;
+    background-color: $sub2;
     border: 1px solid $sub2;
     outline: 0;
     padding: 5px 10px;
@@ -1361,12 +1363,12 @@ select::-ms-expand {
 
 .NotYetBtn {
     font-size: 1rem;
-    background-color : #ebebeb;
+    background-color: #ebebeb;
     border: 1px solid #ebebeb;
     outline: 0;
     padding: 5px 10px;
     width: 300px;
-    cursor: pointer; 
+    cursor: pointer;
 
     @media screen and (max-width: 768px) {
         width: 250px
@@ -1380,14 +1382,14 @@ select::-ms-expand {
     width: 100%;
     height: 100vh;
 
-    
+
     @media screen and (max-width: 768px) {
         height: 100%;
         padding: 180px 60px;
     }
 
     @media screen and (max-width: 680px) {
-        padding-right:24px;
+        padding-right: 24px;
         padding-left: 24px;
     }
 }
@@ -1412,10 +1414,10 @@ select::-ms-expand {
     width: 100%;
     max-width: 500px;
 
-        
+
     @media screen and (max-width: 768px) {
         font-size: 15px;
-    
+
     }
 
 }
@@ -1456,7 +1458,7 @@ select::-ms-expand {
     gap: 10px;
     margin-top: 10px;
 
-    > svg {
+    >svg {
         background-color: #444;
         fill: #fff;
         stroke: #fff;
@@ -1476,14 +1478,14 @@ select::-ms-expand {
     width: 100%;
     height: 100vh;
 
-    
+
     @media screen and (max-width: 768px) {
         height: 100%;
         padding: 100px 60px;
     }
 
     @media screen and (max-width: 680px) {
-        padding-right:24px;
+        padding-right: 24px;
         padding-left: 24px;
     }
 }
@@ -1505,14 +1507,14 @@ select::-ms-expand {
     width: 100%;
     height: 100vh;
     padding: 48px;
-    
+
     @media screen and (max-width: 768px) {
         height: 100%;
         padding: 60px;
     }
 
     @media screen and (max-width: 680px) {
-        padding-right:24px;
+        padding-right: 24px;
         padding-left: 24px;
     }
 }
@@ -1537,7 +1539,7 @@ select::-ms-expand {
     }
 }
 
-.PrintContainer{
+.PrintContainer {
     gap: 30px;
 
 
@@ -1570,8 +1572,8 @@ select::-ms-expand {
 
 
         &:nth-child(3) {
-            background-color : $sub2;
-            border:1px solid $sub2;
+            background-color: $sub2;
+            border: 1px solid $sub2;
             color: $dark-1;
             transition: all 300ms ease-in-out;
 
@@ -1604,7 +1606,7 @@ select::-ms-expand {
     padding: 24px;
     text-align: center;
 
-    > p {
+    >p {
         word-break: break-word;
     }
 
@@ -1620,4 +1622,55 @@ select::-ms-expand {
     padding: 15px 10px;
     overflow: scroll;
 
+}
+
+//coverLetter
+
+.CoverQuestion {
+    width: 100%;
+    max-width: 600px;
+
+    >h4 {
+        font-weight: 600;
+        margin-bottom: 8px;
+    }
+
+    >select {
+        width: 100%;
+        background-color: $white-1;
+        padding: 8px 5px;
+        border: 1px solid #444;
+        margin-bottom: 5px;
+        font-size: 1rem;
+    }
+
+    >label>input {
+        width: 100%;
+        background-color: $white-1;
+        padding: 8px;
+        border: 1px solid #444;
+        font-size: 1rem;
+    }
+
+}
+
+.CoverContent {
+    width: 100%;
+    max-width: 600px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+
+
+    >div {
+        background-color: $white-1;
+        border: 1px solid $dark-1;
+        min-height: 200px;
+        padding: 10px;
+        font-size: 1rem;
+        white-space: pre-wrap;
+        overflow: scroll;
+    }
 }
