@@ -60,4 +60,3 @@ const footerStyle = {
     justifyContent: 'center',
     alignItems: 'center'
   }
-
