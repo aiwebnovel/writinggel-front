@@ -338,6 +338,12 @@ const Header = () => {
               <li>
                 <Link to='/app/storysrc'>이야기 재료 찾기</Link>
               </li>
+              <li>
+                  <Link to='/app/relaynovel'>릴레이 웹소설</Link>
+                </li>
+              <li>
+                <Link to='/app/coverletter'>대입 자소서 완성</Link>
+              </li>
             </ul>
           </Nav>
         </Box>

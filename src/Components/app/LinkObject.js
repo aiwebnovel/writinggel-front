@@ -60,6 +60,30 @@ const LinkObject = [
     link: "/app/storysrc",
     detail: '/service/storysrc',
   },
+  {
+    id:11,
+    title: "릴레이 웹소설",
+    link: "/app/relayNovel",
+    detail: '/service/relaynovel',
+  },
+  {
+    id:12,
+    title: "대입 자소서 완성",
+    link: "/app/coverLetter",
+    detail: '/service/coverletter',
+  },
+  {
+    id:13,
+    title: "Coming Soon!",
+    link: "/",
+    detail: '/',
+  },
+  {
+    id:14,
+    title: "Coming Soon!",
+    link: "/",
+    detail: '/',
+  },
  
 ];
 

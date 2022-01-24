@@ -297,6 +297,12 @@ const Header = () => {
                 <li>
                   <Link to='/service/storysrc'>이야기 재료 찾기</Link>
                 </li>
+                <li>
+                  <Link to='/service/relaynovel'>릴레이 웹소설</Link>
+                </li>
+                <li>
+                  <Link to='/service/coverletter'>대입 자소서 완성</Link>
+                </li>
               </ul>
             </span>
             <Link to='/newsletter'>뉴스레터</Link>
@@ -368,6 +374,12 @@ const Header = () => {
                 </li>
                 <li>
                   <Link to='/service/storysrc'>이야기 재료 찾기</Link>
+                </li>
+                <li>
+                  <Link to='/service/relaynovel'>릴레이 웹소설</Link>
+                </li>
+                <li>
+                  <Link to='/service/coverletter'>대입 자소서 완성</Link>
                 </li>
               </ul>
             )}
