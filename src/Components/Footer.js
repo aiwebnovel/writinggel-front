@@ -41,7 +41,6 @@ const Footer = () => {
         </FooterLayout>
         <FooterLayout className="Mobilefooter MobileCopyRight" background="light-3" pad="medium" justify="center" align="center">
           <p className="copyRight">©Appplatform, Inc All Rights Reserved</p>
-          <IconLicense>Icons made by <a href="https://www.freepik.com" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></IconLicense>
           <Box direction="row" gap="small" className="Icon">
           <a target="_blank" rel="noreferrer" href="https://facebook.com/ai.tinytingel/"><Facebook size="medium"/></a>
           <a target="_blank" rel="noreferrer" href="https://www.instagram.com/tinytingel/"><Instagram size="medium"/></a>
@@ -62,7 +61,3 @@ const footerStyle = {
     alignItems: 'center'
   }
 
-const IconLicense = styled.div`
-  font-size: 13px;
-  text-align: center;
-`
