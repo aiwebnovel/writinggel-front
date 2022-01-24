@@ -1,16 +1,16 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import {Link} from 'react-router-dom';
 import ScrollToTop from "../../../routes/ScrollToTop";
 import ServiceLayout from "../Layout";
 import Loading from "../../Loading";
 import Modal from "../../SmallModal";
 
-import { Box, ResponsiveContext } from "grommet";
+import { Box } from "grommet";
 
 import styled from "styled-components";
 
 const CoverLetter = () => {
-  const size = useContext(ResponsiveContext);
+
   const [isLoading, setLoading] = useState(false);
   const [isOpen, setOpen] = useState(false);
 const [unexceptable, setexceptable] = useState(false);
@@ -101,7 +101,9 @@ const [input, setInput] = useState('');
       {/* 채워야하는 칸들이 공백일 시 */}
       <Modal onClick={ExceptableModals} open={unexceptable} close={ExceptableModals}>
       <ConfirmDiv>
-          <h3>필수 입력 부분을 모두 채워주세요!</h3>
+         {selectOption === '' && input === '' && <h3>필수 항목을 전부 채워주세요!</h3>}
+          {selectOption === '' && input !== '' &&  <h3>자기소개서 공통 질문을 선택하세요!</h3>}
+          {selectOption !== '' && input === '' && <h3>희망하는 전공을 채워주세요!</h3>}
           <ConfirmBtn onClick={ExceptableModals}>확인</ConfirmBtn>
         </ConfirmDiv>
       </Modal>

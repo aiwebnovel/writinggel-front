@@ -1674,3 +1674,112 @@ select::-ms-expand {
         overflow: scroll;
     }
 }
+
+//Relay
+
+.RelayContainer {
+   background-color : $white-1;
+   //padding : 30px;
+   width: 100%;
+   max-width: 800px;
+   border : 1px solid #444;
+
+    > div:first-child {
+        background-color: $sub1;
+        padding : 20px;
+
+        > h2 {
+            font-weight: 600;
+            font-size : 1.3rem;
+            color: #000;
+            
+        }
+    }
+}
+
+
+.RelayStyle {
+    width: 100%;
+    padding: 10px 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.RelayPanelStyle {
+    width: 100%;
+    padding: 10px 0;
+    // padding: 18px 12px 5px 12px;
+
+    >h4 {
+        font-size: 1.1rem;
+        font-weight: 600;
+        margin: 0;
+        margin-bottom : 5px;
+
+        @media screen and (max-width: 768px) {
+            font-size: 18px;
+        }
+
+      
+        &::before {
+            content: '💡 ';
+        }
+    }
+
+    >svg {
+        width: 22px;
+        height: 22px;
+    }
+
+}
+
+.RelayInput {
+    width: 100%;
+
+    >input {
+        width: 100%;
+        padding: 8px 5px;
+        margin-right: 5px;
+        //border: 1px solid $dark-1;
+        outline: none;
+        border: 0;
+        border-bottom: 1px solid $dark-1;
+        background-color: #fff;
+        font-size : 1rem;
+
+        &:focus {
+            outline: none;
+        }
+
+        @media screen and (max-width: 768px) {
+            height: 35px;
+        }
+    }
+
+    >button {
+        cursor: pointer;
+        background-color: $white-2;
+        border: 1px solid $white-2;
+        color: $dark-1;
+        font-weight: 600;
+        padding: 5px 15px;
+    }
+}
+
+.RelayBtn {
+    display: flex;
+    justify-content: center;
+    margin-top: 35px;
+
+    >button {
+        padding: 8px 15px;
+        border: 1px solid $dark-1;
+        background-color: $sub2;
+        outline: 0;
+        width: 180px;
+        text-align: center;
+        cursor: pointer;
+    }
+}

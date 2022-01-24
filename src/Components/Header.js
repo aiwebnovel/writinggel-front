@@ -96,7 +96,7 @@ const Header = () => {
           headers: { authentication: Idtoken },
         })
         .then((response) => {
-         console.log(response)
+         //console.log(response)
           SetProfile({
             ...profile,
             userName:  name,
