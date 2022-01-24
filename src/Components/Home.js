@@ -8,7 +8,7 @@ import LinkObject from "./app/LinkObject";
 import "../styles/Main.scss";
 import TagManager from "react-gtm-module";
 import styled from "styled-components";
-import eventThumb from './event/fighting_gel_thumbnail.jpg'
+import eventThumb from './event/fighting_gel_sns_square_img.jpg'
 
 const Home = () => {
   const check = sessionStorage.getItem("token");
