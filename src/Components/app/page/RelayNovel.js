@@ -19,7 +19,7 @@ const RelayNovel = () => {
     Place: "",
     Time: "",
     Main_Events: "",
-    Material: "",
+    Theme: "",
   });
 
   const { Main_character, Place, Time, Main_Events, Theme } = Input;
@@ -49,9 +49,10 @@ const RelayNovel = () => {
     ) {
       setIsset(true);
     } else {
-      toast.error(
-        `${options} / ${Main_character} / ${Place} / ${Time} / ${Theme} / ${Main_Events} `
-      );
+      toast.error("빈 칸을 채워주세요!");
+      // toast.error(
+      //   `${options} / ${Main_character} / ${Place} / ${Time} / ${Theme} / ${Main_Events} `
+      // );
     }
   };
 
@@ -64,7 +65,7 @@ const RelayNovel = () => {
           background='#f9f9f9'
           align='center'
         >
-          {isSet && (
+          {!isSet && (
             <div className='RelayContainer'>
               <div>
                 <h2>❗️ 기본 설정을 세팅해주세요.</h2>
@@ -147,16 +148,19 @@ const RelayNovel = () => {
               </Box>
             </div>
           )}
-          {!isSet && (
+          {isSet && (
             <div className='RelayContentContainer'>
               <RelayBox>
                 <div className='RelayContent'>
                   <Reset>
-                    <p>기본 설정 변경하기</p>
+                    <button onClick={HandleModals}>기본 설정 변경하기</button>
                   </Reset>
-                  <div className="ChatRelay">
-                   <textarea />
-                    <div> <Download/> </div>
+                  <div className='ChatRelay'>
+                    <textarea />
+                    <div>
+                      {" "}
+                      <Download />{" "}
+                    </div>
                   </div>
                   <button
                     className='RelayEnglish'
@@ -172,7 +176,10 @@ const RelayNovel = () => {
                   )}
                 </div>
                 <RelayAi>
-                  <input type='text' placeholder="이어지는 이야기를 적어보세요. (한 문장만)"/>
+                  <input
+                    type='text'
+                    placeholder='이어지는 이야기를 적어보세요. (한 문장만)'
+                  />
                   <button>이어쓰기</button>
                 </RelayAi>
               </RelayBox>
@@ -181,7 +188,19 @@ const RelayNovel = () => {
         </Box>
       </ServiceLayout>
       <Modal onClick={HandleModals} open={isOpen} close={HandleModals}>
-        <div>쫄?</div>
+        <div>
+          <div style={{textAlign: 'center', wordBreak: 'keep-all'}}>
+            <p>기존 설정을 변경하게 되면, 지금 내용은 모두 사라집니다.</p>
+            <p>진행 하시겠습니까?</p>
+          </div>
+          <Btns>
+            <CancelBtn onClick={HandleModals}>취소</CancelBtn>
+            <ConfirmBtn onClick={() =>{
+               setIsset(false)
+               setOpen(false)
+            }}>확인</ConfirmBtn>
+          </Btns>
+        </div>
       </Modal>
     </>
   );
@@ -190,21 +209,22 @@ const RelayNovel = () => {
 export default RelayNovel;
 
 const RelayBox = styled.div`
-  display:flex;
-  flex-direction : column;
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  
-`
+`;
 
 const Reset = styled.div`
-  width: 100%; 
+  width: 100%;
   text-align: right;
-  
 
-  > p {
-    display: inline-block;
+  > button {
+    border: 0;
+    outline: 0;
+    background: transparent;
+    font-size: 1rem;
     border-bottom: 1px solid #444;
-    cursor : pointer;
+    cursor: pointer;
 
     &:hover {
       font-weight: 600;
@@ -220,38 +240,62 @@ const RelayAi = styled.div`
 
   width: 100%;
   max-width: 700px;
-  
-
 
   > input {
     width: 100%;
     max-width: 600px;
     height: 35px;
-    font-size : 1rem;
+    font-size: 1rem;
     padding: 8px;
   }
 
-  > button  {
-    background-color : #ffce1f;
-    border : 0;
+  > button {
+    background-color: #ffce1f;
+    border: 0;
     outline: 0;
-  
-    padding : 8px 15px;
-    font-size : 1rem;
+
+    padding: 8px 15px;
+    font-size: 1rem;
     cursor: pointer;
-    transition : all 300ms ease;
+    transition: all 300ms ease;
 
     &:hover {
-      background-color : #ff9300;
+      background-color: #ff9300;
     }
-
   }
 
-  @media screen and (max-width : 768px) {
+  @media screen and (max-width: 768px) {
     flex-direction: column;
-    
+
     > button {
-      width : 100%;
+      width: 100%;
     }
   }
+`;
+
+const Btns = styled.div`
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 25px;
+`;
+
+const CancelBtn = styled.button`
+  background-color: #f45752;
+  border: 1px solid #f45752;
+  padding: 5px 10px;
+  font-size: 1rem;
+  width: 100px;
+  cursor: pointer;
+  color: #fff;
+`;
+
+const ConfirmBtn = styled.button`
+  background-color: #ffce1f;
+  border: 1px solid #ffce1f;
+  padding: 5px 10px;
+  font-size: 1rem;
+  width: 100px;
+  cursor: pointer;
+  color: #444;
 `;
