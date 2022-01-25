@@ -268,7 +268,7 @@ const Header = () => {
               인공지능 글쓰기 서비스 <Down size='small' />
               <ul className='DropDown'>
                 <li>
-                  <Link to='/service/webnovel'>웹소설 창작</Link>
+                  <Link to='/service/webnovel'>웹소설 패키지</Link>
                 </li>
                 <li>
                   <Link to='/service/bloger'>블로그 글쓰기</Link>
@@ -346,7 +346,7 @@ const Header = () => {
             {MobileSubMenu && (
               <ul className='MobileDropDown'>
                 <li>
-                  <Link to='/service/webnovel'>웹소설 창작</Link>
+                  <Link to='/service/webnovel'>웹소설 패키지</Link>
                 </li>
                 <li>
                   <Link to='/service/bloger'>블로그 글쓰기</Link>

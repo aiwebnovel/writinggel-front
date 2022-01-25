@@ -26,7 +26,7 @@ const WebnovelDetail = () => {
        <ScrollToTop/>
       <Box justify='center' align='center' className='BoxContainer'>
         <Box className='DetailHeader' pad='medium'>
-          <h1>릴레이 웹소설 창작</h1>
+          <h1>웹소설 패키지</h1>
           <h2>인공지능과 바통을 주고 받으며 쓰는 '릴레이 웹소설'</h2>
           <hr />
         </Box>

@@ -1,7 +1,7 @@
 const LinkObject = [
   {
     id:1,
-    title: "웹소설 창작",
+    title: "웹소설 패키지",
     link: "/app/webnovel",
     detail: '/service/webnovel',
   },

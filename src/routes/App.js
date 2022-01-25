@@ -60,6 +60,8 @@ import NotFound from './404';
 import { RecoilRoot } from 'recoil';
 import FailPay from './failPay';
 import PayRedirect from '../Components/Membership/PayRedirect';
+import WebnovelPack from '../Components/app/page/WebnovelPack';
+import WebnovelMake from '../Components/app/page/WebnovelMake';
 
 
 function App() {
@@ -102,7 +104,8 @@ function App() {
         <Route exact path='/fightingGel' component={FightingGel}></Route>
 
       {/* service */}
-        <Route exact path="/app/webnovel" component={Webnovel}></Route>
+        <Route exact path="/app/webnovel" component={WebnovelPack}></Route>
+        <Route exact path="/app/makenovel" component={WebnovelMake}></Route>
         
         <Route exact path="/app/bloger/idea" component={BlogIdea}></Route>
         <Route exact path="/app/bloger/name" component={BlogName}></Route>
