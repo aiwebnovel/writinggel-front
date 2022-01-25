@@ -2,9 +2,9 @@ import React, { useContext, useEffect, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import axios from "axios";
 
-import ServiceLayout from "../Layout";
-import ScrollToTop from "../../../routes/ScrollToTop";
-import * as configUrl from '../../../config';
+import ServiceLayout from "../../Layout";
+import ScrollToTop from "../../../../routes/ScrollToTop";
+import * as configUrl from '../../../../config';
 
 import { Box, Grid, ResponsiveContext } from "grommet";
 import { toast } from "react-toastify";

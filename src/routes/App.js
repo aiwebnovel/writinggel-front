@@ -60,8 +60,8 @@ import NotFound from './404';
 import { RecoilRoot } from 'recoil';
 import FailPay from './failPay';
 import PayRedirect from '../Components/Membership/PayRedirect';
-import WebnovelPack from '../Components/app/page/WebnovelPack';
-import WebnovelMake from '../Components/app/page/WebnovelMake';
+import WebnovelPack from '../Components/app/page/Webnovel/WebnovelPack';
+import WebnovelMake from '../Components/app/page/Webnovel/WebnovelMake';
 
 
 function App() {
