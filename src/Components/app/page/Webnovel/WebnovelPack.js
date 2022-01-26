@@ -10,7 +10,9 @@ import { Box, Grid, ResponsiveContext } from "grommet";
 import { toast } from "react-toastify";
 import styled from "styled-components";
 
+//웹소설 창작 패키지에서 제일 먼저 나오는 화면
 const WebnovelPack = () => {
+
   const size = useContext(ResponsiveContext);
   const History = useHistory();
   const [count, SetCount] = useState("");

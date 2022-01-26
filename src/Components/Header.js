@@ -268,7 +268,7 @@ const Header = () => {
               인공지능 글쓰기 서비스 <Down size='small' />
               <ul className='DropDown'>
                 <li>
-                  <Link to='/service/webnovel'>웹소설 패키지</Link>
+                  <Link to='/service/webnovel'>웹소설 창작 패키지</Link>
                 </li>
                 <li>
                   <Link to='/service/bloger'>블로그 글쓰기</Link>
@@ -298,10 +298,10 @@ const Header = () => {
                   <Link to='/service/storysrc'>이야기 재료 찾기</Link>
                 </li>
                 <li>
-                  <Link to='/service/relaynovel'>릴레이 웹소설</Link>
+                  <Link to='/service/relaynovel'>1:1 릴레이 소설</Link>
                 </li>
                 <li>
-                  <Link to='/service/coverletter'>대입 자소서 완성</Link>
+                  <Link to='/service/coverletter'>대입 자소서 자동 완성</Link>
                 </li>
               </ul>
             </span>
