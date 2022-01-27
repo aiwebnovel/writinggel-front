@@ -1,19 +1,34 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
+import axios from "axios";
 import ScrollToTop from "../../../routes/ScrollToTop";
 import ServiceLayout from "../Layout";
 import Modal from "../../SmallModal";
+import CopyToClipboard from "react-copy-to-clipboard";
+import * as configUrl from "../../../config";
+import TagManager from "react-gtm-module";
+
+import Loading from "../../Loading";
 
 import { Box } from "grommet";
-import { FormDown, Download } from "grommet-icons";
+import { FormDown, Download, Clone } from "grommet-icons";
 import { toast } from "react-toastify";
 
 import styled from "styled-components";
 
 const RelayNovel = () => {
+  const loginCheck = sessionStorage.getItem("token");
+  const History = useHistory();
+
+  const [isLoading, setLoading] = useState(false);
+  const [count, SetCount] = useState("");
+  const [isBill, SetBill] = useState("");
+  const [Copied, SetCopy] = useState(false);
   const [english, setReveal] = useState(true);
   const [isOpen, setOpen] = useState(false);
   const [isSet, setIsset] = useState(false);
   const [options, setOptions] = useState("");
+  const [follow, setFollow] = useState("");
   const [Input, setInput] = useState({
     Main_character: "",
     Place: "",
@@ -21,45 +36,283 @@ const RelayNovel = () => {
     Main_Events: "",
     Theme: "",
   });
+  const [output, setOutput] = useState({
+    outputKr: "",
+    outputEng: "",
+  });
 
   const { Main_character, Place, Time, Main_Events, Theme } = Input;
+  const { outputKr, outputEng } = output;
 
   const onSelect = (e) => {
     setOptions(e.target.value);
-    console.log(e.target.value);
+    //console.log(e.target.value);
   };
 
   const HandleInput = (e) => {
     setInput({ ...Input, [e.target.name]: e.target.value });
-    console.log(e.target.value);
+    //console.log(e.target.value);
+  };
+
+  const HandleFollow = (e) => {
+    const sentence = e.target.value;
+
+    if (sentence.length > 30) {
+      toast.error("문장이 30자가 넘었습니다.");
+    } else {
+      setFollow(sentence);
+      //console.log(sentence);
+    }
   };
 
   const HandleModals = () => {
     setOpen(!isOpen);
   };
 
-  const GoRelay = () => {
-    if (
-      options !== "" &&
-      Main_character !== "" &&
-      Place !== "" &&
-      Time !== "" &&
-      Main_Events !== "" &&
-      Theme !== ""
-    ) {
-      setIsset(true);
+  const GoRelay = async () => {
+    if (count === 0 && isBill === false) {
+      setOpen(true);
     } else {
-      toast.error("빈 칸을 채워주세요!");
-      // toast.error(
-      //   `${options} / ${Main_character} / ${Place} / ${Time} / ${Theme} / ${Main_Events} `
-      // );
+      if (
+        options !== "" &&
+        Main_character !== "" &&
+        Place !== "" &&
+        Time !== "" &&
+        Main_Events !== "" &&
+        Theme !== ""
+      ) {
+        setLoading(true);
+
+        if (outputKr === "") {
+          const config = {
+            method: "post",
+            url: `${configUrl.SERVER_URL}/writinggel/novelpackage`,
+            headers: { authentication: loginCheck },
+            data: {
+              option: "start",
+              Theme: Theme,
+              Main_character: Main_character,
+              Genre: options,
+              Place: Place,
+              Main_event: Main_Events,
+              Period: Time,
+              StoryFollow: "",
+            },
+          };
+
+          await axios(config)
+            .then(async (response) => {
+              console.log(response);
+              const data = response.data;
+
+              if (data[0] === "") {
+                toast.error(
+                  "적어주신 키워드가 적절하지 않은 것 같습니다.😭 재시도 해주세요!"
+                );
+                setLoading(false);
+              } else {
+                setOutput({
+                  ...output,
+                  outputKr: data[0],
+                  outputEng: data[1],
+                });
+                setIsset(true);
+                setLoading(false);
+              }
+            })
+            .catch((error) => {
+              console.log(error);
+              if (error.response.status === 403) {
+                setLoading(false);
+                toast.info(
+                  "무료 사용이 끝났습니다. 멤버십 가입을 통해 서비스를 이용하실 수 있어요!",
+                  {
+                    icon: "⚠️",
+                    progressStyle: { backgroundColor: "#7D4CDB" },
+                  }
+                );
+              }
+              if (error.response.status === 500) {
+                setLoading(false);
+                toast.info(
+                  "여러 번 새로고침 후에도 똑같은 오류가 뜰 시, 해당 오류는 관리자에게 문의 해주세요.",
+                  {
+                    icon: "⚠️",
+                    progressStyle: { backgroundColor: "#7D4CDB" },
+                  }
+                );
+              }
+              setLoading(false);
+            });
+        } else {
+          const newOutputKr = outputKr + follow;
+
+          console.log(outputKr);
+          console.log(follow);
+          console.log(newOutputKr);
+
+          const configFollow = {
+            method: "post",
+            url: `${configUrl.SERVER_URL}/writinggel/novelpackage`,
+            headers: { authentication: loginCheck },
+            data: {
+              option: "follow",
+              Theme: Theme,
+              Main_character: Main_character,
+              Genre: options,
+              Place: Place,
+              Main_event: Main_Events,
+              Period: Time,
+              StoryFollow: newOutputKr,
+            },
+          };
+
+          await axios(configFollow)
+            .then(async (response) => {
+              console.log(response);
+              const data = response.data;
+              if (data[0] === "") {
+                toast.error(
+                  "적어주신 키워드가 적절하지 않거나 결과가 나오지 않았습니다.😭 재시도 해주세요!"
+                );
+                setLoading(false);
+              } else {
+                console.log(outputKr + data[0]);
+                setOutput({
+                  ...output,
+                  outputKr: newOutputKr + data[0],
+                  outputEng: outputEng + data[1],
+                });
+                setFollow(" ");
+                setLoading(false);
+              }
+            })
+            .catch((error) => {
+              console.log(error);
+              if (error.response.status === 403) {
+                setLoading(false);
+                toast.info(
+                  "무료 사용이 끝났습니다. 멤버십 가입을 통해 서비스를 이용하실 수 있어요!",
+                  {
+                    icon: "⚠️",
+                    progressStyle: { backgroundColor: "#7D4CDB" },
+                  }
+                );
+              }
+              if (error.response.status === 500) {
+                setLoading(false);
+                toast.info(
+                  "여러 번 새로고침 후에도 똑같은 오류가 뜰 시, 해당 오류는 관리자에게 문의 해주세요.",
+                  {
+                    icon: "⚠️",
+                    progressStyle: { backgroundColor: "#7D4CDB" },
+                  }
+                );
+              }
+              setLoading(false);
+            });
+        }
+      } else {
+        toast.error("빈 칸을 채워주세요!");
+      }
     }
   };
+
+  const onCopied = () => {
+    if (outputKr === "") {
+      toast.warn("복사할 내용이 없어요!😭");
+    } else {
+      SetCopy(true);
+      toast.success("Copied!");
+    }
+  };
+
+  const ResetAll = () => {
+    setIsset(false);
+    setOpen(false);
+    setInput({
+      ...Input,
+      Main_character: "",
+      Place: "",
+      Time: "",
+      Main_Events: "",
+      Theme: "",
+    });
+    setOutput({
+      ...output,
+      outputKr: "",
+      outputEng: "",
+    });
+  };
+
+  const SaveContent = async () => {
+    //console.log(outputKorean);
+    if (outputKr) {
+      const config = {
+        method: "post",
+        url: `${configUrl.SERVER_URL}/archive`,
+        headers: { authentication: loginCheck },
+        data: {
+          story: outputKr,
+          category: "릴레이 웹소설",
+        },
+      };
+
+      await axios(config)
+        .then(async (response) => {
+          //console.log('성공?', response.data)
+          toast.success(`${response.data.log}`);
+        })
+        .catch(async (error) => {
+          const errorMessage = error.message;
+          console.log(errorMessage);
+          if (error.response.status === 403) {
+            toast.error("보관함이 꽉 찼습니다!");
+          }
+         
+          if (error.response.status === 500) {
+            toast.error("해당 에러는 관리자에게 문의해주세요.");
+          }
+        });
+    } else {
+      toast.info("저장할 결과가 없습니다!");
+    }
+  };
+
+
+  useEffect(() => {
+    if (loginCheck !== null) {
+      axios
+        .get(`${configUrl.SERVER_URL}/profile`, {
+          headers: { authentication: loginCheck },
+        })
+        .then((res) => {
+          // console.log(res)
+          let count = res.data.membership_count;
+          SetCount(count);
+          SetBill(res.data.isBill);
+        });
+    } else {
+      History.push("/service/coverletter");
+      setTimeout(toast.info("로그인을 해주세요!"), 300);
+    }
+  }, []);
+
+  useEffect(() => {
+    TagManager.dataLayer({
+      dataLayer: {
+        event: "pageview",
+        pagePath: "/app/coverletter",
+        pageTitle: "대입 자소서 완성",
+      },
+    });
+  }, []);
 
   return (
     <>
       <ServiceLayout>
         <ScrollToTop />
+        {isLoading && <Loading />}
         <Box
           className='ServiceContainer RelayPad'
           background='#f9f9f9'
@@ -79,11 +332,11 @@ const RelayNovel = () => {
                   <option value='default' disabled>
                     장르를 선택해주세요! ✔
                   </option>
-                  <option value='fan'>판타지</option>
-                  <option value='modernFan'>현대 판타지</option>
-                  <option value='action'>무협</option>
-                  <option value='mystery'>미스터리</option>
-                  <option value='romanFan'>로맨스 판타지</option>
+                  <option value='판타지'>판타지</option>
+                  <option value='현판'>현대 판타지</option>
+                  <option value='무협'>무협</option>
+                  <option value='미스터리'>미스터리</option>
+                  <option value='로판'>로맨스 판타지</option>
                 </select>
                 <div className='RelayStyle'>
                   <div className='RelayPanelStyle'>
@@ -93,6 +346,7 @@ const RelayNovel = () => {
                         required
                         type='text'
                         name='Main_character'
+                        value={Main_character}
                         onChange={HandleInput}
                       />
                     </div>
@@ -104,6 +358,7 @@ const RelayNovel = () => {
                         required
                         type='text'
                         name='Place'
+                        value={Place}
                         onChange={HandleInput}
                       />
                     </div>
@@ -115,6 +370,7 @@ const RelayNovel = () => {
                         required
                         type='text'
                         name='Time'
+                        value={Time}
                         onChange={HandleInput}
                       />
                     </div>
@@ -126,6 +382,7 @@ const RelayNovel = () => {
                         required
                         type='text'
                         name='Theme'
+                        value={Theme}
                         onChange={HandleInput}
                       />
                     </div>
@@ -137,6 +394,7 @@ const RelayNovel = () => {
                         required
                         type='text'
                         name='Main_Events'
+                        value={Main_Events}
                         onChange={HandleInput}
                       />
                     </div>
@@ -156,10 +414,14 @@ const RelayNovel = () => {
                     <button onClick={HandleModals}>기본 설정 변경하기</button>
                   </Reset>
                   <div className='ChatRelay'>
-                    <textarea />
-                    <div>
-                      {" "}
-                      <Download />{" "}
+                    <div className='RelayOutputBox'>{outputKr}</div>
+                    <div className='RelayIconBox'>
+                      <CopyToClipboard text={outputKr} onCopy={onCopied}>
+                        <Clone style={{ cursor: "pointer" }} />
+                      </CopyToClipboard>
+                      <Download
+                      onClick={SaveContent}
+                      />
                     </div>
                   </div>
                   <button
@@ -169,18 +431,23 @@ const RelayNovel = () => {
                     <FormDown /> English (Only Read)
                   </button>
                   {english && (
-                    <textarea
-                      disabled
-                      placeholder='영어로 된 결과가 나올 예정입니다.'
-                    />
+                    <div
+                      className='RelayOutputBox'
+                      style={{ border: "1px solid #444" }}
+                    >
+                      {outputEng}
+                    </div>
                   )}
                 </div>
                 <RelayAi>
                   <input
                     type='text'
                     placeholder='이어지는 이야기를 적어보세요. (한 문장만)'
+                    maxLength='30'
+                    value={follow}
+                    onChange={HandleFollow}
                   />
-                  <button>이어쓰기</button>
+                  <button onClick={GoRelay}>이어쓰기</button>
                 </RelayAi>
               </RelayBox>
             </div>
@@ -189,16 +456,13 @@ const RelayNovel = () => {
       </ServiceLayout>
       <Modal onClick={HandleModals} open={isOpen} close={HandleModals}>
         <div>
-          <div style={{textAlign: 'center', wordBreak: 'keep-all'}}>
+          <div style={{ textAlign: "center", wordBreak: "keep-all" }}>
             <p>기존 설정을 변경하게 되면, 지금 내용은 모두 사라집니다.</p>
             <p>진행 하시겠습니까?</p>
           </div>
           <Btns>
             <CancelBtn onClick={HandleModals}>취소</CancelBtn>
-            <ConfirmBtn onClick={() =>{
-               setIsset(false)
-               setOpen(false)
-            }}>확인</ConfirmBtn>
+            <ConfirmBtn onClick={ResetAll}>확인</ConfirmBtn>
           </Btns>
         </div>
       </Modal>

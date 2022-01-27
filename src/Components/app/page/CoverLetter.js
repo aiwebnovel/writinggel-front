@@ -44,12 +44,12 @@ const CoverLetter = () => {
 
   const onSelect = (e) => {
     setOption(e.target.value);
-    console.log(e.target.value);
+    //console.log(e.target.value);
   };
 
   const OnChangeInput = (e) => {
     setInput(e.target.value);
-    console.log(e.target.value);
+    //console.log(e.target.value);
   };
 
   const MakeCoverLetter = async () => {
@@ -93,7 +93,7 @@ const CoverLetter = () => {
             if (error.response.status === 500) {
               setLoading(false);
               toast.info(
-                "새로고침 후 똑같은 오류가 뜰 시, 해당 오류는 관리자에게 문의 해주세요.",
+                "여러 번 새로고침 후에도 똑같은 오류가 뜰 시, 해당 오류는 관리자에게 문의 해주세요.",
                 {
                   icon: "⚠️",
                   progressStyle: { backgroundColor: "#7D4CDB" },
