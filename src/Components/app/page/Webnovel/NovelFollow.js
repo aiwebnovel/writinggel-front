@@ -21,14 +21,14 @@ const NovelFollow = () => {
         <div className='NovelFollowProgressBox'>
           <h4>웹소설 이어쓰기</h4>
           <div>
-            {/* <ProgressBar
-              // completed={tempLength}
+            <ProgressBar
+              completed={10}
               bgColor='#372874'
               width={size !== "small" ? "250px" : "200px"}
               height='8px'
               isLabelVisible={false}
               maxCompleted={30}
-            /> */}
+            />
             <button
             // onClick={requestcontents}
             >

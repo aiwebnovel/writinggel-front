@@ -45,13 +45,13 @@ const Header = () => {
         await authService.currentUser
           .getIdToken()
           .then(async (data) => {
-          console.log(data)
-            await axios
+         //console.log(data)
+             await axios
             .get(`${config.SERVER_URL}/profile`, {
               headers: { authentication: data},
             })
             .then((response) => {
-              console.log(response)
+              //console.log(response)
               SetProfile({
                 ...profile,
                 isBill: response.data.isBill,
@@ -142,7 +142,7 @@ const Header = () => {
           headers: { authentication: check },
         })
         .then(async (response) => {
-          console.log(response.data);
+         // console.log(response.data);
 
           SetProfile({
             ...profile,
@@ -182,7 +182,7 @@ const Header = () => {
       headers: { authentication: kakao_token},
     })
     .then((response) => {
-      console.log(response);
+      //console.log(response);
       SetProfile({
         ...profile,
         userName: name,

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useLocation } from "react-router-dom";
 import ServiceLayout from "../../Layout";
 
 import { Box } from "grommet";
@@ -9,8 +10,12 @@ import styled from "styled-components";
 
 
 const WebnovelMake = () => {
-  const [index, setIndex] = useState(0);
-  const onActive = (nextIndex) => setIndex(nextIndex);
+
+const location = useLocation();
+const firstIndex = location.state;
+//console.log(location)
+const [index, setIndex] = useState(firstIndex);
+ const onActive = (nextIndex) => setIndex(nextIndex);
 
   const TabList = {
       0: <Synopsis/>,
@@ -22,17 +27,23 @@ const WebnovelMake = () => {
     <ServiceLayout>
     <Box className='ServiceContainer' align='center' background='#f9f9f9' style={{paddingTop: '60px'}}>
         <Tabs>
-            <button className={ index === 0 ? 'active'  : 'TabBtn'} onClick={()=> onActive(0)}>
+            <button className={ index === 0 ? 'active'  : 'TabBtn'} 
+           onClick={()=> onActive(0)}
+            >
                 <div>
                     <span>줄거리 쓰기</span>
                 </div>
             </button>
-            <button className={ index === 1 ? 'active'  : 'TabBtn'} onClick={() => onActive(1)}>
+            <button className={ index === 1 ? 'active'  : 'TabBtn'} 
+            onClick={() => onActive(1)}
+            >
                 <div>
                     <span></span>도입부 쓰기
                 </div>
             </button>
-            <button className={ index === 2 ? 'active'  : 'TabBtn'} onClick={()=> onActive(2)}>
+            <button className={ index === 2 ? 'active'  : 'TabBtn'} 
+            onClick={()=> onActive(2)}
+            >
                 <div>
                     <span>이어 쓰기</span>
                 </div>

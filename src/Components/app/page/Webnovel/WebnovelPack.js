@@ -14,6 +14,7 @@ import styled from "styled-components";
 const WebnovelPack = () => {
 
   const size = useContext(ResponsiveContext);
+
   const History = useHistory();
   const [count, SetCount] = useState("");
   const [isBill, SetBill] = useState("");
@@ -52,13 +53,22 @@ const WebnovelPack = () => {
         justify='center'
       >
         <BoxContainer justify="center" align="center" direction={size !== 'small' ? 'row': 'column'} gap='small'>
-          <LinkBox to='/app/makenovel'>
+          <LinkBox to={{
+            pathname: '/app/makenovel',
+            state : 0
+          }}>
             <div>줄거리 쓰기</div>
           </LinkBox>
-          <LinkBox  to='/app/makenovel'>
+          <LinkBox to={{
+            pathname: '/app/makenovel',
+            state : 1
+          }}>
             <div>도입부 쓰기</div>
           </LinkBox>
-          <LinkBox  to='/app/makenovel'>
+          <LinkBox to={{
+            pathname: '/app/makenovel',
+            state : 2
+          }} >
             <div>이어쓰기</div>
           </LinkBox>
         </BoxContainer>

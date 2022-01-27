@@ -131,7 +131,7 @@ const Synopsis = () => {
         <div className='TabOutputBox'>
           <textarea
             className='output1'
-            placeholder='결과가 나올예정이에요!'
+            placeholder='줄거리에 대한 결과가 나올예정이에요!'
             // onChange={(e) => HandleStory(e)}
             // value={Output[0]}
           ></textarea>

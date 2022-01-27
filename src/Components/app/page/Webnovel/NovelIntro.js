@@ -132,7 +132,7 @@ const NovelIntro = () => {
         <div className='TabOutputBox'>
           <textarea
             className='output1'
-            placeholder='결과가 나올예정이에요!'
+            placeholder='도입부에 대한 결과가 나올예정이에요!'
             // onChange={(e) => HandleStory(e)}
             // value={Output[0]}
           ></textarea>
@@ -224,5 +224,7 @@ const FollowBtn = styled.button`
   outline: 0;
   padding: 8px 10px;
   cursor: pointer;
+
+  word-break : keep-all;
 
 `;
