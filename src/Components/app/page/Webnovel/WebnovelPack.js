@@ -4,15 +4,15 @@ import axios from "axios";
 
 import ServiceLayout from "../../Layout";
 import ScrollToTop from "../../../../routes/ScrollToTop";
-import * as configUrl from '../../../../config';
+import * as configUrl from "../../../../config";
 
+import TagManager from "react-gtm-module";
 import { Box, Grid, ResponsiveContext } from "grommet";
 import { toast } from "react-toastify";
 import styled from "styled-components";
 
 //웹소설 창작 패키지에서 제일 먼저 나오는 화면
 const WebnovelPack = () => {
-
   const size = useContext(ResponsiveContext);
 
   const History = useHistory();
@@ -21,26 +21,33 @@ const WebnovelPack = () => {
 
   useEffect(() => {
     const loginCheck = sessionStorage.getItem("token");
-    const provider = sessionStorage.getItem('provider');
 
     if (loginCheck !== null) {
-      
-        axios
+      axios
         .get(`${configUrl.SERVER_URL}/profile`, {
           headers: { authentication: sessionStorage.getItem("token") },
         })
         .then((res) => {
-         // console.log(res)
+          // console.log(res)
           let count = res.data.membership_count;
           SetCount(count);
           SetBill(res.data.isBill);
         });
-     
     } else {
       History.push("/service/webnovel");
       setTimeout(toast.info("로그인을 해주세요!"), 300);
     }
   }, [History]);
+
+  useEffect(() => {
+    TagManager.dataLayer({
+      dataLayer: {
+        event: "pageview",
+        pagePath: "/app/makenovel",
+        pageTitle: "웹소설 창작 패키지",
+      },
+    });
+  }, []);
 
   return (
     <ServiceLayout>
@@ -52,23 +59,40 @@ const WebnovelPack = () => {
         align='center'
         justify='center'
       >
-        <BoxContainer justify="center" align="center" direction={size !== 'small' ? 'row': 'column'} gap='small'>
-          <LinkBox to={{
-            pathname: '/app/makenovel',
-            state : 0
-          }}>
+        <BoxContainer
+          justify='center'
+          align='center'
+          direction={size !== "small" ? "row" : "column"}
+          gap='small'
+        >
+          <LinkBox
+            to={{
+              pathname: "/app/makenovel",
+              state: {
+                index: 0,
+              },
+            }}
+          >
             <div>줄거리 쓰기</div>
           </LinkBox>
-          <LinkBox to={{
-            pathname: '/app/makenovel',
-            state : 1
-          }}>
+          <LinkBox
+            to={{
+              pathname: "/app/makenovel",
+              state: {
+                index: 1,
+              },
+            }}
+          >
             <div>도입부 쓰기</div>
           </LinkBox>
-          <LinkBox to={{
-            pathname: '/app/makenovel',
-            state : 2
-          }} >
+          <LinkBox
+            to={{
+              pathname: "/app/makenovel",
+              state: {
+                index: 2,
+              },
+            }}
+          >
             <div>이어쓰기</div>
           </LinkBox>
         </BoxContainer>
@@ -84,19 +108,18 @@ const BoxContainer = styled(Box)`
 `;
 
 const LinkBox = styled(Link)`
-
-    > div {
+  > div {
     background-color: #372874;
     color: #fff;
     text-align: center;
     width: 200px;
-    padding : 20px;
-    font-size : 1.2rem;
-    transition : all 300ms ease;
+    padding: 20px;
+    font-size: 1.2rem;
+    transition: all 300ms ease;
 
     &:hover {
-        background-color: #ff9300;
-        color : #444;
+      background-color: #ff9300;
+      color: #444;
     }
-    }
+  }
 `;

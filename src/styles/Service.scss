@@ -1318,6 +1318,7 @@ select::-ms-expand {
     resize: none;
     font-size: 16px;
 
+
     @media screen and (max-width: 768px) {
         width: 90%;
     }
@@ -1943,7 +1944,7 @@ select::-ms-expand {
     border-right: 1px solid $main;
     height: 100%;
     width: 250px;
-    padding: 80px 10px 150px 10px;
+    padding: 60px 10px 150px 10px;
     transition: width 0.4s ease;
     overflow: hidden;
 
@@ -2198,4 +2199,23 @@ select::-ms-expand {
     @media screen and (max-width: 768px) {
         width: 90%;
     }
+}
+
+//webnovel package
+
+.WebnovelSelect {
+    border: 1px solid $dark-1;
+    border-radius: 5px;
+    color: $dark-1;
+    background-color: $white-1;
+    cursor: pointer;
+    width: 100%;
+    padding: 8px 13px;
+    font-size: 1rem;
+    margin-bottom: 20px;
+
+    /* select 화살표 없애기 */
+    appearance: none;
+    -webkit-appearance: none;
+
 }

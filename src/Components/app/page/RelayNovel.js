@@ -119,6 +119,11 @@ const RelayNovel = () => {
                 setIsset(true);
                 setLoading(false);
               }
+
+
+            if (response.data[2] >= 2) {
+              toast.error(`결과물에 유해한 내용이 들어가 버렸어요. 😭 `);
+            }
             })
             .catch((error) => {
               console.log(error);
@@ -145,11 +150,11 @@ const RelayNovel = () => {
               setLoading(false);
             });
         } else {
-          const newOutputKr = outputKr + follow;
+          const newOutputKr = outputKr + `\n` + follow + `\n`;
 
-          console.log(outputKr);
-          console.log(follow);
-          console.log(newOutputKr);
+         // console.log(outputKr);
+         // console.log(follow);
+        //console.log(newOutputKr);
 
           const configFollow = {
             method: "post",
@@ -177,7 +182,7 @@ const RelayNovel = () => {
                 );
                 setLoading(false);
               } else {
-                console.log(outputKr + data[0]);
+                //console.log(outputKr + data[0]);
                 setOutput({
                   ...output,
                   outputKr: newOutputKr + data[0],
@@ -230,6 +235,7 @@ const RelayNovel = () => {
   const ResetAll = () => {
     setIsset(false);
     setOpen(false);
+    setOptions('');
     setInput({
       ...Input,
       Main_character: "",
@@ -246,8 +252,8 @@ const RelayNovel = () => {
   };
 
   const SaveContent = async () => {
-    //console.log(outputKorean);
-    if (outputKr) {
+    console.log(outputKr.replaceAll(`\n`,""));
+    if (output) {
       const config = {
         method: "post",
         url: `${configUrl.SERVER_URL}/archive`,
@@ -271,7 +277,7 @@ const RelayNovel = () => {
           }
          
           if (error.response.status === 500) {
-            toast.error("해당 에러는 관리자에게 문의해주세요.");
+            toast.error("여러 번 시도 후에도 똑같은 오류가 뜰 시, 해당 에러는 관리자에게 문의해주세요.");
           }
         });
     } else {

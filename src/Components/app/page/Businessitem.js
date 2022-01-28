@@ -101,7 +101,7 @@ const Businessitem = () => {
           }
 
           if (error.response.status === 500) {
-            toast.error("해당 에러는 관리자에게 문의해주세요!");
+            toast.error("여러 번 시도 후에도 똑같은 오류가 뜰 시,  문의해주세요!");
           }
         });
     } else {

@@ -1,30 +1,66 @@
-import React, { useState } from "react";
-import { useLocation } from "react-router-dom";
+import React, { useState,useEffect } from "react";
+import axios from 'axios';
+import { useLocation , useHistory} from "react-router-dom";
 import ServiceLayout from "../../Layout";
+import * as configUrl from '../../../../config';
 
 import { Box } from "grommet";
 import Synopsis from "./Synopsis";
 import NovelIntro from "./NovelIntro";
 import NovelFollow from "./NovelFollow";
 import styled from "styled-components";
+import ScrollToTop from "../../../../routes/ScrollToTop";
 
+import { toast } from "react-toastify";
 
 const WebnovelMake = () => {
 
 const location = useLocation();
-const firstIndex = location.state;
-//console.log(location)
+const History = useHistory();
+const firstIndex = location.state.index;
+// const isBill = location.state.isBill;
+// const count = location.state.count;
+
+
+console.log(location);
+const [count, SetCount] = useState("");
+const [isBill, SetBill] = useState("");
+
 const [index, setIndex] = useState(firstIndex);
  const onActive = (nextIndex) => setIndex(nextIndex);
 
   const TabList = {
-      0: <Synopsis/>,
-      1: <NovelIntro/>,
-      2: <NovelFollow/>,
+      0: <Synopsis isBill={isBill} count={count}/>,
+      1: <NovelIntro isBill={isBill} count={count} onActive={onActive}/>,
+      2: <NovelFollow isBill={isBill} count={count} />,
   }
+
+
+  useEffect(() => {
+    const loginCheck = sessionStorage.getItem("token");
+
+    if (loginCheck !== null) {
+      
+        axios
+        .get(`${configUrl.SERVER_URL}/profile`, {
+          headers: { authentication: sessionStorage.getItem("token") },
+        })
+        .then((res) => {
+         // console.log(res)
+          let count = res.data.membership_count;
+          SetCount(count);
+          SetBill(res.data.isBill);
+        });
+     
+    } else {
+      History.push("/service/webnovel");
+      setTimeout(toast.info("로그인을 해주세요!"), 300);
+    }
+  }, [History]);
 
   return (
     <ServiceLayout>
+    <ScrollToTop />
     <Box className='ServiceContainer' align='center' background='#f9f9f9' style={{paddingTop: '60px'}}>
         <Tabs>
             <button className={ index === 0 ? 'active'  : 'TabBtn'} 
