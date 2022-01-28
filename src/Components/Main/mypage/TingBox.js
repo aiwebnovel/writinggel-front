@@ -154,9 +154,9 @@ const TingBox = () => {
         <Box fill background='#3b2477' color='#fff' className='MypageHeader'>
           <h2>팅젤 보관함</h2>
         </Box>
-        <Box fill className='tingContainer' justify='center' align='center'>
+        <div className='tingContainer' >
           {SaveData[0] !== undefined &&  SaveData[0] !== "" ? (
-            <Box fill className='tingContent'>
+            <div className='tingContent'>
               <div className='ListTitle'>
                 <h3>최근 저장된 콘텐츠</h3>
                 <p>_최대 10개까지 저장됩니다.</p>
@@ -165,8 +165,10 @@ const TingBox = () => {
               {SaveData[0] !== undefined  && (
                 <SaveList fill direction={size !== "small" ? "row" : "column"}>
                   <Box
-                    direction={size !== "small" ? "column" : "row"}
+                    // direction={size !== "small" ? "column" : "row"}
+                    direction='column'
                     align='center'
+                    justify="evenly"
                     className='titleAbutton'
                   >
                     <h3>{SaveData[0].category}</h3>
@@ -192,7 +194,7 @@ const TingBox = () => {
               {SaveData[1] !== undefined && (
                 <SaveList fill direction={size !== "small" ? "row" : "column"}>
                   <Box
-                    direction={size !== "small" ? "column" : "row"}
+                   direction='column'
                     align='center'
                     className='titleAbutton'
                   >
@@ -222,7 +224,7 @@ const TingBox = () => {
                   direction={size !== "small" ? "row" : "column"}
                 >
                   <Box
-                    direction={size !== "small" ? "column" : "row"}
+                   direction='column'
                     align='center'
                     className='titleAbutton'
                   >
@@ -248,7 +250,7 @@ const TingBox = () => {
                   direction={size !== "small" ? "row" : "column"}
                 >
                   <Box
-                    direction={size !== "small" ? "column" : "row"}
+                   direction='column'
                     align='center'
                     className='titleAbutton'
                   >
@@ -274,7 +276,7 @@ const TingBox = () => {
                   direction={size !== "small" ? "row" : "column"}
                 >
                   <Box
-                    direction={size !== "small" ? "column" : "row"}
+                   direction='column'
                     align='center'
                     className='titleAbutton'
                   >
@@ -300,7 +302,7 @@ const TingBox = () => {
                   direction={size !== "small" ? "row" : "column"}
                 >
                   <Box
-                    direction={size !== "small" ? "column" : "row"}
+                   direction='column'
                     align='center'
                     className='titleAbutton'
                   >
@@ -326,7 +328,7 @@ const TingBox = () => {
                   direction={size !== "small" ? "row" : "column"}
                 >
                   <Box
-                    direction={size !== "small" ? "column" : "row"}
+                   direction='column'
                     align='center'
                     className='titleAbutton'
                   >
@@ -352,7 +354,7 @@ const TingBox = () => {
                   direction={size !== "small" ? "row" : "column"}
                 >
                   <Box
-                    direction={size !== "small" ? "column" : "row"}
+                   direction='column'
                     align='center'
                     className='titleAbutton'
                   >
@@ -378,7 +380,7 @@ const TingBox = () => {
                   direction={size !== "small" ? "row" : "column"}
                 >
                   <Box
-                    direction={size !== "small" ? "column" : "row"}
+                   direction='column'
                     align='center'
                     className='titleAbutton'
                   >
@@ -404,7 +406,7 @@ const TingBox = () => {
                   direction={size !== "small" ? "row" : "column"}
                 >
                   <Box
-                    direction={size !== "small" ? "column" : "row"}
+                   direction='column'
                     align='center'
                     className='titleAbutton'
                   >
@@ -424,7 +426,7 @@ const TingBox = () => {
                   <div className="SaveContent">{SaveData[9].content}</div>
                 </SaveList>
               )}
-            </Box>
+            </div>
           ) : (
             <Box fill className='tingNoContent' justify='center' align='center'>
               <div>
@@ -436,7 +438,7 @@ const TingBox = () => {
               </Link>
             </Box>
           )}
-        </Box>
+        </div>
       </Box>
     </Layout>
   );
@@ -445,13 +447,15 @@ const TingBox = () => {
 export default TingBox;
 
 const SaveList = styled(Box)`
-  padding: 35px 20px;
-  gap: 5px;
+  padding: 28px 20px;
+  gap: 20px;
+  border-bottom: 1px solid #444;
 
-  @media screen and (max-width: 768px) {
-    border-top: 1px solid $dark-1;
-    gap: 10px;
+  &:last-child {
+    border-bottom: 0;
   }
+
+
 `;
 
 const deleteStyle = {

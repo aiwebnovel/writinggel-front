@@ -1834,6 +1834,11 @@ hr {
 //tingbox 
 
 .tingContainer {
+    display : flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
     padding: 215px 64px;
 
     @media screen and (max-width: 768px) {
@@ -1845,29 +1850,32 @@ hr {
 
 .tingContent {
     border: 1px solid $dark-1;
-
+    width: 100%;
+    height: 100%;
+    max-width: 1400px;
 }
 
 
 .titleAbutton {
-    gap: 5px;
+    gap: 10px;
 
     >h3 {
         font-weight: 600;
-        width: 120px;
-        font-size: 17px;
+        //width: 120px;
         text-align: center;
-
+        word-break: keep-all;
     }
 
     >div {
-        // width: 100%;
+        width: 100%;
         display: flex;
         flex-direction: column;
         align-items: center;
+        justify-content: center;
         gap: 5px;
 
         >button {
+            width: 100%;
             padding: 2px 8px;
             cursor: pointer;
             font-size: 14px;
@@ -1889,6 +1897,10 @@ hr {
 
         >div {
             flex-direction: row;
+
+            > button {
+                width: 100px;
+            }
         }
 
         >h3 {
@@ -1922,8 +1934,8 @@ hr {
 }
 
 .SaveContent {
-    max-width: 700px;
-
+    max-width: 1000px;
+    width: 100%;
 }
 
 

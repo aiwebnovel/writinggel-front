@@ -320,8 +320,8 @@ const Synopsis = ({ isBill, count }) => {
           <Icons>
             <Download onClick={SaveContent} />
             <Update
-            //onClick={NewStory}
-            />{" "}
+            onClick={MakeSynp}
+            />
             <Close onClick={ResetData} />
           </Icons>
         </Box>
