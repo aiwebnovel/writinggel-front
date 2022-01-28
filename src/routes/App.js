@@ -28,7 +28,7 @@ import TingBox from '../Components/Main/mypage/TingBox';
 import PayResult from '../Components/Membership/PayResult';
 import PayDone from '../Components/Membership/Paydone';
 
-import Webnovel from '../Components/app/page/Webnovel';
+//import Webnovel from '../Components/app/page/Webnovel';
 
 import BlogIdea from '../Components/app/page/BlogIdea';
 import BlogName from '../Components/app/page/BlogName';

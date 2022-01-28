@@ -198,7 +198,7 @@ const CoverLetter = () => {
             <label>
               <input
                 type='text'
-                placeholder='지원하는 전공을 입력하세요(ex: 국어국문학)'
+                placeholder='지원하는 전공을 입력하세요(ex: 컴퓨터공학)'
                 value={input}
                 onChange={OnChangeInput}
               />

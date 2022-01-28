@@ -290,7 +290,7 @@ const NovelIntro = ({isBill, count, onActive}) => {
                 <button
                   onClick={MakeIntro}
                 >
-                  줄거리 쓰기
+                  도입부 쓰기
                 </button>
               </SynopBtn>
             </div>

@@ -15,7 +15,7 @@ const WebnovelDetail = () => {
       dataLayer: {
         event: 'pageview',
         pagePath: '/service/webnovel',
-        pageTitle: '웹소설 소개',
+        pageTitle: '웹소설 창작 패키지 소개',
       },
     });
 
@@ -26,8 +26,12 @@ const WebnovelDetail = () => {
        <ScrollToTop/>
       <Box justify='center' align='center' className='BoxContainer'>
         <Box className='DetailHeader' pad='medium'>
-          <h1>웹소설 패키지</h1>
-          <h2>인공지능과 바통을 주고 받으며 쓰는 '릴레이 웹소설'</h2>
+          <h1>웹소설 창작 패키지</h1>
+          <div>
+            <h2>도입부, 줄거리, 이어쓰기</h2>
+            <h2>웹소설 창작 패키지로 해결해보세요</h2>
+          </div>
+        
           <hr />
         </Box>
 
@@ -42,21 +46,17 @@ const WebnovelDetail = () => {
             <img src='/lantern.png' alt='팅젤이' className="Detail-img"/>
             <div className='Detail-TextBox'>
               <div>
-                <h3>웹소설을 써보고 싶은데 시작을 망설이고 있나요?</h3>
+                <h3>웹소설 써보고 싶은데 시작을 망설이고 있나요?</h3>
                 <p>
-                  '틈만 나면 읽는 웹소설 장르에 작가로 뛰어들 수는 없을까'
-                  고민하고 있으신 분들에게 인공지능과 바통을 주고받으며 완성하는
-                  릴레이 웹소설을 추천합니다.
+                틈만 나면 읽는 웹소설 장르에 나도 작가로 뛰어들 수는 없을까' 누구나 꿈은 꾸지만, 정작 시작해보면 쉽지 않죠. 누구나 웹소설 작가에 쉽게 도전해볼 수 있도록 이야기의 기본 요소만 입력하면 도입부, 줄거리를 제공합니다.
                 </p>
               </div>
               <div>
                 <h3>
-                  분당 500타 속도로 써내야 하는 웹소설 연재, 속도를 높여보세요!
+                 분당 500타 속도로 써내야 하는 웹소설 연재, 속도를 높여보세요!
                 </h3>
                 <p>
-                  웹소설 작가로는 입문했는데, 빠른 속도로 원고를 보내야 하는
-                  현실 속에서 새로운 소재를 찾기란 쉽지 않습니다. 인공지능과의
-                  색다른 경험을 통해 글 쓰는 속도를 업그레이드 해보세요.
+                웹소설 작가로는 입문했는데, 빠른 속도로 원고를 보내야 하는 현실 속에서 새로운 소재를 찾기란 쉽지 않습니다. 인공지능과의 색다른 경험을 통해 글 쓰는 속도를 업그레이드 해보세요.
                 </p>
               </div>
             </div>
@@ -78,7 +78,7 @@ const WebnovelDetail = () => {
                 <img src='/person.png' alt='유저'  className='Detail2-img' />
                 <p style={{ marginTop: "25px" }}>연재 마감에 쫓겨 매일</p>
                 <p>새로운 웹소설을 써내야 하는</p>
-                <p> 창작자, 작가</p>
+                <p>창작자, 작가</p>
               </div>
               <div>
                 <img
@@ -114,7 +114,7 @@ const WebnovelDetail = () => {
                 <p>인공지능이 이를 인식해 이야기의 도입부를 만들어 줍니다.</p>
               </div>
               <div>
-                <img src='/note.png' alt='writing' className='Detail3-img' />
+                <img src='/chat-box.png' alt='writing' className='Detail3-img' />
                 <p>인공지능과 번갈아가며 웹소설을 전개해 보세요.</p>
               </div>
             </Box>

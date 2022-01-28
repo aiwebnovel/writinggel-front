@@ -2,34 +2,34 @@ import React, { useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Layout from "../../Layout";
 import { Box, Grid, ResponsiveContext } from "grommet";
-import { StatusGood } from "grommet-icons";
-import ScrollToTop from '../../../routes/ScrollToTop';
-import TagManager from 'react-gtm-module';
+import ScrollToTop from "../../../routes/ScrollToTop";
+import TagManager from "react-gtm-module";
 
 const CoverLetterDetail = () => {
   const size = useContext(ResponsiveContext);
 
-  useEffect(()=>{
-
+  useEffect(() => {
     TagManager.dataLayer({
       dataLayer: {
-        event: 'pageview',
-        pagePath: '/service/businessitem',
-        pageTitle: '비즈니스 아이템 소개',
+        event: "pageview",
+        pagePath: "/service/coverletter",
+        pageTitle: "대입 자소서 완성 소개",
       },
     });
-
-  },[])
+  }, []);
 
   return (
     <Layout>
-      <ScrollToTop/>
+      <ScrollToTop />
       <Box justify='center' align='center' className='BoxContainer'>
         <Box className='DetailHeader' pad='medium'>
           <h1>대입 자소서 완성</h1>
-          <h2>
-            스띠카스띠카스띠카
-          </h2>
+          <div>
+            <h2>
+              자기소개서 질문 앞에만 서면 작아지나요? 
+            </h2>
+            <h2>자동 완성으로 자신감을 높여보세요.</h2>
+          </div>
           <hr />
         </Box>
 
@@ -44,15 +44,22 @@ const CoverLetterDetail = () => {
             <img src='/lantern.png' alt='팅젤이' className='Detail-img' />
             <div className='Detail-TextBox'>
               <div>
-                <h3>렛츠플레이볼렛츠플레이볼</h3>
+                <h3>당신의 자소서는 이미 완성되어 있습니다.</h3>
                 <p>
-               요요마유니벌-스스스스 렛츠플레이볼렛츠플레이볼
+                  어떻게 써야 할지 몰라서 망설여질 뿐이죠. 팅젤이 자동 완성하는
+                  자소서 답안에서 당신이 이미 가지고 있는 실력과 능력, 경험과
+                  자원 중에 어떤 것들을 골라 쓸 수 있을지, 힌트를 얻어 보세요.
+                  자소서 답안을 당신에게 어울리게 다듬어서 이미 완성형인 당신을
+                  멋지게 소개해보세요.
                 </p>
               </div>
               <div>
-                <h3> 요요마유니벌-스스스스 렛츠플레이볼렛츠플레이볼</h3>
+                <h3>당신의 꿈 앞에서 작아지지 마세요.</h3>
                 <p>
-                요요마유니벌-스스스스 렛츠플레이볼렛츠플레이볼
+                  대학교에 진학해서 원하는 공부를 하고 싶은데, 자소서에 막혀서
+                  꿈을 포기하는 일이 있어서는 안 되죠. 희망하는 전공을 입력하면,
+                  전공에 필요한 역량에 맞는 답안을 제시합니다. 전공에 필요한
+                  당신의 역량을 발견해서 꿈을 이뤄보세요.
                 </p>
               </div>
             </div>
@@ -66,24 +73,28 @@ const CoverLetterDetail = () => {
               className='Detail2-Content'
             >
               <div>
-                <img src='/woman5.png' alt='유저' className='Detail2-img' />
-                <p style={{ marginTop: "25px" }}>나만의 콘텐츠를 상품화할 방법을</p>
-                <p>모색하고 있는 사람</p>
+                <img src='/woman.png' alt='유저' className='Detail2-img' />
+                <p style={{ marginTop: "25px" }}>
+                대학 입학을 코앞에 두고
+                </p>
+                <p>자기소개서를 작성해야 하는 </p>
+                <p>고3 청소년, N수생, 그리고 부모</p>
               </div>
               <div>
-                <img src='/man2.png' alt='유저' className='Detail2-img' />
-                <p style={{ marginTop: "25px" }}>새로운 비지니스 아이디어를 위한</p>
-                <p>영감이 필요한 사람</p>
+                <img src='/woman3.png' alt='유저' className='Detail2-img' />
+                <p style={{ marginTop: "25px" }}>
+                자기소개서를 잘 쓸 수 있도록
+                </p>
+                <p>코칭하는 교육 컨설턴트</p>
               </div>
               <div>
                 <img
-                  src='/grandmother2.png'
+                  src='/grandfather2.png'
                   alt='유저'
                   className='Detail2-img'
                 />
-                <p style={{ marginTop: "25px" }}>외부 지원사업이나</p>
-                <p>사내 신사업 기획을 위한</p>
-                <p>사업계획서를 쓰고 있는 사람</p>
+                <p style={{ marginTop: "25px" }}>자기소개서를 대비해 교내외 생활을</p>
+                <p>미리 설계하고 싶은 청소년, 부모</p>
               </div>
             </Box>
           </Box>
@@ -97,16 +108,17 @@ const CoverLetterDetail = () => {
             >
               <div>
                 <img src='/agreement.png' alt='문서' className='Detail3-img' />
-                <p>상품화하고 싶은 분야나 주제를 입력하면, 관련 비즈니스 아이디어를 제시합니다.</p>
+                <p>
+                대학교 공통질문 세 개 중에 원하는 질문과 희망 전공을 선택합니다.
+                </p>
               </div>
               <div>
                 <img src='/ai.png' alt='ai' className='Detail3-img' />
-                <p>여러 아이디어 중 실제 사업으로 연계할 수 있는 아이템이 뭔지 생각해보세요.</p>
+                <p>
+                인공지능이 제안하는 답변을 자신의 상황에 맞게 다듬어서 자기소개서를 작성합니다.
+                </p>
               </div>
-              <div>
-                <img src='/note.png' alt='writing' className='Detail3-img' />
-                <p>비지니스 관점에서 내 콘텐츠의 방향과 지향점을 살펴보세요. </p>
-              </div>
+              
             </Box>
             <div className='intoServiceBtn'>
               <Link to='/app/coverletter'>
@@ -155,8 +167,6 @@ const CoverLetterDetail = () => {
             </Link>
           </div>
         </Box>
-
-      
       </Box>
     </Layout>
   );

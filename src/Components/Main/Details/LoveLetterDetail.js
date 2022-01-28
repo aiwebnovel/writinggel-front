@@ -30,8 +30,10 @@ const LoveLetterDetail = () => {
       <Box justify="center" align="center" className="BoxContainer">
         <Box className="DetailHeader" pad="medium">
           <h1>MBTI 연애편지</h1>
-          <h2>사랑에 빠지면, 창의력이 높아집니다. 글로 마음을 전달해보세요.</h2>
-
+          <div>
+            <h2>사랑에 빠지면, 창의력이 높아집니다. </h2>
+            <h2>글로 마음을 전달해보세요.</h2>
+          </div>
           <hr />
         </Box>
 

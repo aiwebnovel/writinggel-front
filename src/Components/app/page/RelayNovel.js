@@ -27,7 +27,7 @@ const RelayNovel = () => {
   const [english, setReveal] = useState(true);
   const [isOpen, setOpen] = useState(false);
   const [isSet, setIsset] = useState(false);
-  const [options, setOptions] = useState("");
+  const [options, setOptions] = useState("default");
   const [follow, setFollow] = useState("");
   const [Input, setInput] = useState({
     Main_character: "",
@@ -182,13 +182,15 @@ const RelayNovel = () => {
                 );
                 setLoading(false);
               } else {
-                //console.log(outputKr + data[0]);
+                
+                const AllOutput = newOutputKr + data[0];
+                const replaceOutput = AllOutput.replaceAll('-','')
                 setOutput({
                   ...output,
-                  outputKr: newOutputKr + data[0],
+                  outputKr: replaceOutput,
                   outputEng: outputEng + data[1],
                 });
-                setFollow(" ");
+                setFollow('');
                 setLoading(false);
               }
             })
@@ -235,15 +237,6 @@ const RelayNovel = () => {
   const ResetAll = () => {
     setIsset(false);
     setOpen(false);
-    setOptions('');
-    setInput({
-      ...Input,
-      Main_character: "",
-      Place: "",
-      Time: "",
-      Main_Events: "",
-      Theme: "",
-    });
     setOutput({
       ...output,
       outputKr: "",
@@ -331,7 +324,7 @@ const RelayNovel = () => {
               </div>
               <Box align='center' pad='large'>
                 <select
-                  defaultValue='default'
+                  defaultValue={options}
                   className='RelaySelect'
                   onChange={onSelect}
                 >

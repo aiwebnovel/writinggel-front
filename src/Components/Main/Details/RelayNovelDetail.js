@@ -14,8 +14,8 @@ const RelayNovelDetail = () => {
     TagManager.dataLayer({
       dataLayer: {
         event: 'pageview',
-        pagePath: '/service/businessitem',
-        pageTitle: '비즈니스 아이템 소개',
+        pagePath: '/service/relaynovel',
+        pageTitle: '1대1 릴레이 소설 소개',
       },
     });
 
@@ -26,10 +26,13 @@ const RelayNovelDetail = () => {
       <ScrollToTop/>
       <Box justify='center' align='center' className='BoxContainer'>
         <Box className='DetailHeader' pad='medium'>
-          <h1>릴레이 웹소설</h1>
+          <h1>1:1 릴레이 소설</h1>
+          <div>
           <h2>
-            스띠카스띠카스띠카
+          한 문장씩 쌓아올리는 이야기,
           </h2>
+          <h2>인공지능과 대화하듯 완성해보세요.</h2>
+          </div>
           <hr />
         </Box>
 
@@ -44,15 +47,15 @@ const RelayNovelDetail = () => {
             <img src='/lantern.png' alt='팅젤이' className='Detail-img' />
             <div className='Detail-TextBox'>
               <div>
-                <h3>렛츠플레이볼렛츠플레이볼</h3>
+                <h3>훌륭한 이야기는 대화에서 시작됩니다.</h3>
                 <p>
-               요요마유니벌-스스스스 렛츠플레이볼렛츠플레이볼
+                친구와 이야기할 때, 글로 잘 표현되지 않던 마음과 생각을 술술 표현해본 경험 누구나 있죠? 훌륭한 이야기꾼 팅젤과 이야기하듯 한 문장씩 주고 받으면서 이야기를 완성해 보세요. 지금까지 한번도 상상해보지 않았던 이야기가 술술 나오는 경험을 하게 될 거에요.
                 </p>
               </div>
               <div>
-                <h3> 요요마유니벌-스스스스 렛츠플레이볼렛츠플레이볼</h3>
+                <h3>한 문장씩 주고 받으며 쓰는 '1:1 릴레이 소설'</h3>
                 <p>
-                요요마유니벌-스스스스 렛츠플레이볼렛츠플레이볼
+                이야기하듯 한 문장씩 번갈아가며 써서 완성한 이야기를 잘 다듬어 한편의 소설을 엮어보세요. 내가 쓰지 않은 나머지 반에 대한 지분도 내가 가질 수 있습니다. 100% 당신의 저작물로 만들어보세요!
                 </p>
               </div>
             </div>
@@ -66,24 +69,24 @@ const RelayNovelDetail = () => {
               className='Detail2-Content'
             >
               <div>
-                <img src='/woman5.png' alt='유저' className='Detail2-img' />
-                <p style={{ marginTop: "25px" }}>나만의 콘텐츠를 상품화할 방법을</p>
-                <p>모색하고 있는 사람</p>
+                <img src='/man2.png' alt='유저' className='Detail2-img' />
+                <p style={{ marginTop: "25px" }}>아직 혼자서 긴 이야기를</p>
+                <p>쓸 자신이 없는 사람들</p>
               </div>
               <div>
-                <img src='/man2.png' alt='유저' className='Detail2-img' />
-                <p style={{ marginTop: "25px" }}>새로운 비지니스 아이디어를 위한</p>
-                <p>영감이 필요한 사람</p>
+                <img src='/man4.png' alt='유저' className='Detail2-img' />
+                <p style={{ marginTop: "25px" }}>한국어로 텍스트게임을 즐기고 싶은</p>
+                <p>텍스트게임 유저</p>
               </div>
               <div>
                 <img
-                  src='/grandmother2.png'
+                  src='/woman6.png'
                   alt='유저'
                   className='Detail2-img'
                 />
-                <p style={{ marginTop: "25px" }}>외부 지원사업이나</p>
-                <p>사내 신사업 기획을 위한</p>
-                <p>사업계획서를 쓰고 있는 사람</p>
+                <p style={{ marginTop: "25px" }}>한때 심심이에 빠져 </p>
+                <p>시간 가는지 모르고</p>
+                <p>놀아봤던 사람들</p>
               </div>
             </Box>
           </Box>
@@ -97,15 +100,19 @@ const RelayNovelDetail = () => {
             >
               <div>
                 <img src='/agreement.png' alt='문서' className='Detail3-img' />
-                <p>상품화하고 싶은 분야나 주제를 입력하면, 관련 비즈니스 아이디어를 제시합니다.</p>
+                <p>장르, 주인공, 장소, 소재, 주제 등 필수 입력 항목을 채워보세요.</p>
               </div>
               <div>
                 <img src='/ai.png' alt='ai' className='Detail3-img' />
-                <p>여러 아이디어 중 실제 사업으로 연계할 수 있는 아이템이 뭔지 생각해보세요.</p>
+                <p>인공지능이 이를 인식해 이야기의 도입부/줄거리를 만들어 줍니다.</p>
               </div>
               <div>
                 <img src='/note.png' alt='writing' className='Detail3-img' />
-                <p>비지니스 관점에서 내 콘텐츠의 방향과 지향점을 살펴보세요. </p>
+                <p>인공지능이 완성한 도입부에 한 문장을 이어 써보세요.</p>
+              </div>
+              <div>
+                <img src='/chat-box.png' alt='writing' className='Detail3-img' />
+                <p>인공지능과 한 문장씩 번갈아 하나의 이야기를 완성해보세요.</p>
               </div>
             </Box>
             <div className='intoServiceBtn'>

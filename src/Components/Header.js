@@ -23,6 +23,7 @@ const Header = () => {
   const size = useContext(ResponsiveContext);
   const check = sessionStorage.getItem("token");
   const provider = sessionStorage.getItem('provider');
+  const userPlan = sessionStorage.getItem('plan');
 
   const [isShow, SetShow] = useState(false);
   const [isShowMenu, SetShowMenu] = useState(false);
@@ -260,7 +261,7 @@ const Header = () => {
         </Nav>
         {size !== "small" ? (
           <Nav direction='row' className='Menus' gap='large' align='center'>
-            <Link to='/signIn' className={Plan === 'free' || Plan === '0' || Plan === '' ? "MenusLink" : "displayNone"}>
+            <Link to='/signIn' className={userPlan === 'free' || userPlan === '0' || userPlan=== '' ? "MenusLink" : "displayNone"}>
               <MemButton>멤버십 가입</MemButton>
             </Link>
             <Link to='/brand'>브랜드 소개</Link>
@@ -336,7 +337,7 @@ const Header = () => {
           }}
         >
           <Nav direction='column' className='MobileMenus'>
-            <Link to='/signIn' className={Plan === 'free' || Plan === '0' || Plan === ''? "MenusLink" : "displayNone"}>
+            <Link to='/signIn' className={userPlan === 'free' || userPlan === '0' || userPlan === ''? "MenusLink" : "displayNone"}>
               멤버십 가입
             </Link>
             <Link to='/brand'>브랜드 소개</Link>
