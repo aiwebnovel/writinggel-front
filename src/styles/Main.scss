@@ -1962,12 +1962,17 @@ hr {
         >img {
             width: 300px;
             opacity: 0.5;
+
+            @media screen and (max-width: 680px) {
+                width: 200px;
+            }
         }
 
         >p {
             padding: 40px 0;
-            font-size: 25px;
+            font-size: 1.4rem;
             font-weight: 600;
+            word-break: keep-all;
         }
     }
 

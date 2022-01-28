@@ -79,9 +79,9 @@ const RelayNovel = () => {
         Place !== "" &&
         Time !== "" &&
         Main_Events !== "" &&
-        Theme !== ""
+        Theme !== "" 
       ) {
-        setLoading(true);
+       
 
         if (outputKr === "") {
           const config = {
@@ -99,6 +99,7 @@ const RelayNovel = () => {
               StoryFollow: "",
             },
           };
+          setLoading(true);
 
           await axios(config)
             .then(async (response) => {
@@ -150,6 +151,9 @@ const RelayNovel = () => {
               setLoading(false);
             });
         } else {
+
+        if(follow !== '') {
+          setLoading(true);
           const newOutputKr = outputKr + `\n` + follow + `\n`;
 
          // console.log(outputKr);
@@ -218,7 +222,10 @@ const RelayNovel = () => {
               }
               setLoading(false);
             });
+        } else {
+          toast.error('이어갈 문장을 써주세요!');
         }
+      }
       } else {
         toast.error("빈 칸을 채워주세요!");
       }
@@ -253,7 +260,7 @@ const RelayNovel = () => {
         headers: { authentication: loginCheck },
         data: {
           story: outputKr,
-          category: "릴레이 웹소설",
+          category: "1:1 릴레이 소설",
         },
       };
 
@@ -292,7 +299,7 @@ const RelayNovel = () => {
           SetBill(res.data.isBill);
         });
     } else {
-      History.push("/service/coverletter");
+      History.push("/service/relaynovel");
       setTimeout(toast.info("로그인을 해주세요!"), 300);
     }
   }, []);
@@ -301,8 +308,8 @@ const RelayNovel = () => {
     TagManager.dataLayer({
       dataLayer: {
         event: "pageview",
-        pagePath: "/app/coverletter",
-        pageTitle: "대입 자소서 완성",
+        pagePath: "/app/relaynovel",
+        pageTitle: "1:1 릴레이 소설",
       },
     });
   }, []);

@@ -130,6 +130,8 @@ const Synopsis = ({ isBill, count }) => {
             }
             setLoading(false);
           });
+      } else {
+        toast.error("빈 칸을 채워주세요!");
       }
     }
   };

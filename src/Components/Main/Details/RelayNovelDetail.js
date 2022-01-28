@@ -103,11 +103,7 @@ const RelayNovelDetail = () => {
                 <p>장르, 주인공, 장소, 소재, 주제 등 필수 입력 항목을 채워보세요.</p>
               </div>
               <div>
-                <img src='/ai.png' alt='ai' className='Detail3-img' />
-                <p>인공지능이 이를 인식해 이야기의 도입부/줄거리를 만들어 줍니다.</p>
-              </div>
-              <div>
-                <img src='/note.png' alt='writing' className='Detail3-img' />
+                <img src='/ai.png' alt='writing' className='Detail3-img' />
                 <p>인공지능이 완성한 도입부에 한 문장을 이어 써보세요.</p>
               </div>
               <div>

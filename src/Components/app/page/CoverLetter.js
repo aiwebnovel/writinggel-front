@@ -109,7 +109,11 @@ const CoverLetter = () => {
   const ResetData = () => {
     setOption("");
     setInput("");
-    setResume("");
+    setResume({
+      ...resume,
+      outputKr:'',
+      outputEng: ''
+    });
   };
 
   const SaveContent = async () => {
