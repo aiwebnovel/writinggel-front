@@ -56,13 +56,8 @@ const RelayNovel = () => {
 
   const HandleFollow = (e) => {
     const sentence = e.target.value;
-
-    if (sentence.length > 30) {
-      toast.error("문장이 30자가 넘었습니다.");
-    } else {
       setFollow(sentence);
       //console.log(sentence);
-    }
   };
 
   const HandleModals = () => {
@@ -252,7 +247,7 @@ const RelayNovel = () => {
   };
 
   const SaveContent = async () => {
-    console.log(outputKr.replaceAll(`\n`,""));
+    //console.log(outputKr.replaceAll(`\n`,""));
     if (output) {
       const config = {
         method: "post",
@@ -449,7 +444,6 @@ const RelayNovel = () => {
                   <input
                     type='text'
                     placeholder='이어지는 이야기를 적어보세요. (한 문장만)'
-                    maxLength='30'
                     value={follow}
                     onChange={HandleFollow}
                   />
@@ -495,6 +489,7 @@ const Reset = styled.div`
     font-size: 1rem;
     border-bottom: 1px solid #444;
     cursor: pointer;
+    color : #444;
 
     &:hover {
       font-weight: 600;
@@ -517,6 +512,7 @@ const RelayAi = styled.div`
     height: 35px;
     font-size: 1rem;
     padding: 8px;
+    border: 1px solid #444;
   }
 
   > button {

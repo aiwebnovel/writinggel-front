@@ -16,7 +16,6 @@ const Mypage = () => {
   const size = useContext(ResponsiveContext);
   const History = useHistory();
   const provider = sessionStorage.getItem("provider");
-  console.log(provider)
   const { Kakao } = window;
   const kakao_token = Kakao.Auth.getAccessToken();
 

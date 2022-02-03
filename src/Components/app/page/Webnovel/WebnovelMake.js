@@ -22,7 +22,7 @@ const firstIndex = location.state.index;
 // const count = location.state.count;
 
 
-console.log(location);
+//console.log(location);
 const [count, SetCount] = useState("");
 const [isBill, SetBill] = useState("");
 

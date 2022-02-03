@@ -17,14 +17,15 @@ import styled from "styled-components";
 const Header = () => {
 
   const { Kakao } = window;
-  const kakao_token = Kakao.Auth.getAccessToken();
+
 
   const History = useHistory();
   const size = useContext(ResponsiveContext);
   const check = sessionStorage.getItem("token");
   const provider = sessionStorage.getItem('provider');
   const userPlan = sessionStorage.getItem('plan');
-
+  const kakao_token = Kakao.Auth.getAccessToken();
+  
   const [isShow, SetShow] = useState(false);
   const [isShowMenu, SetShowMenu] = useState(false);
   const [profile, SetProfile] = useState({
@@ -260,7 +261,7 @@ const Header = () => {
           </Link>
         </Nav>
         {size !== "small" ? (
-          <Nav direction='row' className='Menus' gap='large' align='center'>
+          <Nav direction='row' className='Menus' gap="large" align='center'>
             <Link to='/signIn' className={userPlan === 'free' || userPlan === '0' || userPlan === null ? "MenusLink" : "displayNone"}>
               <MemButton>멤버십 가입</MemButton>
             </Link>
@@ -440,6 +441,7 @@ const MemButton = styled.button`
   background-color: #fff;
   padding: 5px 20px;
   cursor: pointer;
+  font-size : 0.9rem;
   transition: all 300ms ease-in-out;
 
   &:hover {

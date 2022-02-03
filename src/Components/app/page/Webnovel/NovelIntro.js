@@ -96,7 +96,8 @@ const NovelIntro = ({isBill, count, onActive}) => {
               setOutput({
                 ...output,
                 outputKr: data[0],
-                outputEng : data[1]
+                outputEng : data[1],
+                outputLength: data[0].length
               })
               setLoading(false);
             }

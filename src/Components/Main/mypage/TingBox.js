@@ -18,7 +18,7 @@ const TingBox = () => {
   const size = useContext(ResponsiveContext);
   const History = useHistory();
   const { Kakao } = window;
-  const kakao_token = Kakao.Auth.getAccessToken();
+  //const kakao_token = Kakao.Auth.getAccessToken();
 
 
   const [SaveData, SetData] = useState({

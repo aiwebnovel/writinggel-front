@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { Box, ResponsiveContext } from "grommet";
@@ -43,7 +43,8 @@ const NovelFollow = ({ isBill, count }) => {
     followtempLength: 0,
   });
 
-  const { outputKr, outputEng, outputLength, tempLength } = output;
+  
+  const { outputKr, outputEng, outputLength, tempLength, preOutputKr, preOutputEng } = output;
   const { Main_character, Place, Time, Main_Events, Theme } = category;
   const { followKr, followEng, followLength, followtempLength } = follow;
 
@@ -100,8 +101,7 @@ const NovelFollow = ({ isBill, count }) => {
   //recoil null, follow state !null(분기3) -> 이어쓰기 바로 / follow 이어쓰기
 
   const MakeFollow = async () => {
-    console.log("follow");
-
+   
     if (loginCheck !== null) {
       if (count === 0 && isBill === false) {
         SetCountModal(true);
@@ -209,14 +209,9 @@ const NovelFollow = ({ isBill, count }) => {
               SetLoading(false);
             });
         } else {
-          console.log("follow state");
+          
+          //recoil state 없이 바로.
           let story = followKr;
-
-          setFollow({
-            ...followKr,
-            followKr: story,
-            followtempLength: ((followKr.length - followLength) * 100) / 100,
-          });
 
           if (followtempLength < 30) {
             toast.error(`${30 - followtempLength}자를 더 입력해주세요!😭`);
@@ -224,7 +219,14 @@ const NovelFollow = ({ isBill, count }) => {
           } else if (story === " " || story === "" || story === "undefined") {
             toast.error(`내용을 입력해 주세요!`);
             return;
-          }
+          } else {
+          setFollow({
+            ...followKr,
+            followKr: story,
+            followtempLength: ((followKr.length - followLength) * 100) / 100,
+          });        
+        }
+         
           const date = new Date();
           let time = sessionStorage.getItem("time");
           if (time !== undefined && time !== null && time !== "") {
@@ -322,13 +324,13 @@ const NovelFollow = ({ isBill, count }) => {
 
   const handleChange = (e) => {
     if (outputKr !== "") {
-      console.log(e.target.value.length);
-      console.log(outputKr.length, )
+      console.log(e.target.value.length, outputLength, tempLength)
       setOutput({
         ...output,
         outputKr: e.target.value,
-        outputLength: outputKr.length,
         tempLength: ((outputKr.length - outputLength) * 100) / 100,
+        // outputKr: e.target.value,
+        // tempLength: ((outputKr.length - outputLength) * 100) / 100,
       });
     } else {
       setFollow({
@@ -408,6 +410,7 @@ const NovelFollow = ({ isBill, count }) => {
       }
     }
   };
+
 
   return (
     <>

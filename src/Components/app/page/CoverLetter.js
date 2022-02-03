@@ -25,7 +25,7 @@ const CoverLetter = () => {
   const [count, SetCount] = useState("");
   const [isBill, SetBill] = useState("");
 
-  const [selectOption, setOption] = useState("");
+  const [selectOption, setOption] = useState("default");
   const [input, setInput] = useState("");
   const [resume, setResume] = useState({
     outputKr: "",
@@ -44,23 +44,22 @@ const CoverLetter = () => {
 
   const onSelect = (e) => {
     setOption(e.target.value);
-    //console.log(e.target.value);
+  
   };
 
   const OnChangeInput = (e) => {
     setInput(e.target.value);
-    //console.log(e.target.value);
   };
 
   const MakeCoverLetter = async () => {
     if (count === 0 && isBill === false) {
       setOpen(true);
     } else {
-      if (selectOption === "" || input === "") {
+      if (selectOption === "default" || input === "") {
         setexceptable(true);
       } else {
         setLoading(true);
-        console.log("test");
+       
         const config = {
           method: "post",
           url: `${configUrl.SERVER_URL}/writinggel/resume`,
@@ -75,7 +74,11 @@ const CoverLetter = () => {
           .then(async (response) => {
             console.log(response);
             const data = response.data;
-            setResume({ ...resume, outputKr: data[0], outputEng: data[1] });
+            if (data[0] === "") {
+              toast.error('결과가 나오지 않았습니다😭');
+            } else {
+              setResume({ ...resume, outputKr: data[0], outputEng: data[1] });
+            }
             setLoading(false);
           })
           .catch((error) => {
@@ -107,13 +110,14 @@ const CoverLetter = () => {
   };
 
   const ResetData = () => {
-    setOption("");
+    setOption("default");
     setInput("");
     setResume({
       ...resume,
-      outputKr:'',
-      outputEng: ''
+      outputKr: "",
+      outputEng: "",
     });
+  
   };
 
   const SaveContent = async () => {
@@ -191,9 +195,13 @@ const CoverLetter = () => {
             <h4>
               필수 입력<span style={{ color: "red" }}>*</span>
             </h4>
-            <select defaultValue='default' onChange={onSelect}>
+            <select
+              className='CoverSelect'
+              value={selectOption}
+              onChange={onSelect}
+            >
               <option value='default' disabled>
-                공통 질문을 선택해주세요
+                공통 질문을 선택해주세요 ✔️
               </option>
               <option value='1'>1. 진로 관련 학습 경험 및 교내활동</option>
               <option value='2'>2. 타인과 공동체를 위한 노력한 경험</option>
@@ -229,7 +237,6 @@ const CoverLetter = () => {
             </Icons>
             <textarea
               readOnly
-              style={{ color: "gray" }}
               placeholder='결과가 나올 창입니다.'
               value={outputKr}
             >
@@ -237,7 +244,6 @@ const CoverLetter = () => {
             </textarea>
             <textarea
               readOnly
-              style={{ color: "gray" }}
               placeholder='영어로 결과가 나올 창입니다.'
               value={outputEng}
             >
@@ -254,13 +260,13 @@ const CoverLetter = () => {
         close={ExceptableModals}
       >
         <ConfirmDiv>
-          {selectOption === "" && input === "" && (
+          {selectOption === "default" && input === "" && (
             <h3>필수 항목을 전부 채워주세요!</h3>
           )}
-          {selectOption === "" && input !== "" && (
+          {selectOption === "default" && input !== "" && (
             <h3>자기소개서 공통 질문을 선택하세요!</h3>
           )}
-          {selectOption !== "" && input === "" && (
+          {selectOption !== "default" && input === "" && (
             <h3>희망하는 전공을 채워주세요!</h3>
           )}
           <ConfirmBtn onClick={ExceptableModals}>확인</ConfirmBtn>
