@@ -190,8 +190,9 @@ const Synopsis = ({ isBill, count }) => {
   return (
     <>
       {isLoading && <Loading />}
+    
       <Grid
-        fill
+        
         rows={size !== "small" ? ["auto", "flex"] : ["auto", "auto"]}
         columns={size !== "small" ? ["auto", "flex"] : ["auto"]}
         areas={
@@ -201,8 +202,8 @@ const Synopsis = ({ isBill, count }) => {
                 { name: "main", start: [1, 0], end: [1, 1] },
               ]
             : [
-                { name: "sidebar", start: [0, 0], end: [1, 0] },
-                { name: "main", start: [0, 1], end: [1, 1] },
+                { name: "sidebar", start: [0, 0], end: [0, 0] },
+                { name: "main", start: [0, 1], end: [0, 1] },
               ]
         }
       >
@@ -303,7 +304,7 @@ const Synopsis = ({ isBill, count }) => {
             </div>
           </Box>
         )}
-        <Box fill gridArea='main' className='TabmainBox' align='center'>
+        <Box gridArea='main' className='TabmainBox' >
           <div className='TabOutputBox'>
             <textarea
               className='output1'
@@ -355,6 +356,8 @@ const SynopBtn = styled.div`
     padding: 8px 15px;
     border: 1px solid #444;
     background-color: #ff9300;
+    color : #444;
+    font-size : 1rem;
     outline: 0;
     width: 180px;
     text-align: center;

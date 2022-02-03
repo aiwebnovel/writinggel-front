@@ -190,7 +190,7 @@ const NovelIntro = ({isBill, count, onActive}) => {
     <>
      {isLoading && <Loading />}
     <Grid
-      fill
+      
       rows={size !== "small" ? ["auto", "flex"] : ["auto", "auto"]}
       columns={size !== "small" ? ["auto", "flex"] : ["auto"]}
       areas={
@@ -306,7 +306,7 @@ const NovelIntro = ({isBill, count, onActive}) => {
           </div>
         </Box>
       )}
-      <Box fill gridArea='main' className='TabmainBox' align='center'>
+      <Box gridArea='main' className='TabmainBox'>
         <div className='TabOutputBox'>
           <textarea
             className='output1'
@@ -362,8 +362,10 @@ const SynopBtn = styled.div`
   > button {
     padding: 8px 15px;
     border: 1px solid #444;
+    color : #444;
     background-color: #ff9300;
     outline: 0;
+    font-size : 1rem;
     width: 180px;
     text-align: center;
     cursor: pointer;
@@ -407,7 +409,8 @@ const Icons = styled.div`
 `;
 
 const FollowBtn = styled.button`
-  width: 70%;
+  width: 100%;
+  max-width: 500px;
   font-size: 1rem;
   background-color: #372874;
   color: #fff;

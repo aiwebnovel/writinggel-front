@@ -15,7 +15,7 @@ const AuthPage = () => {
     // sessionStorage.setItem("search", search);
     // sessionStorage.setItem("code", code);
     //const redirectUri = 'https://tinytingel.ai/oauth'
-    const redirectUri = 'https://cee4-183-98-33-132.ngrok.io/oauth'
+    const redirectUri = 'https://2fbf-183-98-33-132.ngrok.io/oauth'
     //console.log(redirectUri);
 
     if (code !== undefined) {

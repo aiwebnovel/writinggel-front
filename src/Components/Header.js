@@ -337,7 +337,7 @@ const Header = () => {
           }}
         >
           <Nav direction='column' className='MobileMenus'>
-            <Link to='/signIn' className={userPlan === 'free' || userPlan === '0' || userPlan === ''? "MenusLink" : "displayNone"}>
+            <Link to='/signIn' className={userPlan === 'free' || userPlan === '0' || userPlan === null ? "MenusLink" : "displayNone"}>
               멤버십 가입
             </Link>
             <Link to='/brand'>브랜드 소개</Link>

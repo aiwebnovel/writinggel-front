@@ -53,8 +53,7 @@ const WebnovelPack = () => {
     <ServiceLayout>
       <ScrollToTop />
       <Box
-        width='100%'
-        height='100vh'
+        className="ServiceContainerVh"
         background='#f9f9f9'
         align='center'
         justify='center'
@@ -105,6 +104,10 @@ export default WebnovelPack;
 
 const BoxContainer = styled(Box)`
   width: 100%;
+
+  @media screen and (max-width: 768px) {
+    height: 100vh;
+}
 `;
 
 const LinkBox = styled(Link)`
@@ -118,7 +121,7 @@ const LinkBox = styled(Link)`
     transition: all 300ms ease;
 
     &:hover {
-      background-color: #ff9300;
+      background-color: #b1b5e6;
       color: #444;
     }
   }

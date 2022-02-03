@@ -39,7 +39,7 @@ const [index, setIndex] = useState(firstIndex);
   useEffect(() => {
     const loginCheck = sessionStorage.getItem("token");
 
-    if (loginCheck !== null) {
+    if (loginCheck !== null || index !== undefined) {
       
         axios
         .get(`${configUrl.SERVER_URL}/profile`, {
@@ -101,9 +101,10 @@ export default WebnovelMake;
 const Tabs = styled.div`
     width: 100%;
     display: flex;
-    justify-content: end;
+    justify-content: flex-end;
     align-items: center;
     gap: 10px;
+    margin:0;
 
     padding-right : 10px;
     border-bottom : 1px solid #444;
@@ -111,4 +112,5 @@ const Tabs = styled.div`
 
 const TabContent = styled(Box)`
     background-color : #fff;
+
 `

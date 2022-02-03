@@ -322,9 +322,12 @@ const NovelFollow = ({ isBill, count }) => {
 
   const handleChange = (e) => {
     if (outputKr !== "") {
+      console.log(e.target.value.length);
+      console.log(outputKr.length, )
       setOutput({
         ...output,
         outputKr: e.target.value,
+        outputLength: outputKr.length,
         tempLength: ((outputKr.length - outputLength) * 100) / 100,
       });
     } else {
