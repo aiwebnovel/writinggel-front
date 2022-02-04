@@ -16,7 +16,6 @@ const Mypage = () => {
   const size = useContext(ResponsiveContext);
   const History = useHistory();
   const provider = sessionStorage.getItem("provider");
-  console.log(provider)
   const { Kakao } = window;
   const kakao_token = Kakao.Auth.getAccessToken();
 
@@ -66,7 +65,7 @@ const Mypage = () => {
       };
       axios(config)
         .then((response) => {
-          console.log(response);
+          //console.log(response);
           toast.success(response.data.log, {
             style: { backgroundColor: "#fff", color: "#000" },
             progressStyle: { backgroundColor: "#7D4CDB" },
@@ -142,7 +141,7 @@ const Mypage = () => {
             headers: { authentication: loginCheck },
           })
           .then((response) => {
-            console.log(response.data);
+           // console.log(response.data);
             let data = response.data;
             //console.log(data);
             let billFormat = moment(data.billStartDate).format("YYYY-MM-DD");

@@ -32,6 +32,7 @@ $boxShadow : rgb(237 237 237) 2px 3px 8px;
     background-color: $white-1;
     border-right: 1px solid $main;
     border-top: 1px solid $main;
+    border-bottom: 1px solid $main;
     height: 100vh;
     width: 250px;
     transition: width 0.4s ease;
@@ -98,17 +99,17 @@ $boxShadow : rgb(237 237 237) 2px 3px 8px;
 }
 
 .OpenBtn {
- 
+
     gap: 2px;
     background-color: #ffce1f;
     border: 1px solid #444;
     border-left: 0;
- 
+
 
     @media screen and (max-width: 768px) {
         border: 0;
         border-bottom: 1px solid #444;
-        
+
     }
 }
 
@@ -195,7 +196,7 @@ $boxShadow : rgb(237 237 237) 2px 3px 8px;
 
 .MembershipCountText {
     text-align: center;
-    color : $main;
+    color: $main;
 }
 
 .MembershipCountBtns {
@@ -206,31 +207,31 @@ $boxShadow : rgb(237 237 237) 2px 3px 8px;
     margin-top: 20px;
     margin-bottom: 5px;
 
-    > button:first-child {
-        background-color : $white-1;
+    >button:first-child {
+        background-color: $white-1;
         border: 1px solid $main;
-        color : $main;
+        color: $main;
         padding: 5px 15px;
         cursor: pointer;
         transition: all 300ms ease;
 
         &:hover {
-            background-color : $red;
+            background-color: $red;
             color: $white-1;
         }
     }
 
-    > a > button {
-        background-color : $main;
+    >a>button {
+        background-color: $main;
         border: 1px solid $main;
         outline: 0;
-        color : $white-1;
+        color: $white-1;
         padding: 5px 25px;
         cursor: pointer;
         transition: all 300ms ease;
 
         &:hover {
-            background-color : $sub2;
+            background-color: $sub2;
             color: $main;
         }
     }
@@ -338,13 +339,13 @@ $boxShadow : rgb(237 237 237) 2px 3px 8px;
     background-color: $white-1;
 
     @media screen and (max-width:768px) {
-       padding: 15px 20px;
+        padding: 15px 20px;
     }
 
     @media screen and (max-width:360px) {
         padding: 15px;
-     }
-    
+    }
+
 }
 
 .MainLogo2 {
@@ -359,7 +360,7 @@ $boxShadow : rgb(237 237 237) 2px 3px 8px;
 
 
             @media screen and (max-width: 768px) {
-                width: 80px;
+                width: 100px;
             }
 
         }
@@ -568,7 +569,7 @@ select::-ms-expand {
     @media screen and (max-width: 768px) {
         flex-direction: column;
         padding: 120px 0px;
-    
+
     }
 }
 
@@ -576,9 +577,9 @@ select::-ms-expand {
 
     justify-content: center;
 
-    > div:first-child {
+    >div:first-child {
         width: 100%;
-        display:flex;
+        display: flex;
         justify-content: center;
         align-items: center;
         gap: 15px;
@@ -586,14 +587,14 @@ select::-ms-expand {
     }
 
     @media screen and (max-width: 768px) {
-      
+
         justify-content: flex-start;
 
-        > div:first-child {
+        >div:first-child {
             flex-direction: column;
         }
     }
-    
+
 }
 
 .outputKo,
@@ -616,6 +617,7 @@ select::-ms-expand {
 
 .blogMainBox {
     padding: 120px 30px;
+
     @media screen and (max-width: 768px) {
         padding: 150px 30px;
     }
@@ -679,7 +681,7 @@ select::-ms-expand {
     border-top: 3px solid #372874;
     border-left: 1px solid $main;
     border-right: 1px solid $main;
-    border-bottom : 1px solid $main;
+    border-bottom: 1px solid $main;
 
     >h4 {
         font-weight: 600;
@@ -709,10 +711,11 @@ select::-ms-expand {
 
     @media screen and (max-width: 680px) {
         flex-direction: column;
-        > div {
+
+        >div {
             flex-direction: column;
 
-            > button {
+            >button {
                 width: 90%;
             }
         }
@@ -731,7 +734,7 @@ select::-ms-expand {
     resize: none;
     font-size: 16px;
     padding: 10px 15px;
-    overflow: scroll;
+    overflow: auto;
 
     @media screen and (max-width: 768px) {
         width: 90%;
@@ -759,16 +762,16 @@ select::-ms-expand {
     @media screen and (max-width: 768px) {
         padding: 120px 30px;
     }
-   
+
 }
 
 
 
 
-.KeyContainer{
-    width:100%;
-    display:flex;
-    flex-direction:column;
+.KeyContainer {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
     align-items: center;
     max-width: 700px;
     min-height: 400px;
@@ -778,14 +781,14 @@ select::-ms-expand {
 }
 
 .keywordHeader {
-    display:flex;
+    display: flex;
     align-items: center;
-    gap:5px;
+    gap: 5px;
     width: 100%;
     background-color: $white-2;
     padding: 8px;
-      
-    > svg {
+
+    >svg {
         // background-color: #444;
         fill: $dark-1;
         stroke: $dark-1;
@@ -793,23 +796,23 @@ select::-ms-expand {
         width: 30px;
         height: 30px;
         margin-right: 5px;
-  
+
         border-radius: 50%;
         cursor: pointer;
-      }
+    }
 
-      .close {
-          background-color : #f45752;
-      }
+    .close {
+        background-color: #f45752;
+    }
 
-      .copy {
+    .copy {
         background-color: $point;
     }
 
-     .download {
+    .download {
         background-color: $sub2;
-     }
-  
+    }
+
 }
 
 .keywordDiv {
@@ -822,7 +825,7 @@ select::-ms-expand {
     padding: 30px 10px;
     transition: all 200ms ease-in-out;
 
-    background-color : $white-1;
+    background-color: $white-1;
 }
 
 
@@ -834,7 +837,7 @@ select::-ms-expand {
     word-wrap: keep-all;
     width: 80%;
     font-size: 0.9rem;
-    padding:8px;
+    padding: 8px;
 
     >svg {
         fill: $main;
@@ -855,8 +858,8 @@ select::-ms-expand {
     border: 1px solid $main;
     border-radius: 10px;
 
-    > svg {
-        fill:$white-1;
+    >svg {
+        fill: $white-1;
         stroke: $white-1;
     }
 
@@ -865,18 +868,18 @@ select::-ms-expand {
 .resultBox {
     width: 100%;
     padding: 20px;
-    background-color : $white-1;
-    overflow: scroll;
+    background-color: $white-1;
+    overflow: auto;
 }
 
 .keywordResult {
     border: 2px solid #55d4bc;
-    background-color:$white-2;
+    background-color: $white-2;
     color: $dark-1;
     padding: 5px;
     border-radius: 15px;
     word-break: break-all;
-   
+
 }
 
 
@@ -896,7 +899,7 @@ select::-ms-expand {
 
 .printBox {
     border: 1px solid #444;
-    background-color : #fff;
+    background-color: #fff;
     border-radius: 15px;
     width: 500px;
     margin-top: 8px;
@@ -983,7 +986,7 @@ select::-ms-expand {
 
     >textarea {
         resize: none;
- 
+
         height: 500px;
 
         &:focus {
@@ -992,7 +995,7 @@ select::-ms-expand {
     }
 
     @media screen and (max-width: 768px) {
-        width: 90%;  
+        width: 90%;
     }
 
 }
@@ -1003,7 +1006,7 @@ select::-ms-expand {
     padding: 10px;
     font-size: 1rem;
     white-space: pre-wrap;
-    overflow: scroll;
+    overflow: auto;
 }
 
 .icons {
@@ -1167,9 +1170,9 @@ select::-ms-expand {
     padding: 10px;
     width: 350px;
     height: 200px;
-    overflow: scroll;
+    overflow: auto;
 
-    display:flex;
+    display: flex;
     justify-content: space-between;
     flex-direction: column;
 
@@ -1179,8 +1182,8 @@ select::-ms-expand {
 }
 
 .AreaBox {
-    
-    > div {
+
+    >div {
         white-space: pre-wrap;
     }
 
@@ -1193,8 +1196,8 @@ select::-ms-expand {
 //fairyTale
 
 
-.FairymainBox{
-    
+.FairymainBox {
+
     justify-content: center;
     gap: 20px;
     padding: 120px 30px;
@@ -1209,7 +1212,7 @@ select::-ms-expand {
 }
 
 .FairyOutputBox {
-    display:flex;
+    display: flex;
     justify-content: center;
     align-items: center;
     gap: 20px;
@@ -1235,25 +1238,25 @@ select::-ms-expand {
     padding: 10px 0;
     // padding: 18px 12px 5px 12px;
 
-        >h4 {
-            font-size: 14px;
-            font-weight: 600;
-            margin: 0;
+    >h4 {
+        font-size: 14px;
+        font-weight: 600;
+        margin: 0;
 
-            @media screen and (max-width: 768px) {
-                font-size: 18px;
-            }
-
-            &::before {
-                content: '❗️';
-            }
+        @media screen and (max-width: 768px) {
+            font-size: 18px;
         }
 
-        >svg {
-            width: 22px;
-            height: 22px;
+        &::before {
+            content: '❗️';
         }
- 
+    }
+
+    >svg {
+        width: 22px;
+        height: 22px;
+    }
+
 }
 
 .AcoInput {
@@ -1267,7 +1270,7 @@ select::-ms-expand {
         outline: none;
         border: 0;
         border-bottom: 1px solid $dark-1;
-        background-color : rgb(249, 249, 249, 0.7);
+        background-color: rgb(249, 249, 249, 0.7);
 
         &:focus {
             outline: none;
@@ -1282,7 +1285,7 @@ select::-ms-expand {
         cursor: pointer;
         background-color: $white-2;
         border: 1px solid $white-2;
-        color:$dark-1;
+        color: $dark-1;
         font-weight: 600;
         padding: 5px 15px;
     }
@@ -1296,9 +1299,11 @@ select::-ms-expand {
     >button {
         padding: 8px 15px;
         border: 1px solid #444;
+        color : $dark-1;
         background-color: #ffd000;
         outline: 0;
         width: 180px;
+        font-size : 1rem;
         text-align: center;
         cursor: pointer;
     }
@@ -1314,6 +1319,7 @@ select::-ms-expand {
     height: 300px;
     resize: none;
     font-size: 16px;
+
 
     @media screen and (max-width: 768px) {
         width: 90%;
@@ -1345,9 +1351,9 @@ select::-ms-expand {
     gap: 10px;
 }
 
-.KeepFairyBtn{
+.KeepFairyBtn {
     font-size: 1rem;
-    background-color : $sub2;
+    background-color: $sub2;
     border: 1px solid $sub2;
     outline: 0;
     padding: 5px 10px;
@@ -1361,12 +1367,12 @@ select::-ms-expand {
 
 .NotYetBtn {
     font-size: 1rem;
-    background-color : #ebebeb;
+    background-color: #ebebeb;
     border: 1px solid #ebebeb;
     outline: 0;
     padding: 5px 10px;
     width: 300px;
-    cursor: pointer; 
+    cursor: pointer;
 
     @media screen and (max-width: 768px) {
         width: 250px
@@ -1380,14 +1386,14 @@ select::-ms-expand {
     width: 100%;
     height: 100vh;
 
-    
+
     @media screen and (max-width: 768px) {
         height: 100%;
         padding: 180px 60px;
     }
 
     @media screen and (max-width: 680px) {
-        padding-right:24px;
+        padding-right: 24px;
         padding-left: 24px;
     }
 }
@@ -1412,10 +1418,10 @@ select::-ms-expand {
     width: 100%;
     max-width: 500px;
 
-        
+
     @media screen and (max-width: 768px) {
         font-size: 15px;
-    
+
     }
 
 }
@@ -1456,7 +1462,7 @@ select::-ms-expand {
     gap: 10px;
     margin-top: 10px;
 
-    > svg {
+    >svg {
         background-color: #444;
         fill: #fff;
         stroke: #fff;
@@ -1476,14 +1482,14 @@ select::-ms-expand {
     width: 100%;
     height: 100vh;
 
-    
+
     @media screen and (max-width: 768px) {
         height: 100%;
         padding: 100px 60px;
     }
 
     @media screen and (max-width: 680px) {
-        padding-right:24px;
+        padding-right: 24px;
         padding-left: 24px;
     }
 }
@@ -1505,14 +1511,14 @@ select::-ms-expand {
     width: 100%;
     height: 100vh;
     padding: 48px;
-    
+
     @media screen and (max-width: 768px) {
         height: 100%;
         padding: 60px;
     }
 
     @media screen and (max-width: 680px) {
-        padding-right:24px;
+        padding-right: 24px;
         padding-left: 24px;
     }
 }
@@ -1537,7 +1543,7 @@ select::-ms-expand {
     }
 }
 
-.PrintContainer{
+.PrintContainer {
     gap: 30px;
 
 
@@ -1570,8 +1576,8 @@ select::-ms-expand {
 
 
         &:nth-child(3) {
-            background-color : $sub2;
-            border:1px solid $sub2;
+            background-color: $sub2;
+            border: 1px solid $sub2;
             color: $dark-1;
             transition: all 300ms ease-in-out;
 
@@ -1604,7 +1610,7 @@ select::-ms-expand {
     padding: 24px;
     text-align: center;
 
-    > p {
+    >p {
         word-break: break-word;
     }
 
@@ -1618,6 +1624,614 @@ select::-ms-expand {
     background-color: #ededed;
     color: $dark-1;
     padding: 15px 10px;
-    overflow: scroll;
+    overflow: auto;
+
+}
+
+//coverLetter
+
+.CoverQuestion {
+    width: 100%;
+    max-width: 600px;
+
+    >h4 {
+        font-weight: 600;
+        margin-bottom: 8px;
+    }
+
+    >label>input {
+        width: 100%;
+        background-color: $white-1;
+        padding: 8px;
+        border: 1px solid #444;
+        font-size: 1rem;
+    }
+
+}
+
+.CoverContent {
+    width: 100%;
+    max-width: 600px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+
+
+    > textarea {
+        background-color: $white-1;
+        color : $dark-1;
+        border: 1px solid $dark-1;
+        outline : 0;
+        min-height: 200px;
+        padding: 10px;
+        font-size: 1rem;
+        white-space: pre-wrap;
+        overflow: auto;
+
+        resize: none;
+    }
+}
+
+.CoverSelect {
+
+    border: 1px solid $dark-1;
+    border-radius: 0;
+    color: $dark-1;
+    background-color: $white-1;
+    cursor: pointer;
+    width: 100%;
+    padding: 8px 13px;
+    font-size: 1rem;
+    margin-bottom: 5px;
+
+    /* select 화살표 없애기 */
+    appearance: none;
+    -webkit-appearance: none;
+
+}
+
+//Relay
+
+.RelayContainer {
+    background-color: $white-1;
+    width: 100%;
+    max-width: 800px;
+    border: 1px solid #444;
+
+    >div:first-child {
+        background-color: $sub1;
+        padding: 20px;
+
+        >h2 {
+            font-weight: 600;
+            font-size: 1.3rem;
+            color: #000;
+
+            @media screen and (max-width : 680px) {
+                font-size: 1.1rem;
+            }
+
+        }
+    }
+}
+
+.RelayPad {
+    padding: 150px 120px;
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+
+    @media screen and (max-width : 680px) {
+        padding-left: 36px;
+        padding-right: 36px;
+    }
+}
+
+.RelaySelect {
+    border: 1px solid $sub1;
+    border-radius: 15px;
+    color: $dark-1;
+    background-color: $white-1;
+    cursor: pointer;
+    width: 100%;
+    padding: 8px 13px;
+    font-size: 1rem;
+    margin-bottom: 10px;
+
+    /* select 화살표 없애기 */
+    appearance: none;
+    -webkit-appearance: none;
+
+}
+
+select::-ms-expand {
+    display: none;
+}
+
+
+.RelayStyle {
+    width: 100%;
+    padding: 20px 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.RelayPanelStyle {
+    width: 100%;
+    padding: 10px 0;
+    // padding: 18px 12px 5px 12px;
+
+    >h4 {
+        font-size: 1.1rem;
+        font-weight: 600;
+        margin: 0;
+        margin-bottom: 5px;
+
+        @media screen and (max-width: 768px) {
+            font-size: 18px;
+        }
+
+
+        &::before {
+            content: '💡 ';
+        }
+    }
+
+    >svg {
+        width: 22px;
+        height: 22px;
+    }
+
+}
+
+.RelayInput {
+    width: 100%;
+
+    >input {
+        width: 100%;
+        padding: 8px 5px;
+        outline: none;
+        border: 0;
+        border-bottom: 1px solid $dark-1;
+        background-color: #fff;
+        font-size: 1rem;
+
+        &:focus {
+            outline: none;
+        }
+
+        @media screen and (max-width: 768px) {
+            height: 35px;
+        }
+    }
+
+    >button {
+        cursor: pointer;
+        background-color: $white-2;
+        border: 1px solid $white-2;
+        color: $dark-1;
+        font-weight: 600;
+        padding: 5px 15px;
+    }
+}
+
+.RelayBtn {
+    display: flex;
+    justify-content: center;
+    margin-top: 35px;
+
+    >button {
+        padding: 8px 15px;
+        border: 1px solid $dark-1;
+        background-color: $sub2;
+        outline: 0;
+        width: 180px;
+        text-align: center;
+        cursor: pointer;
+    }
+}
+
+.RelayContentContainer {
+    width: 100%;
+    max-width: 800px;
+
+}
+
+.RelayContent {
+
+    width: 100%;
+    max-width: 700px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    padding : 15px 0 20px 0;
+    
+    
+    > textarea  {
+        resize: none;
+        border: 1px solid $dark-1;
+        background-color: $white-1;
+        width: 100%;
+        height: 200px;
+        padding : 10px;
+
+        font-size : 1rem;
+        overflow: auto;
+        
+      
+    }
+}
+
+.ChatRelay  {
+    border: 1px solid $dark-1;
+    background-color: $white-1;
+    width: 100%;
+
+}
+
+.RelayOutputBox {
+    width: 100%;
+    height: 200px;
+    padding : 10px;
+    background-color: $white-1;
+    border : 0;
+    outline: 0;
+    
+    font-size : 1rem;
+    overflow: auto;
+}
+
+.RelayIconBox {
+    width: 100%;
+    background-color: $white-2;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 15px;
+    padding: 5px 10px;
+
+    > svg {
+        cursor: pointer;
+    }
+}    
+
+
+.RelayEnglish {
+    border: 1px solid $dark-1;
+    background-color: $sub1;
+    width: 100%;
+    height: 30px;
+
+    display : flex;
+    align-items: center;
+    padding : 8px;
+    font-weight: 600;
+    font-size : 0.9rem;
+    cursor: pointer;
+}
+
+//webnovelMake 
+
+.active  {
+    background-color :$point;
+    color : $dark-1;
+    border : 1px solid $dark-1;
+    border-bottom : 0;
+    outline: 0;
+    font-size : 1rem;
+    font-weight: 600;
+    padding : 12px 10px;
+    margin: 0;
+
+    cursor: pointer;
+
+    @media screen and (max-width: 680px) {
+        font-size : 0.9rem;
+    }
+}
+
+.TabBtn {
+    background-color: $white-1;
+    color: $dark-1;
+    border : 0;
+    outline: 0;
+    font-size : 1rem;
+    padding : 12px 10px;
+    border : 1px solid $dark-1;
+    border-bottom : 0;
+    cursor: pointer;
+    margin:0;
+
+    @media screen and (max-width: 680px) {
+        font-size : 0.85rem;
+    }
+}
+
+//webnovel TabContent 줄거리, 도입부 공통
+
+
+.TabSideContainer {
+    background-color: $white-1;
+    border-right: 1px solid $main;
+    //height: 100vh;
+    width: 250px;
+    padding: 60px 10px 150px 10px;
+    transition: width 0.4s ease;
+    overflow: hidden;
+
+    @media screen and (max-width: 768px) {
+        width: 100%;
+        height: 100vh;
+        padding-top: 20px;
+        padding-bottom : 50px;
+
+        overflow: auto;
+        z-index: 3;
+        border: 0;
+        border-bottom: 1px solid $main;
+
+    }
+}
+
+
+.TabAcoStyle {
+    width: 100%;
+    padding: 10px 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.TabAcoPanelStyle {
+    width: 100%;
+    padding: 10px 0;
+
+
+    >h4 {
+        font-size: 1rem;
+        font-weight: 600;
+        margin: 0;
+        margin-bottom: 5px;
+
+        &::before {
+            content: '❗️';
+        }
+    }
+
+    >svg {
+        width: 22px;
+        height: 22px;
+    }
+
+}
+
+.TabAcoInput {
+    width: 100%;
+
+    >input {
+        width: 100%;
+        padding: 8px 5px;
+        margin: 0;
+        font-size : 0.9rem;
+        outline: none;
+        border: 0;
+        border-bottom: 1px solid $dark-1;
+        
+        @media screen and (max-width: 768px) {
+            height: 35px;
+        }
+    }
+}
+
+
+.TabSiderFalse {
+    width: 80px;
+    gap: 10px;
+    transition: width 0.4s ease;
+
+    @media screen and (max-width: 768px) {
+        width: 100%;
+        border: 0;
+        gap: 0;
+        //margin-bottom: 150px;
+    }
+}
+
+.TabSiderBtn  {
+
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    background-color: $sub2;
+    color: $dark-1;
+
+    border: 0;
+    border-bottom: 1px solid $dark-1;
+    border-right : 1px solid $dark-1;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+  
+    @media screen and (max-width: 768px) {
+        border-right : 0;
+    }
+}
+
+
+.TabmainBox {
+
+    //justify-content: center;
+    gap: 20px;
+    align-items: center;
+    padding: 120px 30px;
+
+
+    @media screen and (max-width: 768px) {
+        padding-right: 20px;
+        padding-left: 20px;
+    }
+
+}
+
+.TabOutputBox {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+
+}
+
+//웹소설 패키지 - 이어쓰기 follow
+
+.NovelFollowMainBox {
+    padding: 120px 30px;
+
+    @media screen and (max-width: 768px) {
+        padding: 150px 30px;
+    }
+}
+
+.NovelFollowWrap {
+    gap: 20px;
+}
+
+.NovelFollowIdeaBox {
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    max-width: 600px;
+    width: 100%;
+
+    gap: 15px;
+
+    >input {
+        padding: 8px 10px;
+        width: 100%;
+        border: 1px solid #444;
+        font-size: 1rem;
+    }
+
+    >button {
+        background-color: $sub1;
+        border: 0;
+        outline: 0;
+        cursor: pointer;
+        padding: 8px 10px;
+        border-radius: 5px;
+    }
+
+    @media screen and (max-width: 768px) {
+        >input {
+            width: 60%;
+        }
+    }
+
+    @media screen and (max-width: 680px) {
+        flex-direction: column;
+
+        >input {
+            width: 100%;
+        }
+    }
+}
+
+.NovelFollowProgressBox {
+    display: flex;
+    justify-content: space-between;;
+    align-items: center;
+
+    width: 100%;
+    max-width: 600px;
+    padding: 20px;
+
+    background-color: $white-1;
+    gap: 15px;
+    border-top: 3px solid #372874;
+    border-left: 1px solid $main;
+    border-right: 1px solid $main;
+    border-bottom: 1px solid $main;
+
+    >h4 {
+        font-size : 1.1rem;
+        font-weight: 600;
+    }
+
+    >div {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        gap: 20px;
+
+        >button {
+            background-color: $sub2;
+            border: 0;
+            outline: 0;
+            cursor: pointer;
+            padding: 8px 15px;
+            border-radius: 5px;
+            color: $dark-1;
+            font-size : 1rem;
+            font-weight: 600;
+        }
+    }
+
+    @media screen and (max-width: 680px) {
+        flex-direction: column; 
+
+        > div {
+            flex-direction: column;
+
+            > button {
+                width: 100%;
+            }
+        }
+    }
+
+
+}
+
+.NovelFollowKo,
+.NovelFollowEn {
+    background-color: $white-1;
+    border: 1px solid #444;
+    max-width: 600px;
+    width: 100%;
+    height: 200px;
+    resize: none;
+    font-size: 16px;
+    padding: 10px 15px;
+    overflow: auto;
+    resize: none;
+    
+    @media screen and (max-width: 768px) {
+        width: 90%;
+    }
+}
+
+//webnovel package
+
+.WebnovelSelect {
+    border: 1px solid $dark-1;
+    border-radius: 5px;
+    color: $dark-1;
+    background-color: $white-1;
+    cursor: pointer;
+    width: 100%;
+    padding: 8px 13px;
+    font-size: 1rem;
+    margin-bottom: 20px;
+
+    /* select 화살표 없애기 */
+    appearance: none;
+    -webkit-appearance: none;
 
 }

@@ -103,7 +103,7 @@ const Header = () => {
             headers: { authentication: Idtoken },
           })
           .then((response) => {
-            console.log(response)
+            //console.log(response)
             SetProfile({
               ...profile,
               userName:  response.data.name,
@@ -175,7 +175,7 @@ const Header = () => {
       headers: { authentication: kakao_token},
     })
     .then((response) => {
-      console.log(response);
+      //console.log(response);
       SetProfile({
         ...profile,
         userName: sessionStorage.getItem('userName'),
@@ -271,7 +271,7 @@ const Header = () => {
               onClick={showMenu}
               
             />
-            <Menu color='brand' size='medium' onClick={HandleShow} />
+            <Menu color='brand' size='medium' style={{cursor: 'pointer'}} onClick={HandleShow} />
           </Nav>
         ) : (
           <Nav direction='row' gap={size !== 'small' ? 'large':'medium'} align='center'>
@@ -309,7 +309,7 @@ const Header = () => {
               }
             <ul className='ServiceDropDown'>
               <li>
-                <Link to='/app/webnovel'>릴레이 웹소설 쓰기</Link>
+                <Link to='/app/webnovel'>릴레이 웹소설 창작</Link>
               </li>
               <li>
                 <Link to='/app/bloger/idea'>블로그 글쓰기</Link>
@@ -337,6 +337,12 @@ const Header = () => {
               </li>
               <li>
                 <Link to='/app/storysrc'>이야기 재료 찾기</Link>
+              </li>
+              {/* <li>
+                  <Link to='/app/relaynovel'>1:1 릴레이 소설</Link>
+                </li> */}
+              <li>
+                <Link to='/app/coverletter'>대입 자소서 자동 완성</Link>
               </li>
             </ul>
           </Nav>

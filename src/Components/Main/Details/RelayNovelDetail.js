@@ -2,10 +2,11 @@ import React, { useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Layout from "../../Layout";
 import { Box, Grid, ResponsiveContext } from "grommet";
+import { StatusGood } from "grommet-icons";
 import ScrollToTop from '../../../routes/ScrollToTop';
 import TagManager from 'react-gtm-module';
 
-const WebnovelDetail = () => {
+const RelayNovelDetail = () => {
   const size = useContext(ResponsiveContext);
 
   useEffect(()=>{
@@ -13,8 +14,8 @@ const WebnovelDetail = () => {
     TagManager.dataLayer({
       dataLayer: {
         event: 'pageview',
-        pagePath: '/service/webnovel',
-        pageTitle: '웹소설 소개',
+        pagePath: '/service/relaynovel',
+        pageTitle: '1대1 릴레이 소설 소개',
       },
     });
 
@@ -22,15 +23,16 @@ const WebnovelDetail = () => {
 
   return (
     <Layout>
-       <ScrollToTop/>
+      <ScrollToTop/>
       <Box justify='center' align='center' className='BoxContainer'>
         <Box className='DetailHeader' pad='medium'>
-          <h1>릴레이 웹소설 창작</h1>
+          <h1>1:1 릴레이 소설</h1>
           <div>
-          <h2>인공지능과 바통을 주고 받으며 쓰는</h2>
-            <h2>릴레이 웹소설</h2>
+          <h2>
+          한 문장씩 쌓아올리는 이야기,
+          </h2>
+          <h2>인공지능과 대화하듯 완성해보세요.</h2>
           </div>
-        
           <hr />
         </Box>
 
@@ -42,22 +44,18 @@ const WebnovelDetail = () => {
             align='center'
             className='Detail1'
           >
-            <img src='/lantern.png' alt='팅젤이' className="Detail-img"/>
+            <img src='/lantern.png' alt='팅젤이' className='Detail-img' />
             <div className='Detail-TextBox'>
               <div>
-                <h3>웹소설 써보고 싶은데 시작을 망설이고 있나요?</h3>
+                <h3>훌륭한 이야기는 대화에서 시작됩니다.</h3>
                 <p>
-                '틈만 나면 읽는 웹소설 장르에 작가로 뛰어들 수는 없을까'
-                  고민하고 있으신 분들에게 인공지능과 바통을 주고받으며 완성하는
-                  릴레이 웹소설을 추천합니다
+                친구와 이야기할 때, 글로 잘 표현되지 않던 마음과 생각을 술술 표현해본 경험 누구나 있죠? 훌륭한 이야기꾼 팅젤과 이야기하듯 한 문장씩 주고 받으면서 이야기를 완성해 보세요. 지금까지 한번도 상상해보지 않았던 이야기가 술술 나오는 경험을 하게 될 거에요.
                 </p>
               </div>
               <div>
-                <h3>
-                 분당 500타 속도로 써내야 하는 웹소설 연재, 속도를 높여보세요!
-                </h3>
+                <h3>한 문장씩 주고 받으며 쓰는 '1:1 릴레이 소설'</h3>
                 <p>
-                웹소설 작가로는 입문했는데, 빠른 속도로 원고를 보내야 하는 현실 속에서 새로운 소재를 찾기란 쉽지 않습니다. 인공지능과의 색다른 경험을 통해 글 쓰는 속도를 업그레이드 해보세요.
+                이야기하듯 한 문장씩 번갈아가며 써서 완성한 이야기를 잘 다듬어 한편의 소설을 엮어보세요. 내가 쓰지 않은 나머지 반에 대한 지분도 내가 가질 수 있습니다. 100% 당신의 저작물로 만들어보세요!
                 </p>
               </div>
             </div>
@@ -71,24 +69,24 @@ const WebnovelDetail = () => {
               className='Detail2-Content'
             >
               <div>
-                <img src='/writer.png' alt='유저' className='Detail2-img' />
-                <p style={{ marginTop: "25px" }}>웹소설을 한번 써보고 싶은</p>
-                <p>초보 창작자, 작가</p>
+                <img src='/man2.png' alt='유저' className='Detail2-img' />
+                <p style={{ marginTop: "25px" }}>아직 혼자서 긴 이야기를</p>
+                <p>쓸 자신이 없는 사람들</p>
               </div>
               <div>
-                <img src='/person.png' alt='유저'  className='Detail2-img' />
-                <p style={{ marginTop: "25px" }}>연재 마감에 쫓겨 매일</p>
-                <p>새로운 웹소설을 써내야 하는</p>
-                <p>창작자, 작가</p>
+                <img src='/man4.png' alt='유저' className='Detail2-img' />
+                <p style={{ marginTop: "25px" }}>한국어로 텍스트게임을 즐기고 싶은</p>
+                <p>텍스트게임 유저</p>
               </div>
               <div>
                 <img
-                  src='/grandmother.png'
+                  src='/woman6.png'
                   alt='유저'
                   className='Detail2-img'
                 />
-                <p style={{ marginTop: "25px" }}>한때 문학청년이 꿈이었던</p>
-                <p>모든 어른</p>
+                <p style={{ marginTop: "25px" }}>한때 심심이에 빠져 </p>
+                <p>시간 가는지 모르고</p>
+                <p>놀아봤던 사람들</p>
               </div>
             </Box>
           </Box>
@@ -101,26 +99,20 @@ const WebnovelDetail = () => {
               className='Detail3-Content'
             >
               <div>
-                <img
-                  src='/agreement.png'
-                  alt='문서'
-                  className='Detail3-img'
-                />
-                <p>
-                  장르, 주인공, 장소, 소재, 주제 등 필수 입력 항목을 채워보세요.
-                </p>
+                <img src='/agreement.png' alt='문서' className='Detail3-img' />
+                <p>장르, 주인공, 장소, 소재, 주제 등 필수 입력 항목을 채워보세요.</p>
               </div>
               <div>
-                <img src='/ai.png' alt='ai' className='Detail3-img' />
-                <p>인공지능이 이를 인식해 이야기의 도입부를 만들어 줍니다.</p>
+                <img src='/ai.png' alt='writing' className='Detail3-img' />
+                <p>인공지능이 완성한 도입부에 한 문장을 이어 써보세요.</p>
               </div>
               <div>
                 <img src='/chat-box.png' alt='writing' className='Detail3-img' />
-                <p>인공지능과 번갈아가며 웹소설을 전개해 보세요.</p>
+                <p>인공지능과 한 문장씩 번갈아 하나의 이야기를 완성해보세요.</p>
               </div>
             </Box>
             <div className='intoServiceBtn'>
-              <Link to='/app/webnovel'>
+              <Link to='/app/relaynovel'>
                 <button>서비스 이용하기</button>
               </Link>
             </div>
@@ -167,12 +159,10 @@ const WebnovelDetail = () => {
           </div>
         </Box>
 
-       
+      
       </Box>
     </Layout>
   );
 };
 
-export default WebnovelDetail;
-
-
+export default RelayNovelDetail;

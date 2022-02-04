@@ -29,7 +29,10 @@ const BlogerDetail = () => {
          <Box justify='center' align='center' className='BoxContainer'>
         <Box className='DetailHeader' pad='medium'>
           <h1>블로그 쓰기 A to Z</h1>
-          <h2>파워 블로거로 가는 똑똑한 지름길! 독자의 이목을 끄는 매력적인 콘텐츠를 만들어보세요.</h2>
+          <div>
+          <h2>파워 블로거로 가는 똑똑한 지름길!</h2>
+          <h2>독자의 이목을 끄는 매력적인 콘텐츠를 만들어보세요.</h2>
+          </div>
           <hr />
         </Box>
 

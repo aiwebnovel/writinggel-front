@@ -29,7 +29,10 @@ const FairyTaleDetail = () => {
       <Box justify='center' align='center' className='BoxContainer'>
         <Box className='DetailHeader' pad='medium'>
           <h1>릴레이 동화 창작</h1>
-          <h2>인공지능과 바통을 주고 받으며 완성해보는 '릴레이 동화'</h2>
+          <div>
+            <h2>인공지능과 바통을 주고 받으며 완성해보는</h2>
+            <h2>'릴레이 동화'</h2>
+          </div>
           <hr />
         </Box>
 

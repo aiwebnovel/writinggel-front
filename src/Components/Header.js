@@ -17,13 +17,15 @@ import styled from "styled-components";
 const Header = () => {
 
   const { Kakao } = window;
-  const kakao_token = Kakao.Auth.getAccessToken();
+
 
   const History = useHistory();
   const size = useContext(ResponsiveContext);
   const check = sessionStorage.getItem("token");
   const provider = sessionStorage.getItem('provider');
-
+  const userPlan = sessionStorage.getItem('plan');
+  const kakao_token = Kakao.Auth.getAccessToken();
+  
   const [isShow, SetShow] = useState(false);
   const [isShowMenu, SetShowMenu] = useState(false);
   const [profile, SetProfile] = useState({
@@ -45,13 +47,13 @@ const Header = () => {
         await authService.currentUser
           .getIdToken()
           .then(async (data) => {
-          console.log(data)
-            await axios
+         //console.log(data)
+             await axios
             .get(`${config.SERVER_URL}/profile`, {
               headers: { authentication: data},
             })
             .then((response) => {
-              console.log(response)
+              //console.log(response)
               SetProfile({
                 ...profile,
                 isBill: response.data.isBill,
@@ -96,7 +98,7 @@ const Header = () => {
           headers: { authentication: Idtoken },
         })
         .then((response) => {
-         console.log(response)
+         //console.log(response)
           SetProfile({
             ...profile,
             userName:  name,
@@ -142,7 +144,7 @@ const Header = () => {
           headers: { authentication: check },
         })
         .then(async (response) => {
-          console.log(response.data);
+         // console.log(response.data);
 
           SetProfile({
             ...profile,
@@ -182,7 +184,7 @@ const Header = () => {
       headers: { authentication: kakao_token},
     })
     .then((response) => {
-      console.log(response);
+      //console.log(response);
       SetProfile({
         ...profile,
         userName: name,
@@ -259,8 +261,8 @@ const Header = () => {
           </Link>
         </Nav>
         {size !== "small" ? (
-          <Nav direction='row' className='Menus' gap='large' align='center'>
-            <Link to='/signIn' className={Plan === 'free' || Plan === '0' || Plan === '' ? "MenusLink" : "displayNone"}>
+          <Nav direction='row' className='Menus' gap="large" align='center'>
+            <Link to='/signIn' className={userPlan === 'free' || userPlan === '0' || userPlan === null ? "MenusLink" : "displayNone"}>
               <MemButton>멤버십 가입</MemButton>
             </Link>
             <Link to='/brand'>브랜드 소개</Link>
@@ -268,7 +270,7 @@ const Header = () => {
               인공지능 글쓰기 서비스 <Down size='small' />
               <ul className='DropDown'>
                 <li>
-                  <Link to='/service/webnovel'>웹소설 창작</Link>
+                  <Link to='/service/webnovel'>릴레이 웹소설 창작</Link>
                 </li>
                 <li>
                   <Link to='/service/bloger'>블로그 글쓰기</Link>
@@ -296,6 +298,12 @@ const Header = () => {
                 </li>
                 <li>
                   <Link to='/service/storysrc'>이야기 재료 찾기</Link>
+                </li>
+                {/* <li>
+                  <Link to='/service/relaynovel'>1:1 릴레이 소설</Link>
+                </li> */}
+                <li>
+                  <Link to='/service/coverletter'>대입 자소서 자동 완성</Link>
                 </li>
               </ul>
             </span>
@@ -330,7 +338,7 @@ const Header = () => {
           }}
         >
           <Nav direction='column' className='MobileMenus'>
-            <Link to='/signIn' className={Plan === 'free' || Plan === '0' || Plan === ''? "MenusLink" : "displayNone"}>
+            <Link to='/signIn' className={userPlan === 'free' || userPlan === '0' || userPlan === null ? "MenusLink" : "displayNone"}>
               멤버십 가입
             </Link>
             <Link to='/brand'>브랜드 소개</Link>
@@ -340,7 +348,7 @@ const Header = () => {
             {MobileSubMenu && (
               <ul className='MobileDropDown'>
                 <li>
-                  <Link to='/service/webnovel'>웹소설 창작</Link>
+                  <Link to='/service/webnovel'>릴레이 웹소설 창작</Link>
                 </li>
                 <li>
                   <Link to='/service/bloger'>블로그 글쓰기</Link>
@@ -368,6 +376,12 @@ const Header = () => {
                 </li>
                 <li>
                   <Link to='/service/storysrc'>이야기 재료 찾기</Link>
+                </li>
+                {/* <li>
+                  <Link to='/service/relaynovel'>릴레이 웹소설</Link>
+                </li> */}
+                <li>
+                  <Link to='/service/coverletter'>대입 자소서 완성</Link>
                 </li>
               </ul>
             )}
@@ -427,6 +441,7 @@ const MemButton = styled.button`
   background-color: #fff;
   padding: 5px 20px;
   cursor: pointer;
+  font-size : 0.9rem;
   transition: all 300ms ease-in-out;
 
   &:hover {

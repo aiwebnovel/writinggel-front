@@ -214,6 +214,7 @@ const Login = () => {
   const LoginKakao = () => {
     Kakao.Auth.authorize({
       redirectUri: "https://tinytingel.ai/oauth",
+      //redirectUri: "https://1d54-183-98-33-132.ngrok.io/oauth",
     });
   };
 
@@ -272,8 +273,8 @@ const Login = () => {
             <img src='/logo2.png' alt='로그인 이미지' />
           </Link>
         </div>
-        <Box className='LoginBox'>
-          <Box>
+        <Box className='LoginBox' >
+          <Box >
             <div className='loginTitle'>
               <h2>로그인</h2>
               <p>로그인 후 라이팅젤 서비스를 즐겨보세요!</p>

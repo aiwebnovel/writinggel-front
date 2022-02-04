@@ -28,10 +28,13 @@ const StorySrcDetail = () => {
       <Box justify="center" align="center" className="BoxContainer">
         <Box className="DetailHeader" pad="medium">
           <h1>이야기 재료 찾기</h1>
-          <h2>
-            모든 이야기는 점에서 시작합니다. 점을 선으로, 선을 면으로
-            확장해보세요.
-          </h2>
+          <div>
+            <h2>
+              모든 이야기는 점에서 시작합니다. 
+            </h2>
+            <h2>점을 선으로, 선을 면으로
+              확장해보세요.</h2>
+            </div>
           <hr />
         </Box>
 

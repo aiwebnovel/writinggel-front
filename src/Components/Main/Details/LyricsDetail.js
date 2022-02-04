@@ -3,38 +3,33 @@ import { Link } from "react-router-dom";
 import Layout from "../../Layout";
 import { Box, Grid, ResponsiveContext } from "grommet";
 import { StatusGood } from "grommet-icons";
-import ScrollToTop from '../../../routes/ScrollToTop';
-import TagManager from 'react-gtm-module';
+import ScrollToTop from "../../../routes/ScrollToTop";
+import TagManager from "react-gtm-module";
 // import styled from "styled-components";
 
 const LyricsDetail = () => {
   const size = useContext(ResponsiveContext);
 
-
-  useEffect(()=>{
-
+  useEffect(() => {
     TagManager.dataLayer({
       dataLayer: {
-        event: 'pageview',
-        pagePath: '/service/lyrics',
-        pageTitle: '영어가사 소개',
+        event: "pageview",
+        pagePath: "/service/lyrics",
+        pageTitle: "영어가사 소개",
       },
     });
-
-  },[])
-
+  }, []);
 
   return (
     <Layout>
-       <ScrollToTop/>
+      <ScrollToTop />
       <Box justify='center' align='center' className='BoxContainer'>
         <Box className='DetailHeader' pad='medium'>
           <h1>영어 가사 쓰기</h1>
-          <h2>
-            나도 랩이나 노래 속에 영어 가사 넣고 싶다. 문법, 맞춤법 틀릴 걱정
-            없이 정확하게.
-          </h2>
-
+          <div>
+            <h2>나도 랩이나 노래 속에 영어 가사 넣고 싶다.</h2>
+            <h2>문법, 맞춤법 틀릴 걱정없이 정확하게.</h2>
+          </div>
           <hr />
         </Box>
 
@@ -51,13 +46,18 @@ const LyricsDetail = () => {
               <div>
                 <h3>래퍼들은 가사 쓸 때 번역기를 돌릴까?</h3>
                 <p>
-                다들 외국에 살다온 원어민처럼 랩이나 노래 가사를 쉽게 써내는데, 나만 어렵게 느껴지나요? 인공지능 영어 가사 쓰기로 도전해보세요. 맞춤법이나 문법 걱정 없이 가져다 쓰실 수 있습니다.
+                  다들 외국에 살다온 원어민처럼 랩이나 노래 가사를 쉽게
+                  써내는데, 나만 어렵게 느껴지나요? 인공지능 영어 가사 쓰기로
+                  도전해보세요. 맞춤법이나 문법 걱정 없이 가져다 쓰실 수
+                  있습니다.
                 </p>
               </div>
               <div>
                 <h3>영어 실력을 키울 수 있습니다.</h3>
                 <p>
-                단어, 문법을 학습하는 차원을 넘어 실제 창작물에 적용된 영어를 만날 수 있습니다. 내 취향, 필요에 맞게 수정하면서 영어 실력을 더 향상해보세요.
+                  단어, 문법을 학습하는 차원을 넘어 실제 창작물에 적용된 영어를
+                  만날 수 있습니다. 내 취향, 필요에 맞게 수정하면서 영어 실력을
+                  더 향상해보세요.
                 </p>
               </div>
             </div>
@@ -77,17 +77,11 @@ const LyricsDetail = () => {
               </div>
               <div>
                 <img src='/woman6.png' alt='유저' className='Detail2-img' />
-                <p style={{ marginTop: "25px" }}>
-                이제 막 배우기 시작한
-                </p>
+                <p style={{ marginTop: "25px" }}>이제 막 배우기 시작한</p>
                 <p>영어의 감각을 키워보고 싶은 사람</p>
               </div>
               <div>
-                <img
-                  src='/man3.png'
-                  alt='유저'
-                  className='Detail2-img'
-                />
+                <img src='/man3.png' alt='유저' className='Detail2-img' />
                 <p style={{ marginTop: "25px" }}>영어로 가사를 넣고 싶은</p>
                 <p>크리에이터</p>
               </div>
@@ -103,9 +97,7 @@ const LyricsDetail = () => {
             >
               <div>
                 <img src='/agreement.png' alt='문서' className='Detail3-img' />
-                <p>
-                창작하고자 하는 주제를 키워드로 간단히 입력해보세요.
-                </p>
+                <p>창작하고자 하는 주제를 키워드로 간단히 입력해보세요.</p>
               </div>
               <div>
                 <img src='/ai.png' alt='ai' className='Detail3-img' />
@@ -163,7 +155,6 @@ const LyricsDetail = () => {
             </Link>
           </div>
         </Box>
-
       </Box>
     </Layout>
   );
