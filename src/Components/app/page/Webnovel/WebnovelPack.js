@@ -7,7 +7,7 @@ import ScrollToTop from "../../../../routes/ScrollToTop";
 import * as configUrl from "../../../../config";
 
 import TagManager from "react-gtm-module";
-import { Box, Grid, ResponsiveContext } from "grommet";
+import { Box, ResponsiveContext } from "grommet";
 import { toast } from "react-toastify";
 import styled from "styled-components";
 

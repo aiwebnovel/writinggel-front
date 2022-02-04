@@ -1,4 +1,4 @@
-import { atom, selector } from 'recoil'
+import { atom } from 'recoil'
 
 export const outputFollowState = atom({
     key: 'outputFollowState',
@@ -25,20 +25,4 @@ export const FollowSelectOption = atom({
     key: 'FollowSelectOption',
     default : ''
 })
-
-// export const OutputSelect = selector({
-//     key:'OutputSelect',
-//     get: ({get}) => {
-//         const output = get(outputFollowState)
-        
-//     }
-// })
-
-// export const PlanSelect = selector({
-//     key:'PlanSelect',
-//     get: ({get}) => {
-//         const plan = get(PayPlanState)
-//         return parseInt(plan);
-//     }
-// })
 

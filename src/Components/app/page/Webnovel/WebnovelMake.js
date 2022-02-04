@@ -38,8 +38,9 @@ const [index, setIndex] = useState(firstIndex);
 
   useEffect(() => {
     const loginCheck = sessionStorage.getItem("token");
+    //console.log(loginCheck);
 
-    if (loginCheck !== null || index !== undefined) {
+    if (loginCheck !== null) {
       
         axios
         .get(`${configUrl.SERVER_URL}/profile`, {
@@ -74,7 +75,7 @@ const [index, setIndex] = useState(firstIndex);
             onClick={() => onActive(1)}
             >
                 <div>
-                    <span></span>도입부 쓰기
+                    <span>도입부 쓰기</span>
                 </div>
             </button>
             <button className={ index === 2 ? 'active'  : 'TabBtn'} 

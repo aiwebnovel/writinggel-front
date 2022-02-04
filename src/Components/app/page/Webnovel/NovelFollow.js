@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { Box, ResponsiveContext } from "grommet";
@@ -27,6 +27,7 @@ const NovelFollow = ({ isBill, count }) => {
   const output = useRecoilValue(outputFollowState);
   const category = useRecoilValue(FollowSettingState);
   const options = useRecoilValue(FollowSelectOption);
+  //console.log(category, options, output);
 
   const setOutput = useSetRecoilState(outputFollowState);
   const setCategory = useSetRecoilState(FollowSettingState);
@@ -43,8 +44,7 @@ const NovelFollow = ({ isBill, count }) => {
     followtempLength: 0,
   });
 
-  
-  const { outputKr, outputEng, outputLength, tempLength, preOutputKr, preOutputEng } = output;
+  const { outputKr, outputEng, outputLength, tempLength } = output;
   const { Main_character, Place, Time, Main_Events, Theme } = category;
   const { followKr, followEng, followLength, followtempLength } = follow;
 
@@ -94,10 +94,10 @@ const NovelFollow = ({ isBill, count }) => {
 
   //recoil로 가져온 state가 ""일 때, 아닐 때 비교해서 진행해야.
   //recoil_state !== null -> 도입부에서 이어쓰기로 들어왔을 때
-  //recoil_state === null -> 맨 처음 화면에서 이어쓰기로 바로 들어왔을 때 (recoil인 state 말고 이 컴포넌트 안에 있는 state로 진행해야.)
+  //recoil_state === null -> 맨 처음 화면에서 이어쓰기로 바로 들어왔을 때 (recoil인 state 말고 이 컴포넌트 안에 있는 state로 진행.)
 
   //recoil !null -> 도입부에서 이어쓰기로 -> recoil로 계속 진행. (분기1)
-  //recoil null , follow state null(분기2) -> 이어쓰기 바로
+  //recoil null , follow state null(분기2) -> 이어쓰기 바로/ follow 없으면 alert
   //recoil null, follow state !null(분기3) -> 이어쓰기 바로 / follow 이어쓰기
 
   const MakeFollow = async () => {
@@ -157,7 +157,7 @@ const NovelFollow = ({ isBill, count }) => {
               console.log(response);
               if (response.data[0] === "") {
                 toast.error(
-                  "적어주신 키워드가 적절하지 않은 것 같습니다.😭 재시도 해주세요!"
+                  "적어주신 키워드가 적절하지 않거나 결과가 나오지 않았습니다.😭 재시도 해주세요!"
                 );
               } else {
                 setOutput({
@@ -261,7 +261,7 @@ const NovelFollow = ({ isBill, count }) => {
               console.log(response);
               if (response.data[0] === "") {
                 toast.error(
-                  "적어주신 키워드가 적절하지 않은 것 같습니다.😭 재시도 해주세요!"
+                  "적어주신 키워드가 적절하지 않거나 결과가 나오지 않았습니다.😭 재시도 해주세요!"
                 );
               } else {
                 setFollow({
@@ -288,6 +288,11 @@ const NovelFollow = ({ isBill, count }) => {
                   }
                 );
               }
+
+              if (error.response.status === 429) {
+                toast.warn('요청이 너무 많습니다. 잠시 후에 시도해주세요!')
+              }
+
               if (error.response.status === 412) {
                 toast.info(`로그인이 필요합니다!`, {
                   icon: "🙅‍♀️",
@@ -324,7 +329,7 @@ const NovelFollow = ({ isBill, count }) => {
 
   const handleChange = (e) => {
     if (outputKr !== "") {
-      console.log(e.target.value.length, outputLength, tempLength)
+      //console.log(e.target.value.length, outputLength, tempLength)
       setOutput({
         ...output,
         outputKr: e.target.value,

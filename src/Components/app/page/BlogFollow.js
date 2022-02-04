@@ -180,6 +180,10 @@ const BlogFollow = () => {
                 }
               );
             }
+            if (error.response.status === 429) {
+              toast.warn('요청이 너무 많습니다. 잠시 후에 시도해주세요!')
+            }
+
             if (error.response.status === 412) {
               toast.info(`로그인이 필요합니다!`, {
                 icon: "🙅‍♀️",
@@ -235,7 +239,7 @@ const BlogFollow = () => {
           headers: { authentication: sessionStorage.getItem("token") },
         })
         .then((res) => {
-          console.log(res)
+          //console.log(res)
           let count = res.data.membership_count;
           SetCount(count);
           SetBill(res.data.isBill);

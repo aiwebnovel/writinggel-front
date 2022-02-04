@@ -56,8 +56,8 @@ const RelayNovel = () => {
 
   const HandleFollow = (e) => {
     const sentence = e.target.value;
-      setFollow(sentence);
-      //console.log(sentence);
+    setFollow(sentence);
+    //console.log(sentence);
   };
 
   const HandleModals = () => {
@@ -74,10 +74,8 @@ const RelayNovel = () => {
         Place !== "" &&
         Time !== "" &&
         Main_Events !== "" &&
-        Theme !== "" 
+        Theme !== ""
       ) {
-       
-
         if (outputKr === "") {
           const config = {
             method: "post",
@@ -103,7 +101,7 @@ const RelayNovel = () => {
 
               if (data[0] === "") {
                 toast.error(
-                  "적어주신 키워드가 적절하지 않은 것 같습니다.😭 재시도 해주세요!"
+                  "적어주신 키워드가 적절하지 않거나 결과가 나오지 않았습니다.😭 재시도 해주세요!"
                 );
                 setLoading(false);
               } else {
@@ -116,81 +114,8 @@ const RelayNovel = () => {
                 setLoading(false);
               }
 
-
-            if (response.data[2] >= 2) {
-              toast.error(`결과물에 유해한 내용이 들어가 버렸어요. 😭 `);
-            }
-            })
-            .catch((error) => {
-              console.log(error);
-              if (error.response.status === 403) {
-                setLoading(false);
-                toast.info(
-                  "무료 사용이 끝났습니다. 멤버십 가입을 통해 서비스를 이용하실 수 있어요!",
-                  {
-                    icon: "⚠️",
-                    progressStyle: { backgroundColor: "#7D4CDB" },
-                  }
-                );
-              }
-              if (error.response.status === 500) {
-                setLoading(false);
-                toast.info(
-                  "여러 번 새로고침 후에도 똑같은 오류가 뜰 시, 해당 오류는 관리자에게 문의 해주세요.",
-                  {
-                    icon: "⚠️",
-                    progressStyle: { backgroundColor: "#7D4CDB" },
-                  }
-                );
-              }
-              setLoading(false);
-            });
-        } else {
-
-        if(follow !== '') {
-          setLoading(true);
-          const newOutputKr = outputKr + `\n` + follow + `\n`;
-
-         // console.log(outputKr);
-         // console.log(follow);
-        //console.log(newOutputKr);
-
-          const configFollow = {
-            method: "post",
-            url: `${configUrl.SERVER_URL}/writinggel/novelpackage`,
-            headers: { authentication: loginCheck },
-            data: {
-              option: "follow",
-              Theme: Theme,
-              Main_character: Main_character,
-              Genre: options,
-              Place: Place,
-              Main_event: Main_Events,
-              Period: Time,
-              StoryFollow: newOutputKr,
-            },
-          };
-
-          await axios(configFollow)
-            .then(async (response) => {
-              console.log(response);
-              const data = response.data;
-              if (data[0] === "") {
-                toast.error(
-                  "적어주신 키워드가 적절하지 않거나 결과가 나오지 않았습니다.😭 재시도 해주세요!"
-                );
-                setLoading(false);
-              } else {
-                
-                const AllOutput = newOutputKr + data[0];
-                const replaceOutput = AllOutput.replaceAll('-','')
-                setOutput({
-                  ...output,
-                  outputKr: replaceOutput,
-                  outputEng: outputEng + data[1],
-                });
-                setFollow('');
-                setLoading(false);
+              if (response.data[2] >= 2) {
+                toast.error(`결과물에 유해한 내용이 들어가 버렸어요. 😭 `);
               }
             })
             .catch((error) => {
@@ -218,9 +143,79 @@ const RelayNovel = () => {
               setLoading(false);
             });
         } else {
-          toast.error('이어갈 문장을 써주세요!');
+          if (follow !== "") {
+            setLoading(true);
+            const newOutputKr = outputKr + `\n` + follow + `\n`;
+
+            // console.log(outputKr);
+            // console.log(follow);
+            console.log(newOutputKr);
+
+            const configFollow = {
+              method: "post",
+              url: `${configUrl.SERVER_URL}/writinggel/novelpackage`,
+              headers: { authentication: loginCheck },
+              data: {
+                option: "follow",
+                Theme: Theme,
+                Main_character: Main_character,
+                Genre: options,
+                Place: Place,
+                Main_event: Main_Events,
+                Period: Time,
+                StoryFollow: newOutputKr,
+              },
+            };
+
+            await axios(configFollow)
+              .then(async (response) => {
+                console.log(response);
+                const data = response.data;
+                if (data[0] === "") {
+                  toast.error(
+                    "적어주신 키워드가 적절하지 않거나 결과가 나오지 않았습니다.😭 재시도 해주세요!"
+                  );
+                  setLoading(false);
+                } else {
+                  const AllOutput = newOutputKr + data[0];
+                  const replaceOutput = AllOutput.replaceAll("-", "");
+                  setOutput({
+                    ...output,
+                    outputKr: replaceOutput,
+                    outputEng: outputEng + data[1],
+                  });
+                  setFollow("");
+                  setLoading(false);
+                }
+              })
+              .catch((error) => {
+                console.log(error);
+                if (error.response.status === 403) {
+                  setLoading(false);
+                  toast.info(
+                    "무료 사용이 끝났습니다. 멤버십 가입을 통해 서비스를 이용하실 수 있어요!",
+                    {
+                      icon: "⚠️",
+                      progressStyle: { backgroundColor: "#7D4CDB" },
+                    }
+                  );
+                }
+                if (error.response.status === 500) {
+                  setLoading(false);
+                  toast.info(
+                    "여러 번 새로고침 후에도 똑같은 오류가 뜰 시, 해당 오류는 관리자에게 문의 해주세요.",
+                    {
+                      icon: "⚠️",
+                      progressStyle: { backgroundColor: "#7D4CDB" },
+                    }
+                  );
+                }
+                setLoading(false);
+              });
+          } else {
+            toast.error("이어갈 문장을 써주세요!");
+          }
         }
-      }
       } else {
         toast.error("빈 칸을 채워주세요!");
       }
@@ -270,16 +265,17 @@ const RelayNovel = () => {
           if (error.response.status === 403) {
             toast.error("보관함이 꽉 찼습니다!");
           }
-         
+
           if (error.response.status === 500) {
-            toast.error("여러 번 시도 후에도 똑같은 오류가 뜰 시, 해당 에러는 관리자에게 문의해주세요.");
+            toast.error(
+              "여러 번 시도 후에도 똑같은 오류가 뜰 시, 해당 에러는 관리자에게 문의해주세요."
+            );
           }
         });
     } else {
       toast.info("저장할 결과가 없습니다!");
     }
   };
-
 
   useEffect(() => {
     if (loginCheck !== null) {
@@ -420,9 +416,7 @@ const RelayNovel = () => {
                       <CopyToClipboard text={outputKr} onCopy={onCopied}>
                         <Clone style={{ cursor: "pointer" }} />
                       </CopyToClipboard>
-                      <Download
-                      onClick={SaveContent}
-                      />
+                      <Download onClick={SaveContent} />
                     </div>
                   </div>
                   <button
@@ -489,7 +483,7 @@ const Reset = styled.div`
     font-size: 1rem;
     border-bottom: 1px solid #444;
     cursor: pointer;
-    color : #444;
+    color: #444;
 
     &:hover {
       font-weight: 600;

@@ -133,7 +133,7 @@ const Businessitem = () => {
           headers: { authentication: sessionStorage.getItem("token") },
         })
         .then((res) => {
-         console.log(res)
+         //console.log(res)
           let count = res.data.membership_count;
           SetCount(count);
           SetBill(res.data.isBill);

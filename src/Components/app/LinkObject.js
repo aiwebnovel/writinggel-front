@@ -1,7 +1,7 @@
 const LinkObject = [
   {
     id:1,
-    title: "웹소설 창작 패키지",
+    title: "릴레이 웹소설 창작",
     link: "/app/webnovel",
     detail: '/service/webnovel',
   },
@@ -62,15 +62,21 @@ const LinkObject = [
   },
   {
     id:11,
-    title: "1:1 릴레이 소설",
-    link: "/app/relayNovel",
-    detail: '/service/relaynovel',
-  },
-  {
-    id:12,
     title: "대입 자소서 자동 완성",
     link: "/app/coverLetter",
     detail: '/service/coverletter',
+  },
+    // {
+  //   id:12,
+  //   title: "1:1 릴레이 소설",
+  //   link: "/app/relayNovel",
+  //   detail: '/service/relaynovel',
+  // },
+  {
+    id:12,
+    title: "Coming Soon!",
+    link: "/",
+    detail: '/',
   },
   {
     id:13,

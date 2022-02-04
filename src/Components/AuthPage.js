@@ -14,8 +14,8 @@ const AuthPage = () => {
     const code = search.searchParams.get("code");
     // sessionStorage.setItem("search", search);
     // sessionStorage.setItem("code", code);
-    //const redirectUri = 'https://tinytingel.ai/oauth'
-    const redirectUri = 'https://57c9-183-98-33-132.ngrok.io/oauth'
+    const redirectUri = 'https://tinytingel.ai/oauth'
+    // const redirectUri = 'https://1d54-183-98-33-132.ngrok.io/oauth'
     //console.log(redirectUri);
 
     if (code !== undefined) {
@@ -59,7 +59,7 @@ const AuthPage = () => {
 
           await axios(config)
             .then(async (res) => {
-              console.log(res);
+              //console.log(res);
               sessionStorage.setItem("token", access);
      
               await Kakao.API.request({
@@ -91,7 +91,7 @@ const AuthPage = () => {
                 Kakao.API.request({
                   url: "/v2/user/me",
                   success: (response) => {
-                    console.log(response);
+                    //console.log(response);
                     //let id = response.id;
                     let email = response.kakao_account.email;
                     let profile = response.kakao_account.profile;

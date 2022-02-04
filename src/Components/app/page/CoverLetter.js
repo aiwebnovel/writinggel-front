@@ -72,7 +72,7 @@ const CoverLetter = () => {
 
         await axios(config)
           .then(async (response) => {
-            console.log(response);
+            //console.log(response);
             const data = response.data;
             if (data[0] === "") {
               toast.error('결과가 나오지 않았습니다😭');
