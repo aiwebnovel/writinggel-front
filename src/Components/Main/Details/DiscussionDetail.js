@@ -30,10 +30,12 @@ const DiscussionDetail = () => {
       <Box justify='center' align='center' className='BoxContainer'>
         <Box className='DetailHeader' pad='medium'>
           <h1>찬반 논거 찾기</h1>
+          <div>
           <h2>
-            특정 이슈에 대한 자신만의 의견을 갖고 싶나요? 탄탄하고 균형잡힌 글을
-            쓸 수 있습니다
+            특정 이슈에 대한 자신만의 의견을 갖고 싶나요? 
           </h2>
+          <h2>탄탄하고 균형잡힌 글을 쓸 수 있습니다</h2>
+            </div>
           <hr />
         </Box>
 

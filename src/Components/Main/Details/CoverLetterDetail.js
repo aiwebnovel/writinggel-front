@@ -2,20 +2,18 @@ import React, { useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Layout from "../../Layout";
 import { Box, Grid, ResponsiveContext } from "grommet";
-import { StatusGood } from "grommet-icons";
 import ScrollToTop from "../../../routes/ScrollToTop";
 import TagManager from "react-gtm-module";
-import styled from "styled-components";
 
-const DailyWriteDetail = () => {
+const CoverLetterDetail = () => {
   const size = useContext(ResponsiveContext);
 
   useEffect(() => {
     TagManager.dataLayer({
       dataLayer: {
         event: "pageview",
-        pagePath: "/service/dailywrite",
-        pageTitle: "일상기록 소개",
+        pagePath: "/service/coverletter",
+        pageTitle: "대입 자소서 완성 소개",
       },
     });
   }, []);
@@ -25,10 +23,12 @@ const DailyWriteDetail = () => {
       <ScrollToTop />
       <Box justify='center' align='center' className='BoxContainer'>
         <Box className='DetailHeader' pad='medium'>
-          <h1>일상기록 질문 카드뽑기</h1>
+          <h1>대입 자소서 완성</h1>
           <div>
-            <h2>일상 기록은 영감의 원천입니다.</h2>
-            <h2> 익숙하고 평범한 일상을 새로운 관점으로 바라보세요!</h2>
+            <h2>
+              자기소개서 질문 앞에만 서면 작아지나요? 
+            </h2>
+            <h2>자동 완성으로 자신감을 높여보세요.</h2>
           </div>
           <hr />
         </Box>
@@ -44,47 +44,22 @@ const DailyWriteDetail = () => {
             <img src='/lantern.png' alt='팅젤이' className='Detail-img' />
             <div className='Detail-TextBox'>
               <div>
-                <h3>
-                  몇몇 유명 작가들은 일기 쓰기가 창의력에 미치는 영향을
-                  보여줍니다.
-                </h3>
+                <h3>당신의 자소서는 이미 완성되어 있습니다.</h3>
                 <p>
-                  헨리 데이비드 소로, 앤 프랭크, 버지니아 울프, 앙드레 지드,
-                  오스카 와일드, 알베르 카뮈 등
-                  <a
-                    href='https://www.themarginalian.org/2014/09/04/famous-writers-on-keeping-a-diary/'
-                    target='_blank'
-                    rel='noreferrer'
-                  >
-                    일상을 기록하며 자신의 작품 세계를 완성한 작가들
-                  </a>
-                  이 많습니다.
-                </p>
-                <QuoteBox>
-                  <h4>
-                    🖊 The habit of writing thus for my own eye only is good
-                    practice.
-                  </h4>
-                  <p>나만의 시각을 위해 쓰는 습관은 좋은 연습이다.</p>
-                  <p style={{ textAlign: "right" }}>- 버지니아 울프</p>
-                </QuoteBox>
-              </div>
-              <div>
-                <h3>
-                  나의 사소한 일상 속에 이미 숨어있는 이야기를 발견해보세요.
-                </h3>
-                <p>
-                  나의 삶, 일상 속에서 글쓰기 소재를 발견할 수 있도록 질문을
-                  랜덤으로 제시합니다. 예기치 못한 질문의 답을 글로 써보면,
-                  나만의 이야기가 하나씩 쌓일 거에요.
+                  어떻게 써야 할지 몰라서 망설여질 뿐이죠. 팅젤이 자동 완성하는
+                  자소서 답안에서 당신이 이미 가지고 있는 실력과 능력, 경험과
+                  자원 중에 어떤 것들을 골라 쓸 수 있을지, 힌트를 얻어 보세요.
+                  자소서 답안을 당신에게 어울리게 다듬어서 이미 완성형인 당신을
+                  멋지게 소개해보세요.
                 </p>
               </div>
               <div>
-                <h3>관점만 바꿔도 이야기가 됩니다.</h3>
+                <h3>당신의 꿈 앞에서 작아지지 마세요.</h3>
                 <p>
-                  별 생각 없이 당연하게 살았던 일상을 지금까지와는 다른 관점에서
-                  바라볼 수 있습니다. 새로운 관점은 삶의 생기를 갖게 하고,
-                  당신의 창의력을 자극시킬 거에요.
+                  대학교에 진학해서 원하는 공부를 하고 싶은데, 자소서에 막혀서
+                  꿈을 포기하는 일이 있어서는 안 되죠. 희망하는 전공을 입력하면,
+                  전공에 필요한 역량에 맞는 답안을 제시합니다. 전공에 필요한
+                  당신의 역량을 발견해서 꿈을 이뤄보세요.
                 </p>
               </div>
             </div>
@@ -98,25 +73,28 @@ const DailyWriteDetail = () => {
               className='Detail2-Content'
             >
               <div>
-                <img src='/woman5.png' alt='유저' className='Detail2-img' />
+                <img src='/woman.png' alt='유저' className='Detail2-img' />
                 <p style={{ marginTop: "25px" }}>
-                  셀프 브랜딩, 자아 성장을 목적으로
+                대학 입학을 코앞에 두고
                 </p>
-                <p>나 자신을 만나고 싶은 사람들</p>
+                <p>자기소개서를 작성해야 하는 </p>
+                <p>고3 청소년, N수생, 그리고 부모</p>
               </div>
               <div>
-                <img src='/writer.png' alt='유저' className='Detail2-img' />
-                <p style={{ marginTop: "25px" }}>나, 그리고 나의 일상을</p>
-                <p>콘텐츠로 표현하고 싶은 사람들</p>
+                <img src='/woman3.png' alt='유저' className='Detail2-img' />
+                <p style={{ marginTop: "25px" }}>
+                자기소개서를 잘 쓸 수 있도록
+                </p>
+                <p>코칭하는 교육 컨설턴트</p>
               </div>
               <div>
                 <img
-                  src='/grandfather.png'
+                  src='/grandfather2.png'
                   alt='유저'
                   className='Detail2-img'
                 />
-                <p style={{ marginTop: "25px" }}>평범하고 익숙한 일상 속에서</p>
-                <p>새로운 관점을 가지고 싶은 사람</p>
+                <p style={{ marginTop: "25px" }}>자기소개서를 대비해 교내외 생활을</p>
+                <p>미리 설계하고 싶은 청소년, 부모</p>
               </div>
             </Box>
           </Box>
@@ -131,27 +109,19 @@ const DailyWriteDetail = () => {
               <div>
                 <img src='/agreement.png' alt='문서' className='Detail3-img' />
                 <p>
-                  매일 아침이나 저녁 일정한 시간에 일상 기록 질문 카드를 활용해
-                  자신을 돌아볼 수 있습니다.
+                대학교 공통질문 세 개 중에 원하는 질문과 희망 전공을 선택합니다.
                 </p>
               </div>
               <div>
                 <img src='/ai.png' alt='ai' className='Detail3-img' />
                 <p>
-                  하나 둘 씩 쌓이는 이야기를 활용해 하나의 콘텐츠로 발행할 수
-                  있습니다.
+                인공지능이 제안하는 답변을 자신의 상황에 맞게 다듬어서 자기소개서를 작성합니다.
                 </p>
               </div>
-              <div>
-                <img src='/note.png' alt='writing' className='Detail3-img' />
-                <p>
-                  글을 쓰면서 얻은 영감을 바탕으로 새로운 이야기를 만들어낼 수
-                  있습니다.
-                </p>
-              </div>
+              
             </Box>
             <div className='intoServiceBtn'>
-              <Link to='/app/Dailywrite'>
+              <Link to='/app/coverletter'>
                 <button>서비스 이용하기</button>
               </Link>
             </div>
@@ -202,15 +172,4 @@ const DailyWriteDetail = () => {
   );
 };
 
-export default DailyWriteDetail;
-
-const QuoteBox = styled.div`
-  background-color: #f7f6f3;
-  padding: 15px;
-  margin-top: 20px;
-
-  > h4,
-  p {
-    font-size: 16px;
-  }
-`;
+export default CoverLetterDetail;

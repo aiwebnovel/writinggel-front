@@ -15,6 +15,8 @@ import DiscussionDetail from '../Components/Main/Details/DiscussionDetail';
 import LoveLetterDetail from '../Components/Main/Details/LoveLetterDetail';
 import DailyWriteDetail from '../Components/Main/Details/DailyWriteDeatil';
 import StorySrcDetail from '../Components/Main/Details/StorySrcDetail';
+// import RelayNovelDetail from '../Components/Main/Details/RelayNovelDetail';
+import CoverLetterDetail from '../Components/Main/Details/CoverLetterDetail';
 
 import NewsLetter from '../Components/Main/Newsletter';
 import FaQ from '../Components/Main/FaQ';
@@ -43,8 +45,10 @@ import Lyrics from '../Components/app/page/Lyrics';
 import LoveLetter from '../Components/app/page/LoveLetter';
 import Dailywrite from '../Components/app/page/DailyWrite';
 import Storysrc from '../Components/app/page/Storysrc';
-import Login from '../Components/Login';
+// import RelayNovel from '../Components/app/page/RelayNovel';
+import CoverLetter from '../Components/app/page/CoverLetter';
 
+import Login from '../Components/Login';
 import FightingGel from '../Components/event/FightingGel';
 //import GoBrowser from '../Components/GoBrowser';
 import Register from '../Components/Register';
@@ -56,6 +60,8 @@ import NotFound from './404';
 import { RecoilRoot } from 'recoil';
 import FailPay from './failPay';
 import PayRedirect from '../Components/Membership/PayRedirect';
+// import WebnovelPack from '../Components/app/page/Webnovel/WebnovelPack';
+// import WebnovelMake from '../Components/app/page/Webnovel/WebnovelMake';
 
 
 function App() {
@@ -81,6 +87,8 @@ function App() {
         <Route exact path="/service/loveletter" component={LoveLetterDetail}></Route>
         <Route exact path="/service/dailywrite" component={DailyWriteDetail}></Route>
         <Route exact path="/service/storysrc" component={StorySrcDetail}></Route>
+        {/* <Route exact path="/service/relaynovel" component={RelayNovelDetail}></Route> */}
+        <Route exact path='/service/coverletter' component={CoverLetterDetail}></Route>
         {/* <Route exact path="/check" component={GoBrowser}></Route> */}
   
         <Route exact path="/newsletter" component={NewsLetter}></Route>
@@ -96,7 +104,9 @@ function App() {
         <Route exact path='/fightingGel' component={FightingGel}></Route>
 
       {/* service */}
-        <Route exact path="/app/webnovel" component={Webnovel}></Route>
+       <Route exact path="/app/webnovel" component={Webnovel}></Route>
+        {/* <Route exact path="/app/webnovel" component={WebnovelPack}></Route>
+        <Route exact path="/app/makenovel" component={WebnovelMake}></Route> */}
         
         <Route exact path="/app/bloger/idea" component={BlogIdea}></Route>
         <Route exact path="/app/bloger/name" component={BlogName}></Route>
@@ -113,6 +123,8 @@ function App() {
         <Route exact path="/app/loveletter" component={LoveLetter}></Route>
         <Route exact path="/app/dailywrite" component={Dailywrite}></Route>
         <Route exact path="/app/storysrc" component={Storysrc}></Route>
+        {/* <Route exact path='/app/relaynovel' component={RelayNovel}></Route> */}
+        <Route exact path='/app/coverletter' component={CoverLetter}></Route>
 
         <Route exact path='/pay_redirect' component={PayRedirect}/>
         <Route exact path='/fail' component={FailPay}/>
