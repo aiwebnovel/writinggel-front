@@ -113,6 +113,11 @@ const Register = () => {
     }
   };
 
+  const HandleVerify = () => {
+    console.log('verify')
+  }
+
+
   const GoRegister = () => {
     if (isEmail && isPassword && isCheckPw && RegName) {
       SetLoading(true);
@@ -416,6 +421,9 @@ const Register = () => {
                   <p className={isEmail ? "RegCorrect" : "RegIncorrect"}>
                     {EmailMessage}
                   </p>
+                  <Verify>
+                    <button onClick={HandleVerify}>이메일 인증</button>
+                  </Verify>
                 </div>
                 <div>
                   <label>비밀번호</label>
@@ -447,14 +455,6 @@ const Register = () => {
                 </div>
               </div>
               <div className='isChecked'>
-                {/* <input
-                type='checkbox'
-                name='agree'
-                onClick={(e) => {
-                  HandleChecked(e);
-                }}
-                style={{ width: "15px", height: "15px", marginRight: "5px" }}
-              /> */}
                 <p>
                   <a
                     href='https://appplatform.notion.site/8be8232fff0341799cf8c13728610b6b'
@@ -585,3 +585,23 @@ const Line = styled.div`
   width: 50%;
   border-bottom: 1px solid #aaa;
 `;
+
+const Verify = styled.div`
+  > button {
+    width: 100%;
+    background-color : #b1b5e6;
+    border: 1px solid #b1b5e6;
+    font-weight: 600;
+    padding: 5px 8px;
+    font-size : 1rem;
+    margin-top : 5px;
+   cursor: pointer;
+   transition: all 300ms ease;
+
+   &:hover {
+    font-weight: 600;
+    background-color: #ff9300;
+    border: 1px solid #ff9300;
+  }
+  }
+`
