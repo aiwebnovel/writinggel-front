@@ -12,12 +12,14 @@ import {
   updateProfile,
   setPersistence,
   browserSessionPersistence,
+  sendEmailVerification
 } from "@firebase/auth";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ScrollToTop from "../routes/ScrollToTop";
 import TagManager from "react-gtm-module";
 import Loading from "./SmallLoading";
+import firebase from "firebase/compat";
 
 import * as configUrl from "../config";
 import "../styles/header.scss";
@@ -114,8 +116,34 @@ const Register = () => {
   };
 
   const HandleVerify = () => {
-    console.log('verify')
+    console.log('verify');
+    const auth = getAuth();
+    auth.languageCode = 'ko';
+    createUserWithEmailAndPassword(auth, RegEmail, RegPassword)
+    .then(async (userCredential) => {
+    
+      const user = userCredential.user;
+      const token = user.accessToken;
+
+      console.log(user);
+      console.log(auth.currentUser)
+      await sendEmailVerification(auth.currentUser)
+      .then((res)=>{
+        console.log(res, auth.currentUser)  
+        toast.info('메일이 발송되었습니다.');
+      })
+      .catch((err)=>{
+        console.log(err);
+        toast.error('메일이 발송되지 않았습니다.');
+      })
+
+
+    })
+    .catch((err)=>{
+      console.log(err)
+    })
   }
+  
 
 
   const GoRegister = () => {
@@ -123,61 +151,62 @@ const Register = () => {
       SetLoading(true);
       //console.log("가입");
       const auth = getAuth();
+      console.log(auth.currentUser);
 
-      createUserWithEmailAndPassword(auth, RegEmail, RegPassword)
-        .then(async (userCredential) => {
-          // Signed in
-          const user = userCredential.user;
-          const token = user.accessToken;
+    //   createUserWithEmailAndPassword(auth, RegEmail, RegPassword)
+    //     .then(async (userCredential) => {
+    //       // Signed in
+    //       const user = userCredential.user;
+    //       const token = user.accessToken;
 
-          //console.log(user, token);
+    //       //console.log(user, token);
 
-          updateProfile(user, {
-            displayName: RegName,
-          })
-            .then(async () => {
-              const config = {
-                method: "get",
-                url: `${configUrl.SERVER_URL}/signup`,
-                headers: {
-                  authentication: token,
-                },
-              };
+    //       updateProfile(user, {
+    //         displayName: RegName,
+    //       })
+    //         .then(async () => {
+    //           const config = {
+    //             method: "get",
+    //             url: `${configUrl.SERVER_URL}/signup`,
+    //             headers: {
+    //               authentication: token,
+    //             },
+    //           };
 
-              await axios(config)
-                .then(async (response) => {
-                  //console.log(response);
-                  SetLoading(false);
-                  History.push("/welcome");
-                })
-                .catch((error) => {
-                  console.log(error);
-                  SetLoading(false);
-                  if (error.response.data.errorCode === 108) {
-                    toast.error(
-                      "이미 가입된 유저 또는 가입 불가능한 정보입니다😭"
-                    );
-                    SetLoading(false);
-                  }
-                });
-            })
-            .catch((error) => {
-              console.log(error);
-              SetLoading(false);
-            });
-        })
-        .catch((error) => {
-          const errorCode = error.code;
-          const errorMessage = error.message;
-          const errorIndex = errorMessage.indexOf("email-already-in-us");
-          console.log(errorCode, errorMessage, errorIndex);
-          if (errorIndex !== -1) {
-            toast.error("이미 누군가 쓰고 있는 이메일 입니다.😭");
-            SetLoading(false);
-          } else {
-            toast.error(errorMessage);
-          }
-        });
+    //           await axios(config)
+    //             .then(async (response) => {
+    //               //console.log(response);
+    //               SetLoading(false);
+    //               History.push("/welcome");
+    //             })
+    //             .catch((error) => {
+    //               console.log(error);
+    //               SetLoading(false);
+    //               if (error.response.data.errorCode === 108) {
+    //                 toast.error(
+    //                   "이미 가입된 유저 또는 가입 불가능한 정보입니다😭"
+    //                 );
+    //                 SetLoading(false);
+    //               }
+    //             });
+    //         })
+    //         .catch((error) => {
+    //           console.log(error);
+    //           SetLoading(false);
+    //         });
+    //     })
+    //     .catch((error) => {
+    //       const errorCode = error.code;
+    //       const errorMessage = error.message;
+    //       const errorIndex = errorMessage.indexOf("email-already-in-us");
+    //       console.log(errorCode, errorMessage, errorIndex);
+    //       if (errorIndex !== -1) {
+    //         toast.error("이미 누군가 쓰고 있는 이메일 입니다.😭");
+    //         SetLoading(false);
+    //       } else {
+    //         toast.error(errorMessage);
+    //       }
+    //     });
     } else {
       toast.error("빈 칸이 있거나 유효하지 않은 정보가 있습니다!");
     }
