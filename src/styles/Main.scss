@@ -315,6 +315,12 @@ $red: #f45752;
     height: 100%;
     overflow: hidden;
 
+    display :flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 1920px;
+    margin: 0 auto;
+
     @media screen and (max-width: 768px) {
 
         padding: 80px 40px;
