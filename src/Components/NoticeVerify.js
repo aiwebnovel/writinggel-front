@@ -3,11 +3,11 @@ import { Link } from "react-router-dom";
 import { Box } from "grommet";
 import styled from "styled-components";
 
-const Welcome = () => {
+const NoticeVerify = () => {
 
   return (
-    <Box className="WelcomeContainer">
-       <div className='loginHeader'>
+    <Box className='WelcomeContainer'>
+      <div className='loginHeader'>
         <Link to='/'>
           <img src='/logo2.png' alt='로그인 이미지' />
         </Link>
@@ -15,19 +15,15 @@ const Welcome = () => {
       <Box justify='center' align='center' className='DoneContainer'>
         <Box className='DoneBox'>
           <ImgBox>
-            <img src='tinggle.png' alt='welcomeTing' />
+            <img src='error-4042.png' alt='error' />
           </ImgBox>
-          <div className='DoneText' style={{ wordBreak: 'keep-all'}}>
-            <h2>거의 마지막이에요! 🥳</h2>
-            <p>가입하신 이메일로 인증을 해주시면 회원가입이 완료됩니다!</p>
+          <div className='DoneText' style={{ wordBreak: "keep-all" }}>
+            <h2>이메일 인증에 실패했습니다!</h2>
+            <p>이미 가입되어 있는 메일이거나 사용할 수 없는 메일입니다.</p>
+            <p>유효한 이메일로 다시 가입을 시도해주세요!</p>
           </div>
           <div className='DoneButton'>
-          <button>
-                <Link to='/'>Home</Link>
-            </button>
-            <button>
-                <Link to='/login'>로그인 하기</Link>
-            </button>
+            <button><Link to='/regist'>회원가입</Link></button>
           </div>
         </Box>
       </Box>
@@ -35,7 +31,7 @@ const Welcome = () => {
   );
 };
 
-export default Welcome;
+export default NoticeVerify;
 
 const ImgBox = styled.div`
   text-align: center;

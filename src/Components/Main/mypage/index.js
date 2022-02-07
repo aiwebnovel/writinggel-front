@@ -11,6 +11,7 @@ import { toast } from "react-toastify";
 import TagManager from "react-gtm-module";
 //import styled from "styled-components";
 import Modal from "../../SmallModal";
+import { getAuth } from "@firebase/auth";
 
 const Mypage = () => {
   const size = useContext(ResponsiveContext);
@@ -18,6 +19,8 @@ const Mypage = () => {
   const provider = sessionStorage.getItem("provider");
   const { Kakao } = window;
   const kakao_token = Kakao.Auth.getAccessToken();
+  const auth = getAuth();
+  console.log(auth.currentUser);
 
   const [profile, SetProfile] = useState({
     isBill: "",

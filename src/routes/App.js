@@ -28,6 +28,7 @@ import TingBox from '../Components/Main/mypage/TingBox';
 import PayResult from '../Components/Membership/PayResult';
 import PayDone from '../Components/Membership/Paydone';
 
+
 import Webnovel from '../Components/app/page/Webnovel';
 
 import BlogIdea from '../Components/app/page/BlogIdea';
@@ -53,9 +54,12 @@ import FightingGel from '../Components/event/FightingGel';
 //import GoBrowser from '../Components/GoBrowser';
 import Register from '../Components/Register';
 import Welcome from '../Components/Welcome';
+import WelcomeSns from '../Components/WelcomeSns';
 import AuthPage from '../Components/AuthPage';
 import Callback from '../Components/Callback';
 import NotFound from './404';
+
+import NoticeVerify from '../Components/NoticeVerify';
 
 import { RecoilRoot } from 'recoil';
 import FailPay from './failPay';
@@ -72,6 +76,8 @@ function App() {
         <Route exact path="/" component={Home}></Route>
         <Route exact path="/regist" component={Register}></Route>
         <Route exact path='/welcome' component={Welcome}></Route>
+        <Route exact path='/welcomeSns' component={WelcomeSns}></Route>
+        <Route exact path='/noticeverify' component={NoticeVerify}></Route>
         <Route exact path='/oauth' component={AuthPage}></Route>
         <Route exact path='/naver/oauth' component={Callback}></Route>
         <Route exact path="/login" component={Login}></Route>
