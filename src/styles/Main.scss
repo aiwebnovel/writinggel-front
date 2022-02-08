@@ -41,7 +41,7 @@ $red: #f45752;
 .LoginBox {
     >div {
         margin: 0 auto;
-        padding: 64px 15px;
+        padding: 120px 15px;
     }
 }
 
@@ -253,13 +253,19 @@ $red: #f45752;
         font-weight: 600;
         line-height: 40px;
     }
-
-
-    >p {
+    
+    >h3 {
         font-size: 15px;
-        margin-bottom: 35px;
-
+        
     }
+
+    > h4 {
+        font-size: 15px;
+        font-weight: 600;
+    }
+
+
+ 
 }
 
 .RegFormField {
@@ -308,6 +314,12 @@ $red: #f45752;
     padding: 180px 120px;
     height: 100%;
     overflow: hidden;
+
+    display :flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 1920px;
+    margin: 0 auto;
 
     @media screen and (max-width: 768px) {
 
@@ -1731,7 +1743,8 @@ hr {
 
 .ModifyContent {
     height: 100%;
-
+    padding : 120px 48px;
+    
     @media screen and (max-width: 1024px) {
         height: 80vh;
     }

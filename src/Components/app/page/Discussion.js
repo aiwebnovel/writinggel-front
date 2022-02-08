@@ -46,7 +46,7 @@ const Discussion = () => {
           headers: { authentication: sessionStorage.getItem("token") },
           data: {
             story: ProsOutput[0],
-            category: "찬반 논거",
+            category: "찬반 논거 토론",
           },
         };
 
@@ -74,7 +74,7 @@ const Discussion = () => {
           headers: { authentication: sessionStorage.getItem("token") },
           data: {
             story: ConsOutput[0],
-            category: "찬반 논거",
+            category: "찬반 논거 토론",
           },
         };
 

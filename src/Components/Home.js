@@ -36,7 +36,7 @@ const Home = () => {
   return (
     <Layout>
       <ScrollToTop />
-      <Box justify='center' align='center' className='MainHome'>
+      <div className='MainHome'>
         <Grid
           columns={size !== "small" ? "220px" : "200px"}
           gap={size !== 'small' ? 'large' : 'medium'}
@@ -44,6 +44,7 @@ const Home = () => {
         >
           <Card
             onClick={() => history.push("/fightingGel")}
+          
           >
             <img src={eventThumb} alt='이벤트'/>
           </Card>
@@ -69,7 +70,7 @@ const Home = () => {
             </Link>
           ))}
         </Grid>
-      </Box>
+      </div>
     </Layout>
   );
 };

@@ -1,7 +1,7 @@
 import React, { useContext, useState, useEffect, useCallback } from "react";
 import { Link, useHistory } from "react-router-dom";
 import axios from "axios";
-import { Header as HeaderLayout, Nav, Avatar, Anchor, Button } from "grommet";
+import { Box, Header as HeaderLayout, Nav, Avatar, Anchor, Button } from "grommet";
 import { Menu, Down } from "grommet-icons";
 import { ResponsiveContext } from "grommet";
 import { OuterClick } from "react-outer-click";
@@ -261,7 +261,7 @@ const Header = () => {
           </Link>
         </Nav>
         {size !== "small" ? (
-          <Nav direction='row' className='Menus' gap="large" align='center'>
+          <Box as='nav' direction='row' className='Menus' align='center'>
             <Link to='/signIn' className={userPlan === 'free' || userPlan === '0' || userPlan === null ? "MenusLink" : "displayNone"}>
               <MemButton>멤버십 가입</MemButton>
             </Link>
@@ -324,7 +324,7 @@ const Header = () => {
                 <Button>로그인</Button>
               </Link>
             )}
-          </Nav>
+          </Box>
         ) : (
           <Nav>
             <Menu color='brand' size='medium' onClick={HandleShow} />

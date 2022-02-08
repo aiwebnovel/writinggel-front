@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Box } from "grommet";
 import styled from "styled-components";
 
-const Welcome = () => {
+const WelcomeSns = () => {
 
   return (
     <Box className="WelcomeContainer">
@@ -18,8 +18,9 @@ const Welcome = () => {
             <img src='tinggle.png' alt='welcomeTing' />
           </ImgBox>
           <div className='DoneText' style={{ wordBreak: 'keep-all'}}>
-            <h2>거의 마지막이에요! 🥳</h2>
-            <p>가입하신 이메일로 인증을 해주시면 회원가입이 완료됩니다!</p>
+            <h2>Welcome! 🥳</h2>
+            <p>라이팅젤 멤버가 되신 걸 환영해요!</p>
+            <p>아래 버튼을 눌러서 라이팅젤을 즐겨보세요. 🥰</p>
           </div>
           <div className='DoneButton'>
           <button>
@@ -35,7 +36,7 @@ const Welcome = () => {
   );
 };
 
-export default Welcome;
+export default WelcomeSns;
 
 const ImgBox = styled.div`
   text-align: center;
