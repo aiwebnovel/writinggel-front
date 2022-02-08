@@ -262,8 +262,8 @@ const Modify = () => {
           width='100%'
           justify='center'
           align='center'
-          pad='large'
           className='ModifyContent'
+
         >
           <div className='UserFormInputs'>
             <input

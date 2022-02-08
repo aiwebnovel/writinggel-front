@@ -20,6 +20,7 @@ import TagManager from "react-gtm-module";
 
 import "../styles/header.scss";
 import styled from "styled-components";
+import moment from "moment";
 
 const Login = () => {
   const { Kakao, naver } = window;
@@ -46,37 +47,48 @@ const Login = () => {
     //console.log("login");
     SetLoading(true);
     const auth = getAuth();
+    const user = auth.currentUser;
+
     setPersistence(auth, browserSessionPersistence)
       .then(() => {
         signInWithEmailAndPassword(auth, LogEmail, LogPassword)
           .then(async (userCredential) => {
             const user = userCredential.user;
+            const creationTime = user.metadata.creationTime;
+            const formatCreation = moment(creationTime).format("YYYY-MM-DD");
+            const startVerifyDate =
+              moment("09 Feb 2022").format("YYYY-MM-DD");
 
-            //console.log(user);
+            console.log(formatCreation, startVerifyDate);
 
-            const splitEmail = user.email.split("@");
-            let providerId = user.providerData[0].providerId;
-            let create = user.metadata.creationTime;
-            let displayName = user.displayName;
-
-            const token = user.accessToken;
-            const userName = splitEmail[0];
-
-            if (user.displayName !== null) {
-              sessionStorage.setItem("token", token);
-              sessionStorage.setItem("userName", displayName);
-              sessionStorage.setItem("email", user.email);
-              sessionStorage.setItem("create", create);
-              sessionStorage.setItem("provider", providerId);
+            if (startVerifyDate <= formatCreation && !user.emailVerified) {
+              SetLoading(false);
+              toast.error("이메일 인증이 완료되지 않았습니다. ");
             } else {
-              sessionStorage.setItem("token", token);
-              sessionStorage.setItem("userName", userName);
-              sessionStorage.setItem("email", user.email);
-              sessionStorage.setItem("create", create);
-              sessionStorage.setItem("provider", providerId);
+              const splitEmail = user.email.split("@");
+              let providerId = user.providerData[0].providerId;
+              let create = user.metadata.creationTime;
+              let displayName = user.displayName;
+
+              const token = user.accessToken;
+              const userName = splitEmail[0];
+
+              if (user.displayName !== null) {
+                sessionStorage.setItem("token", token);
+                sessionStorage.setItem("userName", displayName);
+                sessionStorage.setItem("email", user.email);
+                sessionStorage.setItem("create", create);
+                sessionStorage.setItem("provider", providerId);
+              } else {
+                sessionStorage.setItem("token", token);
+                sessionStorage.setItem("userName", userName);
+                sessionStorage.setItem("email", user.email);
+                sessionStorage.setItem("create", create);
+                sessionStorage.setItem("provider", providerId);
+              }
+              await SetLoading(false);
+              History.replace("/");
             }
-            await SetLoading(false);
-            History.replace("/");
           })
           .catch((error) => {
             const errorCode = error.code;
@@ -187,7 +199,7 @@ const Login = () => {
             await sessionStorage.setItem("provider", providerId);
             await sessionStorage.setItem("userName", username);
             await sessionStorage.setItem("userImage", userPhoto);
-  
+
             SetLoading(false);
             setTimeout(History.replace("/"), 3000);
           })
@@ -273,8 +285,8 @@ const Login = () => {
             <img src='/logo2.png' alt='로그인 이미지' />
           </Link>
         </div>
-        <Box className='LoginBox' >
-          <Box >
+        <Box fill className='LoginBox' justify='center'>
+          <Box>
             <div className='loginTitle'>
               <h2>로그인</h2>
               <p>로그인 후 라이팅젤 서비스를 즐겨보세요!</p>

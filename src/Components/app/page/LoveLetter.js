@@ -146,7 +146,7 @@ const LoveLetter = () => {
 
   const resetData = () => {
     SetResult(false);
-    HandleModals(false);
+    SetOpen(false);
     SetUser("");
     SetLover("");
   };

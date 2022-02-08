@@ -55,7 +55,7 @@ const Storysrc = () => {
         headers: { authentication: sessionStorage.getItem("token") },
         data: {
           story: contentKor,
-          category: "이야기 재료",
+          category: "이야기 재료 찾기",
         },
       };
 

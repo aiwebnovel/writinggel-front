@@ -12,12 +12,15 @@ import {
   updateProfile,
   setPersistence,
   browserSessionPersistence,
+  sendEmailVerification,
+  deleteUser,
 } from "@firebase/auth";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ScrollToTop from "../routes/ScrollToTop";
 import TagManager from "react-gtm-module";
 import Loading from "./SmallLoading";
+import firebase from "firebase/compat";
 
 import * as configUrl from "../config";
 import "../styles/header.scss";
@@ -116,8 +119,9 @@ const Register = () => {
   const GoRegister = () => {
     if (isEmail && isPassword && isCheckPw && RegName) {
       SetLoading(true);
-      //console.log("가입");
       const auth = getAuth();
+      auth.languageCode = "ko";
+      console.log(auth.currentUser);
 
       createUserWithEmailAndPassword(auth, RegEmail, RegPassword)
         .then(async (userCredential) => {
@@ -141,9 +145,21 @@ const Register = () => {
 
               await axios(config)
                 .then(async (response) => {
-                  //console.log(response);
-                  SetLoading(false);
-                  History.push("/welcome");
+                  console.log(response);
+                  await sendEmailVerification(auth.currentUser)
+                    .then((res) => {
+                      console.log(res, auth.currentUser);
+                      History.push("/welcome");
+                      SetLoading(false);
+                      setTimeout(toast.info("메일이 발송되었습니다."), 3000);
+                    })
+                    .catch((err) => {
+                      console.log(err);
+                      History.push("/noticeverify");
+                      SetLoading(false);
+                      setTimeout(toast.error("메일이 발송되지 않았습니다."),3000);
+                    });
+                 
                 })
                 .catch((error) => {
                   console.log(error);
@@ -165,6 +181,7 @@ const Register = () => {
           const errorCode = error.code;
           const errorMessage = error.message;
           const errorIndex = errorMessage.indexOf("email-already-in-us");
+
           console.log(errorCode, errorMessage, errorIndex);
           if (errorIndex !== -1) {
             toast.error("이미 누군가 쓰고 있는 이메일 입니다.😭");
@@ -224,7 +241,7 @@ const Register = () => {
                       await sessionStorage.setItem("userName", username);
                       await sessionStorage.setItem("userImage", userPhoto);
                       SetLoading(false);
-                      History.push("/welcome");
+                      History.push("/welcomeSns");
                     })
                     .catch((error) => {
                       console.log(error.response);
@@ -299,7 +316,7 @@ const Register = () => {
                     await sessionStorage.setItem("userName", username);
                     await sessionStorage.setItem("userImage", userPhoto);
                     SetLoading(false);
-                    History.push("/welcome");
+                    History.push("/welcomeSns");
                   })
                   .catch((error) => {
                     console.log(error.response);
@@ -342,7 +359,6 @@ const Register = () => {
     Kakao.Auth.authorize({
       redirectUri: "https://tinytingel.ai/oauth",
     });
-  
   };
 
   useEffect(() => {
@@ -389,7 +405,11 @@ const Register = () => {
             <div className='RegTitle'>
               {/* <img src='/tinggle.png' alt='회원가입 이미지'/> */}
               <h2>회원가입</h2>
-              <p>가입 하시면 더 많은 서비스를 즐기실 수 있어요!</p>
+              <h3>가입 하시면 더 많은 서비스를 즐기실 수 있어요!</h3>
+              <h4 style={{marginTop: '10px'}}><span style={{color :'red'}}>*</span> 회원가입과 동시에 인증용 메일이 전송됩니다.</h4>
+              <h4 style={{marginBottom: '30px'}}><span style={{color :'red'}}>*</span> 반드시 유효한 메일 주소로 가입해주세요!</h4>
+              
+              
             </div>
             <div className='Form'>
               <div className='RegFormField'>
@@ -416,6 +436,9 @@ const Register = () => {
                   <p className={isEmail ? "RegCorrect" : "RegIncorrect"}>
                     {EmailMessage}
                   </p>
+                  {/* <Verify>
+                    <button onClick={HandleVerify}>이메일 인증</button>
+                  </Verify> */}
                 </div>
                 <div>
                   <label>비밀번호</label>
@@ -447,14 +470,6 @@ const Register = () => {
                 </div>
               </div>
               <div className='isChecked'>
-                {/* <input
-                type='checkbox'
-                name='agree'
-                onClick={(e) => {
-                  HandleChecked(e);
-                }}
-                style={{ width: "15px", height: "15px", marginRight: "5px" }}
-              /> */}
                 <p>
                   <a
                     href='https://appplatform.notion.site/8be8232fff0341799cf8c13728610b6b'
@@ -584,4 +599,24 @@ const Line = styled.div`
   height: 1px;
   width: 50%;
   border-bottom: 1px solid #aaa;
+`;
+
+const Verify = styled.div`
+  > button {
+    width: 100%;
+    background-color: #b1b5e6;
+    border: 1px solid #b1b5e6;
+    font-weight: 600;
+    padding: 5px 8px;
+    font-size: 1rem;
+    margin-top: 5px;
+    cursor: pointer;
+    transition: all 300ms ease;
+
+    &:hover {
+      font-weight: 600;
+      background-color: #ff9300;
+      border: 1px solid #ff9300;
+    }
+  }
 `;
