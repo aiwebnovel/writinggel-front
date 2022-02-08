@@ -285,7 +285,7 @@ const Login = () => {
             <img src='/logo2.png' alt='로그인 이미지' />
           </Link>
         </div>
-        <Box className='LoginBox'>
+        <Box fill className='LoginBox' justify='center'>
           <Box>
             <div className='loginTitle'>
               <h2>로그인</h2>

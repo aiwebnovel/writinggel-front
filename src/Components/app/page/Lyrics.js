@@ -88,7 +88,7 @@ const Lyrics = () => {
         headers: { authentication: sessionStorage.getItem("token") },
         data: {
           story: contents,
-          category: "영어 가사",
+          category: "영어 가사쓰기",
         },
       };
 

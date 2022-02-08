@@ -79,6 +79,14 @@ const Fairytale = () => {
     }
   };
 
+  const NoticeWriteIcon = () => {
+    if (Output[0]=== "") {
+      toast.warning("+열기 버튼을 눌러 키워드를 넣어주세요!");
+    } else {
+      return;
+    }
+  };
+
   const NewStory = async () => {
     if (count === 0 && isBill === false) {
       SetCountModal(true);
@@ -468,6 +476,7 @@ const Fairytale = () => {
               <textarea
                 className='output1'
                 placeholder='결과가 나올예정이에요!'
+                onClick={NoticeWriteIcon}
                 onChange={(e) => HandleStory(e)}
                 value={Output[0]}
               ></textarea>
