@@ -57,7 +57,7 @@ const Login = () => {
             const creationTime = user.metadata.creationTime;
             const formatCreation = moment(creationTime).format("YYYY-MM-DD");
             const startVerifyDate =
-              moment("Mon, 07 Feb 2022").format("YYYY-MM-DD");
+              moment("09 Feb 2022").format("YYYY-MM-DD");
 
             console.log(formatCreation, startVerifyDate);
 
