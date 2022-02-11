@@ -106,7 +106,7 @@ const NewsLetter = () => {
           <div className='tingLetterImg'>
             <div className='speech'>
               <h2>팅젤이가 여러분에게</h2>
-              <h2>뉴스테러를 가져다줄 거에요!</h2>
+              <h2>뉴스레터를 가져다줄 거에요!</h2>
             </div>
             <img src='/tingLetter.png' alt='팅젤이'/>
           </div>
