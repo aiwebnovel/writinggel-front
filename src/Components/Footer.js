@@ -31,8 +31,8 @@ const Footer = () => {
         <Box direction="row" gap="medium"  className="MobileFooter">
               <div className="InfoBox">
                 <p><b>정책</b></p>   
-                <a target="_blank" rel="noreferrer" href="https://www.notion.so/appplatform/d99f247a66d141bbbdf227739861a0a2">개인정보 처리방침</a>
-                <a target="_blank" rel="noreferrer" href="https://appplatform.notion.site/8be8232fff0341799cf8c13728610b6b">이용약관</a>
+                <a target="_blank" rel="noreferrer noopener" href="https://www.notion.so/appplatform/d99f247a66d141bbbdf227739861a0a2">개인정보 처리방침</a>
+                <a target="_blank" rel="noreferrer noopener" href="https://appplatform.notion.site/8be8232fff0341799cf8c13728610b6b">이용약관</a>
                 <a href="mailto:support@appplatform.co.kr">support@appplatform.co.kr </a>
               </div>
     
@@ -42,9 +42,9 @@ const Footer = () => {
         <FooterLayout className="Mobilefooter MobileCopyRight" background="light-3" pad="medium" justify="center" align="center">
           <p className="copyRight">©Appplatform, Inc All Rights Reserved</p>
           <Box direction="row" gap="small" className="Icon">
-          <a target="_blank" rel="noreferrer" href="https://facebook.com/ai.tinytingel/"><Facebook size="medium"/></a>
-          <a target="_blank" rel="noreferrer" href="https://www.instagram.com/tinytingel/"><Instagram size="medium"/></a>
-          <a target="_blank" rel="noreferrer" href="https://twitter.com/tinytingel"><Twitter size="medium"/></a>
+          <a target="_blank" rel="noreferrer noopener" href="https://facebook.com/ai.tinytingel/"><Facebook size="medium"/></a>
+          <a target="_blank" rel="noreferrer noopener" href="https://www.instagram.com/tinytingel/"><Instagram size="medium"/></a>
+          <a target="_blank" rel="noreferrer noopener" href="https://twitter.com/tinytingel"><Twitter size="medium"/></a>
           <a target="_blank" rel="noreferrer" href="https://www.youtube.com/channel/UCZA1B4QdPgG0WI3OigXWmdw"><Youtube size="medium"/></a>
           </Box>
           

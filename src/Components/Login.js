@@ -56,8 +56,7 @@ const Login = () => {
             const user = userCredential.user;
             const creationTime = user.metadata.creationTime;
             const formatCreation = moment(creationTime).format("YYYY-MM-DD");
-            const startVerifyDate =
-              moment("09 Feb 2022").format("YYYY-MM-DD");
+            const startVerifyDate = moment("09 Feb 2022").format("YYYY-MM-DD");
 
             console.log(formatCreation, startVerifyDate);
 
@@ -146,15 +145,49 @@ const Login = () => {
               let userPhoto = user.photoURL;
               //console.log('result',token);
 
-              await sessionStorage.setItem("token", token);
-              await sessionStorage.setItem("email", email);
-              await sessionStorage.setItem("create", create);
-              await sessionStorage.setItem("provider", providerId);
-              await sessionStorage.setItem("userName", username);
-              await sessionStorage.setItem("userImage", userPhoto);
+              await authService.currentUser
+                .getIdToken()
+                .then(async (data) => {
+                  console.log(data);
+                  const config = {
+                    method: "get",
+                    url: `${configUrl.SERVER_URL}/signup`,
+                    headers: {
+                      authentication: data,
+                    },
+                  };
 
-              SetLoading(false);
-              setTimeout(History.replace("/"), 3000);
+                  await axios(config)
+                    .then(async (response) => {
+                      console.log(response);
+                      await sessionStorage.setItem("token", token);
+                      await sessionStorage.setItem("email", email);
+                      await sessionStorage.setItem("create", create);
+                      await sessionStorage.setItem("provider", providerId);
+                      await sessionStorage.setItem("userName", username);
+                      await sessionStorage.setItem("userImage", userPhoto);
+                      SetLoading(false);
+                      History.push("/welcomeSns");
+                    })
+                    .catch((error) => {
+                      console.log(error.response);
+                      SetLoading(false);
+                      if (error.response.status === 403) {
+                        sessionStorage.setItem("token", token);
+                        sessionStorage.setItem("email", email);
+                        sessionStorage.setItem("create", create);
+                        sessionStorage.setItem("provider", providerId);
+                        sessionStorage.setItem("userName", username);
+                        sessionStorage.setItem("userImage", userPhoto);
+
+                        SetLoading(false);
+                        setTimeout(History.replace("/"), 3000);
+                      }
+                    });
+                })
+                .catch((err) => {
+                  console.log(err);
+                });
             })
             .catch((error) => {
               console.log(error);
@@ -179,46 +212,75 @@ const Login = () => {
       //await authService.signInWithRedirect(provider)
 
       setPersistence(authService, browserSessionPersistence).then(async () => {
-        await authService
-          .signInWithPopup(provider)
-          .then(async (dataGoogle) => {
-            //console.log(dataGoogle);
-            let credential = dataGoogle.credential;
-            let user = dataGoogle.user;
+        await authService.signInWithPopup(provider).then(async (dataGoogle) => {
+          //console.log(dataGoogle);
+          let credential = dataGoogle.credential;
+          let user = dataGoogle.user;
 
-            let token = credential.idToken;
-            let providerId = credential.providerId;
-            let email = user.email;
-            let create = user.metadata.creationTime;
-            let username = user.displayName;
-            let userPhoto = user.photoURL;
+          let token = credential.idToken;
+          let providerId = credential.providerId;
+          let email = user.email;
+          let create = user.metadata.creationTime;
+          let username = user.displayName;
+          let userPhoto = user.photoURL;
 
-            await sessionStorage.setItem("token", token);
-            await sessionStorage.setItem("email", email);
-            await sessionStorage.setItem("create", create);
-            await sessionStorage.setItem("provider", providerId);
-            await sessionStorage.setItem("userName", username);
-            await sessionStorage.setItem("userImage", userPhoto);
+          await authService.currentUser
+            .getIdToken()
+            .then(async (data) => {
+              //console.log(data);
+              const config = {
+                method: "get",
+                url: `${configUrl.SERVER_URL}/signup`,
+                headers: {
+                  authentication: data,
+                },
+              };
+              await axios(config)
+                .then(async (response) => {
+                  console.log(response);
+                  await sessionStorage.setItem("token", token);
+                  await sessionStorage.setItem("email", email);
+                  await sessionStorage.setItem("create", create);
+                  await sessionStorage.setItem("provider", providerId);
+                  await sessionStorage.setItem("userName", username);
+                  await sessionStorage.setItem("userImage", userPhoto);
+                  SetLoading(false);
+                  History.push("/welcomeSns");
+                })
+                .catch((error) => {
+                  console.log(error.response);
+                  SetLoading(false);
+                  if (error.response.status === 403) {
+                    SetLoading(false);
+                    sessionStorage.setItem("token", token);
+                    sessionStorage.setItem("email", email);
+                    sessionStorage.setItem("create", create);
+                    sessionStorage.setItem("provider", providerId);
+                    sessionStorage.setItem("userName", username);
+                    sessionStorage.setItem("userImage", userPhoto);
 
-            SetLoading(false);
-            setTimeout(History.replace("/"), 3000);
-          })
-          .catch((error) => {
-            console.log(error);
-            SetLoading(false);
-            if (
-              error.code === "auth/account-exists-with-different-credential"
-            ) {
-              toast.error(
-                "이미 페이스북으로 로그인했던 계정입니다. 동일한 이메일 주소를 사용하여 여러 계정을 만들 수 없습니다."
-              );
+                    SetLoading(false);
+                    setTimeout(History.replace("/"), 3000);
+                  }
+                });
+            })
+            .catch((error) => {
+              console.log(error);
               SetLoading(false);
-            }
-          })
-          .catch((error) => {
-            console.log(error);
-            SetLoading(false);
-          });
+              if (
+                error.code === "auth/account-exists-with-different-credential"
+              ) {
+                toast.error(
+                  "이미 페이스북으로 로그인했던 계정입니다. 동일한 이메일 주소를 사용하여 여러 계정을 만들 수 없습니다."
+                );
+                SetLoading(false);
+              }
+            })
+            .catch((error) => {
+              console.log(error);
+              SetLoading(false);
+            });
+        });
       });
     }
   };

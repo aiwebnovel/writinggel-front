@@ -157,9 +157,11 @@ const Register = () => {
                       console.log(err);
                       History.push("/noticeverify");
                       SetLoading(false);
-                      setTimeout(toast.error("메일이 발송되지 않았습니다."),3000);
+                      setTimeout(
+                        toast.error("메일이 발송되지 않았습니다."),
+                        3000
+                      );
                     });
-                 
                 })
                 .catch((error) => {
                   console.log(error);
@@ -222,7 +224,7 @@ const Register = () => {
               await authService.currentUser
                 .getIdToken()
                 .then(async (data) => {
-                  console.log(data);
+                  //console.log(data);
                   const config = {
                     method: "get",
                     url: `${configUrl.SERVER_URL}/signup`,
@@ -246,6 +248,11 @@ const Register = () => {
                     .catch((error) => {
                       console.log(error.response);
                       SetLoading(false);
+                      if (error.response.status === 403) {
+                        toast.error(
+                          "이미 가입된 유저 또는 가입 불가능한 정보입니다😭"
+                        );
+                        }
                       if (error.response.data.errorCode === 108) {
                         toast.error(
                           "이미 가입된 유저 또는 가입 불가능한 정보입니다😭"
@@ -292,12 +299,12 @@ const Register = () => {
             let create = user.metadata.creationTime;
             let username = user.displayName;
             let userPhoto = user.photoURL;
-            console.log(token);
+            //console.log(token);
 
             await authService.currentUser
               .getIdToken()
               .then(async (data) => {
-                console.log(data);
+                //console.log(data);
                 const config = {
                   method: "get",
                   url: `${configUrl.SERVER_URL}/signup`,
@@ -321,10 +328,15 @@ const Register = () => {
                   .catch((error) => {
                     console.log(error.response);
                     SetLoading(false);
-                    if (error.response.data.errorCode === 108) {
+                    if (error.response.status === 403) {
                       toast.error(
                         "이미 가입된 유저 또는 가입 불가능한 정보입니다😭"
                       );
+                      SetLoading(false);
+                      // if (error.response.data.errorCode === 108) {
+                      //   toast.error(
+                      //     "이미 가입된 유저 또는 가입 불가능한 정보입니다😭"
+                      //   );
                       SetLoading(false);
                     }
                   });
@@ -406,10 +418,14 @@ const Register = () => {
               {/* <img src='/tinggle.png' alt='회원가입 이미지'/> */}
               <h2>회원가입</h2>
               <h3>가입 하시면 더 많은 서비스를 즐기실 수 있어요!</h3>
-              <h4 style={{marginTop: '10px'}}><span style={{color :'red'}}>*</span> 회원가입과 동시에 인증용 메일이 전송됩니다.</h4>
-              <h4 style={{marginBottom: '30px'}}><span style={{color :'red'}}>*</span> 반드시 유효한 메일 주소로 가입해주세요!</h4>
-              
-              
+              <h4 style={{ marginTop: "10px" }}>
+                <span style={{ color: "red" }}>*</span> 회원가입과 동시에 인증용
+                메일이 전송됩니다.
+              </h4>
+              <h4 style={{ marginBottom: "30px" }}>
+                <span style={{ color: "red" }}>*</span> 반드시 유효한 메일
+                주소로 가입해주세요!
+              </h4>
             </div>
             <div className='Form'>
               <div className='RegFormField'>
