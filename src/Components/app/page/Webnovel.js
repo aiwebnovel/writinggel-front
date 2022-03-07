@@ -184,7 +184,6 @@ const Webnovel = () => {
           },
           {
             headers: { authentication: sessionStorage.getItem("token") },
-            timeout: 100000,
           }
         )
         .then(async (response) => {
