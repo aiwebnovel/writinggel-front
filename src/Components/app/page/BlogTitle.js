@@ -143,7 +143,7 @@ const BlogTitle = () => {
               await resK.push(response.data[i][0]);
               await resE.push(response.data[i][1]);
 
-              console.log(resK, resE);
+              //console.log(resK, resE);
               if (response.data[0][0] === "") {
                 toast.error(
                   "적어주신 키워드가 적절하지 않은 것 같습니다.😭 재시도 해주세요!"
@@ -177,6 +177,12 @@ const BlogTitle = () => {
                 progressStyle: { backgroundColor: "#7D4CDB" },
               });
               sessionStorage.removeItem("token");
+            }
+            if (error.response.status === 429) {
+              toast.error("요청이 너무 많습니다! 잠시 후에 다시 시도해주세요!");
+            }
+            if (error.response.status === 500) {
+              toast.error("새로고침 혹은 다시 로그인 해주세요! 같은 메세지가 반복될 시 메일로 문의해주세요!");
             }
           })
           .finally(() => {

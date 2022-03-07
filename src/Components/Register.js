@@ -145,7 +145,7 @@ const Register = () => {
 
               await axios(config)
                 .then(async (response) => {
-                  console.log(response);
+                  //console.log(response);
                   await sendEmailVerification(auth.currentUser)
                     .then((res) => {
                       console.log(res, auth.currentUser);

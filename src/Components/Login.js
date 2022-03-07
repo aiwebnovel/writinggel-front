@@ -148,7 +148,7 @@ const Login = () => {
               await authService.currentUser
                 .getIdToken()
                 .then(async (data) => {
-                  console.log(data);
+                  //console.log(data);
                   const config = {
                     method: "get",
                     url: `${configUrl.SERVER_URL}/signup`,
@@ -159,7 +159,7 @@ const Login = () => {
 
                   await axios(config)
                     .then(async (response) => {
-                      console.log(response);
+                     //console.log(response);
                       await sessionStorage.setItem("token", token);
                       await sessionStorage.setItem("email", email);
                       await sessionStorage.setItem("create", create);
@@ -237,7 +237,7 @@ const Login = () => {
               };
               await axios(config)
                 .then(async (response) => {
-                  console.log(response);
+                  //console.log(response);
                   await sessionStorage.setItem("token", token);
                   await sessionStorage.setItem("email", email);
                   await sessionStorage.setItem("create", create);

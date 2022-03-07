@@ -12,7 +12,7 @@ const Callback = () => {
     // if(!Location.hash) return;
     const token = Location.hash.split('=')[1].split('&')[0];
     sessionStorage.setItem('naver_token', token);
-    console.log(token);
+   // console.log(token);
     const header = "Bearer " + token;
 
     // History.push('/')

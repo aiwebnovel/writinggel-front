@@ -87,7 +87,7 @@ const BlogIdea = () => {
             toast.error("보관함이 꽉 찼습니다!");
           }
           if (error.response.status === 500) {
-            toast.error("여러 번 시도 후에도 똑같은 오류가 뜰 시, 해당 에러는 관리자에게 문의해주세요!");
+            toast.error("새로고침 혹은 다시 로그인 해주세요! 같은 메세지가 반복될 시 메일로 문의해주세요!");
           }
         });
     } else {
@@ -137,6 +137,7 @@ const BlogIdea = () => {
             }
           )
           .then(async (response) => {
+            //console.log(response.data);
             let resK = [];
             let resE = [];
 
@@ -178,6 +179,12 @@ const BlogIdea = () => {
                 progressStyle: { backgroundColor: "#7D4CDB" },
               });
               sessionStorage.removeItem("token");
+            }
+            if (error.response.status === 429) {
+              toast.error("요청이 너무 많습니다! 잠시 후에 다시 시도해주세요!");
+            }
+            if (error.response.status === 500) {
+              toast.error("새로고침 혹은 다시 로그인 해주세요! 같은 메세지가 반복될 시 메일로 문의해주세요!");
             }
           })
           .finally(() => {
