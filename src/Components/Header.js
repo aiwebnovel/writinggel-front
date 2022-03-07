@@ -69,8 +69,10 @@ const Header = () => {
             })
             .catch((error) => {
               if(error.response.status === 412) {
-                toast.error('새로고침하거나 다시 로그인 해주세요!') 
-                
+                toast.error('새로고침하거나 다시 로그인 해주세요!')  
+              }
+              if (error.response.status === 500) {
+                toast.error("새로고침 혹은 다시 로그인 해주세요! 이후 같은 메세지가 반복될 시 메일로 문의해주세요!");
               }
              
             });
@@ -125,6 +127,9 @@ const Header = () => {
             toast.error('새로고침하거나 다시 로그인 해주세요!') 
             //window.location.reload();  
           }
+          if (error.response.status === 500) {
+            toast.error("새로고침 혹은 다시 로그인 해주세요! 같은 메세지가 반복될 시 메일로 문의해주세요!");
+          }
           // toast.error(error.message);
         });
     } else {
@@ -144,7 +149,7 @@ const Header = () => {
           headers: { authentication: check },
         })
         .then(async (response) => {
-         // console.log(response.data);
+         console.log(response.data);
 
           SetProfile({
             ...profile,
@@ -201,6 +206,9 @@ const Header = () => {
       if(error.response.status === 412) {
         toast.error('새로고침하거나 다시 로그인 해주세요!') 
         //window.location.reload();  
+      }
+      if (error.response.status === 500) {
+        toast.error("새로고침 혹은 다시 로그인 해주세요!");
       }
       // toast.error(error.message);
     });

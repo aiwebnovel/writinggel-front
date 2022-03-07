@@ -3,6 +3,8 @@ import axios from "axios";
 import { useHistory } from "react-router-dom";
 import Loading from "./SmallLoading";
 import * as configUrl from "../config";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const AuthPage = () => {
   //const { Kakao } = window;
@@ -83,6 +85,7 @@ const AuthPage = () => {
                       },
                       fail: (error)=> {
                         console.log(error);
+                        toast.error('error! 다시 시도해주세요.')
                       },
               });
             })
@@ -108,6 +111,7 @@ const AuthPage = () => {
                   },
                   fail: (error) => {
                     console.log(error);
+                    toast.error('error! 다시 시도해주세요.')
                   },
                 });
               }

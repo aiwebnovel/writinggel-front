@@ -148,6 +148,15 @@ const Fairytale = () => {
               progressStyle: { backgroundColor: "#7D4CDB" },
             });
           }
+         if (error.response.status === 412) {
+            toast.error("새로고침 혹은 재로그인 해주세요!");
+          }
+          if (error.response.status === 429) {
+            toast.error("요청이 너무 많습니다! 잠시 후에 다시 시도해주세요!");
+          }
+          if (error.response.status === 500) {
+            toast.error("새로고침 혹은 다시 로그인 해주세요! 같은 메세지가 반복될 시 메일로 문의해주세요!");
+          }
         })
         .finally(() => {
           SetLoading(false);
@@ -206,6 +215,12 @@ const Fairytale = () => {
           }
           if (error.response.status === 412) {
             toast.error("새로고침 혹은 재로그인 해주세요!");
+          }
+          if (error.response.status === 429) {
+            toast.error("요청이 너무 많습니다! 잠시 후에 다시 시도해주세요!");
+          }
+          if (error.response.status === 500) {
+            toast.error("새로고침 혹은 다시 로그인 해주세요! 같은 메세지가 반복될 시 메일로 문의해주세요!");
           }
         })
         .finally(() => {

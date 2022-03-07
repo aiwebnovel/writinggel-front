@@ -203,6 +203,10 @@ const BlogFollow = () => {
                 });
               }
             }
+            
+            if (error.response.status === 500) {
+              toast.error("새로고침 혹은 다시 로그인 해주세요! 같은 메세지가 반복될 시 메일로 문의해주세요!");
+            }
           })
           .finally(() => {
             SetLoading(false);

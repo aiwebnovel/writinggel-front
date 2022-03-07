@@ -47,7 +47,7 @@ const Firstsentence = () => {
 
         await axios(config)
           .then(async (response) => {
-            //  console.log(response.data);
+             console.log(response.data);
             //  console.log(response.data[0].split('\n\n'));
 
             if (response.data[0] === "") {
@@ -85,6 +85,16 @@ const Firstsentence = () => {
                   progressStyle: { backgroundColor: "#7D4CDB" },
                 }
               );
+            }
+            if (error.response.status === 412) {
+              toast.info(`로그인이 필요합니다!`, {
+                icon: "🙅‍♀️",
+                progressStyle: { backgroundColor: "#7D4CDB" },
+              });
+              sessionStorage.removeItem("token");
+            } 
+            if (error.response.status === 429) {
+              toast.error("요청이 너무 많습니다! 잠시 후에 다시 시도해주세요!");
             }
           })
           .finally(() => {

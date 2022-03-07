@@ -93,15 +93,14 @@ const CoverLetter = () => {
                 }
               );
             }
+            if (error.response.status === 412) {
+              toast.error("새로고침 혹은 재로그인 해주세요!");
+            }
+            if (error.response.status === 429) {
+              toast.error("요청이 너무 많습니다! 잠시 후에 다시 시도해주세요!");
+            }
             if (error.response.status === 500) {
-              setLoading(false);
-              toast.info(
-                "여러 번 새로고침 후에도 똑같은 오류가 뜰 시, 해당 오류는 관리자에게 문의 해주세요.",
-                {
-                  icon: "⚠️",
-                  progressStyle: { backgroundColor: "#7D4CDB" },
-                }
-              );
+              toast.error("새로고침 혹은 다시 로그인 해주세요! 같은 메세지가 반복될 시 메일로 문의해주세요!");
             }
             setLoading(false);
           });
