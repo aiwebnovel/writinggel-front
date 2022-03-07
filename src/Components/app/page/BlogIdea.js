@@ -137,7 +137,7 @@ const BlogIdea = () => {
             }
           )
           .then(async (response) => {
-            console.log(response.data);
+            //console.log(response.data);
             let resK = [];
             let resE = [];
 

@@ -46,7 +46,7 @@ const Lyrics = () => {
 
       await axios(config)
         .then(async (response) => {
-         console.log(response.data);
+        // console.log(response.data);
 
           if (response.data[0] === "") {
             toast.error(

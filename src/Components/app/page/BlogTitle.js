@@ -143,7 +143,7 @@ const BlogTitle = () => {
               await resK.push(response.data[i][0]);
               await resE.push(response.data[i][1]);
 
-              console.log(resK, resE);
+              //console.log(resK, resE);
               if (response.data[0][0] === "") {
                 toast.error(
                   "적어주신 키워드가 적절하지 않은 것 같습니다.😭 재시도 해주세요!"

@@ -44,7 +44,7 @@ const AuthPage = () => {
       })
         .then((res) => res.json())
         .then(async (data) => {
-          console.log(data);
+          //console.log(data);
           const access = data.access_token;
           //const authToken = 'Bearer ' + access
           sessionStorage.setItem("token", access);
