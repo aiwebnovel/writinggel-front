@@ -47,7 +47,7 @@ const Firstsentence = () => {
 
         await axios(config)
           .then(async (response) => {
-             console.log(response.data);
+            // console.log(response.data);
             //  console.log(response.data[0].split('\n\n'));
 
             if (response.data[0] === "") {

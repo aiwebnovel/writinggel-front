@@ -50,7 +50,7 @@ const Dailywrite = () => {
 
     await axios(config)
       .then(async (response) => {
-        //console.log('response', response.data)
+        console.log('response', response.data)
         if(response.data[0] === ''){
           toast.error('결과물에 유해한 내용이 들어가 버렸어요. 😭  `재시도 해주세요!');
       
@@ -66,19 +66,21 @@ const Dailywrite = () => {
             icon: "⚠️",
             progressStyle: { backgroundColor: "#7D4CDB" },
           });
-
+          SetOpen(false);
         }
         if (error.response.status === 412) {
           toast.error("새로고침 혹은 재로그인 해주세요!");
+          SetOpen(false);
         }
         if (error.response.status === 429) {
           toast.error("요청이 너무 많습니다! 잠시 후에 다시 시도해주세요!");
+          SetOpen(false);
         }
         if (error.response.status === 500) {
           toast.error("새로고침 혹은 다시 로그인 해주세요! 같은 메세지가 반복될 시 메일로 문의해주세요!");
+          SetOpen(false);
         }
       }).finally(()=>{
-        SetOpen(false);
         SetLoading(false);
       });
     }
@@ -315,9 +317,13 @@ const ResultCard = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  word-break: keep-all;
+
 
   > div {
-    width: 80%;
+    width: 100%;
+    max-width: 500px;
+    text-align: center;
   }
 
   .cardImg {

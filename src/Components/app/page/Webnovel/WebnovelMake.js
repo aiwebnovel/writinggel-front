@@ -78,13 +78,6 @@ const [index, setIndex] = useState(firstIndex);
                     <span>도입부 쓰기</span>
                 </div>
             </button>
-            <button className={ index === 2 ? 'active'  : 'TabBtn'} 
-            onClick={()=> onActive(2)}
-            >
-                <div>
-                    <span>이어 쓰기</span>
-                </div>
-            </button>
         </Tabs>
 
         <TabContent fill>
